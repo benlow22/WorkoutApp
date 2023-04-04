@@ -16,13 +16,6 @@ export const CreateUsername: React.FC<{}> = () => {
 		setNewUsername("");
 	};
 
-	useEffect(() => {
-		supabase.auth.getUser().then(({ data: { user } }) => {
-			setUser(user);
-		});
-		console.log("user:", user);
-	}, []);
-
 	return (
 		<div>
 			<Space.Compact>
