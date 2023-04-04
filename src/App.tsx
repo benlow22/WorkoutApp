@@ -9,6 +9,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<Header />
 			{/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
@@ -32,7 +33,9 @@ function App() {
       <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
       </a> */}
-			<Login />
+			<div className="main">
+				<Login />
+			</div>
 		</div>
 	);
 }

@@ -3,7 +3,9 @@
 	margin: 0px;
 	text-align: center;
 }
-
+.main {
+	margin: 30px;
+}
 .logo {
 	height: 6em;
 	padding: 1.5em;
@@ -55,3 +57,8 @@ h1 {
 	margin: 0px;
 	text-align: left;
 }
+
+input[value]{
+    color: #c6c6c6;
+}
+
