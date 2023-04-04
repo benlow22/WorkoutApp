@@ -2,6 +2,8 @@ import "./index.css";
 import { useState, useEffect } from "react";
 import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
+import { WorkoutsPage } from "../src/Workouts";
+import { workouts } from "../src/data";
 
 export default function App() {
 	const [session, setSession] = useState(null);
@@ -22,9 +24,13 @@ export default function App() {
 
 	if (!session) {
 		return (
-			<Auth supabaseClient={supabase} />
+			<div>
+				<h1>Welcome to Workout Buddy</h1>
+				<p>Please Login Below</p>
+				<Auth supabaseClient={supabase} />
+			</div>
 		);
 	} else {
-		return <div>Logged in!</div>;
+		return <WorkoutsPage workouts={workouts} />;
 	}
 }
