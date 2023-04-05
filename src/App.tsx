@@ -16,6 +16,7 @@ type IAuthContext = {
 	username: string;
 	isLoggedIn: boolean;
 	setIsLoggedIn: (loggedIn: boolean) => void;
+	setUsername: (newName:string) => void;
 };
 
 export const AuthContext = React.createContext<IAuthContext>({
@@ -23,6 +24,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	username: "",
 	isLoggedIn: false,
 	setIsLoggedIn: () => {},
+	setUsername: ()=> {}
 });
 
 export default function App() {
@@ -145,12 +147,14 @@ export default function App() {
 					username,
 					isLoggedIn,
 					setIsLoggedIn,
+					setUsername
 				}}
 			>
 				<div className="App">
 					<Header />
 					<div className="main">
-						<Login />
+						{!username && <CreateUsername />}
+						<WorkoutsPage workouts={workouts} />
 					</div>
 				</div>
 			</AuthContext.Provider>

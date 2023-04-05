@@ -1,25 +1,29 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { supabase } from "./supabaseClient";
 import { UserOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from "antd";
+import { AuthContext } from "./App";
 
 export const CreateUsername: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
+	const { userid, setUsername } = useContext(AuthContext);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		console.log("new Username to set", newUsername);
 
-		const {
-			data: { user },
-		} = await supabase.auth.getUser();
 		console.log("user info", user);
-		const { error } = await supabase
-			.from("profiles")
-			.update({ username: newUsername })
-			.eq("id", user.id);
-		setNewUsername("");
+		try {
+			const { error } = await supabase
+				.from("profiles")
+				.update({ username: newUsername })
+				.eq("id", userid);
+			setUsername(newUsername);
+			setNewUsername("");
+		} catch (err) {
+			console.log("error updating username", err);
+		}
 	};
 
 	return (
@@ -38,5 +42,7 @@ export const CreateUsername: React.FC<{}> = () => {
 		</div>
 	);
 };
+
+// later make a edit username section 
 
 export default CreateUsername;
