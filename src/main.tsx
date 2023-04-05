@@ -5,7 +5,5 @@ import App from "./App";
 import { Header } from "./Header";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-	<React.StrictMode>
-		<App />
-	</React.StrictMode>
+	<App />
 );

@@ -34,7 +34,9 @@ export const Header: React.FC<{}> = () => {
 	//console.log('username', data);
 	return (
 		<div className="header">
-			<h1>Workout Buddy</h1>
+			<Link to="/">
+				<h1>Workout Buddy</h1>
+			</Link>
 			<div className="account">
 				{username && <p>{username}</p>}
 				{username && <LogoutButton />}
