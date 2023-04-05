@@ -149,7 +149,7 @@ export default function App() {
 									<NewWorkoutPage />
 								</Route>
 								<Route path="/">
-									<WorkoutsPage workouts={workouts} />
+									<WorkoutsPage/>
 								</Route>
 							</Switch>
 						</div>
