@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button, Space, Input } from "antd";
 import { workouts } from "../data";
+import { useLocation } from "react-router";
+import { EditTwoTone } from "@ant-design/icons";
 
 export interface IWorkout {
 	name: string;
@@ -21,6 +23,8 @@ const postNewWorkout = (name: string) => {
 
 export const NewWorkoutPage = () => {
 	const [workoutName, setWorkoutName] = useState<string>("");
+	const [submittedWorkoutName, setSubmittedWorkoutName] =
+		useState<string>("");
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
@@ -31,6 +35,7 @@ export const NewWorkoutPage = () => {
 				});
 				if (!workoutExists) {
 					const newWorkouts = await postNewWorkout(workoutName);
+					setSubmittedWorkoutName(workoutName);
 				} else {
 					console.log("workout name taken");
 				}
@@ -54,18 +59,29 @@ export const NewWorkoutPage = () => {
 
 	return (
 		<>
-			<Space.Compact>
-				<Input
-					defaultValue="Username"
-					onChange={(e) => setWorkoutName(e.target.value)}
-					value={workoutName}
-					placeholder="New Workout Name"
-					className="new-workout-input"
-				/>
-				<Button type="primary" onClick={handleSubmit}>
-					Submit
-				</Button>
-			</Space.Compact>
+			{!submittedWorkoutName ? (
+				<Space.Compact>
+					<Input
+						defaultValue="Username"
+						onChange={(e) => setWorkoutName(e.target.value)}
+						value={workoutName}
+						placeholder="New Workout Name"
+						className="new-workout-input"
+					/>
+					<Button type="primary" onClick={handleSubmit}>
+						Submit
+					</Button>
+				</Space.Compact>
+			) : (
+				<section className="new-workout-name">
+					<h2>{submittedWorkoutName}</h2>
+					<EditTwoTone className="new-workout-edit-icon"/>
+				</section>
+			)}
+
+			<div className="new-workout-data test">
+				<p>Submitted New Workout Name: {submittedWorkoutName}</p>
+			</div>
 		</>
 	);
 };

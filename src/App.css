@@ -78,3 +78,10 @@ input[value]{
 input[value].new-workout-input {
 	color: black;
 }
+
+.new-workout-name {
+	display: flex;
+	width: 300px;
+	margin: auto;
+	justify-content: center;
+}
