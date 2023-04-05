@@ -13,7 +13,7 @@ export const {
 
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 
-export default function App() {
+export default function Login() {
 	const [session, setSession] = useState<any | null>(null);
 
 	useEffect(() => {
