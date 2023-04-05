@@ -1,1 +1,1 @@
-export const workouts = [{name: 'Back and Bi'}, {name: 'Chest day'}, {name: 'Leg day'}]
+export const workouts = [{name: 'Back and Bi', url: 'backAndBi' }, {name: 'Chest day', url: 'chestDay'}, {name: 'Leg day', url: 'legDay'}]

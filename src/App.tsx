@@ -11,6 +11,7 @@ import { CreateUsername } from "./components/CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
+import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 
 type IAuthContext = {
 	userid: string;
@@ -144,11 +145,14 @@ export default function App() {
 					<div className="main">
 						{!username && <CreateUsername />}
 						<Switch>
-							<Route path="/new-workout">
+							<Route path="/newWorkout">
 								<NewWorkoutPage />
 							</Route>
 							<Route path="/">
 								<WorkoutsPage />
+							</Route>
+							<Route path="/:workoutName">
+								<EditWorkoutPage />
 							</Route>
 						</Switch>
 					</div>
