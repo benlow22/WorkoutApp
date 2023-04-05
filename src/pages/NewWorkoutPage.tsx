@@ -20,9 +20,7 @@ const toCamelCase = (phrase: string): string => {
 	let ch1 = phrase[0];
 	if ((ch1 >= "a" && ch1 <= "z") || (ch1 >= "A" && ch1 <= "Z")) {
 		newStr = ch1.toLowerCase();
-		console.log("ch1", newStr);
 	}
-	console.log("ch1 outside", newStr);
 
 	const capitalizeChAfterSpace = (ch: string) => {
 		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
@@ -38,7 +36,6 @@ const toCamelCase = (phrase: string): string => {
 
 	for (let i = 1; i < phrase.length; i++) {
 		const ch = phrase[i];
-		console.log("phrase[i]", phrase[i]);
 		if (phrase[i - 1] == " ") {
 			const capitalizeCh = capitalizeChAfterSpace(ch);
 		} else if ((ch >= "a" && ch <= "z") || (ch >= "0" && ch <= "9")) {
@@ -51,13 +48,12 @@ const toCamelCase = (phrase: string): string => {
 };
 
 const postNewWorkout = (name: string) => {
-	console.log("POST WORKOUT", name);
 	workouts2.push({ name: name, url: toCamelCase(name) });
 };
 // TO DO
 // should i add workouts to Provider?
 
-export const NewWorkoutPage = () => {
+export const  NewWorkoutPage = () => {
 	const [workoutName, setWorkoutName] = useState<string>("");
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");

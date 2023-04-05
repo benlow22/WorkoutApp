@@ -19,7 +19,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		<>
 			<h2>Your Workouts</h2>
 			{workouts.map((workout, index) => (
-				<Link to={`/${workout.url}`} key={index}>
+				<Link to={`/workouts/${workout.url}`} key={index}>
 					<WorkoutButton workout={workout} />
 				</Link>
 			))}

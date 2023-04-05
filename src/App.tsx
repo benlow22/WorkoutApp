@@ -34,6 +34,7 @@ export default function App() {
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [session, setSession] = useState<any | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
@@ -44,7 +45,8 @@ export default function App() {
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-		//return () => subscription.unsubscribe();
+		return () => subscription.unsubscribe();
+		setIsLoading(true);
 	}, []);
 
 	const getUserId = async () => {
@@ -88,7 +90,9 @@ export default function App() {
 			getUsername();
 		}
 	}, [userid]);
-
+	// if (!isLoading) {
+	// 	return <p>Loading</p>
+	// } else
 	if (!session) {
 		return (
 			<div>
@@ -145,14 +149,14 @@ export default function App() {
 					<div className="main">
 						{!username && <CreateUsername />}
 						<Switch>
+							<Route path="/workouts/:name">
+								<EditWorkoutPage />
+							</Route>
 							<Route path="/newWorkout">
 								<NewWorkoutPage />
 							</Route>
 							<Route path="/">
 								<WorkoutsPage />
-							</Route>
-							<Route path="/:workoutName">
-								<EditWorkoutPage />
 							</Route>
 						</Switch>
 					</div>
