@@ -10,7 +10,8 @@ import { supabase } from "../src/supabaseClient";
 // import { user, username } from "./supabaseClient";
 import LogoutButton from "./LogOutButton";
 import { AuthContext } from "./App";
-import { Link } from "react-router-dom";
+import { Link, BrowserRouter as Router, Route } from "react-router-dom";
+import { WorkoutsPage } from "./WorkoutsPage";
 
 // const {
 // 	data: { user },

@@ -14,12 +14,12 @@ export interface IWorkouts {
 	workouts: IWorkout[];
 }
 
-export const WorkoutsPage = () => {
+export const WorkoutsPage: React.FC<{}>  = () => {
 	return (
 		<>
 			<h2>Your Workouts</h2>
-			{workouts.map((workout) => (
-				<Link to={`/${workout.name}`}>
+			{workouts.map((workout, index) => (
+				<Link to={`/${workout.name}`} key={index}>
 					<WorkoutButton workout={workout} />
 				</Link>
 			))}

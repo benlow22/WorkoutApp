@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Button, Space, Input } from "antd";
+import { workouts } from "./data";
 
 export interface IWorkout {
 	name: string;
@@ -10,10 +11,37 @@ export interface IWorkouts {
 	workouts: IWorkout[];
 }
 
+
+let workouts2 = workouts
+const postNewWorkout = (name: string) => {
+	console.log('POST WORKOUT', name);
+	workouts2.push({name:name});
+}
+// TO DO 
+// should i add workouts to Provider? 
+
+
 export const NewWorkoutPage = () => {
-    const [workoutName, setWorkoutName] = useState<string>("");
-    const handleSubmit = async (e: any) => {
+	const [workoutName, setWorkoutName] = useState<string>("");
+	const handleSubmit = async (e: any) => {
 		e.preventDefault();
+		try {
+			const createWorkout = async () => {
+				// also check if workout already exists
+				let workoutExists = Object.values(workouts2).includes({
+					name: workoutName,
+				});
+				if (!workoutExists) {
+					const newWorkouts = await postNewWorkout(workoutName);
+				} else {
+					console.log('workout name taken');
+				}
+			};
+			createWorkout();
+			setWorkoutName("");
+		} catch (error) {
+			console.log(`error creating workout ${workoutName}`, error);
+		}
 		// try {
 		// 	const { error } = await supabase
 		// 		.from("profiles")
@@ -25,7 +53,6 @@ export const NewWorkoutPage = () => {
 		// 	console.log("error updating username", err);
 		// }
 	};
-
 
 	return (
 		<>

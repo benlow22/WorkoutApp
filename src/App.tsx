@@ -28,7 +28,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	setUsername: () => {},
 });
 
-export default function App() {
+const App: React.Component<{}> = () => {
 	const [userid, setUserId] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -139,9 +139,9 @@ export default function App() {
 					setUsername,
 				}}
 			>
-				<Router>
+					{" "}
+					<Header />
 					<div className="App">
-						<Header />
 						<div className="main">
 							{!username && <CreateUsername />}
 							<Switch>
@@ -149,13 +149,14 @@ export default function App() {
 									<NewWorkoutPage />
 								</Route>
 								<Route path="/">
-									<WorkoutsPage/>
+									<WorkoutsPage />
 								</Route>
 							</Switch>
 						</div>
 					</div>
-				</Router>
 			</AuthContext.Provider>
 		);
 	}
-}
+};
+
+export default App;
