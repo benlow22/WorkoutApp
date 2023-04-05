@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts } from "./data";
+import { workouts } from "../data";
 
 export interface IWorkout {
 	name: string;
@@ -11,15 +11,13 @@ export interface IWorkouts {
 	workouts: IWorkout[];
 }
 
-
-let workouts2 = workouts
+let workouts2 = workouts;
 const postNewWorkout = (name: string) => {
-	console.log('POST WORKOUT', name);
-	workouts2.push({name:name});
-}
-// TO DO 
-// should i add workouts to Provider? 
-
+	console.log("POST WORKOUT", name);
+	workouts2.push({ name: name });
+};
+// TO DO
+// should i add workouts to Provider?
 
 export const NewWorkoutPage = () => {
 	const [workoutName, setWorkoutName] = useState<string>("");
@@ -34,7 +32,7 @@ export const NewWorkoutPage = () => {
 				if (!workoutExists) {
 					const newWorkouts = await postNewWorkout(workoutName);
 				} else {
-					console.log('workout name taken');
+					console.log("workout name taken");
 				}
 			};
 			createWorkout();

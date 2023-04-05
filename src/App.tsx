@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 
 import "./App.css";
-import { Header } from "./Header";
+import { Header } from "./components/Header";
 import "./index.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
-import { WorkoutsPage } from "./WorkoutsPage";
+import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { workouts } from "./data";
-import { CreateUsername } from "./CreateUsername";
+import { CreateUsername } from "./components/CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { NewWorkoutPage } from "./NewWorkoutPage";
+import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 
 type IAuthContext = {
 	userid: string;
@@ -28,7 +28,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	setUsername: () => {},
 });
 
-const App: React.Component<{}> = () => {
+export default function App() {
 	const [userid, setUserId] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -139,24 +139,21 @@ const App: React.Component<{}> = () => {
 					setUsername,
 				}}
 			>
-					{" "}
+				<div className="App">
 					<Header />
-					<div className="App">
-						<div className="main">
-							{!username && <CreateUsername />}
-							<Switch>
-								<Route path="/new-workout">
-									<NewWorkoutPage />
-								</Route>
-								<Route path="/">
-									<WorkoutsPage />
-								</Route>
-							</Switch>
-						</div>
+					<div className="main">
+						{!username && <CreateUsername />}
+						<Switch>
+							<Route path="/new-workout">
+								<NewWorkoutPage />
+							</Route>
+							<Route path="/">
+								<WorkoutsPage />
+							</Route>
+						</Switch>
 					</div>
+				</div>
 			</AuthContext.Provider>
 		);
 	}
-};
-
-export default App;
+}

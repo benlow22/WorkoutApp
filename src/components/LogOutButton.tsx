@@ -1,8 +1,8 @@
 
 import React from "react";
 import { Button } from "antd";
-import { supabase } from "./supabaseClient";
-import { user } from "./supabaseClient";
+import { supabase } from ".././supabaseClient";
+import { user } from ".././supabaseClient";
 
 
 const LogoutButton: React.FC<{}> = () => {

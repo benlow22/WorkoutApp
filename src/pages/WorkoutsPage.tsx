@@ -1,9 +1,9 @@
 import React from "react";
-import WorkoutButton from "./WorkoutButton";
+import WorkoutButton from "../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
 import { NewWorkoutPage } from "./NewWorkoutPage";
-import { workouts } from "./data";
+import { workouts } from "../data";
 
 export interface IWorkout {
 	name: string;
@@ -14,7 +14,7 @@ export interface IWorkouts {
 	workouts: IWorkout[];
 }
 
-export const WorkoutsPage: React.FC<{}>  = () => {
+export const WorkoutsPage: React.FC<{}> = () => {
 	return (
 		<>
 			<h2>Your Workouts</h2>

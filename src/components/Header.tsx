@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import WorkoutButton from "./WorkoutButton";
 import { Button } from "antd";
-import { supabase } from "../src/supabaseClient";
+import { supabase } from "../../src/supabaseClient";
 // import {user} from './Login';
 // interface IHeader {
 // 	userName?: string;
@@ -9,9 +9,9 @@ import { supabase } from "../src/supabaseClient";
 // }
 // import { user, username } from "./supabaseClient";
 import LogoutButton from "./LogOutButton";
-import { AuthContext } from "./App";
+import { AuthContext } from ".././App";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
-import { WorkoutsPage } from "./WorkoutsPage";
+import { WorkoutsPage } from ".././pages/WorkoutsPage";
 
 // const {
 // 	data: { user },
