@@ -72,3 +72,6 @@ input[value]{
     color: #c6c6c6;
 }
 
+input[value].new-workout-input {
+	color: black;
+}

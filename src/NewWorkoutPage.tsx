@@ -11,11 +11,9 @@ export interface IWorkouts {
 }
 
 export const NewWorkoutPage = () => {
-	console.log('hi from newowrkoutpage"')
     const [workoutName, setWorkoutName] = useState<string>("");
     const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		console.log("new workoutName is: ", workoutName);
 		// try {
 		// 	const { error } = await supabase
 		// 		.from("profiles")
@@ -37,6 +35,7 @@ export const NewWorkoutPage = () => {
 					onChange={(e) => setWorkoutName(e.target.value)}
 					value={workoutName}
 					placeholder="New Workout Name"
+					className="new-workout-input"
 				/>
 				<Button type="primary" onClick={handleSubmit}>
 					Submit
