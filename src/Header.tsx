@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import WorkoutButton from "./WorkoutButton";
 import { Button } from "antd";
 import { supabase } from "../src/supabaseClient";
@@ -10,6 +10,7 @@ import { supabase } from "../src/supabaseClient";
 // import { user, username } from "./supabaseClient";
 import LogoutButton from "./LogOutButton";
 import { AuthContext } from "./App";
+import { Link } from "react-router-dom";
 
 // const {
 // 	data: { user },
@@ -28,12 +29,12 @@ import { AuthContext } from "./App";
 // 	.single();
 
 export const Header: React.FC<{}> = () => {
-	const {username} = useContext(AuthContext)
+	const { username } = useContext(AuthContext);
 	// const user = supabase.auth.user();
 	//console.log('username', data);
 	return (
 		<div className="header">
-			<h1>Workout Buddy </h1>
+			<h1>Workout Buddy</h1>
 			<div className="account">
 				{username && <p>{username}</p>}
 				{username && <LogoutButton />}

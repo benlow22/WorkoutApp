@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 
 import "./App.css";
-import Login from "./Login";
 import { Header } from "./Header";
 import "./index.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
-import { WorkoutsPage } from "./Workouts";
+import { WorkoutsPage } from "./WorkoutsPage";
 import { workouts } from "./data";
 import { CreateUsername } from "./CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { NewWorkoutPage } from "./NewWorkoutPage";
 
 type IAuthContext = {
 	userid: string;
 	username: string;
 	isLoggedIn: boolean;
 	setIsLoggedIn: (loggedIn: boolean) => void;
-	setUsername: (newName:string) => void;
+	setUsername: (newName: string) => void;
 };
 
 export const AuthContext = React.createContext<IAuthContext>({
@@ -24,7 +25,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	username: "",
 	isLoggedIn: false,
 	setIsLoggedIn: () => {},
-	setUsername: ()=> {}
+	setUsername: () => {},
 });
 
 export default function App() {
@@ -68,7 +69,6 @@ export default function App() {
 				.eq("id", userid)
 				.limit(1)
 				.single();
-			console.log("hello");
 			username && setUsername(username);
 		} catch (error) {
 			console.error("Error while getting Username", error);
@@ -79,25 +79,14 @@ export default function App() {
 		if (session) {
 			getUserId();
 			setIsLoggedIn(true);
-			console.log("called getUserId");
 		}
 	}, [session]);
 
 	useEffect(() => {
 		if (userid) {
-			console.log("userID:", userid);
 			getUsername();
-			console.log("getting username");
 		}
 	}, [userid]);
-
-	useEffect(() => {
-		if (username) {
-			console.log("1. new username:", username);
-			console.log("2. new username:", userid);
-			console.log("3. new username:", isLoggedIn);
-		}
-	}, [username]);
 
 	if (!session) {
 		return (
@@ -147,16 +136,25 @@ export default function App() {
 					username,
 					isLoggedIn,
 					setIsLoggedIn,
-					setUsername
+					setUsername,
 				}}
 			>
-				<div className="App">
-					<Header />
-					<div className="main">
-						{!username && <CreateUsername />}
-						<WorkoutsPage workouts={workouts} />
+				<Router>
+					<div className="App">
+						<Header />
+						<div className="main">
+							{!username && <CreateUsername />}
+							<Switch>
+								<Route path="/new-workout">
+									<NewWorkoutPage />
+								</Route>
+								<Route path="/">
+									<WorkoutsPage workouts={workouts} />
+								</Route>
+							</Switch>
+						</div>
 					</div>
-				</div>
+				</Router>
 			</AuthContext.Provider>
 		);
 	}

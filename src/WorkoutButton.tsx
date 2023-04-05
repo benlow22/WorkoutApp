@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { IWorkout } from "./Workouts";
+import { IWorkout } from "./WorkoutsPage";
 import { workouts } from "./data";
 
 const WorkoutButton: React.FC<{ workout: IWorkout }> = ({ workout }) => (
