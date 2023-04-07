@@ -5,8 +5,11 @@ const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-
-
-export const { data: { user } } = await supabase.auth.getUser();
+export const user = async () => {
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	return user;
+};
 // export const {data: {username}} = await supabase.from('profiles').select('username').match({id: user.id })
 // console.log('USERNAMe:', user.id);
