@@ -11,7 +11,7 @@ import { supabase } from "../../src/supabaseClient";
 import LogoutButton from "./LogOutButton";
 import { AuthContext } from ".././App";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
-import { WorkoutsPage } from ".././pages/WorkoutsPage";
+import { WorkoutsPage } from "../pages/WorkoutsPage/WorkoutsPage";
 
 // const {
 // 	data: { user },

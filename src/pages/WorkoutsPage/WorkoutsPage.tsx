@@ -1,9 +1,9 @@
 import React from "react";
-import WorkoutButton from "../components/WorkoutButton";
+import WorkoutButton from "../../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
-import { NewWorkoutPage } from "./NewWorkoutPage";
-import { workouts } from "../data";
+import { NewWorkoutPage } from "../NewWorkoutPage";
+import { workouts } from "../../data";
 
 export interface IWorkout {
 	name: string;
