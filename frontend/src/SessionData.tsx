@@ -8,5 +8,5 @@ export const userInfo = async () => {
 		.select("username")
 		.eq("id", user.id);
         console.log('usernameee:', username);
-	return { username: username };
+	return {username: username };
 };
