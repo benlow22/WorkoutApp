@@ -64,7 +64,7 @@ export default function App() {
 	const getUsername = async () => {
 		try {
 			const {
-				data: { username },
+				data,
 				error,
 			} = await supabase
 				.from("profiles")
@@ -72,6 +72,7 @@ export default function App() {
 				.eq("id", userid)
 				.limit(1)
 				.single();
+				console.log('DATA:', data)
 			username && setUsername(username);
 		} catch (error) {
 			console.error("Error while getting Username", error);
