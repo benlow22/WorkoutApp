@@ -24,8 +24,8 @@ export const EditWorkoutPage = () => {
 		<div>
 			{data && <h1>{data.name}</h1>}
 			{data &&
-				data.exercises?.map((exercise) => (
-					<h3>Exercise: {exercise.name}</h3>
+				data.exercises?.map((exercise, index) => (
+					<h3 key={index}>Exercise: {exercise.name}</h3>
 				))}
 		</div>
 	);

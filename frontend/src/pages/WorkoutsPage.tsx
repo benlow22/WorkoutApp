@@ -1,24 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
 import { NewWorkoutPage } from "./NewWorkoutPage";
 import { IWorkout } from "../data";
 import { getWorkouts } from "../api/api";
+import { AuthContext } from "../App";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
+	const {workouts, setWorkouts}  = useContext(AuthContext)
 	const [error, setError] = useState();
-
+	
 	useEffect(() => {
 		async function fetchWorkouts() {
 			const res = await getWorkouts();
 			if (res.error) {
 				setError(res.error.name);
-				console.log("ERRRROR:", res.error);
 			}
 			setWorkouts(res);
-			console.log("workouts", res);
 		}
 		fetchWorkouts();
 	}, []);

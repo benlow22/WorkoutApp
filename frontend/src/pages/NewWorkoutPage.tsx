@@ -3,6 +3,7 @@ import { Button, Space, Input } from "antd";
 import { workouts } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
+import { getWorkouts } from "../api/api";
 
 export interface IWorkout {
 	name: string;
@@ -57,6 +58,7 @@ export const  NewWorkoutPage = () => {
 	const [workoutName, setWorkoutName] = useState<string>("");
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
+
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
@@ -78,16 +80,6 @@ export const  NewWorkoutPage = () => {
 		} catch (error) {
 			console.log(`error creating workout ${workoutName}`, error);
 		}
-		// try {
-		// 	const { error } = await supabase
-		// 		.from("profiles")
-		// 		.update({ username: newUsername })
-		// 		.eq("id", userid);
-		// 	setUsername(newUsername);
-		// 	setNewUsername("");
-		// } catch (err) {
-		// 	console.log("error updating username", err);
-		// }
 	};
 
 	const handleEditName = () => {

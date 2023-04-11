@@ -6,7 +6,7 @@ import "./index.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
 import { WorkoutsPage } from "./pages/WorkoutsPage";
-import { workouts } from "./data";
+import { IWorkout, workouts } from "./data";
 import { CreateUsername } from "./components/CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -17,16 +17,20 @@ type IAuthContext = {
 	userid: string;
 	username: string;
 	isLoggedIn: boolean;
+	workouts: IWorkout[];
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setUsername: (newName: string) => void;
+	setWorkouts: (usersWorkouts: IWorkout[]) => void;
 };
 
 export const AuthContext = React.createContext<IAuthContext>({
 	userid: "",
 	username: "",
 	isLoggedIn: false,
+	workouts: [], 
 	setIsLoggedIn: () => {},
 	setUsername: () => {},
+	setWorkouts: () => {}
 });
 
 export default function App() {
@@ -35,7 +39,7 @@ export default function App() {
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-
+	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session);
@@ -140,8 +144,10 @@ export default function App() {
 					userid,
 					username,
 					isLoggedIn,
+					workouts,
 					setIsLoggedIn,
 					setUsername,
+					setWorkouts,
 				}}
 			>
 				<div className="App">
