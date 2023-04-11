@@ -5,7 +5,7 @@ import { Header } from "./components/Header";
 import "./index.css";
 import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
-import { WorkoutsPage } from "./pages/WorkoutsPage/WorkoutsPage";
+import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { workouts } from "./data";
 import { CreateUsername } from "./components/CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
@@ -64,7 +64,7 @@ export default function App() {
 	const getUsername = async () => {
 		try {
 			const {
-				data,
+				data: { username },
 				error,
 			} = await supabase
 				.from("profiles")
@@ -72,7 +72,6 @@ export default function App() {
 				.eq("id", userid)
 				.limit(1)
 				.single();
-				console.log('DATA:', data)
 			username && setUsername(username);
 		} catch (error) {
 			console.error("Error while getting Username", error);
