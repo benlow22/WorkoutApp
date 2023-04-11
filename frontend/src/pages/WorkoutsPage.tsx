@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WorkoutButton from "../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
 import { NewWorkoutPage } from "./NewWorkoutPage";
-import { workouts } from "../data";
-
-export interface IWorkout {
-	name: string;
-	numberOfExercises?: number;
-}
-
-export interface IWorkouts {
-	workouts: IWorkout[];
-}
+import { IWorkout } from "../data";
+import { getWorkouts } from "../api/api";
 
 export const WorkoutsPage: React.FC<{}> = () => {
+	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
+	const [error, setError] = useState();
+
+	useEffect(() => {
+		async function fetchWorkouts() {
+			const res = await getWorkouts();
+			if (res.error) {
+				setError(res.error.name);
+				console.log("ERRRROR:", res.error);
+			}
+			setWorkouts(res);
+			console.log("workouts", workouts);
+		}
+		fetchWorkouts();
+	}, []);
+
 	return (
 		<>
 			<h2>Your Workouts</h2>
