@@ -18,7 +18,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				console.log("ERRRROR:", res.error);
 			}
 			setWorkouts(res);
-			console.log("workouts", workouts);
+			console.log("workouts", res);
 		}
 		fetchWorkouts();
 	}, []);

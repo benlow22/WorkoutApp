@@ -53,6 +53,102 @@ export const workoutRoutine: IWorkout[] = [
 			},
 		],
 	},
+	{
+		name: "Leg Day",
+		url: "legDay",
+		exercises: [
+			{
+				id: 3,
+				name: "Squats",
+				sets: [
+					{
+						setNumber: 1,
+						reps: 10,
+						weight: 10,
+					},
+					{
+						setNumber: 2,
+						reps: 10,
+						weight: 10,
+					},
+					{
+						setNumber: 3,
+						reps: 10,
+						weight: 10,
+					},
+				],
+			},
+			{
+				id: 4,
+				name: "deadlifts",
+				sets: [
+					{
+						setNumber: 1,
+						reps: 10,
+						weight: 25,
+					},
+					{
+						setNumber: 2,
+						reps: 10,
+						weight: 45,
+					},
+					{
+						setNumber: 3,
+						reps: 10,
+						weight: 95,
+					},
+				],
+			},
+		],
+	},
+	{
+		name: "Chest Day",
+		url: "chestDay",
+		exercises: [
+			{
+				id: 1,
+				name: "Bench Press",
+				sets: [
+					{
+						setNumber: 1,
+						reps: 10,
+						weight: 10,
+					},
+					{
+						setNumber: 2,
+						reps: 10,
+						weight: 10,
+					},
+					{
+						setNumber: 3,
+						reps: 10,
+						weight: 10,
+					},
+				],
+			},
+			{
+				id: 2,
+				name: "Pec Fly",
+				sets: [
+					{
+						setNumber: 1,
+						reps: 10,
+						weight: 25,
+					},
+					{
+						setNumber: 2,
+						reps: 10,
+						weight: 45,
+					},
+					{
+						setNumber: 3,
+						reps: 10,
+						weight: 95,
+					},
+				],
+			},
+		],
+	},
 	// { name: "Chest day", url: "chestDay" },
 	// { name: "Leg day", url: "legDay" },
 ];

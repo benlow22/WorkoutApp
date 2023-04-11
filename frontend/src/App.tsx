@@ -149,7 +149,7 @@ export default function App() {
 					<div className="main">
 						{!username && <CreateUsername />}
 						<Switch>
-							<Route path="/workouts/:name">
+							<Route path="/workouts/:workoutName">
 								<EditWorkoutPage />
 							</Route>
 							<Route path="/newWorkout">

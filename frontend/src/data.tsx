@@ -58,24 +58,23 @@ export const workoutRoutine: IWorkout[] = [
 ];
 
 export interface IWorkoutRoutine {
-	workouts: IWorkout[]
+	workouts: IWorkout[];
 }
 
 export interface IWorkout {
-	name: string,
-	url: string,
-	exercises: IExercise[]
+	name: string;
+	url: string;
+	exercises: IExercise[];
 }
 
 interface IExercise {
-	id: number,
-	name: string,
-	sets: ISets[]
+	id: number;
+	name: string;
+	sets: ISets[];
 }
 
 interface ISets {
-	setNumber: number,
-	reps: number,
-	weight: number
+	setNumber: number;
+	reps: number;
+	weight: number;
 }
-
