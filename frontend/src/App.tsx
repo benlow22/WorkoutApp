@@ -12,7 +12,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
-
+import { hydrate, QueryClient, QueryClientProvider } from 'react-query'
 type IAuthContext = {
 	userid: string;
 	username: string;
@@ -34,6 +34,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 });
 
 export default function App() {
+	// const [QueryClient] = useState(()=> new QueryClient());
 	const [userid, setUserId] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);

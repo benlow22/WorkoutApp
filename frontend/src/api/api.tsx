@@ -2,7 +2,9 @@ const API_ENDPOINT = "http://localhost:3000";
 
 export const getWorkouts = async () => {
 	try {
-		const response = await fetch(`${API_ENDPOINT}/`);
+		console.log("errrrroasdfr");
+		const response = await fetch(`${API_ENDPOINT}/workouts`);
+		console.log("response", response);
 		const workouts = response.json();
 		return workouts;
 	} catch (error) {
