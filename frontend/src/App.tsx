@@ -12,9 +12,9 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
-import { hydrate, QueryClient, QueryClientProvider } from 'react-query'
+import { hydrate, QueryClient, QueryClientProvider } from "react-query";
 type IAuthContext = {
-	userid: string;
+	userId: string;
 	username: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
@@ -24,18 +24,18 @@ type IAuthContext = {
 };
 
 export const AuthContext = React.createContext<IAuthContext>({
-	userid: "",
+	userId: "",
 	username: "",
 	isLoggedIn: false,
-	workouts: [], 
+	workouts: [],
 	setIsLoggedIn: () => {},
 	setUsername: () => {},
-	setWorkouts: () => {}
+	setWorkouts: () => {},
 });
 
 export default function App() {
 	// const [QueryClient] = useState(()=> new QueryClient());
-	const [userid, setUserId] = useState<string>("");
+	const [userId, setUserId] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [session, setSession] = useState<any | null>(null);
@@ -68,13 +68,10 @@ export default function App() {
 
 	const getUsername = async () => {
 		try {
-			const {
-				data,
-				error,
-			} = await supabase
+			const { data, error } = await supabase
 				.from("profiles")
 				.select("username")
-				.eq("id", userid)
+				.eq("id",userId)
 				.limit(1)
 				.single();
 			let username;
@@ -95,10 +92,10 @@ export default function App() {
 	}, [session]);
 
 	useEffect(() => {
-		if (userid) {
+		if (userId) {
 			getUsername();
 		}
-	}, [userid]);
+	}, [userId]);
 	// if (!isLoading) {
 	// 	return <p>Loading</p>
 	// } else
@@ -146,7 +143,7 @@ export default function App() {
 		return (
 			<AuthContext.Provider
 				value={{
-					userid,
+					userId,
 					username,
 					isLoggedIn,
 					workouts,
@@ -159,7 +156,9 @@ export default function App() {
 					<Header />
 					<div className="main">
 						{!username && <CreateUsername />}
-						<Switch> {/* when invalid workout/name = redirect to homepage */}
+						<Switch>
+							{" "}
+							{/* when invalid workout/name = redirect to homepage */}
 							<Route path="/workouts/:workoutName">
 								<EditWorkoutPage />
 							</Route>
