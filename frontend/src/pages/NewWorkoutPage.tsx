@@ -54,10 +54,16 @@ const postNewWorkout = (name: string) => {
 // TO DO
 // should i add workouts to Provider?
 
-export const  NewWorkoutPage = () => {
+export const NewWorkoutPage = () => {
 	const [workoutName, setWorkoutName] = useState<string>("");
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
+	const [workoutUrl, setWorkoutUrl] = useState<string>("");
+
+	const changeNameToUrl = (workoutName: string) => {
+		let newUrl = toCamelCase(workoutName);
+		setWorkoutUrl(newUrl);
+	};
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -93,7 +99,10 @@ export const  NewWorkoutPage = () => {
 			<Space.Compact>
 				<Input
 					defaultValue="Username"
-					onChange={(e) => setWorkoutName(e.target.value)}
+					onChange={(e) => {
+						setWorkoutName(e.target.value),
+							changeNameToUrl(e.target.value);
+					}}
 					value={workoutName}
 					placeholder="New Workout Name"
 					className="new-workout-input"
@@ -117,6 +126,9 @@ export const  NewWorkoutPage = () => {
 					Submitted New Workout Name: {submittedWorkoutName},
 					{toCamelCase(submittedWorkoutName)}
 				</p>
+				<br></br>
+				<p>new workout url will be: </p>
+				<p>{workoutUrl}</p>
 			</div>
 		</>
 	);
