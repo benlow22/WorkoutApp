@@ -7,7 +7,7 @@ import { AuthContext } from ".././App";
 export const CreateUsername: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
-	const { userid, setUsername } = useContext(AuthContext);
+	const { userId: userid, setUsername } = useContext(AuthContext);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -43,6 +43,6 @@ export const CreateUsername: React.FC<{}> = () => {
 	);
 };
 
-// later make a edit username section 
+// later make a edit username section
 
 export default CreateUsername;

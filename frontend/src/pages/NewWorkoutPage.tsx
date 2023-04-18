@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button, Space, Input } from "antd";
 import { workouts } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
-import { getWorkouts } from "../api/api";
+import { getWorkouts, postNewWorkout } from "../api/api";
+import { AuthContext } from "../App";
 
 export interface IWorkout {
 	name: string;
@@ -48,9 +49,9 @@ const toCamelCase = (phrase: string): string => {
 	return newStr;
 };
 
-const postNewWorkout = (name: string) => {
-	workouts2.push({ name: name, url: toCamelCase(name) });
-};
+// const postNewWorkout = (name: string) => {
+// 	workouts2.push({ name: name, url: toCamelCase(name) });
+// };
 // TO DO
 // should i add workouts to Provider?
 
@@ -59,32 +60,45 @@ export const NewWorkoutPage = () => {
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
 	const [workoutUrl, setWorkoutUrl] = useState<string>("");
+	const {userId} = useContext(AuthContext);
 
 	const changeNameToUrl = (workoutName: string) => {
 		let newUrl = toCamelCase(workoutName);
 		setWorkoutUrl(newUrl);
 	};
 
+	// const handleSubmit = async (e: any) => {
+	// 	e.preventDefault();
+	// 	try {
+
+	// 		const createWorkout = async () => {
+	// 			// also check if workout already exists
+	// 			let workoutExists = Object.values(workouts2).includes({
+	// 				name: workoutName,
+	// 				url: toCamelCase(workoutName),
+	// 			});
+	// 			if (!workoutExists) {
+	// 				const newWorkouts = await postNewWorkout(workoutName);
+	// 				setSubmittedWorkoutName(workoutName);
+	// 			} else {
+	// 				console.log("workout name taken");
+	// 			}
+	// 		};
+	// 		createWorkout();
+	// 		setWorkoutName("");
+	// 	} catch (error) {
+	// 		console.log(`error creating workout ${workoutName}`, error);
+	// 	}
+	// };
+
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			const createWorkout = async () => {
-				// also check if workout already exists
-				let workoutExists = Object.values(workouts2).includes({
-					name: workoutName,
-					url: toCamelCase(workoutName),
-				});
-				if (!workoutExists) {
-					const newWorkouts = await postNewWorkout(workoutName);
-					setSubmittedWorkoutName(workoutName);
-				} else {
-					console.log("workout name taken");
-				}
-			};
-			createWorkout();
-			setWorkoutName("");
+			await postNewWorkout(workoutUrl, workoutName, userId);
 		} catch (error) {
-			console.log(`error creating workout ${workoutName}`, error);
+			console.log("error inserting new workout", error);
+			setWorkoutName("");
+			setWorkoutUrl("");
 		}
 	};
 
@@ -122,10 +136,8 @@ export const NewWorkoutPage = () => {
 			)} */}
 
 			<div className="new-workout-data test">
-				<p>
-					Submitted New Workout Name: {submittedWorkoutName},
-					{toCamelCase(submittedWorkoutName)}
-				</p>
+				<p>Submitted New Workout Name: </p>
+				<p>{workoutName}</p>
 				<br></br>
 				<p>new workout url will be: </p>
 				<p>{workoutUrl}</p>
