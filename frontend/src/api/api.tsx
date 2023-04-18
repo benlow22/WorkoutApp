@@ -39,18 +39,17 @@ export const postNewWorkout = async (
 ) => {
 	// Check if workout already exists
 	console.log("workout URL: ", url, "workout Name", workoutName);
-	const { data, error } = await supabase
+	const { data: existingWorkoutUrl, error } = await supabase
 		.from("workouts")
 		.select("url")
 		.eq("url", url);
 	// if workout already exist, alert user
-	console.log("DATA:::", data);
+	console.log("empty[] if url is free to take:", existingWorkoutUrl);
 	if (error) {
-		console.log("there was an error with finding if workout exsts", error);
+		console.log("there was an error with finding if workout exists", error);
 		throw "error finding workout in DB, two may have been found"
 	}
-	if (data.length === 1) {
-		console.log("data", data);
+	if (existingWorkoutUrl.length > 0) {
 		alert(
 			"Sorry Workout Name is already in use or too similar to another Workout you have. Please select a new name"
 		);
@@ -71,8 +70,8 @@ export const postNewWorkout = async (
 			console.log("error", error);
 			throw error;
 		} else {
-			console.log('Successfull Added to DB, go CHECK', data)
-			return url;
+			console.log('Successfully added to DB, go CHECK', data[0].url)
+			return data[0].url;
 		}
 	}
 };
