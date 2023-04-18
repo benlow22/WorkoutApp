@@ -5,6 +5,7 @@ import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { getWorkouts, postNewWorkout } from "../api/api";
 import { AuthContext } from "../App";
+import { useHistory } from "react-router-dom";
 
 export interface IWorkout {
 	name: string;
@@ -60,12 +61,14 @@ export const NewWorkoutPage = () => {
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
 	const [workoutUrl, setWorkoutUrl] = useState<string>("");
-	const {userId} = useContext(AuthContext);
+	const { userId } = useContext(AuthContext);
 
 	const changeNameToUrl = (workoutName: string) => {
 		let newUrl = toCamelCase(workoutName);
 		setWorkoutUrl(newUrl);
 	};
+
+	const history = useHistory();
 
 	// const handleSubmit = async (e: any) => {
 	// 	e.preventDefault();
@@ -94,7 +97,15 @@ export const NewWorkoutPage = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			await postNewWorkout(workoutUrl, workoutName, userId);
+			const newWorkoutAddedUrl = await postNewWorkout(
+				workoutUrl,
+				workoutName,
+				userId
+			);
+
+			if (newWorkoutAddedUrl) {
+				history.push(`/workouts/${newWorkoutAddedUrl}`);
+			}
 		} catch (error) {
 			console.log("error inserting new workout", error);
 			setWorkoutName("");

@@ -66,12 +66,13 @@ export const postNewWorkout = async (
 		// insert and return
 		const { data, error } = await supabase
 			.from("workouts")
-			.insert([newWorkoutObj]);
+			.insert([newWorkoutObj]).select();
 		if (error) {
 			console.log("error", error);
 			throw error;
 		} else {
-			return data;
+			console.log('Successfull Added to DB, go CHECK', data)
+			return url;
 		}
 	}
 };
