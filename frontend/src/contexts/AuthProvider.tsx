@@ -8,12 +8,10 @@ type IAuthContext = {
 	username: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
-	isLoading: boolean;
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setUsername: (newName: string) => void;
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
     setUserId: (userId: string) => void;
-	setIsLoading: (loadin: boolean) => void;
 };
 
 export const AuthContext = React.createContext<IAuthContext>({
@@ -21,12 +19,10 @@ export const AuthContext = React.createContext<IAuthContext>({
 	username: "",
 	isLoggedIn: false,
 	workouts: [],
-	isLoading: false, 
 	setIsLoggedIn: () => {},
 	setUsername: () => {},
 	setWorkouts: () => {},
     setUserId: () => {},
-	setIsLoading: () => {}
 
 });
 
@@ -35,7 +31,6 @@ const AuthProvider = () => {
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 
 
@@ -46,13 +41,10 @@ const AuthProvider = () => {
 				username,
 				isLoggedIn,
 				workouts,
-				isLoading,
 				setIsLoggedIn,
 				setUsername,
 				setWorkouts,
                 setUserId,
-				setIsLoading,
-
 			}}
 		>
 			<App />
