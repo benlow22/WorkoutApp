@@ -20,7 +20,8 @@ export const Header: React.FC<{}> = () => {
 			</Link>
 			<div className="account">
 				{username && <p>{username}</p>}
-				{username && <LogoutButton />}
+				{!username && <Link to='/createUsername'>Create Username</Link>}
+				<LogoutButton />
 			</div>
 		</div>
 	);
