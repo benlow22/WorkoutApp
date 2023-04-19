@@ -67,6 +67,11 @@ export interface IWorkout {
 	exercises?: IExercise[];
 }
 
+export interface IWorkoutNameUrl {
+	name: string;
+	url: string;
+}
+
 interface IExercise {
 	id: number;
 	name: string;
