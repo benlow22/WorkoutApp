@@ -9,7 +9,7 @@ import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { IWorkout, workouts } from "./data";
 import { CreateUsername } from "./components/CreateUsername";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 import AuthProvider, { AuthContext } from "./contexts/AuthProvider";
@@ -30,7 +30,7 @@ export default function App() {
 	const [session, setSession] = useState<any | null>(null);
 
 	useEffect(() => {
-		setIsLoading(true)
+		setIsLoading(true);
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session);
 		});
@@ -39,10 +39,9 @@ export default function App() {
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-		setIsLoading(false)
+		setIsLoading(false);
 		return () => subscription.unsubscribe();
 	}, []);
-
 
 	useEffect(() => {
 		if (session) {
@@ -138,8 +137,11 @@ export default function App() {
 								<Route path="/newWorkout">
 									<NewWorkoutPage />
 								</Route>
-								<Route path="/">
+								<Route path="/workouts">
 									<WorkoutsPage />
+								</Route>
+								<Route path="/">
+									<Redirect to="/workouts" />
 								</Route>
 							</Switch>
 						</>
