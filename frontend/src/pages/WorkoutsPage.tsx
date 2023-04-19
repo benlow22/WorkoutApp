@@ -10,8 +10,8 @@ import { supabase } from "../supabaseClient";
 import { useHistory } from "react-router-dom";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId, isLoading, setIsLoading } =
-		useContext(AuthContext);
+	const { workouts, setWorkouts, userId } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
 		async function fetchWorkouts() {
@@ -50,8 +50,6 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			</div>
 		);
 	} else {
-		return (
-			<p>Loading...</p>
-		)
+		return <p>Loading...</p>;
 	}
 };

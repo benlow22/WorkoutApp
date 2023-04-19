@@ -7,19 +7,25 @@ import { supabase } from "../supabaseClient";
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, setUsername, userId } =
 		useContext(AuthContext);
-	const [isReady, setIsReady] = useState<boolean>(false);
+		const [isLoading, setIsLoading] = useState<boolean>(true);
+		const [isUsername, setIsUsername] = useState<string>('');
 
 	useEffect(() => {
-		const getUsername = async () => {
-			const { data, error } = await supabase.from('profiles').select('username').eq('id', userId);
-			console.log('ASDF ASDF ', data)
-			if (data && data.length > 0) {
-				setUsername(data[0].username)
-				setIsReady(true);
-			}
-		};
-		getUsername();
-	}, [isLoggedIn]);
+		// const getUsername = async () => {
+		// 	const { data, error } = await supabase.from('profiles').select('username').eq('id', userId);
+		// 	console.log('ASDF ASDF ', data)
+		// 	if (data && data.length > 0) {
+		// 		setUsername(data[0].username)
+		// 		setTimeout(()=>setIsLoading(false),1)
+		// 	}
+		// };
+		// getUsername();
+		if(username.length > 0) {
+			setIsUsername(username)
+			setIsLoading(false)
+		}
+
+	}, [username]);
 
 	return (
 		<div className="header">
@@ -27,10 +33,10 @@ export const Header: React.FC<{}> = () => {
 				<h1>Workout Buddy</h1>
 			</Link>
 			<div className="account">
-				{(isLoggedIn && isReady) && (
+				{(isLoggedIn && !isLoading) && (
 					<>
 						<Link to="/createUsername">
-							{!username ? "Create Username" : username}
+							{!isUsername ? "Create Username" : isUsername}
 						</Link>
 						<LogoutButton />
 					</>
