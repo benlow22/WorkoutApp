@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Space, Input } from "antd";
 import { workouts, IWorkoutNameUrl } from "../data";
 import { useLocation } from "react-router";
@@ -67,12 +67,17 @@ export const EditWorkoutNameButton: React.FC<{
 		setNewWorkoutUrl(newUrl);
 	};
 
+	useEffect(() => {
+		console.log("update OG name");
+		setWorkoutName(oldWorkout.name);
+	}, [workoutName]);
+
 	const history = useHistory();
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			if (oldWorkoutUrl.length > 0) {
+			if (newWorkoutUrl.length > 0) {
 				const workoutNameUpdated = await updateWorkoutName(
 					oldWorkoutUrl,
 					newWorkoutUrl,
@@ -80,8 +85,12 @@ export const EditWorkoutNameButton: React.FC<{
 				);
 				if (workoutNameUpdated) {
 					console.log("updated workout data:", workoutNameUpdated);
-					// history.push(`/workouts/${newWorkoutAddedUrl}`);
+					history.push(`/workouts/${workoutNameUpdated.url}`);
 				}
+				setNewWorkoutUrl("");
+				setNewWorkoutName("");
+				setEditName(false);
+				setWorkoutName(newWorkoutName);
 			}
 		} catch (error) {
 			console.log("error updated workout name", error);
@@ -97,7 +106,7 @@ export const EditWorkoutNameButton: React.FC<{
 		<>
 			{!editName ? (
 				<h1>
-					{workoutName}
+					{oldWorkout.name}
 					<EditTwoTone
 						className="new-workout-edit-icon"
 						onClick={revealEditName}
@@ -122,3 +131,13 @@ export const EditWorkoutNameButton: React.FC<{
 		</>
 	);
 };
+
+{
+	/* <div className="new-workout-data test">
+						<p>Submitted New Workout Name: </p>
+						<p>{newWorkoutName}</p>
+						<br></br>
+						<p>new workout url will be: </p>
+						<p>{newWorkoutUrl}</p>
+					</div> */
+}
