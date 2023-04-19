@@ -1,12 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "antd";
 import { supabase } from ".././supabaseClient";
 import { user } from ".././supabaseClient";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useHistory } from "react-router-dom";
 const LogoutButton: React.FC<{}> = () => {
-	const { setIsLoading, setUsername, setIsLoggedIn, setUserId } =
+	const {setUsername, setIsLoggedIn, setUserId } =
 		useContext(AuthContext);
+		const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const history = useHistory();
 
 	const handleSignout = async () => {

@@ -9,7 +9,7 @@ import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
 import { AuthContext } from "../contexts/AuthProvider";
 
 export const EditWorkoutPage = () => {
-	const { isLoading, setIsLoading } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	setIsLoading(true);
 
 	const [workout, setWorkout] = useState<IWorkout | undefined | null >(null);

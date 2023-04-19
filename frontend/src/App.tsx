@@ -19,13 +19,12 @@ export default function App() {
 		userId,
 		username,
 		isLoggedIn,
-		isLoading,
 		setIsLoggedIn,
 		setUsername,
 		setUserId,
-		setIsLoading,
 	} = useContext(AuthContext);
 	const [session, setSession] = useState<any | null>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	useEffect(() => {
 		setIsLoading(true);
