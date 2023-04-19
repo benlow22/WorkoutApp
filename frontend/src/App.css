@@ -44,6 +44,9 @@
 	margin: 3px;
 }
 
+.logout-button {
+	margin-left: 20px;
+}
 .add-new-workout-button {
 	background-color:  rgb(0, 89, 205);
 }
