@@ -7,3 +7,6 @@
 2. move functions to their own file 
 
 3. validate workout name to url, including numbers and characters 
+
+4.  add counter beside workout button (14days ago)
+4.1 order by oldest to newest 
