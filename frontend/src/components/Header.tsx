@@ -31,13 +31,14 @@ import { WorkoutsPage } from ".././pages/WorkoutsPage";
 
 
 export const Header: React.FC<{}> = () => {
-	const { username, userId } = useContext(AuthContext);
+	const { username, isLoggedIn } = useContext(AuthContext);
 	// const user = supabase.auth.user();
 	//console.log('username', data);
 	useEffect(() => {
 		if (username) {
+			console.log(`${username} is logged in`)
 		}
-	}, [userId]);
+	}, [isLoggedIn]);
 
 	return (
 		<div className="header">
