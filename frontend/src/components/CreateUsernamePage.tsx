@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
-	const { userId: userid, setUsername } = useContext(AuthContext);
+	const { userId: userid, setUsername, username } = useContext(AuthContext);
 	const history = useHistory();
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -30,7 +30,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 
 	return (
 		<div>
-			<h2>Create Username</h2> 
+			<h2>{username ? 'Change ' : 'Create ' } Username</h2> 
 			<Space.Compact>
 				<Input
 					defaultValue="Username"

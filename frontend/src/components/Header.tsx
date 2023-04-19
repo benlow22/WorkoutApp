@@ -19,8 +19,8 @@ export const Header: React.FC<{}> = () => {
 				<h1>Workout Buddy</h1>
 			</Link>
 			<div className="account">
-				{username && <p>{username}</p>}
-				{!username && <Link to='/createUsername'>Create Username</Link>}
+				<Link to='/createUsername'>
+					{!username?'Create Username' : username }</Link>
 				<LogoutButton />
 			</div>
 		</div>
