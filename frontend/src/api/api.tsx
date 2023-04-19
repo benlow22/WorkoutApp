@@ -1,5 +1,5 @@
 const API_ENDPOINT = "http://localhost:3000";
-import { supabase } from "../supabaseClient";
+import { supabase, user } from "../supabaseClient";
 import { workouts } from "../data";
 
 export const getWorkouts = async () => {
@@ -12,7 +12,7 @@ export const getWorkouts = async () => {
 	return data;
 };
 
-// getWorkoutDay = 
+// getWorkoutDay =
 export const getWorkoutDay = async (workoutName: string = "") => {
 	const { data, error } = await supabase
 		.from("workouts")
@@ -22,9 +22,9 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	if (error) {
 		console.error(error);
 		return;
-	} else { 
+	} else {
 		if (data.length > 0) {
-			console.log('DATATATAT:', data[0])
+			console.log("DATATATAT:", data[0]);
 			return data[0];
 		}
 	}
@@ -78,5 +78,31 @@ export const postNewWorkout = async (
 			console.log("Successfully added to DB, go CHECK", data[0].url);
 			return data[0].url;
 		}
+	}
+};
+
+/* UpdateNewWorkout = find row with same url, update name and url   */
+
+export const updateWorkoutName = async (
+	oldWorkoutUrl: string,
+	newWorkoutUrl: string,
+	newWorkoutName: string,
+) => {
+	// Update data row and return
+	console.log(
+		"old workout URL: ",
+		oldWorkoutUrl,
+		"workout Name",
+		newWorkoutName
+	);
+	const { data, error } = await supabase
+		.from("workouts")
+		.update({ name: newWorkoutName, url: newWorkoutUrl })
+		.eq("url", oldWorkoutUrl)
+		.select();
+	console.log("returned updated row", data);
+	if (error) {
+		console.log("there was an error with updating workout name", error);
+		throw "error updating workoutName";
 	}
 };
