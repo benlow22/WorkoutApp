@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import WorkoutButton from "./WorkoutButton";
 import { Button } from "antd";
 import { supabase } from "../../src/supabaseClient";
@@ -9,7 +9,7 @@ import { supabase } from "../../src/supabaseClient";
 // }
 // import { user, username } from "./supabaseClient";
 import LogoutButton from "./LogOutButton";
-import { AuthContext } from ".././App";
+import { AuthContext } from "../contexts/AuthProvider";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
 import { WorkoutsPage } from ".././pages/WorkoutsPage";
 
@@ -29,10 +29,18 @@ import { WorkoutsPage } from ".././pages/WorkoutsPage";
 // 	.limit(1)
 // 	.single();
 
+
 export const Header: React.FC<{}> = () => {
-	const { username } = useContext(AuthContext);
+	const { username, isLoggedIn } = useContext(AuthContext);
 	// const user = supabase.auth.user();
 	//console.log('username', data);
+	// useEffect(() => {
+	// 	if (username) {
+	// 		getUserId();
+	// 		setIsLoggedIn(true);
+	// 	}
+	// }, [isLoggedIn]);
+
 	return (
 		<div className="header">
 			<Link to="/">

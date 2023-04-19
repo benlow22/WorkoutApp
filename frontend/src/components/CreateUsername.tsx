@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { supabase } from ".././supabaseClient";
 import { UserOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from "antd";
-import { AuthContext } from ".././App";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export const CreateUsername: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");

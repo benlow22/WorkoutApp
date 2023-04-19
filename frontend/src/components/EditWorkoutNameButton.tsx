@@ -4,7 +4,7 @@ import { workouts, IWorkoutNameUrl } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { getWorkouts, updateWorkoutName } from "../api/api";
-import { AuthContext } from "../App";
+import { AuthContext } from "../contexts/AuthProvider";
 import { useHistory } from "react-router-dom";
 
 export interface IWorkout {

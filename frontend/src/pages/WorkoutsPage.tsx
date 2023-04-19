@@ -5,13 +5,14 @@ import { Link, NavLink, Route } from "react-router-dom";
 import { NewWorkoutPage } from "./NewWorkoutPage";
 import { IWorkout } from "../data";
 import { getWorkouts } from "../api/api";
-import { AuthContext } from "../App";
+import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
+import { useHistory } from "react-router-dom";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const {workouts, setWorkouts}  = useContext(AuthContext)
+	const { workouts, setWorkouts } = useContext(AuthContext);
 	const [error, setError] = useState();
-	
+	const history = useHistory();
 	// useEffect(() => {
 	// 	async function fetchWorkouts() {
 	// 		const res = await getWorkouts();
@@ -32,14 +33,14 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				console.error(error);
 				return;
 			}
-			setWorkouts(data)
+			setWorkouts(data);
 			return data;
 		}
-		fetchWorkouts();			
+		fetchWorkouts();
 	}, []);
 
 	return (
-		<>
+		<div className="workouts-page">
 			<h2>Your Workouts</h2>
 			{workouts.map((workout, index) => (
 				<Link to={`/workouts/${workout.url}`} key={index}>
@@ -55,6 +56,6 @@ export const WorkoutsPage: React.FC<{}> = () => {
 					Add New Workout [+]
 				</Button>
 			</Link>
-		</>
+		</div>
 	);
 };

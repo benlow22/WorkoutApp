@@ -1,10 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts } from "../data";
-import { useLocation } from "react-router";
-import { EditTwoTone } from "@ant-design/icons";
+
 import { getWorkouts, postNewWorkout } from "../api/api";
-import { AuthContext } from "../App";
+import { AuthContext } from "../contexts/AuthProvider";
 import { useHistory } from "react-router-dom";
 
 export interface IWorkout {
@@ -16,7 +14,6 @@ export interface IWorkouts {
 	workouts: IWorkout[];
 }
 
-let workouts2 = workouts;
 
 const toCamelCase = (phrase: string): string => {
 	let newStr = "";
@@ -97,7 +94,8 @@ export const NewWorkoutPage = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			if (workoutUrl.length > 0) { // must have workout url 
+			if (workoutUrl.length > 0) {
+				// must have workout url
 				const newWorkoutAddedUrl = await postNewWorkout(
 					workoutUrl,
 					workoutName,
