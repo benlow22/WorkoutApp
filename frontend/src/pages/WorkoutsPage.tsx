@@ -50,6 +50,6 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			</div>
 		);
 	} else {
-		return <p>Loading...</p>;
+		return <p></p>;
 	}
 };
