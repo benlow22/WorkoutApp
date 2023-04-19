@@ -9,7 +9,7 @@ export const EditWorkoutPage = () => {
 	let { workoutName } = useParams();
 	console.log("workout Name from params: ", workoutName);
 	const [workout, setWorkout] = useState<IWorkout | null>(null);
-
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const history = useHistory();
 	// data consist of name and id
 
@@ -38,11 +38,13 @@ export const EditWorkoutPage = () => {
 				setWorkout(data);
 			}
 		}
+
 		getWorkout();
 	}, [workoutName]);
 
 	useEffect(() => {
 		console.log("data update 1");
+		setIsLoading(false);
 	}, [workout]);
 
 	// if (!workout) {
@@ -51,26 +53,34 @@ export const EditWorkoutPage = () => {
 	// }
 
 	const redirectToHomepage = () => {
-		history.push('/');
-	}
+		history.push("/");
+	};
 
-	return (
-		<div>
-			{workout === null ? (
-				<>
-					<p>No workout with URL {workoutName}</p>
-					<Button type="primary" onClick={redirectToHomepage}>Return to Homepage</Button>
-				</>
-			) : (
-				<>
-					<h1>{workout.name}</h1>
-					{workout.exercises?.map((exercise, index) => (
-						<h3 key={index}>Exercise: {exercise.name}</h3>
-					))}
-				</>
-			)}
-		</div>
-	);
+	if (!isLoading && workout) {
+		return (
+			<div>
+				<h1>{workout.name}</h1>
+				{workout.exercises?.map((exercise, index) => (
+					<h3 key={index}>Exercise: {exercise.name}</h3>
+				))}
+			</div>
+		);
+	} else if (workout === null && isLoading) {
+		return (
+			<div>
+				<p>No workout with URL {workoutName}</p>
+				<Button type="primary" onClick={redirectToHomepage}>
+					Return to Homepage
+				</Button>
+			</div>
+		);
+	} else {
+		return (
+			<div>
+				<h2>Loading...</h2>
+			</div>
+		);
+	}
 
 	// return (
 	// 	<div>{workout && workout.name ?

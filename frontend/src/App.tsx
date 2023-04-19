@@ -51,7 +51,7 @@ export default function App() {
 			setSession(session);
 		});
 		return () => subscription.unsubscribe();
-		setIsLoading(true);
+		setIsLoading(false);
 	}, []);
 
 	const getUserId = async () => {
@@ -168,7 +168,7 @@ export default function App() {
 							<Route path="/">
 								<WorkoutsPage />
 							</Route>
-						</Switch>
+						</Switch> 
 					</div>
 				</div>
 			</AuthContext.Provider>
