@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts } from "../data";
+import { workouts, IWorkoutNameUrl } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { getWorkouts, updateWorkoutName } from "../api/api";
@@ -50,15 +50,14 @@ const toCamelCase = (phrase: string): string => {
 	return newStr;
 };
 
-export const EditWorkoutNameButton = (
-	oldWorkoutName: string,
-	oldUrl: string
-) => {
-	const [workoutName, setWorkoutName] = useState<string>(oldWorkoutName);
+export const EditWorkoutNameButton: React.FC<{
+	oldWorkout: IWorkoutNameUrl;
+}> = ({ oldWorkout }) => {
+	const [workoutName, setWorkoutName] = useState<string>(oldWorkout.name);
 	const [newWorkoutName, setNewWorkoutName] = useState<string>("");
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
-	const [oldWorkoutUrl, setOldWorkoutUrl] = useState<string>(oldUrl);
+	const [oldWorkoutUrl, setOldWorkoutUrl] = useState<string>(oldWorkout.url);
 	const [newWorkoutUrl, setNewWorkoutUrl] = useState<string>("");
 	const [editName, setEditName] = useState<boolean>(false);
 	const { userId } = useContext(AuthContext);

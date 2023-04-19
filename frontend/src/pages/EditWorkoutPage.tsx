@@ -1,9 +1,11 @@
 import { useHistory, useParams } from "react-router-dom";
-import { workoutRoutine, IWorkout } from "../data";
+import { workoutRoutine, IWorkout, IWorkoutNameUrl } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Button } from "antd";
+import { EditTwoTone } from "@ant-design/icons";
+import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
 
 export const EditWorkoutPage = () => {
 	let { workoutName } = useParams();
@@ -29,6 +31,7 @@ export const EditWorkoutPage = () => {
 	// 	}
 	// 	getWorkoutDay(workoutName);
 	// }, [workoutName]);
+	let oldWorkout: IWorkoutNameUrl = {name: '', url: ''};
 
 	// gets workout day from url, return name and id, to use to get exercises
 	useEffect(() => {
@@ -45,6 +48,12 @@ export const EditWorkoutPage = () => {
 	useEffect(() => {
 		console.log("data update 1");
 		setIsLoading(false);
+		if (workout) {
+			oldWorkout = {
+				name: workout.name,
+				url: workout.url,
+			};
+		}
 	}, [workout]);
 
 	// if (!workout) {
@@ -52,6 +61,9 @@ export const EditWorkoutPage = () => {
 	// 	return <h2>Loading...</h2>;
 	// }
 
+	const handleEditName = () => {
+		setIsLoading(false);
+	};
 	const redirectToHomepage = () => {
 		history.push("/");
 	};
@@ -59,7 +71,22 @@ export const EditWorkoutPage = () => {
 	if (!isLoading && workout) {
 		return (
 			<div>
-				<h1>{workout.name}</h1>
+				{oldWorkout && (
+					<EditWorkoutNameButton oldWorkout={oldWorkout} />
+				)}
+				<h1>
+					{workout.name}
+					<EditTwoTone
+						className="new-workout-edit-icon"
+						onClick={handleEditName}
+					/>{" "}
+				</h1>
+				{/* ) : (
+				<section className="new-workout-name">
+					<h2>{submittedWorkoutName}</h2>
+
+				</section>
+			)} */}
 				{workout.exercises?.map((exercise, index) => (
 					<h3 key={index}>Exercise: {exercise.name}</h3>
 				))}
