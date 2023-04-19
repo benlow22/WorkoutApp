@@ -41,7 +41,7 @@ export default function App() {
 		});
 		setIsLoading(false)
 		return () => subscription.unsubscribe();
-	}, [isLoading]);
+	}, []);
 
 
 	useEffect(() => {
@@ -57,6 +57,12 @@ export default function App() {
 		}
 		setIsLoading(false);
 	}, [userId]);
+
+	useEffect(() => {
+		if (!username) {
+			setIsLoggedIn(false);
+		}
+	}, [username]);
 
 	const getUserId = async () => {
 		try {

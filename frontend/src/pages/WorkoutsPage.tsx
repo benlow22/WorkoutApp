@@ -10,19 +10,7 @@ import { supabase } from "../supabaseClient";
 import { useHistory } from "react-router-dom";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts } = useContext(AuthContext);
-	const [error, setError] = useState();
-	const history = useHistory();
-	// useEffect(() => {
-	// 	async function fetchWorkouts() {
-	// 		const res = await getWorkouts();
-	// 		if (res.error) {
-	// 			setError(res.error.name);
-	// 		}
-	// 		setWorkouts(res);
-	// 	}
-	// 	fetchWorkouts();
-	// }, []);
+	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 
 	useEffect(() => {
 		async function fetchWorkouts() {
@@ -37,7 +25,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			return data;
 		}
 		fetchWorkouts();
-	}, []);
+	}, [userId]);
 
 	return (
 		<div className="workouts-page">
