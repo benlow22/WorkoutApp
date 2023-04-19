@@ -97,9 +97,9 @@ export default function App() {
 
 	return (
 		<>
-			{!isLoggedIn && !isLoading ? (
-				<div className="App">
-					<Header />
+			<div className="App">
+				<Header />
+				{!isLoggedIn && !isLoading ? (
 					<div className="auth-page">
 						<p>Please Login Below</p>
 						<Auth
@@ -117,12 +117,9 @@ export default function App() {
 							}}
 						/>
 					</div>
-				</div>
-			) : (
-				<div className="main">
-					{isLoggedIn && !isLoading && (
-						<>
-							<Header />
+				) : (
+					<div className="main">
+						{isLoggedIn && !isLoading && (
 							<Switch>
 								<Route path="/workouts/:workoutName">
 									<EditWorkoutPage />
@@ -140,10 +137,10 @@ export default function App() {
 									<Redirect to="/workouts" />
 								</Route>
 							</Switch>
-						</>
-					)}
-				</div>
-			)}
+						)}{" "}
+					</div>
+				)}{" "}
+			</div>
 		</>
 	);
 }
