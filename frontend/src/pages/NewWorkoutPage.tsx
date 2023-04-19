@@ -128,6 +128,7 @@ export const NewWorkoutPage = () => {
 						setWorkoutName(e.target.value),
 							changeNameToUrl(e.target.value);
 					}}
+					maxLength={30}
 					value={workoutName}
 					placeholder="New Workout Name"
 					className="new-workout-input"
