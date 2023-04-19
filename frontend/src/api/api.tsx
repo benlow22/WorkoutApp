@@ -105,5 +105,5 @@ export const updateWorkoutName = async (
 		console.log("there was an error with updating workout name", error);
 		throw "error updating workoutName";
 	}
-	return data
+	return data[0]
 };
