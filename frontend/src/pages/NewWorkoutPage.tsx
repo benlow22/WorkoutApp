@@ -97,14 +97,16 @@ export const NewWorkoutPage = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			const newWorkoutAddedUrl = await postNewWorkout(
-				workoutUrl,
-				workoutName,
-				userId
-			);
+			if (workoutUrl.length > 0) { // must have workout url 
+				const newWorkoutAddedUrl = await postNewWorkout(
+					workoutUrl,
+					workoutName,
+					userId
+				);
 
-			if (newWorkoutAddedUrl) {
-				history.push(`/workouts/${newWorkoutAddedUrl}`);
+				if (newWorkoutAddedUrl) {
+					history.push(`/workouts/${newWorkoutAddedUrl}`);
+				}
 			}
 		} catch (error) {
 			console.log("error inserting new workout", error);
