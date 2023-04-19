@@ -1,13 +1,16 @@
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { workoutRoutine, IWorkout } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
+import { Button } from "antd";
 
 export const EditWorkoutPage = () => {
 	let { workoutName } = useParams();
 	console.log("workout Name from params: ", workoutName);
 	const [workout, setWorkout] = useState<IWorkout | null>(null);
+
+	const history = useHistory();
 	// data consist of name and id
 
 	// useEffect(() => {
@@ -47,10 +50,17 @@ export const EditWorkoutPage = () => {
 	// 	return <h2>Loading...</h2>;
 	// }
 
+	const redirectToHomepage = () => {
+		history.push('/');
+	}
+
 	return (
 		<div>
 			{workout === null ? (
-				<p>null</p>
+				<>
+					<p>No workout with URL {workoutName}</p>
+					<Button type="primary" onClick={redirectToHomepage}>Return to Homepage</Button>
+				</>
 			) : (
 				<>
 					<h1>{workout.name}</h1>
