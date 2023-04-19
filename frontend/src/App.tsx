@@ -37,7 +37,7 @@ export default function App() {
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-		setIsLoading(false);
+		// setIsLoading(false);
 		return () => subscription.unsubscribe();
 	}, []);
 
@@ -52,7 +52,6 @@ export default function App() {
 		if (userId) {
 			getUsername();
 		}
-		setIsLoading(false);
 	}, [userId]);
 
 	useEffect(() => {
@@ -92,6 +91,7 @@ export default function App() {
 			if (error) {
 				console.log("ERROR getting userName: ", error);
 			}
+			setIsLoading(false);
 		} catch (error) {
 			console.error("Error while getting Username", error);
 		}
@@ -122,7 +122,7 @@ export default function App() {
 				</div>
 			) : (
 				<div className="main">
-					{isLoggedIn && (
+					{isLoggedIn && !isLoading && (
 						<>
 							<Header />
 							<Switch>
