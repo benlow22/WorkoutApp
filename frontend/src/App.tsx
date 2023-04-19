@@ -41,6 +41,7 @@ export default function App() {
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
+
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session);
@@ -51,8 +52,21 @@ export default function App() {
 			setSession(session);
 		});
 		return () => subscription.unsubscribe();
-		setIsLoading(false);
 	}, []);
+
+	useEffect(() => {
+		if (session) {
+			getUserId();
+			setIsLoggedIn(true);
+		}
+	}, [session]);
+
+	useEffect(() => {
+		if (userId) {
+			getUsername();
+		}
+		setIsLoading(false);
+	}, [userId]);
 
 	const getUserId = async () => {
 		try {
@@ -71,7 +85,7 @@ export default function App() {
 			const { data, error } = await supabase
 				.from("profiles")
 				.select("username")
-				.eq("id",userId)
+				.eq("id", userId)
 				.limit(1)
 				.single();
 			let username;
@@ -84,22 +98,74 @@ export default function App() {
 		}
 	};
 
-	useEffect(() => {
-		if (session) {
-			getUserId();
-			setIsLoggedIn(true);
-		}
-	}, [session]);
-
-	useEffect(() => {
-		if (userId) {
-			getUsername();
-		}
-	}, [userId]);
 	// if (!isLoading) {
 	// 	return <p>Loading</p>
 	// } else
-	if (!session) {
+
+	// const getUserId = async () => {
+	// 	try {
+	// 		const {
+	// 			data: { user },
+	// 			error,
+	// 		} = await supabase.auth.getUser();
+	// 		user && setUserId(user.id);
+	// 	} catch (error) {
+	// 		console.error("Error while getting User", error);
+	// 	}
+	// };
+	// getUserId();
+	// console.log("after the big GET", userid);
+	// const getUsername = async () => {
+	// 	// try {
+
+	// 	// }
+	// }
+	// setIsLoggedIn(true);
+
+	// if IsLoading is TRUE then set to LOADING screen
+
+	// if isLoggedIn = false = Auth Path
+	// if (isLoggedIn) {
+	// 	return (
+
+	// 	)
+	// }
+	//
+	if (session && !isLoading && isLoggedIn) {
+		return (
+			<AuthContext.Provider
+				value={{
+					userId,
+					username,
+					isLoggedIn,
+					workouts,
+					setIsLoggedIn,
+					setUsername,
+					setWorkouts,
+				}}
+			>
+				<div className="App">
+					<Header />
+					<div className="main">
+						{/* {!username && <CreateUsername />} */}
+						<Switch>
+							{" "}
+							{/* when invalid workout/name = redirect to homepage */}
+							<Route path="/workouts/:workoutName">
+								<EditWorkoutPage />
+							</Route>
+							<Route path="/newWorkout">
+								<NewWorkoutPage />
+							</Route>
+							<Route path="/">
+								<WorkoutsPage />
+							</Route>
+						</Switch>
+					</div>
+				</div>
+			</AuthContext.Provider>
+		);
+	} else if (!session && !isLoading && !isLoggedIn) {
 		return (
 			<div>
 				<Header />
@@ -121,57 +187,11 @@ export default function App() {
 			</div>
 		);
 	} else {
-		// const getUserId = async () => {
-		// 	try {
-		// 		const {
-		// 			data: { user },
-		// 			error,
-		// 		} = await supabase.auth.getUser();
-		// 		user && setUserId(user.id);
-		// 	} catch (error) {
-		// 		console.error("Error while getting User", error);
-		// 	}
-		// };
-		// getUserId();
-		// console.log("after the big GET", userid);
-		// const getUsername = async () => {
-		// 	// try {
-
-		// 	// }
-		// }
-		// setIsLoggedIn(true);
 		return (
-			<AuthContext.Provider
-				value={{
-					userId,
-					username,
-					isLoggedIn,
-					workouts,
-					setIsLoggedIn,
-					setUsername,
-					setWorkouts,
-				}}
-			>
-				<div className="App">
-					<Header />
-					<div className="main">
-						{!username && <CreateUsername />}
-						<Switch>
-							{" "}
-							{/* when invalid workout/name = redirect to homepage */}
-							<Route path="/workouts/:workoutName">
-								<EditWorkoutPage />
-							</Route>
-							<Route path="/newWorkout">
-								<NewWorkoutPage />
-							</Route>
-							<Route path="/">
-								<WorkoutsPage />
-							</Route>
-						</Switch> 
-					</div>
-				</div>
-			</AuthContext.Provider>
+			<div>
+				<Header />
+				<h2>Loading...</h2>
+			</div>
 		);
 	}
 }
