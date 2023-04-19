@@ -35,6 +35,8 @@ export default function App() {
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
+		setIsLoading(false);
+
 		return () => subscription.unsubscribe();
 	}, []);
 
@@ -42,7 +44,6 @@ export default function App() {
 		if (session) {
 			getUserId();
 			setIsLoggedIn(true);
-			setIsLoading(false);
 		}
 	}, [session]);
 
