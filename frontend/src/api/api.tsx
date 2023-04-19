@@ -23,10 +23,7 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 		console.error(error);
 		return;
 	} else {
-		if (data.length > 0) {
-			console.log("DATATATAT:", data[0]);
-			return data[0];
-		}
+		return data[0];
 	}
 };
 
@@ -86,7 +83,7 @@ export const postNewWorkout = async (
 export const updateWorkoutName = async (
 	oldWorkoutUrl: string,
 	newWorkoutUrl: string,
-	newWorkoutName: string,
+	newWorkoutName: string
 ) => {
 	// Update data row and return
 	console.log(
@@ -105,5 +102,5 @@ export const updateWorkoutName = async (
 		console.log("there was an error with updating workout name", error);
 		throw "error updating workoutName";
 	}
-	return data[0]
+	return data[0];
 };

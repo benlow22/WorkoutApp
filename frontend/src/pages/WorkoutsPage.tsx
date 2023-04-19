@@ -10,7 +10,8 @@ import { supabase } from "../supabaseClient";
 import { useHistory } from "react-router-dom";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId } = useContext(AuthContext);
+	const { workouts, setWorkouts, userId, isLoading, setIsLoading } =
+		useContext(AuthContext);
 
 	useEffect(() => {
 		async function fetchWorkouts() {
@@ -22,28 +23,35 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				return;
 			}
 			setWorkouts(data);
+			setIsLoading(false);
 			return data;
 		}
 		fetchWorkouts();
 	}, [userId]);
 
-	return (
-		<div className="workouts-page">
-			<h2>Your Workouts</h2>
-			{workouts.map((workout, index) => (
-				<Link to={`/workouts/${workout.url}`} key={index}>
-					<WorkoutButton workout={workout} />
+	if (!isLoading) {
+		return (
+			<div className="workouts-page">
+				<h2>Your Workouts</h2>
+				{workouts.map((workout, index) => (
+					<Link to={`/workouts/${workout.url}`} key={index}>
+						<WorkoutButton workout={workout} />
+					</Link>
+				))}
+				<Link to={`/newWorkout`}>
+					<Button
+						type="primary"
+						block
+						className="add-new-workout-button workout-button"
+					>
+						Add New Workout [+]
+					</Button>
 				</Link>
-			))}
-			<Link to={`/newWorkout`}>
-				<Button
-					type="primary"
-					block
-					className="add-new-workout-button workout-button"
-				>
-					Add New Workout [+]
-				</Button>
-			</Link>
-		</div>
-	);
+			</div>
+		);
+	} else {
+		return (
+			<p>Loading...</p>
+		)
+	}
 };

@@ -1,36 +1,22 @@
 import { useHistory, useParams } from "react-router-dom";
 import { workoutRoutine, IWorkout, IWorkoutNameUrl } from "../data";
 import { getWorkoutDay } from "../api/api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Button } from "antd";
 import { EditTwoTone } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export const EditWorkoutPage = () => {
-	let { workoutName } = useParams();
-	console.log("workout Name from params: ", workoutName);
-	const [workout, setWorkout] = useState<IWorkout | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const history = useHistory();
-	// data consist of name and id
+	const { isLoading, setIsLoading } = useContext(AuthContext);
+	setIsLoading(true);
 
-	// useEffect(() => {
-	// 	// get's workoutDay from db and di
-	// 	async function getWorkoutDay(workoutName: string = "") {
-	// 		const { data, error } = await supabase
-	// 			.from("workouts")
-	// 			.select("name, url")
-	// 			.eq("url", workoutName);
-	// 		if (error) {
-	// 			console.error(error);
-	// 			return;
-	// 		}
-	// 		console.log("DATA id: ", data);
-	// 		setData(data[0]);
-	// 	}
-	// 	getWorkoutDay(workoutName);
-	// }, [workoutName]);
+	const [workout, setWorkout] = useState<IWorkout | undefined | null >(null);
+	const history = useHistory();
+	let { workoutName } = useParams();
+	console.log("workout Name from params: ", workoutName); // data consist of name and id
+
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
 
 	// gets workout day from url, return name and id, to use to get exercises
@@ -39,11 +25,11 @@ export const EditWorkoutPage = () => {
 			const data = await getWorkoutDay(workoutName);
 			if (data) {
 				setWorkout(data);
+				setIsLoading(false);
 			}
 		}
-
 		getWorkout();
-	}, [workoutName]);
+	}, []);
 
 	useEffect(() => {
 		console.log("data update 1");
@@ -60,10 +46,6 @@ export const EditWorkoutPage = () => {
 	// 	// loading page, while waiting for data to be fetched
 	// 	return <h2>Loading...</h2>;
 	// }
-
-	const handleEditName = () => {
-		setIsLoading(false);
-	};
 	const redirectToHomepage = () => {
 		history.push("/");
 	};
@@ -73,7 +55,7 @@ export const EditWorkoutPage = () => {
 			<div>
 				{oldWorkout && (
 					<section className="new-workout-name">
-						<EditWorkoutNameButton oldWorkout={oldWorkout} />{" "}
+						<EditWorkoutNameButton oldWorkout={oldWorkout} />
 					</section>
 				)}
 
@@ -86,7 +68,7 @@ export const EditWorkoutPage = () => {
 				))}
 			</div>
 		);
-	} else if (workout === null && isLoading) {
+	} else if (workout===undefined && !isLoading) {
 		return (
 			<div>
 				<p>No workout with URL {workoutName}</p>
@@ -98,20 +80,8 @@ export const EditWorkoutPage = () => {
 	} else {
 		return (
 			<div>
-				<h2>Loading...</h2>
+				<h2></h2>
 			</div>
 		);
 	}
-
-	// return (
-	// 	<div>{workout && workout.name ?
-	// 			 <h1>{workout.name}</h1>
-	// 		{workout &&
-	// 			workout.exercises?.map((exercise, index) => (
-	// 				<h3 key={index}>Exercise: {exercise.name}</h3>
-	// 			))}:
-	// 			<p>dasdf</p>
-	// 		 }
-	// 	</div>
-	// );
 };
