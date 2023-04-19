@@ -81,7 +81,7 @@ input[value].new-workout-input {
 
 .new-workout-name {
 	display: flex;
-	width: 300px;
+	width: 400px;
 	margin: auto;
 	justify-content: center;
 }
