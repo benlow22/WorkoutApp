@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { supabase } from ".././supabaseClient";
+import { supabase } from "../supabaseClient";
 import { UserOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from "antd";
 import { AuthContext } from "../contexts/AuthProvider";
 
-export const CreateUsername: React.FC<{}> = () => {
+export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
 	const { userId: userid, setUsername } = useContext(AuthContext);
@@ -28,6 +28,7 @@ export const CreateUsername: React.FC<{}> = () => {
 
 	return (
 		<div>
+			<h2>Create Username</h2> 
 			<Space.Compact>
 				<Input
 					defaultValue="Username"
@@ -45,4 +46,4 @@ export const CreateUsername: React.FC<{}> = () => {
 
 // later make a edit username section
 
-export default CreateUsername;
+export default CreateUsernamePage;

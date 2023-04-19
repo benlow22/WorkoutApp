@@ -7,7 +7,7 @@ import { Auth } from "@supabase/auth-ui-react";
 import { supabase } from "./supabaseClient";
 import { WorkoutsPage } from "./pages/WorkoutsPage";
 import { IWorkout, workouts } from "./data";
-import { CreateUsername } from "./components/CreateUsername";
+import CreateUsernamePage from "./components/CreateUsernamePage";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
@@ -19,11 +19,9 @@ export default function App() {
 		userId,
 		username,
 		isLoggedIn,
-		workouts,
 		isLoading,
 		setIsLoggedIn,
 		setUsername,
-		setWorkouts,
 		setUserId,
 		setIsLoading,
 	} = useContext(AuthContext);
@@ -124,13 +122,10 @@ export default function App() {
 				</div>
 			) : (
 				<div className="main">
-					{/* {!username && <CreateUsername />} */}
 					{isLoggedIn && (
 						<>
 							<Header />
 							<Switch>
-								{" "}
-								{/* when invalid workout/name = redirect to homepage */}
 								<Route path="/workouts/:workoutName">
 									<EditWorkoutPage />
 								</Route>
@@ -139,6 +134,9 @@ export default function App() {
 								</Route>
 								<Route path="/workouts">
 									<WorkoutsPage />
+								</Route>
+								<Route path="/createUsername">
+									<CreateUsernamePage />
 								</Route>
 								<Route path="/">
 									<Redirect to="/workouts" />
@@ -151,33 +149,3 @@ export default function App() {
 		</>
 	);
 }
-// 	} else if (!session && !isLoading && !isLoggedIn) {
-// 		return (
-// 			<div>
-// 				<Header />
-// 				<p>Please Login Below</p>
-// 				<Auth
-// 					supabaseClient={supabase}
-// 					appearance={{
-// 						theme: ThemeSupa,
-// 						variables: {
-// 							default: {
-// 								colors: {
-// 									brand: "red",
-// 									brandAccent: "darkred",
-// 								},
-// 							},
-// 						},
-// 					}}
-// 				/>
-// 			</div>
-// 		);
-// 	} else {
-// 		return (
-// 			<div>
-// 				<Header />
-// 				<h2>Loading...</h2>
-// 			</div>
-// 		);
-// 	}
-// }
