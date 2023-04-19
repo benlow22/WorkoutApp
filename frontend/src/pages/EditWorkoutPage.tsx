@@ -7,7 +7,7 @@ import { supabase } from "../supabaseClient";
 export const EditWorkoutPage = () => {
 	let { workoutName } = useParams();
 	console.log("workout Name from params: ", workoutName);
-	const [data, setData] = useState<IWorkout | null>(null);
+	const [workout, setWorkout] = useState<IWorkout | null>(null);
 	// data consist of name and id
 
 	// useEffect(() => {
@@ -32,7 +32,7 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getWorkoutDay(workoutName);
 			if (data) {
-				setData(data);
+				setWorkout(data);
 			}
 		}
 		getWorkout();
@@ -40,20 +40,37 @@ export const EditWorkoutPage = () => {
 
 	useEffect(() => {
 		console.log("data update 1");
-	}, [data]);
+	}, [workout]);
 
-	if (!data) {
-		// loading page, while waiting for data to be fetched
-		return <h2>Loading...</h2>;
-	}
+	// if (!workout) {
+	// 	// loading page, while waiting for data to be fetched
+	// 	return <h2>Loading...</h2>;
+	// }
 
 	return (
 		<div>
-			{data && <h1>{data.name}</h1>}
-			{data &&
-				data.exercises?.map((exercise, index) => (
-					<h3 key={index}>Exercise: {exercise.name}</h3>
-				))}
+			{workout === null ? (
+				<p>null</p>
+			) : (
+				<>
+					<h1>{workout.name}</h1>
+					{workout.exercises?.map((exercise, index) => (
+						<h3 key={index}>Exercise: {exercise.name}</h3>
+					))}
+				</>
+			)}
 		</div>
 	);
+
+	// return (
+	// 	<div>{workout && workout.name ?
+	// 			 <h1>{workout.name}</h1>
+	// 		{workout &&
+	// 			workout.exercises?.map((exercise, index) => (
+	// 				<h3 key={index}>Exercise: {exercise.name}</h3>
+	// 			))}:
+	// 			<p>dasdf</p>
+	// 		 }
+	// 	</div>
+	// );
 };
