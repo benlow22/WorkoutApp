@@ -24,10 +24,9 @@ export default function App() {
 		setUserId,
 	} = useContext(AuthContext);
 	const [session, setSession] = useState<any | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		setIsLoading(true);
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session);
 		});
@@ -36,7 +35,6 @@ export default function App() {
 		} = supabase.auth.onAuthStateChange((_event, session) => {
 			setSession(session);
 		});
-		setIsLoading(false);
 		return () => subscription.unsubscribe();
 	}, []);
 
@@ -44,6 +42,7 @@ export default function App() {
 		if (session) {
 			getUserId();
 			setIsLoggedIn(true);
+			setIsLoading(false);
 		}
 	}, [session]);
 
