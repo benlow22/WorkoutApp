@@ -31,7 +31,7 @@ export const EditWorkoutPage = () => {
 	// 	}
 	// 	getWorkoutDay(workoutName);
 	// }, [workoutName]);
-	let oldWorkout: IWorkoutNameUrl = {name: '', url: ''};
+	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
 
 	// gets workout day from url, return name and id, to use to get exercises
 	useEffect(() => {
@@ -48,14 +48,14 @@ export const EditWorkoutPage = () => {
 	useEffect(() => {
 		console.log("data update 1");
 		setIsLoading(false);
-		if (workout) {
-			oldWorkout = {
-				name: workout.name,
-				url: workout.url,
-			};
-		}
 	}, [workout]);
 
+	if (workout) {
+		oldWorkout = {
+			name: workout.name,
+			url: workout.url,
+		};
+	}
 	// if (!workout) {
 	// 	// loading page, while waiting for data to be fetched
 	// 	return <h2>Loading...</h2>;
@@ -72,20 +72,14 @@ export const EditWorkoutPage = () => {
 		return (
 			<div>
 				{oldWorkout && (
-					<EditWorkoutNameButton oldWorkout={oldWorkout} />
+					<section className="new-workout-name">
+						<EditWorkoutNameButton oldWorkout={oldWorkout} />{" "}
+					</section>
 				)}
-				<h1>
-					{workout.name}
-					<EditTwoTone
-						className="new-workout-edit-icon"
-						onClick={handleEditName}
-					/>{" "}
-				</h1>
+
 				{/* ) : (
-				<section className="new-workout-name">
 					<h2>{submittedWorkoutName}</h2>
 
-				</section>
 			)} */}
 				{workout.exercises?.map((exercise, index) => (
 					<h3 key={index}>Exercise: {exercise.name}</h3>
