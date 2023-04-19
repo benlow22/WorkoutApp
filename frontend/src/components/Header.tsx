@@ -3,13 +3,12 @@ import LogoutButton from "./LogOutButton";
 import { AuthContext } from "../contexts/AuthProvider";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
 
-
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn } = useContext(AuthContext);
 
 	useEffect(() => {
 		if (username) {
-			console.log(`${username} is logged in`)
+			console.log(`${username} is logged in`);
 		}
 	}, [isLoggedIn]);
 
@@ -19,9 +18,14 @@ export const Header: React.FC<{}> = () => {
 				<h1>Workout Buddy</h1>
 			</Link>
 			<div className="account">
-				<Link to='/createUsername'>
-					{!username?'Create Username' : username }</Link>
-				<LogoutButton />
+				{isLoggedIn && (
+					<>
+						<Link to="/createUsername">
+							{!username ? "Create Username" : username}
+						</Link>
+						<LogoutButton />
+					</>
+				)}
 			</div>
 		</div>
 	);

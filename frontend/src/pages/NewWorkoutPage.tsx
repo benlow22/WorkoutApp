@@ -121,6 +121,7 @@ export const NewWorkoutPage = () => {
 	return (
 		<>
 			{/* {!submittedWorkoutName ? ( */}
+			<h2>New Workout Name</h2>
 			<Space.Compact>
 				<Input
 					defaultValue="Username"
