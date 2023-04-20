@@ -10,28 +10,26 @@ import { AuthContext } from "../contexts/AuthProvider";
 
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [workout, setWorkout] = useState<IWorkout | undefined | null >(null);
-	const history = useHistory();
+	const [workout, setWorkout] = useState<IWorkout | undefined | null>(null);
 	let { workoutName } = useParams();
-	console.log("workout Name from params: ", workoutName); // data consist of name and id
-
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
+	const history = useHistory();
+	const redirectToHomepage = () => {
+		history.push("/");
+	};
 
-	// gets workout day from url, return name and id, to use to get exercises
+	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
 	useEffect(() => {
 		async function getWorkout() {
 			const data = await getWorkoutDay(workoutName);
-			if (data) {
-				setWorkout(data);
-				setIsLoading(false);
-			}
+			setWorkout(data);
 		}
 		getWorkout();
 	}, []);
 
+	// once workout is determined or undefined, isloading = done
 	useEffect(() => {
-		console.log("data update 1");
-		setIsLoading(false);
+		if (workout === undefined || workout) setIsLoading(false);
 	}, [workout]);
 
 	if (workout) {
@@ -40,13 +38,6 @@ export const EditWorkoutPage = () => {
 			url: workout.url,
 		};
 	}
-	// if (!workout) {
-	// 	// loading page, while waiting for data to be fetched
-	// 	return <h2>Loading...</h2>;
-	// }
-	const redirectToHomepage = () => {
-		history.push("/");
-	};
 
 	if (!isLoading && workout) {
 		return (
@@ -56,17 +47,13 @@ export const EditWorkoutPage = () => {
 						<EditWorkoutNameButton oldWorkout={oldWorkout} />
 					</section>
 				)}
-
-				{/* ) : (
-					<h2>{submittedWorkoutName}</h2>
-
-			)} */}
+				{/* DISPLAY EXERCISES HERE */}
 				{workout.exercises?.map((exercise, index) => (
 					<h3 key={index}>Exercise: {exercise.name}</h3>
 				))}
 			</div>
 		);
-	} else if (workout===undefined && !isLoading) {
+	} else if (workout === undefined && !isLoading) {
 		return (
 			<div>
 				<p>No workout with URL {workoutName}</p>
