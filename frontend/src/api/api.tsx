@@ -12,13 +12,13 @@ export const getWorkouts = async () => {
 	return data;
 };
 
-// getWorkoutDay =
+// getWorkoutDay = takes params sent in and returns SINGLE matching workout 
 export const getWorkoutDay = async (workoutName: string = "") => {
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name, url")
 		.eq("url", workoutName);
-	console.log("get that data:", data);
+	console.log("API CALL = get that data:", data);
 	if (error) {
 		console.error(error);
 		return;
