@@ -18,7 +18,7 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 		.from("workouts")
 		.select("name, url")
 		.eq("url", workoutName);
-	console.log("API CALL = get that data:", data);
+	console.log("API CALL = get workout:", data);
 	if (error) {
 		console.error(error);
 		return;
@@ -86,21 +86,15 @@ export const updateWorkoutName = async (
 	newWorkoutName: string
 ) => {
 	// Update data row and return
-	console.log(
-		"old workout URL: ",
-		oldWorkoutUrl,
-		"workout Name",
-		newWorkoutName
-	);
 	const { data, error } = await supabase
 		.from("workouts")
 		.update({ name: newWorkoutName, url: newWorkoutUrl })
 		.eq("url", oldWorkoutUrl)
 		.select();
-	console.log("returned updated row", data);
+	console.log("API CALL = update workout name, updated workout = ", data);
 	if (error) {
 		console.log("there was an error with updating workout name", error);
 		throw "error updating workoutName";
 	}
-	return data[0];
+	return data[0]; // return single ROW of updated Data 
 };
