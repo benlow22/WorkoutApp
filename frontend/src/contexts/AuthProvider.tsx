@@ -26,7 +26,11 @@ export const AuthContext = React.createContext<IAuthContext>({
 
 });
 
-const AuthProvider = () => {
+type IChildren = {
+	children: React.ReactNode
+ }
+
+const AuthProvider: React.FC<IChildren> = ({children }) => {
 	const [userId, setUserId] = useState<string>("");
 	const [username, setUsername] = useState<string>("");
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -47,7 +51,7 @@ const AuthProvider = () => {
                 setUserId,
 			}}
 		>
-			<App />
+			{children}
 		</AuthContext.Provider>
 	);
 };

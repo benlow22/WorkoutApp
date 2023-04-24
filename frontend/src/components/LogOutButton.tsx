@@ -3,13 +3,13 @@ import { Button } from "antd";
 import { supabase } from ".././supabaseClient";
 import { user } from ".././supabaseClient";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const LogoutButton: React.FC<{}> = () => {
 	const {setUsername, setIsLoggedIn, setUserId } =
 		useContext(AuthContext);
 		const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const handleSignout = async () => {
 		try {
@@ -21,7 +21,7 @@ const LogoutButton: React.FC<{}> = () => {
 			setUserId("");
 			setUsername("");
 			setIsLoggedIn(false);
-			history.push("/");
+			navigate("/");
 			setIsLoading(false);
 		} catch (error) {
 			console.error("Error while signing out", error);
