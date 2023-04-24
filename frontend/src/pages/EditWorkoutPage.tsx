@@ -1,5 +1,5 @@
 import { useHistory, useParams } from "react-router-dom";
-import { workoutRoutine, IWorkout, IWorkoutNameUrl } from "../data";
+import { workoutRoutine, IWorkout, IWorkoutNameUrl, workouts } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
@@ -20,12 +20,15 @@ export const EditWorkoutPage = () => {
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
 	useEffect(() => {
+		if (workoutName) {
+			setIsLoading(true);
+		}
 		async function getWorkout() {
 			const data = await getWorkoutDay(workoutName);
 			setWorkout(data);
 		}
 		getWorkout();
-	}, []);
+	}, [workoutName]);
 
 	// once workout is determined or undefined, isloading = done
 	useEffect(() => {
