@@ -19,13 +19,18 @@ import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 import AuthProvider, { AuthContext } from "./contexts/AuthProvider";
 import Root from "./components/Root";
+import { AuthPage } from "./pages/AuthPage";
+import { WelcomePage } from "./pages/WelcomePage";
 
-const router = createBrowserRouter(createRoutesFromElements(
-	<Route path='/' element={<Root/>}>
-
-	</Route>
-));
-
+const router = createBrowserRouter(
+	createRoutesFromElements(
+		<Route path="/" element={<Root />}>
+			<Route path="" element={<WelcomePage />} />
+			<Route path="login" element={<AuthPage />} />
+			<Route path="workouts" element={<WorkoutsPage/>}></Route>
+		</Route>
+	)
+);
 
 // <div className="App">
 // <Header />
@@ -72,93 +77,6 @@ const router = createBrowserRouter(createRoutesFromElements(
 // )}{" "}
 // </div>
 
-
-
 export default function App() {
-	const {
-		userId,
-		username,
-		isLoggedIn,
-		setIsLoggedIn,
-		setUsername,
-		setUserId,
-	} = useContext(AuthContext);
-	const [session, setSession] = useState<any | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
-
-	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			setSession(session);
-		});
-		const {
-			data: { subscription },
-		} = supabase.auth.onAuthStateChange((_event, session) => {
-			setSession(session);
-		});
-		setIsLoading(false);
-
-		return () => subscription.unsubscribe();
-	}, []);
-
-	useEffect(() => {
-		if (session) {
-			getUserId();
-			setIsLoggedIn(true);
-		}
-	}, [session]);
-
-	useEffect(() => {
-		if (userId) {
-			getUsername();
-		}
-	}, [userId]);
-
-	useEffect(() => {
-		if (!username) {
-			setIsLoggedIn(false);
-		}
-	}, [username]);
-
-	const getUserId = async () => {
-		try {
-			const {
-				data: { user },
-				error,
-			} = await supabase.auth.getUser();
-
-			if (user) {
-				setUserId(user.id);
-			}
-		} catch (error) {
-			console.error("Error while getting User", error);
-		}
-	};
-
-	const getUsername = async () => {
-		try {
-			const { data, error } = await supabase
-				.from("profiles")
-				.select("username")
-				.eq("id", userId)
-				.limit(1)
-				.single();
-			let username;
-			if (data) {
-				username = data.username;
-			}
-			username && setUsername(username);
-			if (error) {
-				console.log("ERROR getting userName: ", error);
-			}
-			setIsLoading(false);
-		} catch (error) {
-			console.error("Error while getting Username", error);
-		}
-	};
-
-	return (
-		<>
-			<RouterProvider router={router} />
-		</>
-	);
+	return <RouterProvider router={router} />;
 }
