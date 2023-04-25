@@ -5,7 +5,7 @@ import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { getWorkouts, updateWorkoutName } from "../api/api";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { changeNameToUrl, buttonClickTrue } from "../utils/utils";
 
 export interface IWorkout {
@@ -28,7 +28,7 @@ export const EditWorkoutNameButton: React.FC<{
 	// 	useState<string>("");
 	const [newWorkoutUrl, setNewWorkoutUrl] = useState<string>("");
 	const [editName, setEditName] = useState<boolean>(false); // is edit button clicked
-	const history = useHistory();
+	const navigate = useNavigate();
 
 
 	// whenever oldWorkout, one being diosplayed, pre-edit, is entered, 
@@ -48,7 +48,7 @@ export const EditWorkoutNameButton: React.FC<{
 				if (workoutNameUpdated) {
 					// returned updated workout
 					console.log("updated workout data:", workoutNameUpdated);
-					history.push(`/workouts/${workoutNameUpdated.url}`);
+					navigate(`/workouts/${workoutNameUpdated.url}`);
 				}
 				setNewWorkoutUrl("");
 				setNewWorkoutName("");
