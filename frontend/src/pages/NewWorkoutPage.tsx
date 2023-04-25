@@ -3,7 +3,7 @@ import { Button, Space, Input } from "antd";
 
 import { getWorkouts, postNewWorkout } from "../api/api";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export interface IWorkout {
 	name: string;
@@ -13,7 +13,6 @@ export interface IWorkout {
 export interface IWorkouts {
 	workouts: IWorkout[];
 }
-
 
 const toCamelCase = (phrase: string): string => {
 	let newStr = "";
@@ -54,7 +53,7 @@ const toCamelCase = (phrase: string): string => {
 // should i add workouts to Provider?
 
 export const NewWorkoutPage = () => {
-	const [workoutName, setWorkoutName] = useState<string>("");
+	const [newWorkoutName, setNewWorkoutName] = useState<string>("");
 	const [submittedWorkoutName, setSubmittedWorkoutName] =
 		useState<string>("");
 	const [workoutUrl, setWorkoutUrl] = useState<string>("");
@@ -65,7 +64,7 @@ export const NewWorkoutPage = () => {
 		setWorkoutUrl(newUrl);
 	};
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	// const handleSubmit = async (e: any) => {
 	// 	e.preventDefault();
@@ -96,25 +95,27 @@ export const NewWorkoutPage = () => {
 		try {
 			if (workoutUrl.length > 0) {
 				// must have workout url
+				console.log("user IDD", userId);
 				const newWorkoutAddedUrl = await postNewWorkout(
 					workoutUrl,
-					workoutName,
+					newWorkoutName,
 					userId
 				);
 
 				if (newWorkoutAddedUrl) {
-					history.push(`/workouts/${newWorkoutAddedUrl}`);
+					navigate(`/workouts/${newWorkoutAddedUrl}`);
 				}
 			}
+			return true;
 		} catch (error) {
 			console.log("error inserting new workout", error);
-			setWorkoutName("");
+			setNewWorkoutName("");
 			setWorkoutUrl("");
 		}
 	};
 
 	const handleEditName = () => {
-		setWorkoutName(submittedWorkoutName);
+		setNewWorkoutName(submittedWorkoutName);
 		setSubmittedWorkoutName("");
 	};
 
@@ -126,11 +127,11 @@ export const NewWorkoutPage = () => {
 				<Input
 					defaultValue="Username"
 					onChange={(e) => {
-						setWorkoutName(e.target.value),
+						setNewWorkoutName(e.target.value),
 							changeNameToUrl(e.target.value);
 					}}
 					maxLength={30}
-					value={workoutName}
+					value={newWorkoutName}
 					placeholder="New Workout Name"
 					className="new-workout-input"
 				/>
@@ -150,7 +151,7 @@ export const NewWorkoutPage = () => {
 
 			<div className="new-workout-data test">
 				<p>Submitted New Workout Name: </p>
-				<p>{workoutName}</p>
+				<p>{newWorkoutName}</p>
 				<br></br>
 				<p>new workout url will be: </p>
 				<p>{workoutUrl}</p>

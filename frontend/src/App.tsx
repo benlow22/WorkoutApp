@@ -29,9 +29,21 @@ const router = createBrowserRouter(
 			<Route path="login" element={<AuthPage />} />
 			<Route path="workouts" element={<WorkoutsPage />} />
 			<Route path="workouts/:workoutName" element={<EditWorkoutPage />} />
+			<Route path="newWorkout" element={<NewWorkoutPage />} />
+
 		</Route>
 	)
 );
+
+
+export default function App() {
+	return <RouterProvider router={router} />;
+}
+
+
+
+
+
 
 // <div className="App">
 // <Header />
@@ -77,7 +89,3 @@ const router = createBrowserRouter(
 // 	</div>
 // )}{" "}
 // </div>
-
-export default function App() {
-	return <RouterProvider router={router} />;
-}
