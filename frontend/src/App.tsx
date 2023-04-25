@@ -34,6 +34,7 @@ const router = createBrowserRouter(
 					path="workouts/:workoutName"
 					element={<EditWorkoutPage />}
 				/>
+				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
 			</Route>
 		</Route>

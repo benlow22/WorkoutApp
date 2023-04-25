@@ -3,16 +3,17 @@ import { supabase } from "../supabaseClient";
 import { UserOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from "antd";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
 	const { userId: userid, setUsername, username } = useContext(AuthContext);
-	const history = useHistory();
+	const navigate = useNavigate();
+
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		if (newUsername.length > 4) {
+		if (newUsername.match(/^\w{5,15}$/)) {	//if newUsername matches RegEx of any number/letter 5-15 length
 			console.log("new Username to set", newUsername);
 			console.log("user info", user);
 			try {
@@ -22,7 +23,8 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					.eq("id", userid);
 				setUsername(newUsername);
 				setNewUsername("");
-				history.push("/workouts");
+				navigate("/workouts");
+				if (error) throw error;
 			} catch (err) {
 				console.log("error updating username", err);
 			}
@@ -37,8 +39,8 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					defaultValue="Username"
 					onChange={(e) => setNewUsername(e.target.value)}
 					value={newUsername}
+					type="text"
 					placeholder="New Username"
-					min={5}
 				/>
 				<Button type="primary" onClick={handleSubmit}>
 					Submit
