@@ -22,6 +22,7 @@ export const AuthPage = () => {
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    // when going to AuthPage, get session, set if logged in
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
 			setSession(session);
@@ -32,10 +33,11 @@ export const AuthPage = () => {
 			setSession(session);
 		});
 		setIsLoading(false);
-
 		return () => subscription.unsubscribe();
 	}, []);
 
+
+    // if there is a session, get userId (sets it to provider), turn logged in to TRUE
 	useEffect(() => {
 		if (session) {
 			getUserId();
@@ -43,23 +45,31 @@ export const AuthPage = () => {
 		}
 	}, [session]);
 
+    // once user ID is set/changed, get username 
 	useEffect(() => {
 		if (userId) {
 			getUsername();
 		}
 	}, [userId]);
 
+    //once username is set or changed, check if id does not nexists, then set logged in to false 
+    // logs user out if userID is gone, unnessary ??? 
 	useEffect(() => {
-		if (!username) {
+		if (!userId) {
 			setIsLoggedIn(false);
 		}
 	}, [username]);
 
+    // once logged in and username is gotten, redirect to workouts 
+    
 	useEffect(() => {
 		if (isLoggedIn) {
 			navigate('/workouts')
 		}
-	}, [isLoggedIn]);
+	}, [username]);
+
+
+
 
 	const getUserId = async () => {
 		try {
@@ -72,7 +82,7 @@ export const AuthPage = () => {
 				setUserId(user.id);
 			}
 		} catch (error) {
-			console.error("Error while getting User", error);
+			console.error("Error getting User", error);
 		}
 	};
 
