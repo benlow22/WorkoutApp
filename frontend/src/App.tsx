@@ -21,29 +21,28 @@ import AuthProvider, { AuthContext } from "./contexts/AuthProvider";
 import Root from "./components/Root";
 import { AuthPage } from "./pages/AuthPage";
 import { WelcomePage } from "./pages/WelcomePage";
+import AuthRoute from "./AuthRoute";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
 			<Route path="" element={<WelcomePage />} />
 			<Route path="login" element={<AuthPage />} />
-			<Route path="workouts" element={<WorkoutsPage />} />
-			<Route path="workouts/:workoutName" element={<EditWorkoutPage />} />
-			<Route path="newWorkout" element={<NewWorkoutPage />} />
-
+			<Route element={<AuthRoute />}>
+				<Route path="workouts" element={<WorkoutsPage />} />
+				<Route
+					path="workouts/:workoutName"
+					element={<EditWorkoutPage />}
+				/>
+				<Route path="newWorkout" element={<NewWorkoutPage />} />
+			</Route>
 		</Route>
 	)
 );
 
-
 export default function App() {
 	return <RouterProvider router={router} />;
 }
-
-
-
-
-
 
 // <div className="App">
 // <Header />
