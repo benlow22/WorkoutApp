@@ -7,7 +7,6 @@ import { IWorkout } from "../data";
 import { getWorkouts } from "../api/api";
 import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
-import { useHistory } from "react-router-dom";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
@@ -27,7 +26,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			return data;
 		}
 		fetchWorkouts();
-	}, [userId]);
+	}, []);
 
 	if (!isLoading) {
 		return (

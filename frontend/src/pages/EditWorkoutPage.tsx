@@ -1,4 +1,4 @@
-import { useHistory, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { workoutRoutine, IWorkout, IWorkoutNameUrl, workouts } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useContext, useEffect, useState } from "react";
@@ -13,9 +13,9 @@ export const EditWorkoutPage = () => {
 	const [workout, setWorkout] = useState<IWorkout | undefined | null>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
-	const history = useHistory();
+	const navigate = useNavigate();
 	const redirectToHomepage = () => {
-		history.push("/");
+		navigate("/");
 	};
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
