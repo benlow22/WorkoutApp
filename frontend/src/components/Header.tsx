@@ -3,6 +3,7 @@ import LogoutButton from "./LogOutButton";
 import { AuthContext } from "../contexts/AuthProvider";
 import { Link, BrowserRouter as Router, Route } from "react-router-dom";
 import { supabase } from "../supabaseClient";
+import LogInButton from "./LogInButton";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, setUsername, userId } =
@@ -10,9 +11,7 @@ export const Header: React.FC<{}> = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 
-
-
-	// update everytime username changes; if username exists, put it on display, if not, default 
+	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
 		if (username.length > 0) {
 			setDisplayUsername(username);
@@ -39,6 +38,11 @@ export const Header: React.FC<{}> = () => {
 					</>
 				)}
 			</div>
+			{!isLoggedIn && (
+				<Link to="/login">
+					<LogInButton />
+				</Link>
+			)}
 		</div>
 	);
 };
