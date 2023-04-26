@@ -11,7 +11,7 @@ import {
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 import Root from "./components/Root";
-import { AuthPage } from "./pages/AuthPage";
+import { LoginPage } from "./pages/AuthPage";
 import { WelcomePage } from "./pages/WelcomePage";
 import AuthRoute from "./AuthRoute";
 
@@ -19,7 +19,7 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
 			<Route index element={<WelcomePage />} />
-			<Route path="login" element={<AuthPage />} />
+			<Route path="login" element={<LoginPage />} />
 			<Route element={<AuthRoute />}>			{/* only authenticated users can use these routes  */}
 				<Route path="workouts" element={<WorkoutsPage />} />
 				<Route

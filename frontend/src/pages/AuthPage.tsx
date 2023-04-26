@@ -5,7 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export const AuthPage = () => {
+export const LoginPage = () => {
 	const { auth } = useContext(AuthContext);
 
 	// when going to AuthPage, get session, set if logged in
@@ -27,6 +27,7 @@ export const AuthPage = () => {
 								},
 							},
 						},
+				
 					}}
 				/>
 			</div>
