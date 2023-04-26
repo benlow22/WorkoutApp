@@ -26,7 +26,7 @@ import AuthRoute from "./AuthRoute";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
-			<Route path="" element={<WelcomePage />} />
+			<Route index element={<WelcomePage />} />
 			<Route path="login" element={<AuthPage />} />
 			<Route element={<AuthRoute />}>
 				<Route path="workouts" element={<WorkoutsPage />} />
