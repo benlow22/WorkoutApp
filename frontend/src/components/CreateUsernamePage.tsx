@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const [user, setUser] = useState<any | null>(null);
-	const { userId: userid, setUsername, username } = useContext(AuthContext);
+	const { userId, setUsername, username } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e: any) => {
@@ -20,7 +20,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 				const { error } = await supabase
 					.from("profiles")
 					.update({ username: newUsername })
-					.eq("id", userid);
+					.eq("id", userId);
 				setUsername(newUsername);
 				const { data, error: err2 } = await supabase.auth.updateUser({
 					data: { username: newUsername }
