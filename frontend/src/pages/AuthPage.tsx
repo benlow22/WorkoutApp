@@ -13,6 +13,7 @@ export const AuthPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	useEffect(() => {
 		supabase.auth.getSession().then(({ data: { session } }) => {
+			console.log('session data', session)
 			setSession(session);
 		});
 		const {

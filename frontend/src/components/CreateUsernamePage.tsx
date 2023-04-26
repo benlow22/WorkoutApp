@@ -22,6 +22,9 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					.update({ username: newUsername })
 					.eq("id", userid);
 				setUsername(newUsername);
+				const { data, error: err2 } = await supabase.auth.updateUser({
+					data: { username: newUsername }
+				  })
 				setNewUsername("");
 				navigate("/workouts");
 				if (error) throw error;

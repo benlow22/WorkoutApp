@@ -28,7 +28,7 @@ const router = createBrowserRouter(
 		<Route path="/" element={<Root />}>
 			<Route index element={<WelcomePage />} />
 			<Route path="login" element={<AuthPage />} />
-			<Route element={<AuthRoute />}>
+			<Route element={<AuthRoute />}>			{/* only authenticated users can use these routes  */}
 				<Route path="workouts" element={<WorkoutsPage />} />
 				<Route
 					path="workouts/:workoutName"
@@ -44,48 +44,3 @@ const router = createBrowserRouter(
 export default function App() {
 	return <RouterProvider router={router} />;
 }
-
-// <div className="App">
-// <Header />
-// {!isLoggedIn && !isLoading ? (
-// 	<div className="auth-page">
-// 		<p>Please Login Below</p>
-// 		<Auth
-// 			supabaseClient={supabase}
-// 			appearance={{
-// 				theme: ThemeSupa,
-// 				variables: {
-// 					default: {
-// 						colors: {
-// 							brand: "red",
-// 							brandAccent: "darkred",
-// 						},
-// 					},
-// 				},
-// 			}}
-// 		/>
-// 	</div>
-// ) : (
-// 	<div className="main">
-// 		{isLoggedIn && !isLoading && (
-// 			<Switch>
-// 				<Route path="/workouts/:workoutName">
-// 					<EditWorkoutPage />
-// 				</Route>
-// 				<Route path="/newWorkout">
-// 					<NewWorkoutPage />
-// 				</Route>
-// 				<Route path="/workouts">
-// 					<WorkoutsPage />
-// 				</Route>
-// 				<Route path="/createUsername">
-// 					<CreateUsernamePage />
-// 				</Route>
-// 				<Route path="/">
-// 					<Redirect to="/workouts" />
-// 				</Route>
-// 			</Switch>
-// 		)}{" "}
-// 	</div>
-// )}{" "}
-// </div>
