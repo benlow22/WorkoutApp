@@ -58,73 +58,44 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		});
 	}, []);
 
-	// // if there is a session, get userId (sets it to provider), turn logged in to TRUE
-	// useEffect(() => {
-	// 	if (session) {
-	// 		getUserId();
-	// 		setIsLoggedIn(true);
-	// 	}
-	// }, [session]);
+	useEffect(() => {
+		const { data } = supabase.auth.onAuthStateChange(
+			async (event, session) => {
+				if (event == "PASSWORD_RECOVERY") {
+					setAuth(false);
+				} else if (event === "SIGNED_IN") { // everytime there is a sign in event, context states will be triggered
+					setAuth(true);
+					console.log("did this work");
+					if (session) {
+						setSession(session);
+						setAuth(true);
+						setUserId(session.user.id);
+						setUsername(session.user.user_metadata.username);
+						setIsLoggedIn(true); // late can be removed and replaced with auth
+						setUser(session.user);
+					}
+				} else if (event === "SIGNED_OUT") {
+					setAuth(false);
+					setUser(null);
+				}
+			}
+		);
+		return () => {
+			data.subscription.unsubscribe();
+		};
+	}, []);
 
-	// // once user ID is set/changed, get username
-	// useEffect(() => {
-	// 	if (userId) {
-	// 		getUsername();
-	// 	}
-	// }, [userId]);
-
-	// //once username is set or changed, check if id does not nexists, then set logged in to false
-	// // logs user out if userID is gone, unnessary ???
-	// useEffect(() => {
-	// 	if (!userId) {
-	// 		setIsLoggedIn(false);
-	// 	}
-	// }, [username]);
-
-	// once logged in and username is gotten, redirect to workouts
-
-	// useEffect(() => {
-	// 	if (isLoggedIn) {
-	// 		navigate('/workouts')
-	// 	}
-	// }, [username]);
-
-	// const getUserId = async () => {
-	// 	try {
-	// 		const {
-	// 			data: { user },
-	// 			error,
-	// 		} = await supabase.auth.getUser();
-
-	// 		if (user) {
-	// 			setUserId(user.id);
-	// 		}
-	// 	} catch (error) {
-	// 		console.error("Error getting User", error);
-	// 	}
-	// };
-	
-	// const getUsername = async () => {
-	// 	try {
-	// 		const { data, error } = await supabase
-	// 			.from("profiles")
-	// 			.select("username")
-	// 			.eq("id", userId)
-	// 			.limit(1)
-	// 			.single();
-	// 		let username;
-	// 		if (data) {
-	// 			username = data.username;
-	// 		}
-	// 		username && setUsername(username);
-	// 		if (error) {
-	// 			console.log("ERROR getting userName: ", error);
-	// 		}
-	// 		setIsLoading(false);
-	// 	} catch (error) {
-	// 		console.error("Error while getting Username", error);
-	// 	}
-	// };
+	useEffect(() => {
+		setIsLoading(true);
+		const getUser = async () => {
+			const { data } = await supabase.auth.getUser();
+			const { user: currentUser } = data;
+			setUser(currentUser ?? null);
+			setIsLoading(false);
+		};
+		getUser();
+		// onAuthStateChange code below
+	}, []);
 
 	return (
 		<AuthContext.Provider
@@ -141,7 +112,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				auth,
 			}}
 		>
-			{children}
+			{!isLoading && children}
 		</AuthContext.Provider>
 	);
 };

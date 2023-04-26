@@ -6,46 +6,31 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
-
 	// when going to AuthPage, get session, set if logged in
-    const [session, setSession] = useState<any>(null)
-
-    useEffect(() => {
-      supabase.auth.getSession().then(({ data: { session } }) => {
-        setSession(session)
-      })
-
-      const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((_event, session) => {
-        setSession(session)
-      })
-      
-      return () => subscription.unsubscribe()
-    }, [])
-
-	if (!session) {
-		return (
-			<div className="auth-page">
-				<p>Please Login Below</p>
-				<Auth
-					supabaseClient={supabase}
-					appearance={{
-						theme: ThemeSupa,
-						variables: {
-							default: {
-								colors: {
-									brand: "red",
-									brandAccent: "darkred",
-								},
-							},
-						},
-				
-					}}
-				/>
-			</div>
-		);
-	} else {
+	const { auth, userId, setIsLoggedIn, isLoggedIn } = useContext(AuthContext);
+	
+	if (auth) {
+		console.log("Auth rerendered", userId);
 		return <Navigate to="/workouts" />;
 	}
+
+	return (
+		<div className="auth-page">
+			<p>Please Login Below</p>
+			<Auth
+				supabaseClient={supabase}
+				appearance={{
+					theme: ThemeSupa,
+					variables: {
+						default: {
+							colors: {
+								brand: "red",
+								brandAccent: "darkred",
+							},
+						},
+					},
+				}}
+			/>
+		</div>
+	);
 };

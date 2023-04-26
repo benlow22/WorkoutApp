@@ -4,6 +4,7 @@ import { AuthContext } from "./contexts/AuthProvider";
 
 const AuthRoute = () => {
 	const { auth } = useContext(AuthContext);
+	console.log("Auth in route", auth);
 	return auth ? <Outlet /> : <Navigate to={"/login"} />;
 };
 
