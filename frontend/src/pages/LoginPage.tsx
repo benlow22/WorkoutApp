@@ -6,12 +6,25 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
-	const { auth } = useContext(AuthContext);
 
 	// when going to AuthPage, get session, set if logged in
+    const [session, setSession] = useState<any>(null)
 
+    useEffect(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        setSession(session)
+      })
 
-	if (!auth) {
+      const {
+        data: { subscription },
+      } = supabase.auth.onAuthStateChange((_event, session) => {
+        setSession(session)
+      })
+      
+      return () => subscription.unsubscribe()
+    }, [])
+
+	if (!session) {
 		return (
 			<div className="auth-page">
 				<p>Please Login Below</p>
