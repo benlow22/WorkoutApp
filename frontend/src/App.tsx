@@ -21,7 +21,6 @@ const router = createBrowserRouter(
 			<Route index element={<WelcomePage />} />
 			<Route path="login" element={<LoginPage />} />
 			<Route element={<AuthRoute />}>
-				{" "}
 				{/* only authenticated users can use these routes  */}
 				<Route path="workouts" element={<WorkoutsPage />} />
 				<Route
