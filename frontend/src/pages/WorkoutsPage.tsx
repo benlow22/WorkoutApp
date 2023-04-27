@@ -10,16 +10,17 @@ import { supabase } from "../supabaseClient";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
+	console.log("workouts page");
 	useEffect(() => {
-		setIsLoading(true);
 		async function fetchWorkouts() {
 			const { data, error } = await supabase
 				.from("workouts")
 				.select("name,url");
 			if (error) {
 				console.error(error);
+				setIsLoading(false);
 				return;
 			}
 			setWorkouts(data);

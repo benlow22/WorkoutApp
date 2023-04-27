@@ -39,23 +39,30 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 	const [workouts, setWorkouts] = useState<IWorkout[]>([]);
 	const [session, setSession] = useState<any | null>(null);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [user, setUser] = useState<any>(null);
 	const [auth, setAuth] = useState(false);
 
 	// when going to AuthPage, get session, set if logged in
 	useEffect(() => {
-		supabase.auth.getSession().then(({ data: { session } }) => {
-			console.log("session data 2", session);
-			if (session) {
-				setSession(session);
-				setAuth(true);
-				setUserId(session.user.id);
-				setUsername(session.user.user_metadata.username);
-				setIsLoggedIn(true); // late can be removed and replaced with auth
-				setUser(session.user);
-			}
-		});
+		setIsLoading(true);
+		const getSessionData = async () => {
+			supabase.auth.getSession().then(({ data: { session } }) => {
+				console.log("session data 2", session);
+				if (session) {
+					setSession(session);
+					console.log("getSessionAuth");
+					setAuth(true);
+					setUserId(session.user.id);
+					setUsername(session.user.user_metadata.username);
+					setIsLoggedIn(true); // late can be removed and replaced with auth
+					setUser(session.user);
+				}
+				setIsLoading(false);
+			});
+		};
+		getSessionData();
+		// return
 	}, []);
 
 	useEffect(() => {
@@ -63,11 +70,12 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			async (event, session) => {
 				if (event == "PASSWORD_RECOVERY") {
 					setAuth(false);
-				} else if (event === "SIGNED_IN") { // everytime there is a sign in event, context states will be triggered
-					setAuth(true);
+				} else if (event === "SIGNED_IN") {
+					// everytime there is a sign in event, context states will be triggered
 					console.log("did this work");
 					if (session) {
 						setSession(session);
+						console.log("statechangeauth");
 						setAuth(true);
 						setUserId(session.user.id);
 						setUsername(session.user.user_metadata.username);
@@ -80,6 +88,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				}
 			}
 		);
+		setIsLoading(false);
 		return () => {
 			data.subscription.unsubscribe();
 		};
