@@ -14,6 +14,8 @@ export const WorkoutsPage: React.FC<{}> = () => {
 
 	console.log("workouts page");
 	useEffect(() => {
+		console.log("workouts fetch");
+
 		async function fetchWorkouts() {
 			const { data, error } = await supabase
 				.from("workouts")
