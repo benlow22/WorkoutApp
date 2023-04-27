@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
 import { IWorkout, IWorkoutNameUrl, workouts } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useContext, useEffect, useState } from "react";
@@ -19,7 +19,18 @@ export const EditWorkoutPage = () => {
 	};
 
 	const deleteWorkout = async () => {
-		const { error } = await supabase.from("workouts").delete().eq("id", 1);
+		if (workout) {
+			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
+				const { error } = await supabase
+					.from("workouts")
+					.delete()
+					.eq("id", workout.id);
+				console.log("workout deleted");
+				navigate('/workouts');
+			}
+		} else {
+			console.log("workout not deleted");
+		}
 	};
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
