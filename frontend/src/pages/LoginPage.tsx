@@ -7,13 +7,13 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
-	const { auth, userId, setIsLoggedIn, isLoggedIn } = useContext(AuthContext);
-	
+	const {auth} = useContext(AuthContext);
+
 	if (auth) {
-		console.log("Auth rerendered", userId);
+		console.log("Auth TRUE, nav to workouts", auth);
 		return <Navigate to="/workouts" />;
 	}
-
+	console.log("Auth false", auth);
 	return (
 		<div className="auth-page">
 			<p>Please Login Below</p>
