@@ -4,6 +4,9 @@ import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
+import { Input, Space } from "antd";
+
+const { Search } = Input;
 
 export const ExercisesPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
@@ -29,5 +32,18 @@ export const ExercisesPage: React.FC<{}> = () => {
 	// 	fetchWorkouts();
 	// }, []);
 
-	return <></>;
+	const onSearch = (value: string) => console.log(value);
+
+	return (
+		<div className="exercise-page">
+			<h2>Exercises</h2>
+			<Search
+				placeholder="Exercise Search"
+				onSearch={onSearch}
+				enterButton
+				className="exercise-search"
+			/>
+            
+		</div>
+	);
 };

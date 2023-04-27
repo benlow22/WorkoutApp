@@ -105,3 +105,10 @@ input[value].new-workout-input {
 	width: 400px;
 	margin: auto;
 }
+
+.exercise-page {
+	text-align: center;
+}
+.exercise-search {
+	width: 300px;
+}
