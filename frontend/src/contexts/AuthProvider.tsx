@@ -58,11 +58,12 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setIsLoggedIn(true); // late can be removed and replaced with auth
 					setUser(session.user);
 				}
-				setIsLoading(false);
+				setIsLoading(false);		// 
+				return
+
 			});
 		};
 		getSessionData();
-		// return
 	}, []);
 
 	useEffect(() => {

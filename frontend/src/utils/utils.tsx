@@ -1,6 +1,6 @@
 
 
-const toCamelCase = (phrase: string): string => {
+export const toCamelCase = (phrase: string): string => {
 	let newStr = "";
 	let ch1 = phrase[0];
 	if ((ch1 >= "a" && ch1 <= "z") || (ch1 >= "A" && ch1 <= "Z")) {

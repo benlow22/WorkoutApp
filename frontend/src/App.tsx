@@ -1,16 +1,18 @@
 import "./App.css";
 import "./index.css";
-import { WorkoutsPage } from "./pages/WorkoutsPage";
-import CreateUsernamePage from "./components/CreateUsernamePage";
+
 import {
 	Route,
 	RouterProvider,
 	createBrowserRouter,
 	createRoutesFromElements,
 } from "react-router-dom";
+
+import Root from "./components/Root";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
-import Root from "./components/Root";
+import { WorkoutsPage } from "./pages/WorkoutsPage";
+import CreateUsernamePage from "./components/CreateUsernamePage";
 import { LoginPage } from "./pages/LoginPage";
 import { WelcomePage } from "./pages/WelcomePage";
 import AuthRoute from "./AuthRoute";

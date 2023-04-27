@@ -5,9 +5,8 @@ import { user } from ".././supabaseClient";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 const LogoutButton: React.FC<{}> = () => {
-	const {setUsername, setIsLoggedIn, setUserId } =
-		useContext(AuthContext);
-		const [isLoading, setIsLoading] = useState<boolean>(false);
+	const { setUsername, setIsLoggedIn, setUserId } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const navigate = useNavigate();
 

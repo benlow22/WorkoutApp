@@ -13,7 +13,8 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		if (newUsername.match(/^\w{5,15}$/)) {	//if newUsername matches RegEx of any number/letter 5-15 length
+		if (newUsername.match(/^\w{5,15}$/)) {
+			//if newUsername matches RegEx of any number/letter 5-15 length
 			console.log("new Username to set", newUsername);
 			console.log("user info", user);
 			try {
@@ -23,8 +24,8 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					.eq("id", userId);
 				setUsername(newUsername);
 				const { data, error: err2 } = await supabase.auth.updateUser({
-					data: { username: newUsername }
-				  })
+					data: { username: newUsername },
+				});
 				setNewUsername("");
 				navigate("/workouts");
 				if (error) throw error;
