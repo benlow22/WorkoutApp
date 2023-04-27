@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { workoutRoutine, IWorkout, IWorkoutNameUrl, workouts } from "../data";
+import { IWorkout, IWorkoutNameUrl, workouts } from "../data";
 import { getWorkoutDay } from "../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
@@ -18,6 +18,10 @@ export const EditWorkoutPage = () => {
 		navigate("/");
 	};
 
+	const deleteWorkout = async () => {
+		const { error } = await supabase.from("workouts").delete().eq("id", 1);
+	};
+
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
 	useEffect(() => {
 		if (workoutName) {
@@ -26,6 +30,7 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getWorkoutDay(workoutName);
 			setWorkout(data);
+			setIsLoading(false);
 		}
 		getWorkout();
 	}, [workoutName]);
@@ -54,6 +59,10 @@ export const EditWorkoutPage = () => {
 				{workout.exercises?.map((exercise, index) => (
 					<h3 key={index}>Exercise: {exercise.name}</h3>
 				))}
+				<br></br>
+				<Button type="primary" onClick={deleteWorkout}>
+					Delete Workout
+				</Button>
 			</div>
 		);
 	} else if (workout === undefined && !isLoading) {

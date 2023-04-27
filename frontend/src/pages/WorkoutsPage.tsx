@@ -2,9 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route } from "react-router-dom";
-import { NewWorkoutPage } from "./NewWorkoutPage";
-import { IWorkout } from "../data";
-import { getWorkouts } from "../api/api";
 import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
 
@@ -19,7 +16,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		async function fetchWorkouts() {
 			const { data, error } = await supabase
 				.from("workouts")
-				.select("name,url");
+				.select("name,url,id");
 			if (error) {
 				console.error(error);
 				setIsLoading(false);

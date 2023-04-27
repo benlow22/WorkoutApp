@@ -15,7 +15,7 @@ export const getWorkouts = async () => {
 export const getWorkoutDay = async (workoutName: string = "") => {
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("name, url")
+		.select("name, url, id")
 		.eq("url", workoutName);
 	console.log("API CALL = get workout:", data);
 	if (error) {
