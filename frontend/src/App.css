@@ -50,7 +50,7 @@
 	margin-left: 20px;
 }
 .add-new-workout-button {
-	background-color:  rgb(0, 89, 205);
+	background-color: rgb(0, 89, 205);
 }
 .header {
 	background-color: rgb(0, 110, 255);
@@ -59,7 +59,7 @@
 	margin-bottom: 20px;
 	display: flex;
 	justify-content: space-between;
-	align-items: center
+	align-items: center;
 }
 
 .account {
@@ -76,15 +76,13 @@ h1 {
 	text-align: left;
 }
 
-input[value]{
-    color: #c6c6c6;
+input[value] {
+	color: #c6c6c6;
 }
-input[value].new-workout-input, .ant-select-open *{
-	color: black;
-}
-
+input[value].new-workout-input,
+.ant-select-auto-complete span,
 .ant-select-item-option-content {
-  color: black;
+	color: black;
 }
 
 .new-workout-name {
@@ -94,7 +92,7 @@ input[value].new-workout-input, .ant-select-open *{
 	justify-content: center;
 }
 .auth-page p {
-	width:100%;
+	width: 100%;
 }
 
 .auth-page {
@@ -104,7 +102,6 @@ input[value].new-workout-input, .ant-select-open *{
 	flex-wrap: wrap;
 	justify-content: center;
 }
-
 
 .workouts-page {
 	width: 400px;

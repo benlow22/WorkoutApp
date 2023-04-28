@@ -62,8 +62,6 @@ export const ExercisesPage: React.FC<{}> = () => {
 					}}
 				>
 					<AutoComplete
-						defaultOpen={true}
-						open={true}
 						allowClear
 						onDropdownVisibleChange={() => {}}
 						style={{
