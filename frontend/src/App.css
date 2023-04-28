@@ -111,6 +111,8 @@ input[value].new-workout-input,
 .exercise-page {
 	text-align: center;
 }
-.exercise-search {
-	width: 300px;
+.search-bar {
+	width: 260;
 }
+
+

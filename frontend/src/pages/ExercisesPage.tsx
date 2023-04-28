@@ -13,14 +13,15 @@ export const ExercisesPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<any>([]); //change to appropriate type
-	const { useToken } = theme;
+	const [searchExercise, setSearchExercise] = useState<string>("");
+
 	console.log("Exercises page");
-    const options = [
-        { value: "Burns Bay Road" },
-        { value: "Downing Street" },
-        { value: "Wall Street" },
-    ];
-    
+	const options = [
+		{ value: "Burns Bay Road" },
+		{ value: "Downing Street" },
+		{ value: "Wall Street" },
+	];
+
 	useEffect(() => {
 		console.log("exercises fetch", allExercises);
 
@@ -54,38 +55,28 @@ export const ExercisesPage: React.FC<{}> = () => {
 		<div className="exercise-page">
 			<h2>Exercises </h2>
 			<div className="search-container">
-				<ConfigProvider
-					theme={{
-						token: {
-							colorTextBase: "rgba(0,0,0,0)",
-						},
+				<AutoComplete
+					allowClear
+					style={{
+						width: 260,
 					}}
-				>
-					<AutoComplete
-						allowClear
-						onDropdownVisibleChange={() => {}}
-						style={{
-							width: 200,
-						}}
-						popupClassName="thingys"
-						options={options}
-						placeholder="Search Exercises`"
-						filterOption={(inputValue, option) =>
-							option!.value
-								.toUpperCase()
-								.indexOf(inputValue.toUpperCase()) !== -1
-						}
-					/>
-
-					<Button type="primary">Submit</Button>
-					<Search
-						placeholder="Exercise Search"
-						onSearch={onSearch}
-						enterButton
-						className="exercise-search"
-					/>
-					<div className="suggestions"></div>
-				</ConfigProvider>
+					onChange={(value) => setSearchExercise(value)}
+					options={options}
+					children={
+						<Search
+							placeholder="Exercise Search"
+							onSearch={onSearch}
+							enterButton
+							className="search-bar"
+						/>
+					}
+					filterOption={(inputValue, option) =>
+						option!.value
+							.toUpperCase()
+							.indexOf(inputValue.toUpperCase()) !== -1
+					}
+				/>
+				<div className="searched">Searched: {searchExercise}</div>
 			</div>
 
 			{allExercises.map((exercise: any) => (
@@ -94,4 +85,3 @@ export const ExercisesPage: React.FC<{}> = () => {
 		</div>
 	);
 };
-
