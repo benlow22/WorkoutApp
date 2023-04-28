@@ -2,9 +2,11 @@
 	margin: 0px;
 	text-align: center;
 }
+
 /* .main {
 	margin: 30px;
 } */
+
 .logo {
 	height: 6em;
 	padding: 1.5em;
@@ -77,9 +79,12 @@ h1 {
 input[value]{
     color: #c6c6c6;
 }
-
-input[value].new-workout-input {
+input[value].new-workout-input, .ant-select-open *{
 	color: black;
+}
+
+.ant-select-item-option-content {
+  color: black;
 }
 
 .new-workout-name {
