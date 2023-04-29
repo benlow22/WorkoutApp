@@ -17,6 +17,7 @@ import { LoginPage } from "./pages/LoginPage";
 import { WelcomePage } from "./pages/WelcomePage";
 import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
+import Exercise from "./components/Exercise";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
 					element={<EditWorkoutPage />}
 				/>
 				<Route path="exercises" element={<ExercisesPage />} />
+				<Route path="exercises/:exerciseName" element={<Exercise />} />
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
 			</Route>
