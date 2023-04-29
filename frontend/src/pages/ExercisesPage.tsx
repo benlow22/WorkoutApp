@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../components/WorkoutButton";
 import { Button, theme, ConfigProvider } from "antd";
-import { Link, NavLink, Route } from "react-router-dom";
+import { Link, NavLink, Outlet, Route, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
@@ -16,7 +16,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 	const [allExercises, setAllExercises] = useState<{ value: string }[]>([]); //change to appropriate type
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
-
+	const navigate = useNavigate();
 	useEffect(() => {
 		// upon loading, fetch all exercise data to populate dropdown
 		console.log("exercises fetch", allExercises);
@@ -49,14 +49,22 @@ export const ExercisesPage: React.FC<{}> = () => {
 	}, [allExercises]);
 
 	useEffect(() => {
-		console.log("searc", searchExercise);
-		console.log(allExercises);
+		console.log("searched Exercise: ", searchExercise);
+		console.log("All exercises:", allExercises);
 		if (allExercises.filter((e) => e.value === searchExercise).length > 0) {
 			setIsNewExercise(false);
 		} else {
 			setIsNewExercise(true);
 		}
 	}, [searchExercise]);
+
+	const addExercise = () => {
+		navigate(`${searchExercise}`);
+	};
+
+	const getExercise = () => {
+		navigate("/workouts");
+	};
 
 	return (
 		<div className="exercise-page">
@@ -73,7 +81,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 					children={
 						<Search
 							placeholder="Exercise Search"
-							onSearch={onSearch} // conditional for add or seach 
+							onSearch={isNewExercise ? addExercise : getExercise} // conditional for add or seach
 							enterButton={
 								isNewExercise ? (
 									<PlusOutlined />
@@ -90,15 +98,15 @@ export const ExercisesPage: React.FC<{}> = () => {
 							.indexOf(inputValue.toUpperCase()) !== -1
 					}
 				/>
-				<div className="searched">Searched: {searchExercise}</div>
+				{/* <div className="searched">Searched: {searchExercise}</div> */}
 			</div>
-
-			{allExercises.map((exercise: any, index) => (
+			<Outlet />
+			{/* {allExercises.map((exercise: any, index) => (
 				<p key={`${index}-${exercise.value}`}>{exercise.value}</p>
 			))}
 
 			<p> is it new? </p>
-			{isNewExercise ? <p>true</p> : <p>false</p>}
+			{isNewExercise ? <p>true</p> : <p>false</p>} */}
 		</div>
 	);
 };
