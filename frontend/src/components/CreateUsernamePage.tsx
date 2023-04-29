@@ -14,7 +14,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		if (newUsername.match(/^\w{5,15}$/)) {
-			//if newUsername matches RegEx of any number/letter 5-15 length
+			// if newUsername matches RegEx of any number/letter 5-15 length
 			console.log("new Username to set", newUsername);
 			console.log("user info", user);
 			try {

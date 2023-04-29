@@ -13,7 +13,9 @@ const { Search } = Input;
 export const ExercisesPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [allExercises, setAllExercises] = useState<{ value: string }[]>([]); //change to appropriate type
+	const [allExercises, setAllExercises] = useState<
+		{ value: string; id: string }[]
+	>([]); //change to appropriate type
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const navigate = useNavigate();
@@ -23,7 +25,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 		async function fetchExercises() {
 			const { data, error } = await supabase
 				.from("Exercises")
-				.select("value: name"); // change name column to "value" to match options()
+				.select("value: name, id"); // change name column to "value" to match options()
 			if (error) {
 				console.error("error fetching exercises", error);
 				setIsLoading(false);
@@ -58,12 +60,28 @@ export const ExercisesPage: React.FC<{}> = () => {
 		}
 	}, [searchExercise]);
 
-	const addExercise = () => {
-		navigate(`${searchExercise}`);
+	const handleSearch = () => {
+		if (searchExercise.length > 0) {
+			if (isNewExercise) {
+				navigate(`${searchExercise}/new`);
+			} else {
+				let exercise = allExercises.find( // grab exercise from list of ALLexercise
+					(e) => e.value === searchExercise
+				);
+				if (exercise) {
+					console.log("asdfasdf", exercise.id);
+					navigate(`${exercise.id}`);
+				}
+			}
+		}
 	};
 
 	const getExercise = () => {
-		navigate("/workouts");
+		let exercise = allExercises.find((e) => e.value === searchExercise);
+		if (exercise) {
+			console.log("asdfasdf", exercise.id);
+			navigate(`${searchExercise}/id=${exercise.id}`);
+		}
 	};
 
 	return (
@@ -81,7 +99,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 					children={
 						<Search
 							placeholder="Exercise Search"
-							onSearch={isNewExercise ? addExercise : getExercise} // conditional for add or seach
+							onSearch={handleSearch} // conditional for add or seach
 							enterButton={
 								isNewExercise ? (
 									<PlusOutlined />
