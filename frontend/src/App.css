@@ -81,7 +81,8 @@ input[value] {
 }
 input[value].new-workout-input,
 .ant-select-auto-complete span,
-.ant-select-item-option-content {
+.ant-select-item-option-content, 
+.ant-select-item-empty{
 	color: black;
 }
 
