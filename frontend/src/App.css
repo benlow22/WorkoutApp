@@ -77,12 +77,12 @@ h1 {
 }
 
 input[value] {
-	color: #c6c6c6;
+	color: #8a8a8a;
 }
 input[value].new-workout-input,
 .ant-select-auto-complete span,
-.ant-select-item-option-content, 
-.ant-select-item-empty{
+.ant-select-item-option-content,
+.ant-select-item-empty {
 	color: black;
 }
 
@@ -116,4 +116,11 @@ input[value].new-workout-input,
 	width: 260;
 }
 
+.add-exercise-button {
+  font-size: large
+}
 
+.ant-select-auto-complete span {
+  color: white;
+  font-size: large;
+}
