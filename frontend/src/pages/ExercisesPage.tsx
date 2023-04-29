@@ -6,6 +6,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 
 const { Search } = Input;
 
@@ -13,34 +14,16 @@ export const ExercisesPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<{ value: string }[]>([]); //change to appropriate type
-	const [searchExercise, setSearchExercise] = useState<string>("");
-
-	console.log("Exercises page");
-
-	const options = [
-		{ value: "Burns Bay Road" },
-		{ value: "Downing Street" },
-		{ value: "Wall Street" },
-		{ value: "Burns Bay1 Road" },
-		{ value: "Downing1 Street" },
-		{ value: "Wall Str1eet" },
-		{ value: "Burns Bay1a Road" },
-		{ value: "Downing St1reet" },
-		{ value: "Wall Street1" },
-		{ value: "Burns Bay Ro1ad" },
-		{ value: "Downing Stree1t" },
-		{ value: "Wall Street2" },
-		{ value: "Burns Bay Roa2d" },
-		{ value: "Downing Stre2et" },
-		{ value: "Wall Stree2t" },
-	];
+	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
+	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 
 	useEffect(() => {
+		// upon loading, fetch all exercise data to populate dropdown
 		console.log("exercises fetch", allExercises);
 		async function fetchExercises() {
 			const { data, error } = await supabase
 				.from("Exercises")
-				.select("value: name");
+				.select("value: name"); // change name column to "value" to match options()
 			if (error) {
 				console.error("error fetching exercises", error);
 				setIsLoading(false);
@@ -58,32 +41,46 @@ export const ExercisesPage: React.FC<{}> = () => {
 	}, []);
 
 	const onSearch = (value: string) => console.log(value);
+
 	useEffect(() => {
 		if (allExercises) {
 			console.log("all exercises updated", allExercises);
 		}
 	}, [allExercises]);
 
+	useEffect(() => {
+		console.log("searc", searchExercise);
+		console.log(allExercises);
+		if (allExercises.filter((e) => e.value === searchExercise).length > 0) {
+			setIsNewExercise(false);
+		} else {
+			setIsNewExercise(true);
+		}
+	}, [searchExercise]);
+
 	return (
 		<div className="exercise-page">
 			<h2>Exercises </h2>
 			<div className="search-container">
 				<AutoComplete
-					allowClear
 					style={{
 						width: 260,
 					}}
-					notFoundContent={`new exercise: ${searchExercise}`}
-					defaultOpen={false}
-					open
+					// notFoundContent={`new exercise: ${searchExercise}`}
 					defaultActiveFirstOption
 					onChange={(value) => setSearchExercise(value)}
 					options={allExercises}
 					children={
 						<Search
 							placeholder="Exercise Search"
-							onSearch={onSearch}
-							enterButton
+							onSearch={onSearch} // conditional for add or seach 
+							enterButton={
+								isNewExercise ? (
+									<PlusOutlined />
+								) : (
+									<SearchOutlined />
+								)
+							}
 							className="search-bar"
 						/>
 					}
@@ -96,12 +93,16 @@ export const ExercisesPage: React.FC<{}> = () => {
 				<div className="searched">Searched: {searchExercise}</div>
 			</div>
 
-			{allExercises.map((exercise: any) => (
-				<p>{exercise.name}</p>
+			{allExercises.map((exercise: any, index) => (
+				<p key={`${index}-${exercise.value}`}>{exercise.value}</p>
 			))}
+
+			<p> is it new? </p>
+			{isNewExercise ? <p>true</p> : <p>false</p>}
 		</div>
 	);
 };
+
 // ant-select-dropdown css-dev-only-do-not-override-yp8pcc ant-select-dropdown-placement-bottomLeft ant-select-dropdown-empty
 // ant-select-dropdown css-dev-only-do-not-override-yp8pcc ant-select-dropdown-placement-bottomLeft"
 // ant-select-item ant-select-item-option ant-select-item-option-active"
