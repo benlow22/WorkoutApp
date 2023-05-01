@@ -11,7 +11,7 @@ export const getWorkouts = async () => {
 	return data;
 };
 
-// getWorkoutDay = takes params sent in and returns SINGLE matching workout 
+// getWorkoutDay = takes params sent in and returns SINGLE matching workout
 export const getWorkoutDay = async (workoutName: string = "") => {
 	const { data, error } = await supabase
 		.from("workouts")
@@ -26,6 +26,19 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	}
 };
 
+export const getFullWorkout = async (workoutId: string, userId: string) => {
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name, url, id, Exercises(name)")
+		.eq("id", workoutId);
+	console.log("API CALL = get workout:", data);
+	if (error) {
+		console.error(error);
+		return;
+	} else {
+		return data[0];
+	}
+};
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  
 	- making an uuid id 
 	- name
@@ -95,5 +108,5 @@ export const updateWorkoutName = async (
 		console.log("there was an error with updating workout name", error);
 		throw "error updating workoutName";
 	}
-	return data[0]; // return single ROW of updated Data 
+	return data[0]; // return single ROW of updated Data
 };

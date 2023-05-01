@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../components/WorkoutButton";
 import { Button } from "antd";
-import { Link, NavLink, Route } from "react-router-dom";
+import { Link, NavLink, Route, useLocation } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import { supabase } from "../supabaseClient";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	
 
 	console.log("workouts page");
 	useEffect(() => {
-		console.log("workouts fetch");
 
 		async function fetchWorkouts() {
 			const { data, error } = await supabase
@@ -34,7 +34,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			<div className="workouts-page">
 				<h2>Your Workouts</h2>
 				{workouts.map((workout, index) => (
-					<Link to={`/workouts/${workout.url}`} key={index}>
+					<Link to={`/workouts/${workout.url}`} key={index} state={{ workoutId: workout.id }}>
 						<WorkoutButton workout={workout} />
 					</Link>
 				))}

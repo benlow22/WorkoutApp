@@ -1,6 +1,12 @@
-import { Navigate, redirect, useNavigate, useParams } from "react-router-dom";
+import {
+	Navigate,
+	redirect,
+	useLocation,
+	useNavigate,
+	useParams,
+} from "react-router-dom";
 import { IWorkout, IWorkoutNameUrl, workouts } from "../data";
-import { getWorkoutDay } from "../api/api";
+import { getFullWorkout, getWorkoutDay } from "../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../supabaseClient";
 import { Button } from "antd";
@@ -14,14 +20,18 @@ export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExersise] = useState<any>({});
-	const [workout, setWorkout] = useState<IWorkout | undefined | null>(null);
+	const [workout, setWorkout] = useState<any>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
 	const navigate = useNavigate();
 	const redirectToHomepage = () => {
 		navigate("/");
 	};
+	const {
+		state: { workoutId },
+	} = useLocation();
 
+	const {userId} = useContext(AuthContext);
 	const deleteWorkout = async () => {
 		if (workout) {
 			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
@@ -36,6 +46,19 @@ export const EditWorkoutPage = () => {
 			console.log("workout not deleted");
 		}
 	};
+
+	useEffect(() => {
+		if (workout?.id) {
+			getExercisesFromWorkout();
+		}
+	}, [workoutName]);
+
+	useEffect(() => {
+		if (exercises) {
+			console.log("hio");
+			setIsLoading(false);
+		}
+	}, [exercises]);
 
 	const getExercisesFromWorkout = async () => {
 		let { data, error } = await supabase
@@ -56,21 +79,19 @@ export const EditWorkoutPage = () => {
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
 	useEffect(() => {
-		if (workoutName) {
-			setIsLoading(true);
-		}
+		setIsLoading(true);
 		async function getWorkout() {
-			const data = await getWorkoutDay(workoutName);
+			const data = await getFullWorkout(workoutId, userId);
 			setWorkout(data);
 			setIsLoading(false);
 		}
 		getWorkout();
-	}, [workoutName]);
+	}, []);
 
 	// once workout is determined or undefined, isloading = done
-	useEffect(() => {
-		if (workout === undefined || workout) setIsLoading(false);
-	}, [workout]);
+	// useEffect(() => {
+	// 	if (workout === undefined || workout) setIsLoading(false);
+	// }, [workout]);
 
 	if (workout) {
 		oldWorkout = {
@@ -92,8 +113,8 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
-				{exercises.Exercises &&
-					exercises.Exercises.map((exercise, index) => (
+				{workout.Exercises &&
+					workout.Exercises.map((exercise, index) => (
 						<h3 key={index}>Exercise ID: {exercise.name}</h3>
 					))}
 				<br></br>
