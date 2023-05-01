@@ -206,20 +206,24 @@ const NewExercise: React.FC<{}> = () => {
 					valuePropName="fileList"
 					getValueFromEvent={normFile}
 				>
-					<Space.Compact style={{ width: "100%" }}>
-						<Input onChange={(e) => setNewLink(e.target.value)} />
-						<Button
-							type="primary"
-							icon={<PlusCircleOutlined />}
-							onClick={addToLinkList}
-						></Button>
-					</Space.Compact>
-					{linkList.map((link, index) => (
-						<Link to={{ pathname: link }}>
-							{`${index}. ${link}`}
-							<br></br>
-						</Link>
-					))}
+					<>
+						<Space.Compact style={{ width: "100%" }}>
+							<Input
+								onChange={(e) => setNewLink(e.target.value)}
+							/>
+							<Button
+								type="primary"
+								icon={<PlusCircleOutlined />}
+								onClick={addToLinkList}
+							></Button>
+						</Space.Compact>
+						{linkList.map((link, index) => (
+							<Link to={{ pathname: link }}>
+								{`${index}. ${link}`}
+								<br></br>
+							</Link>
+						))}
+					</>
 				</Form.Item>
 
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
