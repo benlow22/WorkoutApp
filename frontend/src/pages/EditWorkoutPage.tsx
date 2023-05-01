@@ -7,9 +7,12 @@ import { Button } from "antd";
 import { EditTwoTone } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
 import { AuthContext } from "../contexts/AuthProvider";
-
+import Exercise from "../components/Exercise";
+import { ExercisesPage } from "./ExercisesPage";
+import { SearchExercises } from "../components/SearchExercises";
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [workout, setWorkout] = useState<IWorkout | undefined | null>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
@@ -26,7 +29,7 @@ export const EditWorkoutPage = () => {
 					.delete()
 					.eq("id", workout.id);
 				console.log("workout deleted");
-				navigate('/workouts');
+				navigate("/workouts");
 			}
 		} else {
 			console.log("workout not deleted");
@@ -58,6 +61,10 @@ export const EditWorkoutPage = () => {
 		};
 	}
 
+	const toggleButton = () => {
+		addExercise ? setAddExercise(false) : setAddExercise(true);
+	};
+
 	if (!isLoading && workout) {
 		return (
 			<div>
@@ -70,6 +77,14 @@ export const EditWorkoutPage = () => {
 				{workout.exercises?.map((exercise, index) => (
 					<h3 key={index}>Exercise: {exercise.name}</h3>
 				))}
+				<br></br>
+				{!addExercise ? (
+					<Button type="primary" onClick={toggleButton} className="add-exercise-button">
+						Add Exercise
+					</Button>
+				) : (
+					<SearchExercises />
+				)}
 				<br></br>
 				<Button type="primary" onClick={deleteWorkout}>
 					Delete Workout
