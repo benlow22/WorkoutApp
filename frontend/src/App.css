@@ -61,6 +61,10 @@
 	justify-content: space-between;
 	align-items: center;
 }
+/* 
+.header *, .workouts-page * {
+  color: white;
+} */
 
 .account {
 	display: flex;
@@ -117,10 +121,60 @@ input[value].new-workout-input,
 }
 
 .add-exercise-button {
-  font-size: large
+	font-size: large;
 }
 
 .ant-select-auto-complete span {
-  color: white;
-  font-size: large;
+	color: white;
+	font-size: large;
+}
+
+.new-exercise-form {
+	background-color: rgb(101, 168, 255);
+	margin: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 15px;
+}
+
+.new-exercise-form * {
+	color: black;
+}
+
+.add-field-button {
+	margin: auto;
+}
+
+/* .ant-form-item-control-input-content {
+  justify-content: center;
+} */
+
+/* .form-item {
+  margin: auto;
+  margin-bottom: 5px;
+} */
+
+.add-description-button {
+	width: 300px;
+	margin-bottom: 35px;
+}
+
+.close-field-button {
+	position: absolute;
+	left: 360px;
+	top: 15px;
+}
+
+.edit-workout-name {
+	position: relative;
+	left: 5px;
+	top: 30px;
+}
+
+.new-workout-name {
+	margin: auto;
+}
+
+.edit-new-workout-name {
+  margin-top: 10px;
 }
