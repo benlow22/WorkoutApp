@@ -51,8 +51,6 @@ export const ExercisesPage: React.FC<{}> = () => {
 	}, [allExercises]);
 
 	useEffect(() => {
-		console.log("searched Exercise: ", searchExercise);
-		console.log("All exercises:", allExercises);
 		if (allExercises.filter((e) => e.value === searchExercise).length > 0) {
 			setIsNewExercise(false);
 		} else {

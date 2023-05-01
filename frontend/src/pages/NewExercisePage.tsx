@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useParams } from "react-router";
+import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 
 import {
 	CloseOutlined,
@@ -27,6 +27,8 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Link } from "react-router-dom";
+import { supabase } from "../supabaseClient";
+import { AuthContext } from "../contexts/AuthProvider";
 
 const { Option } = Select;
 
@@ -43,10 +45,6 @@ const normFile = (e: any) => {
 	return e?.fileList;
 };
 
-const onFinish = (values: any) => {
-	console.log("Received values of form: ", values);
-};
-
 const NewExercise: React.FC<{}> = () => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [editWorkoutName, setEditWorkoutName] = useState<boolean>(false);
@@ -56,10 +54,33 @@ const NewExercise: React.FC<{}> = () => {
 	const [newExerciseName, setNewExerciseName] = useState<string | undefined>(
 		exerciseName
 	);
+	const { userId } = useContext(AuthContext);
 	console.log("eercise name:", exerciseName);
 	const addToLinkList = () => {
 		setLinkList([...linkList, newLink]);
 	};
+	const navigate = useNavigate();
+	const onFinish = async (formValues: any) => {
+		console.log("Received values of form: ", formValues);
+		const { data, error } = await supabase.from("Exercises").insert([
+			{
+				name: formValues.workout,
+				description: formValues.description,
+				equipment: formValues.equipment,
+				created_by: userId,
+				muscles: formValues.muscles,
+			},
+		]);
+		if (data) {
+			console.log("successfull post", data);
+		}
+
+		if (error) {
+			console.log(error);
+		}
+		navigate(`/exercises`);
+	};
+
 	return (
 		<>
 			<Form
@@ -83,7 +104,7 @@ const NewExercise: React.FC<{}> = () => {
 					<Form.Item
 						hidden={!editWorkoutName}
 						label="Workout Name: "
-						name="username"
+						name="workout"
 						rules={[
 							{
 								required: true,
@@ -92,20 +113,28 @@ const NewExercise: React.FC<{}> = () => {
 						]}
 						initialValue={newExerciseName}
 					>
-						<Input
-							value={newExerciseName}
-						/>
+						<Input value={newExerciseName} />
 					</Form.Item>
 				</div>
 
-				<Form.Item label="Description" hidden={hideDescription}>
-					<Button
-						className="close-field-button"
-						icon={<CloseOutlined />}
-						onClick={() => setHideDescription(true)}
-						size="small"
-					></Button>
-					<TextArea rows={4} autoSize={{ minRows: 2, maxRows: 5 }} />
+				<Form.Item
+					name="description"
+					label="Description"
+					hidden={hideDescription}
+				>
+					{/* <>
+						<Button
+							className="close-field-button"
+							icon={<CloseOutlined />}
+							onClick={() => setHideDescription(true)}
+							size="small"
+						></Button> */}
+					<TextArea
+						rows={4}
+						autoSize={{ minRows: 2, maxRows: 5 }}
+						defaultValue={""}
+					/>
+					{/* </> */}
 				</Form.Item>
 				<div className="form-item">
 					<Form.Item hidden={!hideDescription} noStyle>
@@ -121,7 +150,7 @@ const NewExercise: React.FC<{}> = () => {
 				</div>
 
 				<Form.Item
-					name="select-multiple"
+					name="muscles"
 					label="Exercise Group"
 					rules={[
 						{
@@ -147,7 +176,7 @@ const NewExercise: React.FC<{}> = () => {
 				</Form.Item>
 
 				<Form.Item
-					name="select"
+					name="equipment"
 					label="equipment"
 					hasFeedback
 					rules={[
