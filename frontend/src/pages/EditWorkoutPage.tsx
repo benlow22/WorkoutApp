@@ -13,6 +13,7 @@ import { SearchExercises } from "../components/SearchExercises";
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
+	const [exercises, setExersise] = useState<any>({});
 	const [workout, setWorkout] = useState<IWorkout | undefined | null>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
@@ -33,6 +34,23 @@ export const EditWorkoutPage = () => {
 			}
 		} else {
 			console.log("workout not deleted");
+		}
+	};
+
+	const getExercisesFromWorkout = async () => {
+		let { data, error } = await supabase
+			.from("workouts")
+			.select(
+				`name, id,
+			Exercises(name, muscles)`
+			)
+			.eq("id", workout?.id);
+		if (error) {
+			console.log("err", error);
+		}
+		if (data) {
+			setExersise(data[0]);
+			console.log("fetched DATAAA", data[0]);
 		}
 	};
 
@@ -74,19 +92,24 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
-				{workout.exercises?.map((exercise, index) => (
-					<h3 key={index}>Exercise: {exercise.name}</h3>
-				))}
+				{exercises.Exercises &&
+					exercises.Exercises.map((exercise, index) => (
+						<h3 key={index}>Exercise ID: {exercise.name}</h3>
+					))}
 				<br></br>
 				{!addExercise ? (
-					<Button type="primary" onClick={toggleButton} className="add-exercise-button">
+					<Button
+						type="primary"
+						onClick={toggleButton}
+						className="add-exercise-button"
+					>
 						Add Exercise
 					</Button>
 				) : (
 					<SearchExercises />
 				)}
 				<br></br>
-				<Button type="primary" onClick={deleteWorkout}>
+				<Button type="primary" onClick={getExercisesFromWorkout}>
 					Delete Workout
 				</Button>
 			</div>
