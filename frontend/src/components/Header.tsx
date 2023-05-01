@@ -13,7 +13,7 @@ export const Header: React.FC<{}> = () => {
 
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
-		if (username.length > 0) {
+		if (username) {
 			setDisplayUsername(username);
 			setIsLoading(false);
 		} else {
