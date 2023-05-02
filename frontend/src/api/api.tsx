@@ -11,6 +11,25 @@ export const getWorkouts = async () => {
 	return data;
 };
 
+export const addExerciseToWorkout = async (
+	workoutId: any,
+	exercise: any,
+	userId: string
+) => {
+	const { data, error } = await supabase
+		.from("workouts_exercises")
+		.insert([
+			{
+				workout_id: workoutId,
+				exercise_id: exercise.id,
+				created_by: userId,
+			},
+		]).select("*");
+	console.log('errrror', error);
+	console.log('updated workout exercises', data);
+
+};
+
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
 export const getWorkoutDay = async (workoutName: string = "") => {
 	const { data, error } = await supabase

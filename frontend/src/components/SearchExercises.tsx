@@ -7,10 +7,20 @@ import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { addExerciseToWorkout } from "../api/api";
 
 const { Search } = Input;
 
-export const SearchExercises: React.FC<{}> = () => {
+type TProps = {
+	workout: {
+		name: string;
+		id: string;
+		url: string;
+		Exercises?: [{ name: string }];
+	};
+};
+
+export const SearchExercises = ({ workout }: TProps) => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<
@@ -61,15 +71,25 @@ export const SearchExercises: React.FC<{}> = () => {
 	const handleSearch = () => {
 		if (searchExercise.length > 0) {
 			if (isNewExercise) {
-				navigate(`${searchExercise}/new`);
+				console.log("Add New Exercise Component > new ExercisePage");
 			} else {
 				let exercise = allExercises.find(
 					// grab exercise from list of ALLexercise
 					(e) => e.value === searchExercise
 				);
 				if (exercise) {
-					console.log("asdfasdf", exercise.id);
-					navigate(`${exercise.id}`);
+					console.log(
+						"Add New Exercise Component > new ExercisePage",
+						workout
+					);
+					addExerciseToWorkout(workout.id, exercise, userId);
+					console.log(
+						"Add New Exercise Component > new ExercisePage",
+						workout.id
+					);
+					if (workout.Exercises) {
+						workout.Exercises.push({ name: searchExercise });
+					}
 				}
 			}
 		}

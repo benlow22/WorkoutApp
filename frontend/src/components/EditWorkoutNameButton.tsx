@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts, IWorkoutNameUrl } from "../data";
+import { workouts, IWorkoutNameUrl, IWorkout } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { getWorkouts, updateWorkoutName } from "../api/api";
@@ -8,17 +8,17 @@ import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { changeNameToUrl, buttonClickTrue } from "../utils/utils";
 
-export interface IWorkout {
-	name: string;
-	numberOfExercises?: number;
-}
+// export interface IWorkout {
+// 	name: string;
+// 	numberOfExercises?: number;
+// }
 
-export interface IWorkouts {
-	workouts: IWorkout[];
-}
+// export interface IWorkouts {
+// 	workouts: IWorkout[];
+// }
 
 export const EditWorkoutNameButton: React.FC<{
-	oldWorkout: IWorkoutNameUrl;
+	oldWorkout: IWorkout;
 }> = ({ oldWorkout }) => {
 	const [oldWorkoutName, setOldWorkoutName] = useState<string>(
 		oldWorkout.name
@@ -29,12 +29,6 @@ export const EditWorkoutNameButton: React.FC<{
 	const [newWorkoutUrl, setNewWorkoutUrl] = useState<string>("");
 	const [editName, setEditName] = useState<boolean>(false); // is edit button clicked
 	const navigate = useNavigate();
-
-
-	// whenever oldWorkout, one being diosplayed, pre-edit, is entered, 
-	useEffect(() => {
-		setOldWorkoutName(oldWorkout.name);
-	}, [oldWorkoutName]);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -48,11 +42,13 @@ export const EditWorkoutNameButton: React.FC<{
 				if (workoutNameUpdated) {
 					// returned updated workout
 					console.log("updated workout data:", workoutNameUpdated);
-					navigate(`/workouts/${workoutNameUpdated.url}`);
+					navigate(`/workouts/${workoutNameUpdated.url}`, {
+						state: { workoutId: oldWorkout.id },
+					});
 				}
+				setOldWorkoutName(newWorkoutName);
 				setNewWorkoutUrl("");
 				setNewWorkoutName("");
-				setOldWorkoutName(newWorkoutName); 
 				setEditName(false);
 			}
 		} catch (error) {
