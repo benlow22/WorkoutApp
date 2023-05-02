@@ -1,9 +1,6 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { supabase } from "../supabaseClient";
-import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 export const WelcomePage = () => {
 	const { isLoggedIn } = useContext(AuthContext);
@@ -11,6 +8,6 @@ export const WelcomePage = () => {
 	if (!isLoggedIn) {
 		return <h1>Welcome to the WORKOUT APP</h1>;
 	} else {
-        return <h1> </h1>
-    }
+		return <Navigate to={"workouts"} replace />;
+	}
 };

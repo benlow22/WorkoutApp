@@ -29,6 +29,7 @@ export const EditWorkoutPage = () => {
 	const redirectToHomepage = () => {
 		navigate("/");
 	};
+
 	const {
 		state: { workoutId },
 	} = useLocation();
@@ -62,7 +63,9 @@ export const EditWorkoutPage = () => {
 			setExercises(data?.exercises);
 			setIsLoading(false);
 		}
-		getWorkout();
+		if (workoutId !== "noIdYet") {
+			getWorkout();
+		}
 	}, []);
 
 	// useEffect(() => {

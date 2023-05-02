@@ -6,7 +6,7 @@ export const userInfo = async () => {
 	const { data: username } = await supabase
 		.from("profiles")
 		.select("username")
-		.eq("id", user.id);
+		.eq("id", data.user?.user_metadata.id);
         console.log('usernameee:', username);
 	return { username: username };
 };

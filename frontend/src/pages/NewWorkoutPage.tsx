@@ -31,7 +31,7 @@ export const NewWorkoutPage = () => {
 				);
 
 				if (newWorkoutAddedUrl) {
-					navigate(`/workouts/${newWorkoutAddedUrl}`);
+					navigate(`/workouts/${newWorkoutAddedUrl}`, {state: 'noIdYet'} );
 				}
 			}
 			return true;
