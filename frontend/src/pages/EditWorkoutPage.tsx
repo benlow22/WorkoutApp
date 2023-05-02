@@ -17,10 +17,11 @@ import Exercise from "../components/Exercise";
 import { ExercisesPage } from "./ExercisesPage";
 import { SearchExercises } from "../components/SearchExercises";
 import { Exercises } from "../components/Exercises";
+
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
-	const [exercises, setExersise] = useState<any>({});
+	const [exercises, setExercises] = useState<any>({});
 	const [workout, setWorkout] = useState<any>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkout = { name: "", url: "", id: "" };
@@ -48,18 +49,44 @@ export const EditWorkoutPage = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	if (workout?.id) {
-	// 		getExercisesFromWorkout();
-	// 	}
-	// }, [workoutName]);
-
+	// upon mount, take workoutId passed in
+	// get data for workout IWorkout
 	useEffect(() => {
-		if (exercises) {
-			console.log("hio");
+		setIsLoading(true);
+		async function getWorkout() {
+			const data = await getFullWorkout(workoutId, userId);
+			setWorkout(data); // setState workoutData
+			if (data) {
+				console.log("workoutExercises from API = ", data.exercises);
+			}
+			setExercises(data?.exercises);
 			setIsLoading(false);
 		}
-	}, [exercises]);
+		getWorkout();
+	}, []);
+
+	// useEffect(() => {
+	// 	if (exercises) {
+	// 		setIsLoading(true);
+	// 		async function getWorkout() {
+	// 			const data = await getFullWorkout(workoutId, userId);
+	// 			setWorkout(data); // setState workoutData
+	// 			if (data) {
+	// 				console.log("workoutExercises from API = ", data.exercises);
+	// 			}
+	// 			setExercises(data?.exercises);
+	// 			setIsLoading(false);
+	// 		}
+	// 		getWorkout();
+	// 	}
+	// }, [exercises]);
+
+	// useEffect(() => {
+	// 	if (exercises) {
+	// 		console.log("hio");
+	// 		setIsLoading(false);
+	// 	}
+	// }, [exercises]);
 
 	// const getExercisesFromWorkout = async () => {
 	// 	let { data, error } = await supabase
@@ -80,17 +107,6 @@ export const EditWorkoutPage = () => {
 	// };
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
-	useEffect(() => {
-		setIsLoading(true);
-		async function getWorkout() {
-			const data = await getFullWorkout(workoutId, userId);
-			setWorkout(data);
-			console.log("fetched DATAAA", data?.exercises);
-			setIsLoading(false);
-		}
-
-		getWorkout();
-	}, []);
 
 	// once workout is determined or undefined, isloading = done
 	// useEffect(() => {
@@ -109,6 +125,22 @@ export const EditWorkoutPage = () => {
 		addExercise ? setAddExercise(false) : setAddExercise(true);
 	};
 
+	const addExerciseToAll = (name: string) => {
+		console.log("addExerciseToAll called");
+		let newExercise = { name: name };
+		if (!exercises.find((exercise: any) => exercise.name === name)) {
+			console.log("ahahsda", exercises.name);
+			setExercises([...exercises, newExercise]);
+			setAddExercise(false);
+		}
+	};
+
+	useEffect(() => {
+		setIsLoading(true);
+		console.log("new Exercises", exercises);
+		setIsLoading(false);
+	}, [addExercise]);
+
 	if (!isLoading && workout) {
 		return (
 			<div>
@@ -118,11 +150,7 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
-				<Exercises exercises={workout.exercises} />
-				{/* {workout.Exercises &&
-					workout.Exercises.map((exercise: any, index: any) => (
-						<h3 key={index}>Exercise ID: {exercise.name}</h3>
-					))} */}
+				<Exercises exercises={exercises} />
 				<br></br>
 				{!addExercise ? (
 					<Button
@@ -133,7 +161,10 @@ export const EditWorkoutPage = () => {
 						Add Exercise
 					</Button>
 				) : (
-					<SearchExercises workout={workout} />
+					<SearchExercises
+						workout={workout}
+						addExerciseToAll={addExerciseToAll}
+					/>
 				)}
 				<br></br>
 				<Button type="primary" onClick={deleteWorkout}>

@@ -52,9 +52,9 @@ export const getFullWorkout = async (workoutId: string, userId: string) => {
 		.from("workouts")
 		.select("name, url, id, exercises(name)")
 		.eq("id", workoutId);
-	console.log("API CALL = get workout:", data);
+	console.log("API CALL = get workout data: ", data);
 	if (error) {
-		console.error(error);
+		console.error('API error fetching workout data', error);
 		return;
 	} else {
 		return data[0];

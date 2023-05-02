@@ -18,9 +18,10 @@ type TProps = {
 		url: string;
 		exercises?: [{ name: string }];
 	};
+	addExerciseToAll: (name: string) => void;
 };
 
-export const SearchExercises = ({ workout }: TProps) => {
+export const SearchExercises = ({ workout, addExerciseToAll }: TProps) => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<
@@ -29,6 +30,12 @@ export const SearchExercises = ({ workout }: TProps) => {
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const navigate = useNavigate();
+	const [dropdownExercises, setDropdownExercises] = useState<
+		{ value: string; id: string }[]
+	>([]);
+
+	
+
 	useEffect(() => {
 		// upon loading, fetch all exercise data to populate dropdown
 		console.log("exercises fetch", allExercises);
@@ -56,7 +63,7 @@ export const SearchExercises = ({ workout }: TProps) => {
 
 	useEffect(() => {
 		if (allExercises) {
-			console.log("all exercises updated", allExercises);
+			console.log("all exercises updated", allExercises)
 		}
 	}, [allExercises]);
 
@@ -69,6 +76,9 @@ export const SearchExercises = ({ workout }: TProps) => {
 	}, [searchExercise]);
 
 	const handleSearch = () => {
+		console.log("Searchy", searchExercise);
+		console.log("Searchy", workout);
+
 		if (searchExercise.length > 0) {
 			if (isNewExercise) {
 				console.log("Add New Exercise Component > new ExercisePage");
@@ -79,17 +89,23 @@ export const SearchExercises = ({ workout }: TProps) => {
 				);
 				if (exercise) {
 					console.log(
-						"Add New Exercise Component > new ExercisePage",
-						workout
+						"Add New Exercise to exercises list in state and inserting into workouts_exercises table",
+						exercise
 					);
 					addExerciseToWorkout(workout.id, exercise, userId);
+					addExerciseToAll(exercise.value);
+					setSearchExercise("");
+					// let newAllExercises = workout.exercises;
+					// let newExercise = { name: exercise.value };
+					// newAllExercises.push(newExercise);
+					// updateExercise(newAllExercises);
 					console.log(
 						"Add New Exercise Component > new ExercisePage",
 						workout.id
 					);
-					if (workout.exercises) {
-						workout.exercises.push({ name: searchExercise });
-					}
+					// if (workout.exercises) {
+					// 	workout.exercises.push({ name: searchExercise });
+					// }
 				}
 			}
 		}
@@ -131,7 +147,3 @@ export const SearchExercises = ({ workout }: TProps) => {
 		</div>
 	);
 };
-
-// ant-select-dropdown css-dev-only-do-not-override-yp8pcc ant-select-dropdown-placement-bottomLeft ant-select-dropdown-empty
-// ant-select-dropdown css-dev-only-do-not-override-yp8pcc ant-select-dropdown-placement-bottomLeft"
-// ant-select-item ant-select-item-option ant-select-item-option-active"
