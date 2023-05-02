@@ -22,7 +22,7 @@ export const EditWorkoutPage = () => {
 	const [exercises, setExersise] = useState<any>({});
 	const [workout, setWorkout] = useState<any>(null);
 	let { workoutName } = useParams();
-	let oldWorkout: IWorkoutNameUrl = { name: "", url: "" };
+	let oldWorkout: IWorkout = { name: "", url: "", id: "" };
 	const navigate = useNavigate();
 	const redirectToHomepage = () => {
 		navigate("/");
@@ -31,27 +31,27 @@ export const EditWorkoutPage = () => {
 		state: { workoutId },
 	} = useLocation();
 
-	const {userId} = useContext(AuthContext);
-	const deleteWorkout = async () => {
-		if (workout) {
-			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
-				const { error } = await supabase
-					.from("workouts")
-					.delete()
-					.eq("id", workout.id);
-				console.log("workout deleted");
-				navigate("/workouts");
-			}
-		} else {
-			console.log("workout not deleted");
-		}
-	};
+	const { userId } = useContext(AuthContext);
+	// const deleteWorkout = async () => {
+	// 	if (workout) {
+	// 		if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
+	// 			const { error } = await supabase
+	// 				.from("workouts")
+	// 				.delete()
+	// 				.eq("id", workout.id);
+	// 			console.log("workout deleted");
+	// 			navigate("/workouts");
+	// 		}
+	// 	} else {
+	// 		console.log("workout not deleted");
+	// 	}
+	// };
 
-	useEffect(() => {
-		if (workout?.id) {
-			getExercisesFromWorkout();
-		}
-	}, [workoutName]);
+	// useEffect(() => {
+	// 	if (workout?.id) {
+	// 		getExercisesFromWorkout();
+	// 	}
+	// }, [workoutName]);
 
 	useEffect(() => {
 		if (exercises) {
@@ -60,22 +60,23 @@ export const EditWorkoutPage = () => {
 		}
 	}, [exercises]);
 
-	const getExercisesFromWorkout = async () => {
-		let { data, error } = await supabase
-			.from("workouts")
-			.select(
-				`name, id,
-			Exercises(name, muscles)`
-			)
-			.eq("id", workout?.id);
-		if (error) {
-			console.log("err", error);
-		}
-		if (data) {
-			setExersise(data[0]);
-			console.log("fetched DATAAA", data[0]);
-		}
-	};
+	// const getExercisesFromWorkout = async () => {
+	// 	let { data, error } = await supabase
+	// 		.from("workouts")
+	// 		.select(
+	// 			`name, id,
+	// 		Exercises(name, muscles)`
+	// 		)
+	// 		.eq("id", workout?.id);
+	// 	if (error) {
+	// 		console.log("err", error);
+	// 	}
+	// 	if (data) {
+	// 		setWorkout(data[0]);
+	// 		console.log("fetched DATAAA", data[0]);
+	// 	}
+	// 	console.log("workoutIDDDDDDD", workoutId);
+	// };
 
 	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
 	useEffect(() => {
@@ -83,8 +84,10 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getFullWorkout(workoutId, userId);
 			setWorkout(data);
+			console.log("fetched DATAAA", data);
 			setIsLoading(false);
 		}
+
 		getWorkout();
 	}, []);
 
@@ -97,6 +100,7 @@ export const EditWorkoutPage = () => {
 		oldWorkout = {
 			name: workout.name,
 			url: workout.url,
+			id: workout.id,
 		};
 	}
 
@@ -114,7 +118,7 @@ export const EditWorkoutPage = () => {
 				)}
 				{/* DISPLAY EXERCISES HERE */}
 				{workout.Exercises &&
-					workout.Exercises.map((exercise, index) => (
+					workout.Exercises.map((exercise: any, index: any) => (
 						<h3 key={index}>Exercise ID: {exercise.name}</h3>
 					))}
 				<br></br>
@@ -127,10 +131,10 @@ export const EditWorkoutPage = () => {
 						Add Exercise
 					</Button>
 				) : (
-					<SearchExercises />
+					<SearchExercises workout={workout} />
 				)}
 				<br></br>
-				<Button type="primary" onClick={getExercisesFromWorkout}>
+				<Button type="primary" onClick={()=>{}}>
 					Delete Workout
 				</Button>
 			</div>
