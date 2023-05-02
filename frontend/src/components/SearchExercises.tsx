@@ -16,7 +16,7 @@ type TProps = {
 		name: string;
 		id: string;
 		url: string;
-		Exercises?: [{ name: string }];
+		exercises?: [{ name: string }];
 	};
 };
 
@@ -34,7 +34,7 @@ export const SearchExercises = ({ workout }: TProps) => {
 		console.log("exercises fetch", allExercises);
 		async function fetchExercises() {
 			const { data, error } = await supabase
-				.from("Exercises")
+				.from("exercises")
 				.select("value: name, id"); // change name column to "value" to match options()
 			if (error) {
 				console.error("error fetching exercises", error);
@@ -87,8 +87,8 @@ export const SearchExercises = ({ workout }: TProps) => {
 						"Add New Exercise Component > new ExercisePage",
 						workout.id
 					);
-					if (workout.Exercises) {
-						workout.Exercises.push({ name: searchExercise });
+					if (workout.exercises) {
+						workout.exercises.push({ name: searchExercise });
 					}
 				}
 			}

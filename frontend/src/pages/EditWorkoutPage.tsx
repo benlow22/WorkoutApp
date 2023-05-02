@@ -33,20 +33,20 @@ export const EditWorkoutPage = () => {
 	} = useLocation();
 
 	const { userId } = useContext(AuthContext);
-	// const deleteWorkout = async () => {
-	// 	if (workout) {
-	// 		if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
-	// 			const { error } = await supabase
-	// 				.from("workouts")
-	// 				.delete()
-	// 				.eq("id", workout.id);
-	// 			console.log("workout deleted");
-	// 			navigate("/workouts");
-	// 		}
-	// 	} else {
-	// 		console.log("workout not deleted");
-	// 	}
-	// };
+	const deleteWorkout = async () => {
+		if (workout) {
+			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
+				const { error } = await supabase
+					.from("workouts")
+					.delete()
+					.eq("id", workout.id);
+				console.log("workout deleted");
+				navigate("/workouts");
+			}
+		} else {
+			console.log("workout not deleted");
+		}
+	};
 
 	// useEffect(() => {
 	// 	if (workout?.id) {
@@ -85,7 +85,7 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getFullWorkout(workoutId, userId);
 			setWorkout(data);
-			console.log("fetched DATAAA", data?.Exercises);
+			console.log("fetched DATAAA", data?.exercises);
 			setIsLoading(false);
 		}
 
@@ -118,7 +118,7 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
-				<Exercises exercises={workout.Exercises} />
+				<Exercises exercises={workout.exercises} />
 				{/* {workout.Exercises &&
 					workout.Exercises.map((exercise: any, index: any) => (
 						<h3 key={index}>Exercise ID: {exercise.name}</h3>
@@ -136,7 +136,7 @@ export const EditWorkoutPage = () => {
 					<SearchExercises workout={workout} />
 				)}
 				<br></br>
-				<Button type="primary" onClick={() => {}}>
+				<Button type="primary" onClick={deleteWorkout}>
 					Delete Workout
 				</Button>
 			</div>
