@@ -178,3 +178,10 @@ input[value].new-workout-input,
 .edit-new-workout-name {
   margin-top: 10px;
 }
+
+
+.exercise-list {
+	text-align: left;
+	width: 400px;
+	margin: auto;
+}

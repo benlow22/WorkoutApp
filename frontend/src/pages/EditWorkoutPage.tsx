@@ -16,6 +16,7 @@ import { AuthContext } from "../contexts/AuthProvider";
 import Exercise from "../components/Exercise";
 import { ExercisesPage } from "./ExercisesPage";
 import { SearchExercises } from "../components/SearchExercises";
+import { Exercises } from "../components/Exercises";
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
@@ -84,7 +85,7 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getFullWorkout(workoutId, userId);
 			setWorkout(data);
-			console.log("fetched DATAAA", data);
+			console.log("fetched DATAAA", data?.Exercises);
 			setIsLoading(false);
 		}
 
@@ -117,10 +118,11 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
-				{workout.Exercises &&
+				<Exercises exercises={workout.Exercises} />
+				{/* {workout.Exercises &&
 					workout.Exercises.map((exercise: any, index: any) => (
 						<h3 key={index}>Exercise ID: {exercise.name}</h3>
-					))}
+					))} */}
 				<br></br>
 				{!addExercise ? (
 					<Button
@@ -134,7 +136,7 @@ export const EditWorkoutPage = () => {
 					<SearchExercises workout={workout} />
 				)}
 				<br></br>
-				<Button type="primary" onClick={()=>{}}>
+				<Button type="primary" onClick={() => {}}>
 					Delete Workout
 				</Button>
 			</div>
