@@ -17,7 +17,7 @@ import Exercise from "../components/Exercise";
 import { ExercisesPage } from "./ExercisesPage";
 import { SearchExercises } from "../components/SearchExercises";
 import { Exercises } from "../components/Exercises";
-
+import { TestFetchExercise } from "../components/TestFetchExercises";
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
@@ -153,6 +153,10 @@ export const EditWorkoutPage = () => {
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
+				{exercises.map((exercise) => (
+					<TestFetchExercise exerciseId={exercise.id} />
+				))}
+
 				<Exercises exercises={exercises} />
 				<br></br>
 				{!addExercise ? (

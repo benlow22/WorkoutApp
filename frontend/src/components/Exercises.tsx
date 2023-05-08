@@ -11,6 +11,7 @@ export const Exercises = ({ exercises }: Tprops) => {
 			{exercises.length > 0 && exercises.map((exercise) => (
 				<h3>{exercise.name}</h3>
 			))}
+			
 		</div>
 	);
 };
