@@ -84,3 +84,58 @@ interface ISets {
 	reps: number;
 	weight: number;
 }
+
+export type TSets = {
+	name: string; // join table
+	userId: string; // = uuid()
+	exerciseId: string; // uuid()
+	notes: string;
+	sets: number[][]
+	// {
+	// 	setnumber: number;
+	// 	reps: number;
+	// 	weight: number;
+	// }[];
+};
+
+let mockSets = {
+	userId: "asd987sdsadias9iu",
+	exerciseId: "23kjh3u2iueh7c",
+	notes: "don't fail",
+	sets: [ // [1,10,10],[2,10,10]
+		{
+			setNumber: 1,
+			reps: 10,
+			weight: 10,
+		},
+		{
+			setNumber: 2,
+			reps: 10,
+			weight: 10,
+		},
+		{
+			setNumber: 3,
+			reps: 10,
+			weight: 10,
+		},
+	],
+};
+
+type TSets2 = {
+	userId: string; // = uuid()
+	exerciseId: string; // uuid()
+	notes: string;
+	sets: number[];
+	reps: number[];
+	weight: number[];
+};
+
+let mockSets2 = {
+	userId: "asd987sdsadias9iu",
+	exerciseId: "23kjh3u2iueh7c",
+	notes: "don't fail",
+	sets: [1, 2, 3],
+	reps: [10, 10, 10],
+	weight: [10, 15, 20],
+};
+
