@@ -2,32 +2,53 @@
 
 import {
 	CheckCircleOutlined,
+	DeleteOutlined,
 	EditOutlined,
 	MinusOutlined,
 	PlusOutlined,
 	PoweroffOutlined,
 } from "@ant-design/icons";
 import { Button } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Tprops = {
 	set: number[];
 	units: string;
+	index: number;
+	updateSets: (newset: number[], index: number) => void;
+	removeSet: (index: number) => void;
 	// ADD weight units: TUnits = lbs or kgs
 };
 
 // give [1,10,15]
-export const TestSets = ({ set, units }: Tprops) => {
-	const [setNumber, setSetNumber] = useState<number>(set[0]);
-	const [numberOfReps, setNumberOfReps] = useState<number>(set[1]);
-	const [weight, setWeight] = useState<number>(set[2]);
+export const TestSets = ({
+	set,
+	units,
+	index,
+	updateSets,
+	removeSet,
+}: Tprops) => {
+	// const [setNumber, setSetNumber] = useState<number>(set[0]); using index now as set number +1
+	const [numberOfReps, setNumberOfReps] = useState<number>(set[0]);
+	const [weight, setWeight] = useState<number>(set[1]);
 	const [disableSet, setDisableSet] = useState<boolean>(false);
+
+	useEffect(() => {
+		updateSets([numberOfReps, weight], index);
+	}, [numberOfReps, weight]);
+
+	useEffect(() => {
+		if (set) {
+			setNumberOfReps(set[0]);
+			setWeight(set[1]);
+		}
+	}, [set]);
 
 	return (
 		<div className="set">
 			<div className="set-reps set-item">
 				<p>
-					{setNumber}. {numberOfReps} reps{" "}
+					{index + 1}. {numberOfReps} reps
 				</p>
 			</div>
 			<div className="set-reps-buttons set-item">
@@ -36,14 +57,18 @@ export const TestSets = ({ set, units }: Tprops) => {
 					size="small"
 					type="primary"
 					icon={<MinusOutlined />}
-					onClick={() => {}}
+					onClick={() => {
+						setNumberOfReps((prev) => prev - 1);
+					}}
 				/>
 				<Button
 					disabled={disableSet}
 					size="small"
 					type="primary"
 					icon={<PlusOutlined />}
-					onClick={() => {}}
+					onClick={() => {
+						setNumberOfReps((prev) => prev + 1);
+					}}
 				/>
 			</div>
 			<div className="set-weight-and-units set-item">
@@ -57,14 +82,18 @@ export const TestSets = ({ set, units }: Tprops) => {
 					size="small"
 					type="primary"
 					icon={<MinusOutlined />}
-					onClick={() => {}}
+					onClick={() => {
+						setWeight((prev) => prev - 0.5);
+					}}
 				/>
 				<Button
 					disabled={disableSet}
 					size="small"
 					type="primary"
 					icon={<PlusOutlined />}
-					onClick={() => {}}
+					onClick={() => {
+						setWeight((prev) => prev + 0.5);
+					}}
 				/>
 			</div>
 			{disableSet ? (
@@ -73,7 +102,9 @@ export const TestSets = ({ set, units }: Tprops) => {
 					size="small"
 					ghost
 					icon={<EditOutlined />}
-					onClick={() => setDisableSet(false)}
+					onClick={() => {
+						setDisableSet(false);
+					}}
 				/>
 			) : (
 				<Button
@@ -84,6 +115,13 @@ export const TestSets = ({ set, units }: Tprops) => {
 					onClick={() => setDisableSet(true)}
 				/>
 			)}
+			<Button
+				icon={<DeleteOutlined />}
+				className="delete-set-button"
+				type="text"
+				size="small"
+				onClick={() => removeSet(index)}
+			/>
 		</div>
 	);
 };
