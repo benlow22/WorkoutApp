@@ -24,7 +24,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 		console.log("exercises fetch", allExercises);
 		async function fetchExercises() {
 			const { data, error } = await supabase
-				.from("Exercises")
+				.from("exercises")
 				.select("value: name, id"); // change name column to "value" to match options()
 			if (error) {
 				console.error("error fetching exercises", error);

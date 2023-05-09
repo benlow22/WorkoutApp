@@ -39,7 +39,7 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 	}, []);
 
 	return (
-		<div className="set-list">
+		<div className="exercise-set-list">
             <h2>{exerciseData?.exercises?.name}</h2>
 			{sets.map((set: number[]) => (
 				<TestSets set={set} units={exerciseData.units} />

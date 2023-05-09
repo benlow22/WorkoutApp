@@ -132,9 +132,9 @@ input[value].new-workout-input,
 .new-exercise-form {
 	background-color: rgb(101, 168, 255);
 	margin: auto;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 15px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-radius: 15px;
 }
 
 .new-exercise-form * {
@@ -176,12 +176,38 @@ input[value].new-workout-input,
 }
 
 .edit-new-workout-name {
-  margin-top: 10px;
+	margin-top: 10px;
 }
-
 
 .exercise-list {
 	text-align: left;
 	width: 400px;
 	margin: auto;
+}
+
+.set {
+	text-align: left;
+	width: 350px;
+	margin: auto;
+}
+
+.exercise-set-list {
+	width: 300px;
+	margin: auto;
+	display: inline;
+}
+
+.weight-buttons {
+	display: inline;
+}
+
+
+.set-item{
+	display: inline-block;
+}
+.set-reps, .set-weight-and-units{
+	width: 100px;
+}
+.set-reps-buttons, .weight-buttons{
+	width: 55px;
 }
