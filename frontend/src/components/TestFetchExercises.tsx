@@ -41,6 +41,15 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 		fetchSets();
 	}, []);
 
+	const handleIncrementWeight = (index: number) => {
+		let oldSets = [...sets];
+		oldSets[index][1] += 1;
+		setSets(oldSets);
+	}
+
+	const handleDecrementWeight = () => {
+		
+	}
 	const handleUpdate = (newSet: number[], index: number) => {
 		let oldSets = [...sets];
 		oldSets[index] = newSet;
@@ -69,6 +78,7 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 					index={index}
 					updateSets={handleUpdate}
 					removeSet={handleRemoveSet}
+					incrementWeight={handleIncrementWeight}
 				/>
 			))}
 			<Button

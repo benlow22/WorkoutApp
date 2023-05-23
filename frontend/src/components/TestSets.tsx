@@ -17,6 +17,8 @@ type Tprops = {
 	index: number;
 	updateSets: (newset: number[], index: number) => void;
 	removeSet: (index: number) => void;
+	incrementWeight: (index: number) => void;
+
 	// ADD weight units: TUnits = lbs or kgs
 };
 
@@ -27,6 +29,7 @@ export const TestSets = ({
 	index,
 	updateSets,
 	removeSet,
+	incrementWeight
 }: Tprops) => {
 	// const [setNumber, setSetNumber] = useState<number>(set[0]); using index now as set number +1
 	const [numberOfReps, setNumberOfReps] = useState<number>(set[0]);
@@ -83,7 +86,7 @@ export const TestSets = ({
 					type="primary"
 					icon={<MinusOutlined />}
 					onClick={() => {
-						setWeight((prev) => prev - 0.5);
+						updateSets([numberOfReps, weight-2], index);;
 					}}
 				/>
 				<Button
@@ -92,7 +95,7 @@ export const TestSets = ({
 					type="primary"
 					icon={<PlusOutlined />}
 					onClick={() => {
-						setWeight((prev) => prev + 0.5);
+						incrementWeight(index);
 					}}
 				/>
 			</div>
