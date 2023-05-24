@@ -1,5 +1,5 @@
 const API_ENDPOINT = "http://localhost:3000";
-import { supabase, user } from "../supabaseClient";
+import { supabase } from "../supabaseClient";
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
