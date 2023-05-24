@@ -18,10 +18,16 @@ import { ExercisesPage } from "./ExercisesPage";
 import { SearchExercises } from "../components/SearchExercises";
 import { Exercises } from "../components/Exercises";
 import { TestFetchExercise } from "../components/TestFetchExercises";
+
+type IExercise = {
+	name: any;
+	id?: any;
+};
+
 export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
-	const [exercises, setExercises] = useState<any>({});
+	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<any>(null);
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkout = { name: "", url: "", id: "" };
@@ -59,8 +65,9 @@ export const EditWorkoutPage = () => {
 			setWorkout(data); // setState workoutData
 			if (data) {
 				console.log("workoutExercises from API = ", data.exercises);
+				const exercisesFromData = data.exercises as IExercise[]
+				setExercises(exercisesFromData);
 			}
-			setExercises(data?.exercises);
 			setIsLoading(false);
 		}
 		if (workoutId !== "noIdYet") {
@@ -131,8 +138,8 @@ export const EditWorkoutPage = () => {
 	const addExerciseToAll = (name: string) => {
 		console.log("addExerciseToAll called");
 		let newExercise = { name: name };
-		if (!exercises.find((exercise: any) => exercise.name === name)) {
-			console.log("ahahsda", exercises.name);
+		if (!exercises.find((exercise) => exercise.name === name)) {
+			console.log("ahahsda" );
 			setExercises([...exercises, newExercise]);
 			setAddExercise(false);
 		}
