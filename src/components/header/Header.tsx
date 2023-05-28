@@ -24,9 +24,16 @@ export const Header: React.FC<{}> = () => {
 
 	return (
 		<div className="header">
-			<Link to="/workouts">
-				<h1>Workout Buddy</h1>
-			</Link>
+			{auth ? (
+				<Link to="/workouts">
+					<h1>Workout Buddy</h1>
+				</Link>
+			) : (
+				<Link to="/">
+					<h1>Workout Buddy</h1>
+				</Link>
+			)}
+
 			{auth &&
 				!isLoading && ( // if authorized render "upsert username" link
 					<div className="account">
