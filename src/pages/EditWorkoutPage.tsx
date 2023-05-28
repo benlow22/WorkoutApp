@@ -65,7 +65,7 @@ export const EditWorkoutPage = () => {
 			setWorkout(data); // setState workoutData
 			if (data) {
 				console.log("workoutExercises from API = ", data.exercises);
-				const exercisesFromData = data.exercises as IExercise[]
+				const exercisesFromData = data.exercises as IExercise[];
 				setExercises(exercisesFromData);
 			}
 			setIsLoading(false);
@@ -139,7 +139,7 @@ export const EditWorkoutPage = () => {
 		console.log("addExerciseToAll called");
 		let newExercise = { name: name };
 		if (!exercises.find((exercise) => exercise.name === name)) {
-			console.log("ahahsda" );
+			console.log("ahahsda");
 			setExercises([...exercises, newExercise]);
 			setAddExercise(false);
 		}
@@ -161,7 +161,10 @@ export const EditWorkoutPage = () => {
 				)}
 				{/* DISPLAY EXERCISES HERE */}
 				{exercises.map((exercise) => (
-					<TestFetchExercise exerciseId={exercise.id} />
+					<TestFetchExercise
+						exerciseId={exercise.id}
+						key={exercise.id}
+					/>
 				))}
 
 				<Exercises exercises={exercises} />
