@@ -13,7 +13,7 @@ import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 import { WorkoutsPage } from "./pages/WorkoutsPage";
 import CreateUsernamePage from "./components/CreateUsernamePage";
-import { LoginPage } from "./pages/LoginPage";
+import { LoginPage } from "./pages/login/LoginPage";
 import { WelcomePage } from "./pages/WelcomePage";
 import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
