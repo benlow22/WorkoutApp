@@ -19,7 +19,6 @@ export const Header: React.FC<{}> = () => {
 		} else {
 			setIsLoading(false);
 		}
-		console.log("header location", location);
 	}, [username]);
 
 	return (
