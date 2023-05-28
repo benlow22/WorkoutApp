@@ -8,11 +8,11 @@ import { Navigate, useNavigate } from "react-router-dom";
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	const { auth } = useContext(AuthContext);
-
 	if (auth) {
 		return <Navigate to="/workouts" />;
 	}
 
+	// if not auth = false, Auth page will render
 	return (
 		<div className="auth-page">
 			<p>Please Login Below</p>

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import LogoutButton from "../LogOutButton";
+import LogoutButton from "./LogOutButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
-import LogInButton from "../LogInButton";
+import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 
 export const Header: React.FC<{}> = () => {
