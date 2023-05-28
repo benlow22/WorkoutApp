@@ -41,15 +41,22 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 		fetchSets();
 	}, []);
 
-	const handleIncrementWeight = (index: number) => {
-		let oldSets = [...sets];
-		oldSets[index][1] += 1;
-		setSets(oldSets);
-	}
+	useEffect(() => {
+		if (sets) {
+		}
+	}, [sets]);
 
-	const handleDecrementWeight = () => {
-		
-	}
+	const handleIncrementWeight = (index: number) => {
+		console.log("1", sets);
+		let oldSets = [...sets];
+		console.log("2", oldSets);
+		oldSets[index][1] += 1;
+		console.log("3", oldSets);
+		setSets(oldSets);
+		setIsLoading(false);
+	};
+
+	const handleDecrementWeight = () => {};
 	const handleUpdate = (newSet: number[], index: number) => {
 		let oldSets = [...sets];
 		oldSets[index] = newSet;
@@ -63,9 +70,23 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 	};
 
 	const handleRemoveSet = (index: number) => {
-		const oldSets = [...sets];
-		oldSets.splice(index, 1);
-		setSets(oldSets);
+		console.log("12", sets.length);
+		if (sets.length > 1) {
+			const oldSets = [...sets];
+			oldSets.splice(index, 1);
+			setSets(oldSets);
+		} else {
+			if (
+				confirm(
+					`would you like to delete ${exerciseData.exercises.name}`
+				)
+			) {
+				const oldSets = [...sets];
+				oldSets.splice(index, 1);
+				setSets(oldSets); // also remove from database
+				//DELETE EXERCISE FROM LIST
+			}
+		}
 	};
 
 	return (
@@ -79,6 +100,7 @@ export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
 					updateSets={handleUpdate}
 					removeSet={handleRemoveSet}
 					incrementWeight={handleIncrementWeight}
+					key={`${exerciseData?.exercise?.name}-${index}`}
 				/>
 			))}
 			<Button
