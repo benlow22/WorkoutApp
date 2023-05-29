@@ -64,6 +64,19 @@ export interface IWorkout {
 	last_performed: string | null;
 }
 
+export interface IWorkoutWithExercises {
+	id: string;
+	name: string;
+	url: string;
+	last_performed: string | null;
+	exercises: IExercise[];
+}
+
+export interface IExercise {
+	name: string;
+	id: string;
+}
+
 export interface IWorkoutRoutine {
 	workouts: IWorkout[];
 }
@@ -80,11 +93,11 @@ export interface IWorkoutNameUrl {
 	url: string;
 }
 
-interface IExercise {
-	id: number;
-	name: string;
-	sets: ISets[];
-}
+// interface IExercise {
+// 	id: number;
+// 	name: string;
+// 	sets: ISets[];
+// }
 
 interface ISets {
 	setNumber: number;

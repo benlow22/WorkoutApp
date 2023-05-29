@@ -10,7 +10,7 @@ import {
 
 import Root from "./components/Root";
 import { NewWorkoutPage } from "./pages/newWorkoutPage/NewWorkoutPage";
-import { EditWorkoutPage } from "./pages/EditWorkoutPage";
+import { EditWorkoutPage } from "./pages/EditWorkoutPage/EditWorkoutPage";
 import { WorkoutsPage } from "./pages/workoutsPage/WorkoutsPage";
 import { CreateUsernamePage } from "./pages/createUsernamePage/CreateUsernamePage";
 import { LoginPage } from "./pages/login/LoginPage";
