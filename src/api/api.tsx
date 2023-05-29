@@ -1,4 +1,5 @@
 const API_ENDPOINT = "http://localhost:3000";
+import { IExercise } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 
@@ -47,17 +48,29 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 };
 
 // takes workoutID
-export const getFullWorkout = async (workoutId: string, userId: string) => {
+export const getFullWorkout = async (workoutId: string) => {
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("name, url, id, exercises(name, id)")
+		.select("name, url, id, last_performed, exercises(name, id)")
 		.eq("id", workoutId);
 	console.log("API CALL = get workout data: ", data);
 	if (error) {
 		console.error("API error fetching workout data", error);
 		return;
 	} else {
-		return data[0];
+		if (data[0]) {
+			const workout = data[0]; // get workout data from API call
+			const exercises: IExercise[] = workout.exercises as IExercise[]; // reaffirm Typing
+			console.log("exercises", exercises);
+			const reformattedData = {
+				id: workout.id,
+				name: workout.name,
+				url: workout.url,
+				last_performed: workout.last_performed,
+				exercises: exercises,
+			};
+			return reformattedData;
+		}
 	}
 };
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  

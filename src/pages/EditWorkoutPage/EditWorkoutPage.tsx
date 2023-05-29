@@ -5,47 +5,46 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { IWorkout, IWorkoutNameUrl, workouts } from "../data";
-import { getFullWorkout, getWorkoutDay } from "../api/api";
+import { IWorkout, IWorkoutWithExercises, IExercise } from "../../data";
+import { getFullWorkout, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
 import { EditTwoTone } from "@ant-design/icons";
-import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
-import { AuthContext } from "../contexts/AuthProvider";
-import Exercise from "../components/Exercise";
-import { ExercisesPage } from "./ExercisesPage";
-import { SearchExercises } from "../components/SearchExercises";
-import { Exercises } from "../components/Exercises";
-import { TestFetchExercise } from "../components/TestFetchExercises";
+import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Exercise from "../../components/Exercise";
+import { ExercisesPage } from "../ExercisesPage";
+import { SearchExercises } from "../../components/SearchExercises";
+import { Exercises } from "../../components/Exercises";
+import { TestFetchExercise } from "../../components/TestFetchExercises";
 
-type IExercise = {
-	name: any;
-	id?: any;
-};
+// type IExercise = {
+// 	name: any;
+// 	id?: any;
+// };
 
 export const EditWorkoutPage = () => {
+	const location = useLocation();
+	const navigate = useNavigate();
+
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
-	const [workout, setWorkout] = useState<any>(null);
+	const [workout, setWorkout] = useState<IWorkoutWithExercises>();
+	const [workoutId, setWorkoutId] = useState(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	let { workoutUrl } = useParams();
+
 	let oldWorkout: IWorkout = {
 		name: "",
 		url: "",
 		id: "",
 		last_performed: null,
 	};
-	const navigate = useNavigate();
+
 	const redirectToWelcomepage = () => {
 		navigate("/");
 	};
-
-	const {
-		state: { workoutId },
-	} = useLocation();
-
-	const { userId } = useContext(AuthContext);
 
 	const deleteWorkout = async () => {
 		if (workout) {
@@ -56,6 +55,10 @@ export const EditWorkoutPage = () => {
 					.eq("id", workout.id);
 				console.log("workout deleted");
 				navigate("/workouts");
+				if (error) {
+					console.error(error);
+					return;
+				}
 			}
 		} else {
 			console.log("workout not deleted");
@@ -65,69 +68,24 @@ export const EditWorkoutPage = () => {
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
-		setIsLoading(true);
+		// console.log('what is workout"', workout);
 		async function getWorkout() {
-			const data = await getFullWorkout(workoutId, userId);
-			setWorkout(data); // setState workoutData
+			const data = await getFullWorkout(workoutId);
 			if (data) {
-				console.log("workoutExercises from API = ", data.exercises);
-				const exercisesFromData = data.exercises as IExercise[];
-				setExercises(exercisesFromData);
+				setWorkout(data); // setState workoutData
+				setExercises(data.exercises);
 			}
-			setIsLoading(false);
 		}
-		if (workoutId !== "noIdYet") {
-			getWorkout();
-		}
+		getWorkout();
 	}, []);
 
-	// useEffect(() => {
-	// 	if (exercises) {
-	// 		setIsLoading(true);
-	// 		async function getWorkout() {
-	// 			const data = await getFullWorkout(workoutId, userId);
-	// 			setWorkout(data); // setState workoutData
-	// 			if (data) {
-	// 				console.log("workoutExercises from API = ", data.exercises);
-	// 			}
-	// 			setExercises(data?.exercises);
-	// 			setIsLoading(false);
-	// 		}
-	// 		getWorkout();
-	// 	}
-	// }, [exercises]);
+	useEffect(() => {
+		if (workout) {
+			console.log("what is workout NOW", workout);
 
-	// useEffect(() => {
-	// 	if (exercises) {
-	// 		console.log("hio");
-	// 		setIsLoading(false);
-	// 	}
-	// }, [exercises]);
-
-	// const getExercisesFromWorkout = async () => {
-	// 	let { data, error } = await supabase
-	// 		.from("workouts")
-	// 		.select(
-	// 			`name, id,
-	// 		Exercises(name, muscles)`
-	// 		)
-	// 		.eq("id", workout?.id);
-	// 	if (error) {
-	// 		console.log("err", error);
-	// 	}
-	// 	if (data) {
-	// 		setWorkout(data[0]);
-	// 		console.log("fetched DATAAA", data[0]);
-	// 	}
-	// 	console.log("workoutIDDDDDDD", workoutId);
-	// };
-
-	// gets workout day from url, return name and id, sets workout, sets undefined if url not found
-
-	// once workout is determined or undefined, isloading = done
-	// useEffect(() => {
-	// 	if (workout === undefined || workout) setIsLoading(false);
-	// }, [workout]);
+			setIsLoading(false);
+		}
+	}, [workout]);
 
 	if (workout) {
 		oldWorkout = {
@@ -151,11 +109,11 @@ export const EditWorkoutPage = () => {
 		}
 	};
 
-	useEffect(() => {
-		setIsLoading(true);
-		console.log("new Exercises", exercises);
-		setIsLoading(false);
-	}, [addExercise]);
+	// useEffect(() => {
+	// 	setIsLoading(true);
+	// 	console.log("new Exercises", exercises);
+	// 	setIsLoading(false);
+	// }, [addExercise]);
 
 	if (!isLoading && workout) {
 		return (

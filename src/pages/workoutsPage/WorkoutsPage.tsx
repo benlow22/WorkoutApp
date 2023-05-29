@@ -37,7 +37,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 					<Link
 						to={`/workouts/${workout.url}`}
 						key={index}
-						state={{ workoutId: workout.id }}
+						state={workout.id}
 					>
 						<WorkoutButton workout={workout} />
 					</Link>
