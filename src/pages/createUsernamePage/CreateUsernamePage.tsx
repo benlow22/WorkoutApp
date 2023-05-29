@@ -19,7 +19,9 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					.from("profiles")
 					.update({ username: newUsername })
 					.eq("id", userId);
-				setUsername(newUsername);
+				if (!error) {
+					setUsername(newUsername);
+				}
 				const { data, error: err2 } = await supabase.auth.updateUser({
 					data: { username: newUsername },
 				});
@@ -36,24 +38,21 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 		<div>
 			<h2>{username ? "Change " : "Create "} Username</h2>
 			<form className="upsert-username-form">
-				<Input
+				<input
 					onChange={(e) => setNewUsername(e.target.value)}
 					value={newUsername}
 					type="text"
 					placeholder="New Username"
-					pattern="[A-Za-z0-9]{5,15}"
+					pattern="[A-Za-z0-9]
+					{(5, 15)}"
 					className="upsert-username-form-input"
 					maxLength={15}
-				/>
-
-				<Button
-					type="primary"
+				></input>
+				<input
+					type="submit"
 					onClick={handleSubmit}
 					className="upsert-username-submit-button"
-					value={"Submit"}
-				>
-					SUBMIT
-				</Button>
+				/>
 			</form>
 		</div>
 	);
