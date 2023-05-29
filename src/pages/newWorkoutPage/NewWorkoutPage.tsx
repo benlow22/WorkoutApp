@@ -23,7 +23,7 @@ export const NewWorkoutPage = () => {
 					userId
 				);
 				if (newWorkoutAdded) {
-					navigate(`/workouts/${newWorkoutAdded.url}`, {
+					navigate(`/edit-workout/${newWorkoutAdded.url}`, {
 						state: newWorkoutAdded.id,
 					});
 				}

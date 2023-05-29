@@ -5,26 +5,26 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { IWorkout, IWorkoutNameUrl, workouts } from "../data";
-import { getFullWorkout, getWorkoutDay } from "../api/api";
+import { IWorkout, IWorkoutNameUrl, workouts } from "../../data";
+import { getFullWorkout, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
 import { EditTwoTone } from "@ant-design/icons";
-import { EditWorkoutNameButton } from "../components/EditWorkoutNameButton";
-import { AuthContext } from "../contexts/AuthProvider";
-import Exercise from "../components/Exercise";
-import { ExercisesPage } from "./ExercisesPage";
-import { SearchExercises } from "../components/SearchExercises";
-import { Exercises } from "../components/Exercises";
-import { TestFetchExercise } from "../components/TestFetchExercises";
+import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Exercise from "../../components/Exercise";
+import { ExercisesPage } from ".././ExercisesPage";
+import { SearchExercises } from "../../components/SearchExercises";
+import { Exercises } from "../../components/Exercises";
+import { TestFetchExercise } from "../../components/TestFetchExercises";
 
 type IExercise = {
 	name: any;
 	id?: any;
 };
 
-export const EditWorkoutPage = () => {
+export const WorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
