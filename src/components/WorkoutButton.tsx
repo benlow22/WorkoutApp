@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "antd";
-import { IWorkout, workouts } from "../data";
+import { IWorkout } from "../data";
 
 const WorkoutButton: React.FC<{ workout: IWorkout }> = ({ workout }) => (
 	<Button type="primary" block className="workout-button">

@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 
 import Root from "./components/Root";
-import { NewWorkoutPage } from "./pages/NewWorkoutPage";
+import { NewWorkoutPage } from "./pages/newWorkoutPage/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
-import { WorkoutsPage } from "./pages/WorkoutsPage";
+import { WorkoutsPage } from "./pages/workoutsPage/WorkoutsPage";
 import { CreateUsernamePage } from "./pages/createUsernamePage/CreateUsernamePage";
 import { LoginPage } from "./pages/login/LoginPage";
 import { WelcomePage } from "./pages/welcomePage/WelcomePage";
