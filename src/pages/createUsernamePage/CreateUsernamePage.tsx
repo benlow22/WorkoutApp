@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const { userId, setUsername, username } = useContext(AuthContext);
-	const [allusers, setAllUsers] = useState<string[]>([]);
+	const [allUsernames, setAllUsernames] = useState<string[]>([]);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -24,7 +24,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 				if (data) {
 					const allUsernames = data.map((user) => user.username);
 					console.log("allusernames:", allUsernames);
-					setAllUsers(allUsernames);
+					setAllUsernames(allUsernames);
 				}
 			} catch (error) {
 				console.error("error getting all users:", error);
@@ -35,7 +35,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		if (allusers.includes(newUsername)) {
+		if (allUsernames.includes(newUsername)) {
 			alert(`username "${newUsername}" is already taken`);
 		} else {
 			if (newUsername.match(/^\w{5,15}$/)) {
