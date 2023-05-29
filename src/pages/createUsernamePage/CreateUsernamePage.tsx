@@ -27,7 +27,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					setAllUsers(allUsernames);
 				}
 			} catch (error) {
-				console.log("error getting all users:", error);
+				console.error("error getting all users:", error);
 			}
 		};
 		getAllUsernames();
@@ -58,7 +58,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					if (error) throw error;
 					if (err2) throw error;
 				} catch (err) {
-					console.log("error updating username", err);
+					console.error("error updating username", err);
 				}
 			}
 		}
