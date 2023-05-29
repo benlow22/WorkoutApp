@@ -34,13 +34,6 @@ export const EditWorkoutPage = () => {
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	let { workoutUrl } = useParams();
 
-	let oldWorkout: IWorkout = {
-		name: "",
-		url: "",
-		id: "",
-		last_performed: null,
-	};
-
 	const redirectToWelcomepage = () => {
 		navigate("/");
 	};
@@ -67,32 +60,23 @@ export const EditWorkoutPage = () => {
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
-		// console.log('what is workout"', workout);
+		setIsLoading(true);
 		async function getWorkout() {
 			const data = await getFullWorkout(workout.id);
 			if (data) {
 				// setWorkout(data); // setState workoutData
 				setExercises(data);
+				console.log("should be exercises", data);
 			}
 		}
 		getWorkout();
 	}, []);
 
 	useEffect(() => {
-		if (workout) {
-			console.log("what is workout NOW", workout);
-
+		if (exercises) {
 			setIsLoading(false);
 		}
-	}, [workout]);
-
-	if (workout) {
-		oldWorkout = {
-			name: workout.name,
-			url: workout.url,
-			id: workout.id,
-		};
-	}
+	}, [exercises]);
 
 	const toggleButton = () => {
 		addExercise ? setAddExercise(false) : setAddExercise(true);
@@ -117,9 +101,9 @@ export const EditWorkoutPage = () => {
 	if (!isLoading && workout) {
 		return (
 			<div>
-				{oldWorkout && (
+				{workout && (
 					<section className="new-workout-name">
-						<EditWorkoutNameButton oldWorkout={workout} />
+						<EditWorkoutNameButton workout={workout} />
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
