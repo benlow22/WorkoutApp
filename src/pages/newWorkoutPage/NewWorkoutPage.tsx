@@ -24,7 +24,12 @@ export const NewWorkoutPage = () => {
 				);
 				if (newWorkoutAdded) {
 					navigate(`/edit-workout/${newWorkoutAdded.url}`, {
-						state: newWorkoutAdded.id,
+						state: {
+							id: newWorkoutAdded.id,
+							name: newWorkoutAdded.name,
+							url: newWorkoutAdded.url,
+							last_performed: newWorkoutAdded.last_performed,
+						},
 					});
 				}
 			}

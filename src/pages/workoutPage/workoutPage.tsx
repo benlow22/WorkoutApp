@@ -37,8 +37,7 @@ export const WorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
-	const [workout, setWorkout] = useState<IWorkoutWithExercises>();
-	const [workoutId, setWorkoutId] = useState(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
+	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	let { workoutUrl } = useParams();
 	let oldWorkout: IWorkout = {
 		name: "",
@@ -73,9 +72,10 @@ export const WorkoutPage = () => {
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
+		console.log("workout passed via state", workout);
 		setIsLoading(true);
 		async function getWorkout() {
-			const data = await getFullWorkout(workoutId);
+			const data = await getFullWorkout(workout.id);
 			setWorkout(data); // setState workoutData
 			if (data) {
 				setWorkout(data); // setState workoutData
@@ -86,6 +86,13 @@ export const WorkoutPage = () => {
 		getWorkout();
 	}, []);
 
+	useEffect(() => {
+		if (workout) {
+			console.log("what is workout NOW", workout);
+
+			setIsLoading(false);
+		}
+	}, [workout]);
 	if (workout) {
 		oldWorkout = {
 			name: workout.name,

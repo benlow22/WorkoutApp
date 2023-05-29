@@ -31,8 +31,7 @@ export const EditWorkoutPage = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
-	const [workout, setWorkout] = useState<IWorkoutWithExercises>();
-	const [workoutId, setWorkoutId] = useState(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
+	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	let { workoutUrl } = useParams();
 
 	let oldWorkout: IWorkout = {
@@ -70,7 +69,7 @@ export const EditWorkoutPage = () => {
 	useEffect(() => {
 		// console.log('what is workout"', workout);
 		async function getWorkout() {
-			const data = await getFullWorkout(workoutId);
+			const data = await getFullWorkout(workout.id);
 			if (data) {
 				setWorkout(data); // setState workoutData
 				setExercises(data.exercises);
@@ -120,7 +119,7 @@ export const EditWorkoutPage = () => {
 			<div>
 				{oldWorkout && (
 					<section className="new-workout-name">
-						<EditWorkoutNameButton oldWorkout={oldWorkout} />
+						<EditWorkoutNameButton oldWorkout={workout} />
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
