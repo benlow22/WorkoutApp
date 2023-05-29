@@ -73,8 +73,7 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					value={newUsername}
 					type="text"
 					placeholder="New Username"
-					pattern="[A-Za-z0-9]
-					{(5, 15)}"
+					pattern="[A-Za-z0-9]{5,15}"
 					className="upsert-username-form-input"
 					maxLength={15}
 				></input>
