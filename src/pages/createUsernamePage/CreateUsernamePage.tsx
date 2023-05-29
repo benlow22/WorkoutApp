@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { UserOutlined } from "@ant-design/icons";
 import { Input, Button, Space } from "antd";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
-	const [user, setUser] = useState<any | null>(null);
 	const { userId, setUsername, username } = useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		if (newUsername.match(/^\w{5,15}$/)) {
-			// if newUsername matches RegEx of any number/letter 5-15 length
-			console.log("new Username to set", newUsername);
-			console.log("user info", user);
+			// if newUsername matches RegEx of any number or letter, 5-15 length
 			try {
 				const { error } = await supabase
 					.from("profiles")
@@ -38,22 +35,27 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 	return (
 		<div>
 			<h2>{username ? "Change " : "Create "} Username</h2>
-			<Space.Compact>
+			<form className="upsert-username-form">
 				<Input
-					defaultValue="Username"
 					onChange={(e) => setNewUsername(e.target.value)}
 					value={newUsername}
 					type="text"
 					placeholder="New Username"
+					pattern="[A-Za-z0-9]{5,15}"
+					className="upsert-username-form-input"
+					onPressEnter={handleSubmit}
 				/>
-				<Button type="primary" onClick={handleSubmit}>
-					Submit
+
+				<Button
+					type="primary"
+					onClick={handleSubmit}
+					className="upsert-username-submit-button"
+				>
+					SUBMIT
 				</Button>
-			</Space.Compact>
+			</form>
 		</div>
 	);
 };
 
 // later make a edit username section
-
-export default CreateUsernamePage;

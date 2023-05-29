@@ -12,7 +12,7 @@ import Root from "./components/Root";
 import { NewWorkoutPage } from "./pages/NewWorkoutPage";
 import { EditWorkoutPage } from "./pages/EditWorkoutPage";
 import { WorkoutsPage } from "./pages/WorkoutsPage";
-import CreateUsernamePage from "./components/CreateUsernamePage";
+import { CreateUsernamePage } from "./pages/createUsernamePage/CreateUsernamePage";
 import { LoginPage } from "./pages/login/LoginPage";
 import { WelcomePage } from "./pages/welcomePage/WelcomePage";
 import AuthRoute from "./AuthRoute";
