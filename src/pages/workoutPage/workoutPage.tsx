@@ -39,12 +39,27 @@ export const WorkoutPage = () => {
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	let { workoutUrl } = useParams();
-	let oldWorkout: IWorkout = {
-		name: "",
-		url: "",
-		id: "",
-		last_performed: null,
-	};
+
+	// upon mount, take workoutId passed in
+	// get data for workout IWorkout
+	useEffect(() => {
+		setIsLoading(true);
+		async function getWorkout() {
+			const data = await getFullWorkout(workout.id);
+			if (data) {
+				// setWorkout(data); // setState workoutData
+				setExercises(data);
+				console.log("should be exercises", data);
+			}
+		}
+		getWorkout();
+	}, []);
+
+	useEffect(() => {
+		if (exercises) {
+			setIsLoading(false);
+		}
+	}, [exercises]);
 
 	const redirectToWelcomepage = () => {
 		navigate("/");
@@ -69,37 +84,6 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	// upon mount, take workoutId passed in
-	// get data for workout IWorkout
-	useEffect(() => {
-		setIsLoading(true);
-		async function getWorkout() {
-			const data = await getFullWorkout(workout.id);
-			if (data) {
-				// setWorkout(data); // setState workoutData
-				setExercises(data);
-				console.log("should be exercises", data);
-			}
-			setIsLoading(false);
-		}
-		getWorkout();
-	}, []);
-
-	useEffect(() => {
-		if (workout) {
-			console.log("what is workout NOW", workout);
-
-			setIsLoading(false);
-		}
-	}, [workout]);
-	if (workout) {
-		oldWorkout = {
-			name: workout.name,
-			url: workout.url,
-			id: workout.id,
-		};
-	}
-
 	const toggleButton = () => {
 		addExercise ? setAddExercise(false) : setAddExercise(true);
 	};
@@ -123,9 +107,9 @@ export const WorkoutPage = () => {
 	if (!isLoading && workout) {
 		return (
 			<div>
-				{oldWorkout && (
+				{workout && (
 					<section className="new-workout-name">
-						<EditWorkoutNameButton oldWorkout={oldWorkout} />
+						<EditWorkoutNameButton workout={workout} />
 					</section>
 				)}
 				{/* DISPLAY EXERCISES HERE */}
