@@ -1,19 +1,18 @@
 import { Auth } from "@supabase/auth-ui-react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
-	const {auth} = useContext(AuthContext);
-
+	const { auth } = useContext(AuthContext);
 	if (auth) {
-		console.log("Auth TRUE, nav to workouts", auth);
 		return <Navigate to="/workouts" />;
 	}
-	console.log("Auth false", auth);
+
+	// if not auth = false, Auth page will render
 	return (
 		<div className="auth-page">
 			<p>Please Login Below</p>

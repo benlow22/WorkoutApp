@@ -48,19 +48,16 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		setIsLoading(true);
 		const getSessionData = async () => {
 			supabase.auth.getSession().then(({ data: { session } }) => {
-				console.log("session data 2", session);
 				if (session) {
 					setSession(session);
-					console.log("getSessionAuth");
 					setAuth(true);
 					setUserId(session.user.id);
 					setUsername(session.user.user_metadata.username);
 					setIsLoggedIn(true); // late can be removed and replaced with auth
 					setUser(session.user);
 				}
-				setIsLoading(false);		// 
-				return
-
+				setIsLoading(false);
+				return;
 			});
 		};
 		getSessionData();

@@ -190,7 +190,6 @@ input[value].new-workout-input,
 	width: 360px;
 	margin: auto;
 	height: 40px;
-
 }
 
 .exercise-set-list {
@@ -203,20 +202,40 @@ input[value].new-workout-input,
 	display: inline;
 }
 
-
-.set-item{
+.set-item {
 	display: inline-block;
 }
-.set-reps, .set-weight-and-units{
+.set-reps,
+.set-weight-and-units {
 	width: 100px;
 }
-.set-reps-buttons, .weight-buttons{
+.set-reps-buttons,
+.weight-buttons {
 	width: 55px;
 }
-.delete-set-button{
+.delete-set-button {
 	margin-right: 2px;
 }
 
 .add-set-button {
 	margin-top: 10px;
+}
+
+.upsert-username-form {
+	max-width: 400px;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	margin: auto;
+}
+.upsert-username-form-input {
+	border-radius: 5px 0 0 5px;
+	min-width: 100px;
+	background-color: white;
+}
+
+.upsert-username-submit-button {
+	border-radius: 0 5px 5px 0;
+	background-color: rgb(0, 110, 255);
+	width: 100px;
 }

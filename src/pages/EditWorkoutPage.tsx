@@ -32,7 +32,7 @@ export const EditWorkoutPage = () => {
 	let { workoutName } = useParams();
 	let oldWorkout: IWorkout = { name: "", url: "", id: "" };
 	const navigate = useNavigate();
-	const redirectToHomepage = () => {
+	const redirectToWelcomepage = () => {
 		navigate("/");
 	};
 
@@ -193,8 +193,8 @@ export const EditWorkoutPage = () => {
 		return (
 			<div>
 				<p>No workout with URL {workoutName}</p>
-				<Button type="primary" onClick={redirectToHomepage}>
-					Return to Homepage
+				<Button type="primary" onClick={redirectToWelcomepage}>
+					Return to Welcome Page
 				</Button>
 			</div>
 		);
