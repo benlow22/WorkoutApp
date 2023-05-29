@@ -47,7 +47,7 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	}
 };
 
-// takes workoutID
+// takes workoutId and get workout information + exercises, returns just exercises for now
 export const getFullWorkout = async (workoutId: string) => {
 	const { data, error } = await supabase
 		.from("workouts")
@@ -61,15 +61,14 @@ export const getFullWorkout = async (workoutId: string) => {
 		if (data[0]) {
 			const workout = data[0]; // get workout data from API call
 			const exercises: IExercise[] = workout.exercises as IExercise[]; // reaffirm Typing
-			console.log("exercises", exercises);
-			const reformattedData = {
-				id: workout.id,
-				name: workout.name,
-				url: workout.url,
-				last_performed: workout.last_performed,
-				exercises: exercises,
-			};
-			return reformattedData;
+			// const reformattedData = {
+			// 	id: workout.id,
+			// 	name: workout.name,
+			// 	url: workout.url,
+			// 	last_performed: workout.last_performed,
+			// 	exercises: exercises,
+			// };
+			return exercises;
 		}
 	}
 };

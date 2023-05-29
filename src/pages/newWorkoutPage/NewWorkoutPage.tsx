@@ -59,7 +59,7 @@ export const NewWorkoutPage = () => {
 					Submit
 				</Button>
 			</Space.Compact>
-
+			{/* // can delete */}
 			<div className="new-workout-data test">
 				<p>Submitted New Workout Name: </p>
 				<p>{newWorkoutName}</p>

@@ -72,14 +72,13 @@ export const WorkoutPage = () => {
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
-		console.log("workout passed via state", workout);
 		setIsLoading(true);
 		async function getWorkout() {
 			const data = await getFullWorkout(workout.id);
-			setWorkout(data); // setState workoutData
 			if (data) {
-				setWorkout(data); // setState workoutData
-				setExercises(data.exercises);
+				// setWorkout(data); // setState workoutData
+				setExercises(data);
+				console.log("should be exercises", data);
 			}
 			setIsLoading(false);
 		}

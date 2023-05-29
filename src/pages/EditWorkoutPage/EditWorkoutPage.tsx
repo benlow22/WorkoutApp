@@ -71,8 +71,8 @@ export const EditWorkoutPage = () => {
 		async function getWorkout() {
 			const data = await getFullWorkout(workout.id);
 			if (data) {
-				setWorkout(data); // setState workoutData
-				setExercises(data.exercises);
+				// setWorkout(data); // setState workoutData
+				setExercises(data);
 			}
 		}
 		getWorkout();
