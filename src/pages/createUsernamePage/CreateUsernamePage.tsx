@@ -43,13 +43,14 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 					placeholder="New Username"
 					pattern="[A-Za-z0-9]{5,15}"
 					className="upsert-username-form-input"
-					onPressEnter={handleSubmit}
+					maxLength={15}
 				/>
 
 				<Button
 					type="primary"
 					onClick={handleSubmit}
 					className="upsert-username-submit-button"
+					value={"Submit"}
 				>
 					SUBMIT
 				</Button>
