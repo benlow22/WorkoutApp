@@ -8,28 +8,58 @@ import { useNavigate } from "react-router-dom";
 export const CreateUsernamePage: React.FC<{}> = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const { userId, setUsername, username } = useContext(AuthContext);
+	const [allusers, setAllUsers] = useState<string[]>([]);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		const getAllUsernames = async () => {
+			try {
+				const { data, error } = await supabase
+					.from("profiles")
+					.select("username");
+				console.log("allusers:", data);
+				if (error) {
+					throw error;
+				}
+				if (data) {
+					const allUsernames = data.map((user) => user.username);
+					console.log("allusernames:", allUsernames);
+					setAllUsers(allUsernames);
+				}
+			} catch (error) {
+				console.log("error getting all users:", error);
+			}
+		};
+		getAllUsernames();
+	}, []);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		if (newUsername.match(/^\w{5,15}$/)) {
-			// if newUsername matches RegEx of any number or letter, 5-15 length
-			try {
-				const { error } = await supabase
-					.from("profiles")
-					.update({ username: newUsername })
-					.eq("id", userId);
-				if (!error) {
-					setUsername(newUsername);
+		if (allusers.includes(newUsername)) {
+			alert(`username "${newUsername}" is already taken`);
+		} else {
+			if (newUsername.match(/^\w{5,15}$/)) {
+				// if newUsername matches RegEx of any number or letter, 5-15 length
+				try {
+					const { error } = await supabase // update profiles.username
+						.from("profiles")
+						.update({ username: newUsername })
+						.eq("id", userId);
+					if (!error) {
+						setUsername(newUsername);
+					}
+					const { data, error: err2 } =
+						await supabase.auth.updateUser({
+							// update auth.users...metadata.username
+							data: { username: newUsername },
+						});
+					setNewUsername("");
+					navigate("/workouts");
+					if (error) throw error;
+					if (err2) throw error;
+				} catch (err) {
+					console.log("error updating username", err);
 				}
-				const { data, error: err2 } = await supabase.auth.updateUser({
-					data: { username: newUsername },
-				});
-				setNewUsername("");
-				navigate("/workouts");
-				if (error) throw error;
-			} catch (err) {
-				console.log("error updating username", err);
 			}
 		}
 	};
