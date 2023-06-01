@@ -12,7 +12,7 @@ import {
 	IWorkoutWithExercises,
 	workouts,
 } from "../../data";
-import { getFullWorkout, getWorkoutDay } from "../../api/api";
+import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -38,21 +38,27 @@ export const WorkoutPage = () => {
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
-	let { workoutUrl } = useParams();
+	const { workoutUrl } = useParams<string>();
+	//need to check if workout URL is valid and grab workout from it, if not from buttons
 
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
 		setIsLoading(true);
 		async function getWorkout() {
-			const data = await getFullWorkout(workout.id);
-			if (data) {
-				// setWorkout(data); // setState workoutData
-				setExercises(data);
-				console.log("should be exercises", data);
+			if (workoutUrl) {
+				// should always be true, if not it would be a different route (error claims type undefined)
+				const data = await getFullWorkoutAPI(workoutUrl);
+				if (data) {
+					// setWorkout(data); // setState workoutData
+					setExercises(data.exercises);
+					setWorkout(data.workout);
+					console.log("should be exercises", data.exercises);
+					console.log("should be workout", data.workout);
+				}
 			}
 		}
-		getWorkout();
+		getWorkout(); // if url is valid, then call GETworkout
 	}, []);
 
 	useEffect(() => {
@@ -104,58 +110,54 @@ export const WorkoutPage = () => {
 	// 	setIsLoading(false);
 	// }, [addExercise]);
 
-	if (!isLoading && workout) {
-		return (
-			<div>
-				{workout && (
-					<section className="new-workout-name">
-						<EditWorkoutNameButton workout={workout} />
-					</section>
-				)}
-				{/* DISPLAY EXERCISES HERE */}
-				{exercises.map((exercise) => (
-					<TestFetchExercise
-						exerciseId={exercise.id}
-						key={exercise.id}
-					/>
-				))}
-
-				<Exercises exercises={exercises} />
-				<br></br>
-				{!addExercise ? (
-					<Button
-						type="primary"
-						onClick={toggleButton}
-						className="add-exercise-button"
-					>
-						Add Exercise
-					</Button>
-				) : (
-					<SearchExercises
-						workout={workout}
-						addExerciseToAll={addExerciseToAll}
-					/>
-				)}
-				<br></br>
-				<Button type="primary" onClick={deleteWorkout}>
-					Delete Workout
+	return (
+		<div>
+			{isLoading && <h1>LOADING</h1>}
+			{workout && (
+				<section className="new-workout-name">
+					<EditWorkoutNameButton workout={workout} />
+				</section>
+			)}
+			{/* DISPLAY EXERCISES HERE */}
+			{exercises.map((exercise) => (
+				<TestFetchExercise exerciseId={exercise.id} key={exercise.id} />
+			))}
+			<Exercises exercises={exercises} />
+			<br></br>
+			{!addExercise ? (
+				<Button
+					type="primary"
+					onClick={toggleButton}
+					className="add-exercise-button"
+				>
+					Add Exercise
 				</Button>
-			</div>
-		);
-	} else if (workout === undefined && !isLoading) {
-		return (
-			<div>
-				<p>No workout with URL {workoutUrl}</p>
-				<Button type="primary" onClick={redirectToWelcomepage}>
-					Return to Welcome Page
-				</Button>
-			</div>
-		);
-	} else {
-		return (
-			<div>
-				<h2></h2>
-			</div>
-		);
-	}
+			) : (
+				<SearchExercises
+					workout={workout}
+					addExerciseToAll={addExerciseToAll}
+				/>
+			)}
+			<br></br>
+			<Button type="primary" onClick={deleteWorkout}>
+				Delete Workout
+			</Button>
+		</div>
+	);
+	// 	} else if (!location.state && !isLoading) {
+	// 		return (
+	// 			<div>
+	// 				<p>No workout with URL {workoutUrl}</p>
+	// 				<Button type="primary" onClick={redirectToWelcomepage}>
+	// 					Return to Welcome Page
+	// 				</Button>
+	// 			</div>
+	// 		);
+	// 	} else {
+	// 		return (
+	// 			<div>
+	// 				<h2></h2>
+	// 			</div>
+	// 		);
+	// 	}
 };

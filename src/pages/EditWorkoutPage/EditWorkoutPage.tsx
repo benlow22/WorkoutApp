@@ -6,7 +6,7 @@ import {
 	useParams,
 } from "react-router-dom";
 import { IWorkout, IWorkoutWithExercises, IExercise } from "../../data";
-import { getFullWorkout, getWorkoutDay } from "../../api/api";
+import { getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -73,7 +73,7 @@ export const EditWorkoutPage = () => {
 	}, []);
 
 	useEffect(() => {
-		if (exercises) {
+		if (workout.name) {
 			setIsLoading(false);
 		}
 	}, [exercises]);
@@ -82,7 +82,7 @@ export const EditWorkoutPage = () => {
 		addExercise ? setAddExercise(false) : setAddExercise(true);
 	};
 
-	const addExerciseToAll = (name: string) => {
+	const addExerciseToAll = (exercise: IExercise) => {
 		console.log("addExerciseToAll called");
 		let newExercise = { name: name };
 		if (!exercises.find((exercise) => exercise.name === name)) {

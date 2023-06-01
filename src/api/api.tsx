@@ -1,7 +1,9 @@
 const API_ENDPOINT = "http://localhost:3000";
+import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
+import { IGetFullWorkoutResponse } from "./types";
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
@@ -48,28 +50,26 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 };
 
 // takes workoutId and get workout information + exercises, returns just exercises for now
-export const getFullWorkout = async (workoutId: string) => {
-	const { data, error } = await supabase
+export const getFullWorkoutAPI = async (
+	workoutUrl: string
+): Promise<
+	| {
+			exercises: IExercise[];
+			workout: IWorkout;
+	  }
+	| undefined
+> => {
+	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
 		.from("workouts")
 		.select("name, url, id, last_performed, exercises(name, id)")
-		.eq("id", workoutId);
-	console.log("API CALL = get workout data: ", data);
-	if (error) {
-		console.error("API error fetching workout data", error);
-		return;
+		.eq("url", workoutUrl)
+		.single(); // get single row as object instead of arr
+	console.log("API CALL = get workout data: ", workoutData);
+	if (workoutData) {
+		const { exercises, id, name, url, last_performed } = workoutData; // extract
+		return { exercises, workout: { id, name, url, last_performed } };
 	} else {
-		if (data[0]) {
-			const workout = data[0]; // get workout data from API call
-			const exercises: IExercise[] = workout.exercises as IExercise[]; // reaffirm Typing
-			// const reformattedData = {
-			// 	id: workout.id,
-			// 	name: workout.name,
-			// 	url: workout.url,
-			// 	last_performed: workout.last_performed,
-			// 	exercises: exercises,
-			// };
-			return exercises;
-		}
+		console.error(`No workout found with url ${workoutUrl}`, error);
 	}
 };
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  

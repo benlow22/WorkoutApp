@@ -64,11 +64,7 @@ export interface IWorkout {
 	last_performed: string | null;
 }
 
-export interface IWorkoutWithExercises {
-	id: string;
-	name: string;
-	url: string;
-	last_performed: string | null;
+export interface IWorkoutWithExercises extends IWorkout {
 	exercises: IExercise[];
 }
 
