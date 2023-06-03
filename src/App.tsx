@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 
 import Root from "./components/Root";
-import { NewWorkoutPage } from "./pages/NewWorkoutPage";
-import { EditWorkoutPage } from "./pages/EditWorkoutPage";
-import { WorkoutsPage } from "./pages/WorkoutsPage";
+import { NewWorkoutPage } from "./pages/newWorkoutPage/NewWorkoutPage";
+import { EditWorkoutPage } from "./pages/EditWorkoutPage/EditWorkoutPage";
+import { WorkoutsPage } from "./pages/workoutsPage/WorkoutsPage";
 import { CreateUsernamePage } from "./pages/createUsernamePage/CreateUsernamePage";
 import { LoginPage } from "./pages/login/LoginPage";
 import { WelcomePage } from "./pages/welcomePage/WelcomePage";
@@ -19,6 +19,7 @@ import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
 import Exercise from "./components/Exercise";
 import NewExercise from "./pages/NewExercisePage";
+import { WorkoutPage } from "./pages/workoutPage/workoutPage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -28,8 +29,9 @@ const router = createBrowserRouter(
 			<Route element={<AuthRoute />}>
 				{/* only authenticated users can use these routes  */}
 				<Route path="workouts" element={<WorkoutsPage />} />
+				<Route path="workouts/:workoutUrl" element={<WorkoutPage />} />
 				<Route
-					path="workouts/:workoutName"
+					path=":edit-workout/:workoutUrl"
 					element={<EditWorkoutPage />}
 				/>
 				<Route path="exercises" element={<ExercisesPage />} />

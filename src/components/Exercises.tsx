@@ -5,7 +5,7 @@ type Tprops = {
 };
 
 export const Exercises = ({ exercises }: Tprops) => {
-	console.log("exercise", exercises);
+	// console.log("exercise", exercises);
 	return (
 		<div className="exercise-list">
 			{exercises.length > 0 &&

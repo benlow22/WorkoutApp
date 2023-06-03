@@ -34,7 +34,9 @@
 		animation: logo-spin infinite 20s linear;
 	}
 }
-
+h2 {
+	margin: 0px;
+}
 .card {
 	padding: 2em;
 }
@@ -56,7 +58,6 @@
 	background-color: rgb(0, 110, 255);
 	padding: 10px 75px;
 	width: 100%;
-	margin-bottom: 20px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -96,6 +97,11 @@ input[value].new-workout-input,
 	margin: auto;
 	justify-content: center;
 }
+
+.new-workout-name h1 {
+	margin: 33px auto 22px;
+}
+
 .auth-page p {
 	width: 100%;
 }
@@ -183,6 +189,7 @@ input[value].new-workout-input,
 	text-align: left;
 	width: 400px;
 	margin: auto;
+	border: 1px solid blue;
 }
 
 .set {
@@ -193,9 +200,10 @@ input[value].new-workout-input,
 }
 
 .exercise-set-list {
-	width: 300px;
+	width: 400px;
 	margin: auto;
-	display: inline;
+	padding: 14px;
+	border: 2px solid rgb(185, 203, 227);
 }
 
 .weight-buttons {
@@ -238,4 +246,121 @@ input[value].new-workout-input,
 	border-radius: 0 5px 5px 0;
 	background-color: rgb(0, 110, 255);
 	width: 100px;
+}
+
+.delete-button {
+	background-color: red;
+}
+
+/* workout page */
+
+.workout-controls {
+	display: flex;
+	width: 400px;
+	justify-content: space-around;
+	margin: auto;
+	align-items: center;
+	height: 51px;
+}
+
+.side-workout-button {
+	position: relative;
+	width: 130px;
+	height: 35px;
+	text-align: center;
+	background-color: #4171b5;
+	padding: 0px;
+	font-size: 14px;
+	border-radius: 43px;
+	z-index: 1;
+}
+
+.start-button {
+	background-color: #17ab2e;
+	height: 51px;
+	width: 155px;
+	font-size: 20px;
+	border-radius: 43px;
+	z-index: 6;
+}
+
+.expand-all-button {
+	float: left;
+	border-radius: 43px 0px 0px 43px;
+	padding-right: 30px;
+	margin-right: 40px;
+	z-index: 2;
+}
+.start-button-container {
+	position: absolute;
+	display: flex;
+	align-items: center;
+}
+.edit-button {
+	position: relative;
+	float: right;
+	border-radius: 0px 43px 43px 0px;
+	padding-left: 30px;
+}
+
+.workout-controls::after,
+.workout-controls::before {
+	content: "";
+	border: 1px solid black;
+	text-decoration: none;
+	height: 51px;
+	width: 150px;
+	line-height: 30px;
+	text-align: center;
+	border-radius: 43px;
+}
+.workout-controls::before {
+	position: absolute;
+	/* right: -50px; */
+}
+.workout-controls::after {
+	position: absolute;
+	/* right: 50px; */
+}
+
+.start-button-container::after,
+.start-button-container::before {
+	content: "";
+	background: rgb(0, 0, 0);
+	border: 1px solid black;
+	text-decoration: none;
+	position: relative;
+	height: 51px;
+	width: 155px;
+	line-height: 30px;
+	text-align: center;
+	z-index: 4;
+	border-top: transparent;
+	border-bottom: transparent;
+}
+.start-button-container::after {
+	left: -145px;
+	border-radius: 0px 43px 43px 0px;
+}
+
+.start-button-container::before {
+	left: 145px;
+	border-radius: 43px 0px 0px 43px;
+}
+
+/* .button-crecsent-spacer-left {
+	width: 10px;
+	height: 51px;
+	background: red;
+	position: relative;
+	left: 10px;
+}
+.button-crecsent-spacer-right {
+	width: 10px;
+	height: 51px;
+	background: red;
+} */
+
+.clock-icon {
+	padding-left: 10px;
 }

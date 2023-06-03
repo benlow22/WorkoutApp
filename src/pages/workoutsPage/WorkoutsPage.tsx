@@ -1,32 +1,32 @@
 import React, { useContext, useEffect, useState } from "react";
-import WorkoutButton from "../components/WorkoutButton";
+import WorkoutButton from "../../components/WorkoutButton";
 import { Button } from "antd";
 import { Link, NavLink, Route, useLocation } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthProvider";
-import { supabase } from "../supabaseClient";
+import { AuthContext } from "../../contexts/AuthProvider";
+import { supabase } from "../../supabaseClient";
+import { IWorkout } from "../../data";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	
 
-	console.log("workouts page");
 	useEffect(() => {
-
-		async function fetchWorkouts() {
+		// get all of user's workouts to render list
+		const getAllUsersWorkouts = async () => {
 			const { data, error } = await supabase
 				.from("workouts")
-				.select("name,url,id");
+				.select("id, name, url, last_performed");
 			if (error) {
 				console.error(error);
 				setIsLoading(false);
 				return;
 			}
+			console.log("workouts", data);
 			setWorkouts(data);
 			setIsLoading(false);
 			return data;
-		}
-		fetchWorkouts();
+		};
+		getAllUsersWorkouts();
 	}, []);
 
 	if (!isLoading) {
@@ -34,7 +34,11 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			<div className="workouts-page">
 				<h2>Your Workouts</h2>
 				{workouts.map((workout, index) => (
-					<Link to={`/workouts/${workout.url}`} key={index} state={{ workoutId: workout.id }}>
+					<Link
+						to={`/workouts/${workout.url}`}
+						key={index}
+						state={workout}
+					>
 						<WorkoutButton workout={workout} />
 					</Link>
 				))}
@@ -42,7 +46,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 					<Button
 						type="primary"
 						block
-						className="add-new-workout-button workout-button"
+						className="add-new-workout-button workout-button capitalize"
 					>
 						Add New Workout [+]
 					</Button>

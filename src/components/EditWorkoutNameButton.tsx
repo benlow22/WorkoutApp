@@ -18,14 +18,10 @@ import { changeNameToUrl, buttonClickTrue } from "../utils/utils";
 // }
 
 export const EditWorkoutNameButton: React.FC<{
-	oldWorkout: IWorkout;
-}> = ({ oldWorkout }) => {
-	const [oldWorkoutName, setOldWorkoutName] = useState<string>(
-		oldWorkout.name
-	);
+	workout: IWorkout;
+}> = ({ workout }) => {
+	const [oldWorkout, setOldWorkout] = useState<IWorkout>(workout);
 	const [newWorkoutName, setNewWorkoutName] = useState<string>("");
-	// const [submittedWorkoutName, setSubmittedWorkoutName] =
-	// 	useState<string>("");
 	const [newWorkoutUrl, setNewWorkoutUrl] = useState<string>("");
 	const [editName, setEditName] = useState<boolean>(false); // is edit button clicked
 	const navigate = useNavigate();
@@ -34,22 +30,28 @@ export const EditWorkoutNameButton: React.FC<{
 		e.preventDefault();
 		try {
 			if (newWorkoutUrl.length > 0) {
-				const workoutNameUpdated = await updateWorkoutName(
+				const updatedWorkout: IWorkout = await updateWorkoutName(
 					oldWorkout.url,
 					newWorkoutUrl,
 					newWorkoutName
 				);
-				if (workoutNameUpdated) {
+				if (updatedWorkout) {
 					// returned updated workout
-					console.log("updated workout data:", workoutNameUpdated);
-					navigate(`/workouts/${workoutNameUpdated.url}`, {
-						state: { workoutId: oldWorkout.id },
+					console.log("updated workout data:", updatedWorkout);
+					navigate(`/workouts/${updatedWorkout.url}`, {
+						state: {
+							id: updatedWorkout.id,
+							name: updatedWorkout.name,
+							url: updatedWorkout.url,
+							last_performed: updatedWorkout.last_performed,
+						},
 					});
+					setEditName(false);
+					setNewWorkoutUrl("");
+					setNewWorkoutName("");
+					setOldWorkout(updatedWorkout);
 				}
-				setOldWorkoutName(newWorkoutName);
-				setNewWorkoutUrl("");
-				setNewWorkoutName("");
-				setEditName(false);
+				//setOldWorkout(newWorkoutName);
 			}
 		} catch (error) {
 			console.log("error updated workout name", error);
@@ -57,14 +59,16 @@ export const EditWorkoutNameButton: React.FC<{
 		}
 	};
 
+	useEffect(() => {}, [oldWorkout]);
+
 	return (
 		<>
-			{!editName ? (
+			{!editName ? ( // if edit button is not clicked, show name
 				<h1>
-					{oldWorkoutName}
+					{oldWorkout.name}
 					<EditTwoTone
 						className="new-workout-edit-icon"
-						onClick={() => setEditName(buttonClickTrue)}
+						onClick={() => setEditName(true)}
 					/>
 				</h1>
 			) : (
@@ -77,8 +81,9 @@ export const EditWorkoutNameButton: React.FC<{
 								);
 						}}
 						value={newWorkoutName}
-						placeholder={oldWorkoutName}
+						placeholder={oldWorkout.name}
 						className="new-workout-input"
+						onPressEnter={handleSubmit}
 					/>
 					<Button type="primary" onClick={handleSubmit}>
 						Submit

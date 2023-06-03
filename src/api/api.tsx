@@ -1,5 +1,9 @@
 const API_ENDPOINT = "http://localhost:3000";
+import { IWorkoutWithExercises } from "../data";
+import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
+import { v4 as uuidv4 } from "uuid";
+import { IGetFullWorkoutResponse } from "./types";
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
@@ -24,10 +28,10 @@ export const addExerciseToWorkout = async (
 				exercise_id: exercise.id,
 				created_by: userId,
 			},
-		]).select("*");
-	console.log('errrror', error);
-	console.log('updated workout exercises', data);
-
+		])
+		.select("*");
+	console.log("errrror", error);
+	console.log("updated workout exercises", data);
 };
 
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
@@ -45,19 +49,27 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	}
 };
 
-
-// takes workoutID
-export const getFullWorkout = async (workoutId: string, userId: string) => {
-	const { data, error } = await supabase
+// takes workoutId and get workout information + exercises, returns just exercises for now
+export const getFullWorkoutAPI = async (
+	workoutUrl: string
+): Promise<
+	| {
+			exercises: IExercise[];
+			workout: IWorkout;
+	  }
+	| undefined
+> => {
+	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
 		.from("workouts")
-		.select("name, url, id, exercises(name, id)")
-		.eq("id", workoutId);
-	console.log("API CALL = get workout data: ", data);
-	if (error) {
-		console.error('API error fetching workout data', error);
-		return;
+		.select("name, url, id, last_performed, exercises(name, id)")
+		.eq("url", workoutUrl)
+		.single(); // get single row as object instead of arr
+	console.log("API CALL = get workout data: ", workoutData);
+	if (workoutData) {
+		const { exercises, id, name, url, last_performed } = workoutData; // extract
+		return { exercises, workout: { id, name, url, last_performed } };
 	} else {
-		return data[0];
+		console.error(`No workout found with url ${workoutUrl}`, error);
 	}
 };
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  
@@ -75,27 +87,29 @@ export const postNewWorkout = async (
 	console.log("workout URL: ", url, "workout Name", workoutName);
 	const { data: existingWorkoutUrl, error } = await supabase
 		.from("workouts")
-		.select("url")
+		.select("name, url")
 		.eq("url", url);
 	// if workout already exist, alert user
-	console.log("empty[] if url is free to take:", existingWorkoutUrl);
 	if (error) {
 		console.log("there was an error with finding if workout exists", error);
 		throw "error finding workout in DB, two may have been found";
 	}
+	console.log("empty[] if url is free to take:", existingWorkoutUrl);
 	if (existingWorkoutUrl.length > 0) {
 		alert(
-			"Sorry Workout Name is already in use or too similar to another Workout you have. Please select a new name"
+			`Sorry, name: "${workoutName}" is already in use or too similar to another workout you have: "${existingWorkoutUrl[0].name}". Please select a new name`
 		);
 		throw "Workout name already in DB";
 	} else {
 		console.log("workout was not found in DB, time to add it in");
 		const newWorkoutObj = {
 			// check if i need uuid or supabase will autofill
+			id: uuidv4(),
 			name: workoutName,
 			url: url,
 			user_id: user_id,
 		};
+		console.log("uuid", newWorkoutObj.id);
 		// insert and return
 		const { data, error } = await supabase
 			.from("workouts")
@@ -105,8 +119,8 @@ export const postNewWorkout = async (
 			console.log("error", error);
 			throw error;
 		} else {
-			console.log("Successfully added to DB, go CHECK", data[0].url);
-			return data[0].url;
+			console.log("Successfully added to DB, go CHECK", data[0]);
+			return data[0];
 		}
 	}
 };
@@ -118,16 +132,38 @@ export const updateWorkoutName = async (
 	newWorkoutUrl: string,
 	newWorkoutName: string
 ) => {
-	// Update data row and return
-	const { data, error } = await supabase
+	// check if url is taken
+	const { data: existingWorkoutUrl, error } = await supabase
 		.from("workouts")
-		.update({ name: newWorkoutName, url: newWorkoutUrl })
-		.eq("url", oldWorkoutUrl)
-		.select();
-	console.log("API CALL = update workout name, updated workout = ", data);
+		.select("name, url")
+		.eq("url", newWorkoutUrl);
+	// if workout already exist, alert user
 	if (error) {
-		console.log("there was an error with updating workout name", error);
-		throw "error updating workoutName";
+		console.error(
+			"there was an error with finding if workout exists",
+			error
+		);
+		throw "error finding workout in DB, two may have been found";
 	}
-	return data[0]; // return single ROW of updated Data
+	console.log("empty[] if url is free to take:", existingWorkoutUrl);
+	if (existingWorkoutUrl.length > 0) {
+		alert(
+			`Sorry, name: "${newWorkoutName}" is already in use or too similar to another workout you have: "${existingWorkoutUrl[0].name}". Please select a new name`
+		);
+		throw "Workout name already in DB";
+	} else {
+		console.log("workout was not found in DB, time to add it in");
+		// Update data row and return
+		const { data, error } = await supabase
+			.from("workouts")
+			.update({ name: newWorkoutName, url: newWorkoutUrl })
+			.eq("url", oldWorkoutUrl)
+			.select();
+		console.log("API CALL = update workout name, updated workout = ", data);
+		if (error) {
+			console.log("there was an error with updating workout name", error);
+			throw "error updating workoutName";
+		}
+		return data[0] as IWorkout; // return single ROW of updated Data
+	}
 };

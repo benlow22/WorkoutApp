@@ -57,27 +57,43 @@ export const workouts = [
 // 	// { name: "Leg day", url: "legDay" },
 // ];
 
+export interface IWorkout {
+	id: string;
+	name: string;
+	url: string;
+	last_performed: string | null;
+}
+
+export interface IWorkoutWithExercises extends IWorkout {
+	exercises: IExercise[];
+}
+
+export interface IExercise {
+	name: string;
+	id: string;
+}
+
 export interface IWorkoutRoutine {
 	workouts: IWorkout[];
 }
 
-export interface IWorkout {
-	name: string;
-	url: string;
-	id: string;
-	exercises?: IExercise[];
-}
+// export interface IWorkout {
+// 	name: string;
+// 	url: string;
+// 	id: string;
+// 	exercises?: IExercise[];
+// }
 
 export interface IWorkoutNameUrl {
 	name: string;
 	url: string;
 }
 
-interface IExercise {
-	id: number;
-	name: string;
-	sets: ISets[];
-}
+// interface IExercise {
+// 	id: number;
+// 	name: string;
+// 	sets: ISets[];
+// }
 
 interface ISets {
 	setNumber: number;
@@ -90,7 +106,7 @@ export type TSets = {
 	userId: string; // = uuid()
 	exerciseId: string; // uuid()
 	notes: string;
-	sets: number[][]
+	sets: number[][];
 	// {
 	// 	setnumber: number;
 	// 	reps: number;
@@ -102,7 +118,8 @@ let mockSets = {
 	userId: "asd987sdsadias9iu",
 	exerciseId: "23kjh3u2iueh7c",
 	notes: "don't fail",
-	sets: [ // [1,10,10],[2,10,10]
+	sets: [
+		// [1,10,10],[2,10,10]
 		{
 			setNumber: 1,
 			reps: 10,
@@ -138,4 +155,3 @@ let mockSets2 = {
 	reps: [10, 10, 10],
 	weight: [10, 15, 20],
 };
-

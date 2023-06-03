@@ -1,44 +1,41 @@
 import React, { useContext, useState } from "react";
 import { Button, Space, Input } from "antd";
 
-import { getWorkouts, postNewWorkout } from "../api/api";
-import { AuthContext } from "../contexts/AuthProvider";
+import { getWorkouts, postNewWorkout } from "../../api/api";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { toCamelCase } from "../utils/utils"
+import { toKebabCase, changeNameToUrl } from "../../utils/utils";
 
 export const NewWorkoutPage = () => {
 	const [newWorkoutName, setNewWorkoutName] = useState<string>("");
-	const [workoutUrl, setWorkoutUrl] = useState<string>("");
-	const { userId } = useContext(AuthContext);
-
-	const changeNameToUrl = (workoutName: string) => {
-		let newUrl = toCamelCase(workoutName);
-		setWorkoutUrl(newUrl);
-	};
+	const [newWorkoutUrl, setNewWorkoutUrl] = useState<string>("");
+	const { workouts, userId } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		try {
-			if (workoutUrl.length > 0) {
-				// must have workout url
-				console.log("user IDD", userId);
-				const newWorkoutAddedUrl = await postNewWorkout(
-					workoutUrl,
+			if (newWorkoutUrl.length > 0) {
+				const newWorkoutAdded = await postNewWorkout(
+					newWorkoutUrl,
 					newWorkoutName,
 					userId
 				);
-
-				if (newWorkoutAddedUrl) {
-					navigate(`/workouts/${newWorkoutAddedUrl}`, {state: 'noIdYet'} );
+				if (newWorkoutAdded) {
+					navigate(`/edit-workout/${newWorkoutAdded.url}`, {
+						state: {
+							id: newWorkoutAdded.id,
+							name: newWorkoutAdded.name,
+							url: newWorkoutAdded.url,
+							last_performed: newWorkoutAdded.last_performed,
+						},
+					});
 				}
 			}
 			return true;
 		} catch (error) {
-			console.log("error inserting new workout", error);
-			setNewWorkoutName("");
-			setWorkoutUrl("");
+			console.error("error inserting new workout", error);
 		}
 	};
 
@@ -50,24 +47,25 @@ export const NewWorkoutPage = () => {
 					defaultValue="Username"
 					onChange={(e) => {
 						setNewWorkoutName(e.target.value),
-							changeNameToUrl(e.target.value);
+							setNewWorkoutUrl(changeNameToUrl(e.target.value));
 					}}
 					maxLength={30}
 					value={newWorkoutName}
 					placeholder="New Workout Name"
 					className="new-workout-input"
+					onPressEnter={handleSubmit}
 				/>
 				<Button type="primary" onClick={handleSubmit}>
 					Submit
 				</Button>
 			</Space.Compact>
-
+			{/* // can delete */}
 			<div className="new-workout-data test">
 				<p>Submitted New Workout Name: </p>
 				<p>{newWorkoutName}</p>
 				<br></br>
 				<p>new workout url will be: </p>
-				<p>{workoutUrl}</p>
+				<p>{newWorkoutUrl}</p>
 			</div>
 		</>
 	);
