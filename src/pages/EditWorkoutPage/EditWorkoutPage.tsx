@@ -6,7 +6,7 @@ import {
 	useParams,
 } from "react-router-dom";
 import { IWorkout, IWorkoutWithExercises, IExercise } from "../../data";
-import { getWorkoutDay } from "../../api/api";
+import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -62,11 +62,13 @@ export const EditWorkoutPage = () => {
 	useEffect(() => {
 		setIsLoading(true);
 		async function getWorkout() {
-			const data = await getFullWorkout(workout.id);
+			const data = await getFullWorkoutAPI(workout.id);
 			if (data) {
 				// setWorkout(data); // setState workoutData
-				setExercises(data);
+				setExercises(data.exercises);
 				console.log("should be exercises", data);
+				console.log("Workouts?", data.workout);
+				console.log("Workouts?", workout);
 			}
 		}
 		getWorkout();
@@ -131,7 +133,11 @@ export const EditWorkoutPage = () => {
 					/>
 				)}
 				<br></br>
-				<Button type="primary" onClick={deleteWorkout}>
+				<Button
+					type="primary"
+					onClick={deleteWorkout}
+					className="delete-button capitalize"
+				>
 					Delete Workout
 				</Button>
 			</div>

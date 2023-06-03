@@ -16,7 +16,7 @@ import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
-import { EditTwoTone } from "@ant-design/icons";
+import { ClockCircleOutlined, EditTwoTone } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import Exercise from "../../components/Exercise";
@@ -53,8 +53,6 @@ export const WorkoutPage = () => {
 					// setWorkout(data); // setState workoutData
 					setExercises(data.exercises);
 					setWorkout(data.workout);
-					console.log("should be exercises", data.exercises);
-					console.log("should be workout", data.workout);
 				}
 			}
 		}
@@ -118,6 +116,23 @@ export const WorkoutPage = () => {
 					<EditWorkoutNameButton workout={workout} />
 				</section>
 			)}
+			<div className="workout-controls">
+				<button className="side-workout-button expand-all-button">
+					Expand All
+				</button>
+				<div className="start-button-container">
+					<button className="start-button">
+						Start
+						<ClockCircleOutlined className="clock-icon" />
+					</button>
+					<div className="start-button-backing"></div>
+				</div>
+
+				<div className="button-crecsent-spacer-right"></div>
+				<button className="side-workout-button edit-button">
+					Edit
+				</button>
+			</div>
 			{/* DISPLAY EXERCISES HERE */}
 			{exercises.map((exercise) => (
 				<TestFetchExercise exerciseId={exercise.id} key={exercise.id} />
@@ -139,7 +154,11 @@ export const WorkoutPage = () => {
 				/>
 			)}
 			<br></br>
-			<Button type="primary" onClick={deleteWorkout}>
+			<Button
+				type="primary"
+				onClick={deleteWorkout}
+				className="capitalize delete-button"
+			>
 				Delete Workout
 			</Button>
 		</div>

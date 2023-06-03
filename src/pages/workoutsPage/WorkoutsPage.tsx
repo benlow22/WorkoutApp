@@ -46,7 +46,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 					<Button
 						type="primary"
 						block
-						className="add-new-workout-button workout-button"
+						className="add-new-workout-button workout-button capitalize"
 					>
 						Add New Workout [+]
 					</Button>
