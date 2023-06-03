@@ -97,7 +97,7 @@ export const WorkoutPage = () => {
 		let newExercise = { name: name };
 		if (!exercises.find((exercise) => exercise.name === name)) {
 			console.log("ahahsda");
-			setExercises([...exercises, newExercise]);
+			// setExercises([...exercises, newExercise]);
 			setAddExercise(false);
 		}
 	};

@@ -34,7 +34,9 @@
 		animation: logo-spin infinite 20s linear;
 	}
 }
-
+h2 {
+	margin: 0px;
+}
 .card {
 	padding: 2em;
 }
@@ -187,6 +189,7 @@ input[value].new-workout-input,
 	text-align: left;
 	width: 400px;
 	margin: auto;
+	border: 1px solid blue;
 }
 
 .set {
@@ -197,9 +200,10 @@ input[value].new-workout-input,
 }
 
 .exercise-set-list {
-	width: 300px;
+	width: 400px;
 	margin: auto;
-	display: inline;
+	padding: 14px;
+	border: 2px solid rgb(185, 203, 227);
 }
 
 .weight-buttons {
