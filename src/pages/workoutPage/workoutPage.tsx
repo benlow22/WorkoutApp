@@ -150,7 +150,7 @@ export const WorkoutPage = () => {
 			) : (
 				<SearchExercises
 					workout={workout}
-					addExerciseToAll={addExerciseToAll}
+					// addExerciseToAll={addExerciseToAll}
 				/>
 			)}
 			<br></br>

@@ -18,10 +18,13 @@ type TProps = {
 		url: string;
 		exercises?: [{ name: string }];
 	};
-	addExerciseToAll: (name: string) => void;
+	// addExerciseToAll: (name: string) => void;
 };
 
-export const SearchExercises = ({ workout, addExerciseToAll }: TProps) => {
+export const SearchExercises = ({
+	workout,
+}: // addExerciseToAll
+TProps) => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<
@@ -33,8 +36,6 @@ export const SearchExercises = ({ workout, addExerciseToAll }: TProps) => {
 	const [dropdownExercises, setDropdownExercises] = useState<
 		{ value: string; id: string }[]
 	>([]);
-
-	
 
 	useEffect(() => {
 		// upon loading, fetch all exercise data to populate dropdown
@@ -63,7 +64,7 @@ export const SearchExercises = ({ workout, addExerciseToAll }: TProps) => {
 
 	useEffect(() => {
 		if (allExercises) {
-			console.log("all exercises updated", allExercises)
+			console.log("all exercises updated", allExercises);
 		}
 	}, [allExercises]);
 
@@ -93,7 +94,7 @@ export const SearchExercises = ({ workout, addExerciseToAll }: TProps) => {
 						exercise
 					);
 					addExerciseToWorkout(workout.id, exercise, userId);
-					addExerciseToAll(exercise.value);
+					// addExerciseToAll(exercise.value);
 					setSearchExercise("");
 					// let newAllExercises = workout.exercises;
 					// let newExercise = { name: exercise.value };

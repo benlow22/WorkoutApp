@@ -86,12 +86,13 @@ export const EditWorkoutPage = () => {
 
 	const addExerciseToAll = (exercise: IExercise) => {
 		console.log("addExerciseToAll called");
-		let newExercise = { name: name };
-		if (!exercises.find((exercise) => exercise.name === name)) {
-			console.log("ahahsda");
-			setExercises([...exercises, newExercise]);
-			setAddExercise(false);
-		}
+		// let newExercise = { name: name };
+		// if (!exercises.find((exercise) => exercise.name === name)) {
+		// 	console.log("ahahsda");
+		// 	setExercises([...exercises, newExercise]);
+		// 	setAddExercise(false);
+		// }
+		return;
 	};
 
 	// useEffect(() => {
@@ -129,7 +130,7 @@ export const EditWorkoutPage = () => {
 				) : (
 					<SearchExercises
 						workout={workout}
-						addExerciseToAll={addExerciseToAll}
+						// addExerciseToAll={addExerciseToAll}
 					/>
 				)}
 				<br></br>
