@@ -52,6 +52,16 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	}
 };
 
+export const getAllExercisesAPI = async () => {
+	console.log("start to get all exercises");
+	const response = await fetch(`${API_ENDPOINT}/exercises`);
+	console.log("response from api = ", response);
+	const json = await response.json();
+	console.log("json", json);
+
+	return json;
+};
+
 // takes workoutId and get workout information + exercises, returns just exercises for now
 export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
 	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);

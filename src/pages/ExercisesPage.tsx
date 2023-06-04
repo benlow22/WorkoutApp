@@ -7,80 +7,92 @@ import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import { getAllExercisesAPI } from "../api/api";
 
 const { Search } = Input;
+
+interface IExercise {
+	name: string;
+}
 
 export const ExercisesPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [allExercises, setAllExercises] = useState<
-		{ value: string; id: string }[]
-	>([]); //change to appropriate type
+	const [allExercises, setAllExercises] = useState<IExercise[]>([]); //change to appropriate type
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const navigate = useNavigate();
+
 	useEffect(() => {
-		// upon loading, fetch all exercise data to populate dropdown
-		console.log("exercises fetch", allExercises);
-		async function fetchExercises() {
-			const { data, error } = await supabase
-				.from("exercises")
-				.select("value: name, id"); // change name column to "value" to match options()
-			if (error) {
-				console.error("error fetching exercises", error);
-				setIsLoading(false);
-				return;
-			}
-			if (data.length > 0) {
-				console.log("fetching exercises data: ", data);
-				setAllExercises(data);
-			}
-			setIsLoading(false);
+		const getAllExercises = async () => {
+			const data = await getAllExercisesAPI();
+			console.log("data made it to ExercisePage Component", data);
 			return data;
-		}
-		fetchExercises();
-		console.log("exercises fetch2", allExercises);
+		};
+
+		// // upon loading, fetch all exercise data to populate dropdown
+		// console.log("exercises fetch", allExercises);
+		// async function fetchExercises() {
+		// 	const { data, error } = await supabase
+		// 		.from("exercises")
+		// 		.select("value: name, id"); // change name column to "value" to match options()
+		// 	if (error) {
+		// 		console.error("error fetching exercises", error);
+		// 		setIsLoading(false);
+		// 		return;
+		// 	}
+		// 	if (data.length > 0) {
+		// 		console.log("fetching exercises data: ", data);
+		// 		setAllExercises(data);
+		// 	}
+		// 	setIsLoading(false);
+		// 	return data;
+		// }
+		// fetchExercises();
+		// console.log("exercises fetch2", allExercises);
+		const data = getAllExercises();
 	}, []);
 
 	const onSearch = (value: string) => console.log(value);
 
-	useEffect(() => {
-		if (allExercises) {
-			console.log("all exercises updated", allExercises);
-		}
-	}, [allExercises]);
+	// useEffect(() => {
+	// 	if (allExercises) {
+	// 		console.log("all exercises updated", allExercises);
+	// 	}
+	// }, [allExercises]);
 
-	useEffect(() => {
-		if (allExercises.filter((e) => e.value === searchExercise).length > 0) {
-			setIsNewExercise(false);
-		} else {
-			setIsNewExercise(true);
-		}
-	}, [searchExercise]);
+	// useEffect(() => {
+	// 	if (allExercises.filter((e) => e.value === searchExercise).length > 0) {
+	// 		setIsNewExercise(false);
+	// 	} else {
+	// 		setIsNewExercise(true);
+	// 	}
+	// }, [searchExercise]);
 
 	const handleSearch = () => {
-		if (searchExercise.length > 0) {
-			if (isNewExercise) {
-				navigate(`${searchExercise}/new`);
-			} else {
-				let exercise = allExercises.find( // grab exercise from list of ALLexercise
-					(e) => e.value === searchExercise
-				);
-				if (exercise) {
-					console.log("asdfasdf", exercise.id);
-					navigate(`${exercise.id}`);
-				}
-			}
-		}
+		// if (searchExercise.length > 0) {
+		// 	if (isNewExercise) {
+		// 		navigate(`${searchExercise}/new`);
+		// 	} else {
+		// 		let exercise = allExercises.find(
+		// 			// grab exercise from list of ALLexercise
+		// 			(e) => e.value === searchExercise
+		// 		);
+		// 		if (exercise) {
+		// 			console.log("asdfasdf", exercise.id);
+		// 			navigate(`${exercise.id}`);
+		// 		}
+		// 	}
+		// }
 	};
 
-	const getExercise = () => {
-		let exercise = allExercises.find((e) => e.value === searchExercise);
-		if (exercise) {
-			console.log("asdfasdf", exercise.id);
-			navigate(`${searchExercise}/id=${exercise.id}`);
-		}
-	};
+	// const getExercise = () => {
+	// 	let exercise = allExercises.find((e) => e.value === searchExercise);
+	// 	if (exercise) {
+	// 		console.log("asdfasdf", exercise.id);
+	// 		navigate(`${searchExercise}/id=${exercise.id}`);
+	// 	}
+	// };
 
 	return (
 		<div className="exercise-page">
@@ -108,11 +120,11 @@ export const ExercisesPage: React.FC<{}> = () => {
 							className="search-bar"
 						/>
 					}
-					filterOption={(inputValue, option) =>
-						option!.value
-							.toUpperCase()
-							.indexOf(inputValue.toUpperCase()) !== -1
-					}
+					// filterOption={(inputValue, option) =>
+					// 	option!.value
+					// 		.toUpperCase()
+					// 		.indexOf(inputValue.toUpperCase()) !== -1
+					// }
 				/>
 				{/* <div className="searched">Searched: {searchExercise}</div> */}
 			</div>
