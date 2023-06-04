@@ -1,4 +1,4 @@
-const API_ENDPOINT = "https://workout-app-express-backend.vercel.app";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
