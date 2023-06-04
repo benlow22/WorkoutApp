@@ -18,6 +18,20 @@ export const getWorkouts = async () => {
 	return data;
 };
 
+//pokemonAPI
+export const pokemonAPI = async () => {
+	// get all of user's workouts
+	// const { data, error } = await supabase.from("workouts").select("name,url");
+	// if (error) {
+	// 	console.error(error);
+	// 	return;
+	// }
+	const response = await fetch(`${API_ENDPOINT}/workouts`);
+	const data = await response.json();
+
+	return data;
+};
+
 export const addExerciseToWorkout = async (
 	workoutId: any,
 	exercise: any,
