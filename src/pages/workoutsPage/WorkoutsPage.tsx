@@ -5,6 +5,7 @@ import { Link, NavLink, Route, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { supabase } from "../../supabaseClient";
 import { IWorkout } from "../../data";
+import { pokemonAPI } from "../../api/api";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
@@ -16,6 +17,9 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			const { data, error } = await supabase
 				.from("workouts")
 				.select("id, name, url, last_performed");
+			///
+			const pokemons = await pokemonAPI();
+			console.log("pokemons", pokemons);
 			if (error) {
 				console.error(error);
 				setIsLoading(false);
