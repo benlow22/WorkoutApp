@@ -5,6 +5,19 @@ import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import { IGetFullWorkoutResponse } from "./types";
 
+export const getWorkouts = async () => {
+	// get all of user's workouts
+	// const { data, error } = await supabase.from("workouts").select("name,url");
+	// if (error) {
+	// 	console.error(error);
+	// 	return;
+	// }
+	const response = await fetch(`${API_ENDPOINT}/workouts`);
+	const data = await response.json();
+
+	return data;
+};
+
 //pokemonAPI
 export const pokemonAPI = async () => {
 	// get all of user's workouts

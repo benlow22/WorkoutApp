@@ -6,10 +6,7 @@ import {
 	useParams,
 } from "react-router-dom";
 import { IWorkout, IWorkoutWithExercises, IExercise } from "../../data";
-import {
-	getFullWorkoutAPI,
-	// getWorkoutDay
-} from "../../api/api";
+import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
