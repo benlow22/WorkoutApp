@@ -1,4 +1,5 @@
-const API_ENDPOINT = "https://workout-app-express-backend.vercel.app/";
+const API_ENDPOINT = "http://localhost:8000";
+///"https://workout-app-express-backend.vercel.app/";
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
