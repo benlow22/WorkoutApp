@@ -1,4 +1,4 @@
-const API_ENDPOINT = "http://localhost:3000";
+const API_ENDPOINT = "http://localhost:8000";
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
@@ -7,11 +7,14 @@ import { IGetFullWorkoutResponse } from "./types";
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
-	const { data, error } = await supabase.from("workouts").select("name,url");
-	if (error) {
-		console.error(error);
-		return;
-	}
+	// const { data, error } = await supabase.from("workouts").select("name,url");
+	// if (error) {
+	// 	console.error(error);
+	// 	return;
+	// }
+	const response = await fetch(`${API_ENDPOINT}/workouts`);
+	const data = await response.json();
+
 	return data;
 };
 
@@ -50,6 +53,14 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 };
 
 // takes workoutId and get workout information + exercises, returns just exercises for now
+export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
+	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
+	const json = await response.json();
+	console.log("json", json);
+	console.log("ressssss", response);
+	return response;
+};
+
 export const getFullWorkoutAPI = async (
 	workoutUrl: string
 ): Promise<
@@ -59,6 +70,8 @@ export const getFullWorkoutAPI = async (
 	  }
 	| undefined
 > => {
+	// const response = await fetch(`${API_ENDPOINT}/`);
+	// console.log("restaurants from connected API", response);
 	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
 		.from("workouts")
 		.select("name, url, id, last_performed, exercises(name, id)")

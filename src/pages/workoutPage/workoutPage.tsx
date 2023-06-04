@@ -12,7 +12,11 @@ import {
 	IWorkoutWithExercises,
 	workouts,
 } from "../../data";
-import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
+import {
+	getFullWorkoutAPI,
+	getFullWorkoutAPIEXPRESS,
+	getWorkoutDay,
+} from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -48,6 +52,8 @@ export const WorkoutPage = () => {
 		async function getWorkout() {
 			if (workoutUrl) {
 				// should always be true, if not it would be a different route (error claims type undefined)
+				const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
+				console.log("THIS MADE IT", lols);
 				const data = await getFullWorkoutAPI(workoutUrl);
 				if (data) {
 					// setWorkout(data); // setState workoutData
