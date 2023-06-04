@@ -1,10 +1,18 @@
-const express = require("express");
+import { createClient } from "@supabase/supabase-js";
 
-const cors = require("cors");
+import express from "express";
+import env from "dotenv";
+import cors from "cors";
+
+env.config();
+
+const supabase = createClient(
+	process.env.SUPABASE_URL,
+	process.env.SUPABASE_ANON_KEY
+);
 
 const app = express();
 const port = process.env.PORT || 8000;
-
 // const workoutsModule = require("./routes/workouts");
 // const workoutsRouter = workoutsModule.router;
 app.use(cors());
@@ -19,6 +27,15 @@ app.get("/workouts", async (req, res) => {
 	);
 	const body = await response.text();
 	res.send(body);
+});
+
+app.get("/exercises", async (req, res) => {
+	let { data: exercises, error } = await supabase
+		.from("exercises")
+		.select("name");
+	const response = { name: "catchy" };
+	console.log(exercises);
+	res.send(exercises);
 });
 
 // app.use("/workouts", workoutsRouter);
