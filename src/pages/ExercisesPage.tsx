@@ -7,7 +7,7 @@ import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
-import { getAllExercises, getAllExercisesAPI } from "../api/api";
+import { getAllExercisesAPI } from "../api/api";
 
 const { Search } = Input;
 
