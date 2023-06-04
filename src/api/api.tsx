@@ -1,4 +1,4 @@
-const API_ENDPOINT = "http://localhost:8000";
+const API_ENDPOINT = "https://workout-app-express-backend.vercel.app/";
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
@@ -52,6 +52,7 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 	}
 };
 
+// add error handling
 export const getAllExercisesAPI = async () => {
 	console.log("start to get all exercises");
 	const response = await fetch(`${API_ENDPOINT}/exercises`);
