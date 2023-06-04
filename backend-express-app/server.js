@@ -17,6 +17,10 @@ const port = process.env.PORT || 8000;
 // const workoutsRouter = workoutsModule.router;
 app.use(cors());
 
+app.get("/", (req, res) => {
+	res.send("Hello World!");
+});
+
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
