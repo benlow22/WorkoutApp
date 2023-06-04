@@ -33,7 +33,6 @@ app.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
 		.from("exercises")
 		.select("name");
-	const response = { name: "catchy" };
 	console.log(exercises);
 	res.send(exercises);
 });
