@@ -25,6 +25,17 @@ app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
 
+app.get("/workouts/:workoutUrl", async (req, res) => {
+	const workoutUrl = req.params();
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name, url, id, last_performed, exercises(name, id)")
+		.eq("url", workoutUrl)
+		.single(); // get single row as object instead of arr
+	console.log(data); // show in terminal
+	res.send(data);
+});
+
 app.get("/workouts", async (req, res) => {
 	const response = await fetch(
 		"https://pogoapi.net/api/v1/raid_exclusive_pokemon.json"
