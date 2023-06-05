@@ -52,7 +52,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-
+app.use(setResHeaders);
 app.use(cors());
 app.use(cookieParser());
 app.use("/workouts", router1);
@@ -77,7 +77,7 @@ app.get("/cats", (req, res) => {
 // 	res.send(data);
 // });
 
-router1.get("/:workoutUrl", setTokens, setResHeaders, async (req, res) => {
+router1.get("/:workoutUrl", setTokens, async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
