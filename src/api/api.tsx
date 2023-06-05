@@ -53,7 +53,14 @@ export const pokemonAPI = async () => {
 	// 	console.error(error);
 	// 	return;
 	// }
-	const response = await fetch(`${API_ENDPOINT}/workouts`);
+	const response = await fetch(`${API_ENDPOINT}/workouts`, {
+		credentials: "include",
+		// headers: {
+		// 	"Access-Control-Allow-Origin": "http://localhost:5173",
+		// Access-Control-Allow-Credentials: true}
+		// 	Cookie: ("my-refresh-token"=refreshToken ;my-access-token=accessToken,
+		// },
+	});
 	const data = await response.json();
 
 	return data;

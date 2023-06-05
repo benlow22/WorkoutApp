@@ -364,3 +364,7 @@ input[value].new-workout-input,
 .clock-icon {
 	padding-left: 10px;
 }
+
+.page-heading {
+	margin: 30px;
+}
