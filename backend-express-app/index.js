@@ -24,11 +24,31 @@ const port = process.env.PORT || 8000;
 // const workoutsRouter = workoutsModule.router;
 app.use(cors());
 app.use(cookieParser());
-// const setTokens = function (req, res, next) {
-// 	req.requestTime = Date.now();
-// 	next();
-// };
-// app.use();
+
+const setTokens = async function (req, res, next) {
+	const refreshToken = req.cookies.my_refresh_token;
+	const accessToken = req.cookies.my_access_token;
+	if (refreshToken && accessToken) {
+		await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+	} else {
+		// make sure you handle this case!
+		throw new Error("User is not authenticated.");
+	}
+	next();
+};
+
+const setResHeaders = (req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	next();
+};
+
+app.use(setTokens);
+app.use(setResHeaders);
+
 app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
@@ -43,15 +63,6 @@ app.get("/workouts/:workoutUrl", async (req, res) => {
 	// console.log("refresh_token", refreshToken);
 	// console.log("access_token", accessToken);
 
-	if (req.cookies.my_refresh_token && req.cookies.my_access_token) {
-		await supabase.auth.setSession({
-			refresh_token: req.cookies.my_refresh_token,
-			access_token: req.cookies.my_access_token,
-		});
-	} else {
-		// make sure you handle this case!
-		throw new Error("User is not authenticated.");
-	}
 	// returns user information
 	// const {
 	// 	data: { user },
@@ -64,11 +75,8 @@ app.get("/workouts/:workoutUrl", async (req, res) => {
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	console.log("dad", data); // show in terminal
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-	res.setHeader("Access-Control-Allow-Credentials", true);
-	// return new Response(JSON.stringify(data), {
-	// 	headers: { ...corsHeaders, "Content-Type": "application/json" },
-	// });
+	// res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	// res.setHeader("Access-Control-Allow-Credentials", true);
 	res.send(data);
 });
 
