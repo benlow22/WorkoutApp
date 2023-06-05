@@ -72,6 +72,10 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					// everytime there is a sign in event, context states will be triggered
 					console.log("did this work");
 					if (session) {
+						const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
+						document.cookie = `my-access-token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+						document.cookie = `my-refresh-token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+
 						setSession(session);
 						console.log("statechangeauth");
 						setAuth(true);
@@ -83,6 +87,9 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				} else if (event === "SIGNED_OUT") {
 					setAuth(false);
 					setUser(null);
+					const expires = new Date(0).toUTCString();
+					document.cookie = `my-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
+					document.cookie = `my-refresh-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
 				}
 			}
 		);
