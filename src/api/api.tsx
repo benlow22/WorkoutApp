@@ -18,6 +18,13 @@ export const getWorkouts = async () => {
 	return data;
 };
 
+//test supabase auth
+export const getFullWorkoutThroughSupabaseWithAuth = async () => {
+	const response = await fetch(`${API_ENDPOINT}/workouts/:workoutUrl`);
+	const data = await response.json();
+	return data;
+};
+
 //pokemonAPI
 export const pokemonAPI = async () => {
 	// get all of user's workouts
@@ -80,7 +87,7 @@ export const getAllExercisesAPI = async () => {
 // takes workoutId and get workout information + exercises, returns just exercises for now
 export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
 	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
-	const json = await response.json();
+	const json = await response.json(); // gets it out of a promise
 	console.log("json", json);
 	console.log("ressssss", response);
 	return response;
