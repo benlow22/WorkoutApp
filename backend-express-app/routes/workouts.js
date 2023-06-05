@@ -1,11 +1,21 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
+// import { v4 as uuidv4 } from ("uuid");
 const router = express.Router();
+
+router.get("/", async (req, res) => {
+	const response = await fetch(
+		"https://pogoapi.net/api/v1/raid_exclusive_pokemon.json"
+	);
+	const body = await response.text();
+	res.send(body);
+});
 
 router.get("/:workoutUrl", async (req, res) => {
 	const response = await fetch(
 		"https://pogoapi.net/api/v1/pokemon_names.json"
 	);
+	const json = response.text();
+	console.log("jaas", json);
 	res.send(response);
 	// const workoutUrl = req.params;
 	// const { data: workoutData, error } = await supabase // return should be of imported type
@@ -47,4 +57,4 @@ router.get("/:workoutUrl", async (req, res) => {
 // 	}
 // };
 
-exports.router = router;
+module.exports = router;

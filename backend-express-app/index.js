@@ -1,8 +1,15 @@
-import { createClient } from "@supabase/supabase-js";
-import cookieParser from "cookie-parser";
-import express from "express";
-import env from "dotenv";
-import cors from "cors";
+const { createClient } = require("@supabase/supabase-js");
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const path = require("path");
+const env = require("dotenv");
+const cors = require("cors");
+// import express from "express";
+// import env from "dotenv";
+// import cors from "cors";
+// import logger from "morgan";
+
+// const logger = require("morgan");
 
 env.config();
 
@@ -20,13 +27,13 @@ const supabase = createClient(
 
 const app = express();
 const port = process.env.PORT || 8000;
-// const workoutsModule = require("./routes/workouts");
-// const workoutsRouter = workoutsModule.router;
-app.use(cors());
-app.use(cookieParser());
+const workoutsRouter = require("./routes/workouts");
 
+const router1 = express.Router();
+
+//MIDDLEWARES
 const setTokens = async function (req, res, next) {
-	const refreshToken = req.cookies.my_refresh_token;
+	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	if (refreshToken && accessToken) {
 		await supabase.auth.setSession({
@@ -46,8 +53,20 @@ const setResHeaders = (req, res, next) => {
 	next();
 };
 
+// app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+// app.use(express.static(path.join(__dirname)));
+
+app.use(cors());
+app.use(cookieParser());
 app.use(setTokens);
 app.use(setResHeaders);
+app.use("/workouts", router1);
+app.use("/workouts", workoutsRouter);
+
+// ROUTES
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
@@ -57,26 +76,14 @@ app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
 
-app.get("/workouts/:workoutUrl", async (req, res) => {
-	// const refreshToken = req.cookies.my_refresh_token;
-	// const accessToken = req.cookies.my_access_token;
-	// console.log("refresh_token", refreshToken);
-	// console.log("access_token", accessToken);
-
-	// returns user information
-	// const {
-	// 	data: { user },
-	// } = await supabase.auth.getUser();
-	// console.log("USSSer", user);
+router1.get("/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name, url, id, last_performed, exercises(name, id)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
-	console.log("dad", data); // show in terminal
-	// res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-	// res.setHeader("Access-Control-Allow-Credentials", true);
+	// console.log("dad", data); // show in terminal
 	res.send(data);
 });
 
