@@ -34,11 +34,6 @@ export const getFullWorkoutThroughSupabaseWithAuth = async (
 ) => {
 	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`, {
 		credentials: "include",
-		// headers: {
-		// 	"Access-Control-Allow-Origin": "http://localhost:5173",
-		// Access-Control-Allow-Credentials: true}
-		// 	Cookie: ("my-refresh-token"=refreshToken ;my-access-token=accessToken,
-		// },
 	});
 	const data = await response.json();
 	console.log('did it make it to the api"', data);
