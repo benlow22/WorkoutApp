@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-
+import cookieParser from "cookie-parser";
 import express from "express";
 import env from "dotenv";
 import cors from "cors";
@@ -8,7 +8,14 @@ env.config();
 
 const supabase = createClient(
 	process.env.SUPABASE_URL,
-	process.env.SUPABASE_ANON_KEY
+	process.env.SUPABASE_ANON_KEY,
+	{
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false,
+			detectSessionInUrl: false,
+		},
+	}
 );
 
 const app = express();
@@ -16,6 +23,7 @@ const port = process.env.PORT || 8000;
 // const workoutsModule = require("./routes/workouts");
 // const workoutsRouter = workoutsModule.router;
 app.use(cors());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
@@ -26,13 +34,32 @@ app.get("/cats", (req, res) => {
 });
 
 app.get("/workouts/:workoutUrl", async (req, res) => {
-	const workoutUrl = req.params();
+	const refreshToken = req.cookies.my_refresh_token;
+	const accessToken = req.cookies.my_access_token;
+	console.log("refresh_token", refreshToken);
+	console.log("access_token", accessToken);
+
+	if (refreshToken && accessToken) {
+		await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+	} else {
+		// make sure you handle this case!
+		throw new Error("User is not authenticated.");
+	}
+	// returns user information
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
+	console.log("USSSer", user);
+	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name, url, id, last_performed, exercises(name, id)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
-	console.log(data); // show in terminal
+	console.log("dad", data); // show in terminal
 	res.send(data);
 });
 
@@ -58,3 +85,5 @@ app.listen(port, () => {
 	// eslint-disable-next-line no-console
 	console.log(`App listening at http://localhost:${port}`);
 });
+
+/// AAAHH so to pass cookies to the server, you need to include {credentials= "include"} in the
