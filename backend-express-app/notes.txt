@@ -1,0 +1,39 @@
+how do i make an a pi call from server that gtsches data and sends access token 
+
+
+
+
+
+import { createClient } from '@supabase/supabase-js'
+import { createAuth } from '@supabase/auth-node'
+
+const supabaseUrl = 'https://your-project-url.supabase.co'
+const supabaseAnonKey = 'your-anon-key'
+const supabase = createClient(supabaseUrl, supabaseAnonKey)
+
+const auth = createAuth({
+  supabaseClient: supabase,
+  cookieName: 'my-cookie-name',
+})
+
+const refreshToken = req.cookies['my-refresh-token']
+const accessToken = req.cookies['my-access-token']
+
+if (refreshToken && accessToken) {
+  await auth.setSession({
+    refresh_token: refreshToken,
+    access_token: accessToken,
+    {
+      auth: { persistSession: false },
+    }
+  })
+} else {
+  // make sure you handle this case!
+  throw new Error('User is not authenticated.')
+}
+
+const { data, error } = await supabase
+  .from('my-table')
+  .select('*')
+  .eq('id', 1)
+  

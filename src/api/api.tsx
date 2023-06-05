@@ -1,9 +1,19 @@
-const API_ENDPOINT = "https://workout-app-express-backend.vercel.app";
+const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import { IGetFullWorkoutResponse } from "./types";
+
+// const refreshToken = document.cookie
+// 	.split("; ")
+// 	.find((row) => row.startsWith("my-refresh-token"))
+// 	?.split("=")[1];
+
+// const accessToken = document.cookie
+// 	.split("; ")
+// 	.find((row) => row.startsWith("my-access-token"))
+// 	?.split("=")[1];
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
@@ -15,6 +25,23 @@ export const getWorkouts = async () => {
 	const response = await fetch(`${API_ENDPOINT}/workouts`);
 	const data = await response.json();
 
+	return data;
+};
+
+//test supabase auth
+export const getFullWorkoutThroughSupabaseWithAuth = async (
+	workoutUrl: string
+) => {
+	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`, {
+		credentials: "include",
+		// headers: {
+		// 	"Access-Control-Allow-Origin": "http://localhost:5173",
+		// Access-Control-Allow-Credentials: true}
+		// 	Cookie: ("my-refresh-token"=refreshToken ;my-access-token=accessToken,
+		// },
+	});
+	const data = await response.json();
+	console.log('did it make it to the api"', data);
 	return data;
 };
 
@@ -79,11 +106,11 @@ export const getAllExercisesAPI = async () => {
 
 // takes workoutId and get workout information + exercises, returns just exercises for now
 export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
-	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
-	const json = await response.json();
-	console.log("json", json);
-	console.log("ressssss", response);
-	return response;
+	// const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
+	// const json = await response.json(); // gets it out of a promise
+	// console.log("json", json);
+	// console.log("ressssss", response);
+	// return response;
 };
 
 export const getFullWorkoutAPI = async (

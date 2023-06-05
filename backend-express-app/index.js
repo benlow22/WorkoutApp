@@ -1,21 +1,72 @@
-import { createClient } from "@supabase/supabase-js";
+const { createClient } = require("@supabase/supabase-js");
+const cookieParser = require("cookie-parser");
+const express = require("express");
+const path = require("path");
+const env = require("dotenv");
+const cors = require("cors");
+// import express from "express";
+// import env from "dotenv";
+// import cors from "cors";
+// import logger from "morgan";
 
-import express from "express";
-import env from "dotenv";
-import cors from "cors";
+// const logger = require("morgan");
 
 env.config();
 
 const supabase = createClient(
 	process.env.SUPABASE_URL,
-	process.env.SUPABASE_ANON_KEY
+	process.env.SUPABASE_ANON_KEY,
+	{
+		auth: {
+			autoRefreshToken: false,
+			persistSession: false,
+			detectSessionInUrl: false,
+		},
+	}
 );
 
 const app = express();
 const port = process.env.PORT || 8000;
-// const workoutsModule = require("./routes/workouts");
-// const workoutsRouter = workoutsModule.router;
+const workoutsRouter = require("./routes/workouts");
+
+const router1 = express.Router();
+
+//MIDDLEWARES
+const setTokens = async function (req, res, next) {
+	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
+	const accessToken = req.cookies.my_access_token;
+	if (refreshToken && accessToken) {
+		await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+	} else {
+		// make sure you handle this case!
+		throw new Error("User is not authenticated.");
+	}
+	next();
+};
+
+const setResHeaders = (req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	next();
+};
+
+// app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+// app.use(express.static(path.join(__dirname)));
+
 app.use(cors());
+app.use(cookieParser());
+app.use(setTokens);
+app.use(setResHeaders);
+app.use("/workouts", router1);
+app.use("/workouts", workoutsRouter);
+
+// ROUTES
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
@@ -23,6 +74,17 @@ app.get("/", (req, res) => {
 
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
+});
+
+router1.get("/:workoutUrl", async (req, res) => {
+	const workoutUrl = req.params.workoutUrl;
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name, url, id, last_performed, exercises(name, id)")
+		.eq("url", workoutUrl)
+		.single(); // get single row as object instead of arr
+	// console.log("dad", data); // show in terminal
+	res.send(data);
 });
 
 app.get("/workouts", async (req, res) => {
@@ -47,3 +109,5 @@ app.listen(port, () => {
 	// eslint-disable-next-line no-console
 	console.log(`App listening at http://localhost:${port}`);
 });
+
+/// AAAHH so to pass cookies to the server, you need to include {credentials= "include"} in the

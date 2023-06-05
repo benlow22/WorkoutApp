@@ -15,6 +15,7 @@ import {
 import {
 	getFullWorkoutAPI,
 	getFullWorkoutAPIEXPRESS,
+	getFullWorkoutThroughSupabaseWithAuth,
 	getWorkoutDay,
 } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
@@ -51,9 +52,19 @@ export const WorkoutPage = () => {
 		setIsLoading(true);
 		async function getWorkout() {
 			if (workoutUrl) {
+				//console.log('coookies"', document.cookie);
 				// should always be true, if not it would be a different route (error claims type undefined)
-				const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
-				console.log("THIS MADE IT", lols);
+				const test = await getFullWorkoutThroughSupabaseWithAuth(
+					workoutUrl
+				);
+				if (test) {
+					console.log(
+						"test data made it to Comp from supabase: ",
+						test
+					);
+				}
+				// const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
+				// console.log("THIS MADE IT", lols);
 				const data = await getFullWorkoutAPI(workoutUrl);
 				if (data) {
 					// setWorkout(data); // setState workoutData
