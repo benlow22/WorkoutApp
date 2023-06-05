@@ -34,6 +34,8 @@ const setTokens = async function (req, res, next) {
 			refresh_token: refreshToken,
 			access_token: accessToken,
 		});
+		console.log("ref", refreshToken);
+		console.log("acc", accessToken);
 	} else {
 		// make sure you handle this case!
 		throw new Error("User is not authenticated.");
@@ -52,7 +54,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(setResHeaders);
 app.use(cors());
 app.use(cookieParser());
 app.use("/workouts", router1);
@@ -68,33 +69,33 @@ app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
 
-// router1.get("/", async (req, res) => {
-// 	const { data, error } = await supabase.from("workouts").select("name,url");
-// 	if (error) {
-// 		console.error(error);
-// 		return;
-// 	}
-// 	res.send(data);
-// });
+router1.get("/", setTokens, setResHeaders, async (req, res) => {
+	const { data, error } = await supabase.from("workouts").select("name,url");
+	if (error) {
+		console.error(error);
+		return;
+	}
+	res.send(data);
+});
 
-router1.get("/:workoutUrl", setTokens, async (req, res) => {
+router1.get("/:workoutUrl", setTokens, setResHeaders, async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name, url, id, last_performed, exercises(name, id)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
-	// console.log("dad", data); // show in terminal
+	console.log("dad", data); // show in terminal
 	res.send(data);
 });
 
-app.get("/workouts", async (req, res) => {
-	const response = await fetch(
-		"https://pogoapi.net/api/v1/raid_exclusive_pokemon.json"
-	);
-	const body = await response.text();
-	res.send(body);
-});
+// app.get("/workouts", async (req, res) => {
+// 	const response = await fetch(
+// 		"https://pogoapi.net/api/v1/raid_exclusive_pokemon.json"
+// 	);
+// 	const body = await response.text();
+// 	res.send(body);
+// });
 
 app.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
