@@ -15,6 +15,7 @@ import {
 import {
 	getFullWorkoutAPI,
 	getFullWorkoutAPIEXPRESS,
+	getFullWorkoutThroughSupabaseWithAuth,
 	getWorkoutDay,
 } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
@@ -52,6 +53,13 @@ export const WorkoutPage = () => {
 		async function getWorkout() {
 			if (workoutUrl) {
 				// should always be true, if not it would be a different route (error claims type undefined)
+				const test = await getFullWorkoutThroughSupabaseWithAuth();
+				if (test) {
+					console.log(
+						"test data made it to Comp from supabase: ",
+						test
+					);
+				}
 				const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
 				console.log("THIS MADE IT", lols);
 				const data = await getFullWorkoutAPI(workoutUrl);
