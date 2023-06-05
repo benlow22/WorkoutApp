@@ -73,14 +73,14 @@ app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
 
-router1.get("/", async (req, res) => {
-	const { data, error } = await supabase.from("workouts").select("name,url");
-	if (error) {
-		console.error(error);
-		return;
-	}
-	res.send(data);
-});
+// router1.get("/", async (req, res) => {
+// 	const { data, error } = await supabase.from("workouts").select("name,url");
+// 	if (error) {
+// 		console.error(error);
+// 		return;
+// 	}
+// 	res.send(data);
+// });
 
 router1.get("/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
