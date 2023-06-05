@@ -24,7 +24,11 @@ const port = process.env.PORT || 8000;
 // const workoutsRouter = workoutsModule.router;
 app.use(cors());
 app.use(cookieParser());
-
+// const setTokens = function (req, res, next) {
+// 	req.requestTime = Date.now();
+// 	next();
+// };
+// app.use();
 app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
@@ -34,15 +38,15 @@ app.get("/cats", (req, res) => {
 });
 
 app.get("/workouts/:workoutUrl", async (req, res) => {
-	const refreshToken = req.cookies.my_refresh_token;
-	const accessToken = req.cookies.my_access_token;
-	console.log("refresh_token", refreshToken);
-	console.log("access_token", accessToken);
+	// const refreshToken = req.cookies.my_refresh_token;
+	// const accessToken = req.cookies.my_access_token;
+	// console.log("refresh_token", refreshToken);
+	// console.log("access_token", accessToken);
 
-	if (refreshToken && accessToken) {
+	if (req.cookies.my_refresh_token && req.cookies.my_access_token) {
 		await supabase.auth.setSession({
-			refresh_token: refreshToken,
-			access_token: accessToken,
+			refresh_token: req.cookies.my_refresh_token,
+			access_token: req.cookies.my_access_token,
 		});
 	} else {
 		// make sure you handle this case!
