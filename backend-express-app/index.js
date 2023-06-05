@@ -42,7 +42,10 @@ const setTokens = async function (req, res, next) {
 };
 
 const setResHeaders = (req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", process.env.ADDRESS);
+	res.setHeader(
+		"Access-Control-Allow-Origin",
+		"https://workout-app-express-backend.vercel.app"
+	);
 	res.setHeader("Access-Control-Allow-Credentials", true);
 	next();
 };
