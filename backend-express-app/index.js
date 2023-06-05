@@ -49,10 +49,10 @@ app.get("/workouts/:workoutUrl", async (req, res) => {
 		throw new Error("User is not authenticated.");
 	}
 	// returns user information
-	const {
-		data: { user },
-	} = await supabase.auth.getUser();
-	console.log("USSSer", user);
+	// const {
+	// 	data: { user },
+	// } = await supabase.auth.getUser();
+	// console.log("USSSer", user);
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
@@ -60,6 +60,11 @@ app.get("/workouts/:workoutUrl", async (req, res) => {
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	console.log("dad", data); // show in terminal
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	res.setHeader("Access-Control-Allow-Credentials", true);
+	// return new Response(JSON.stringify(data), {
+	// 	headers: { ...corsHeaders, "Content-Type": "application/json" },
+	// });
 	res.send(data);
 });
 

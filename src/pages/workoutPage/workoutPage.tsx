@@ -63,8 +63,8 @@ export const WorkoutPage = () => {
 						test
 					);
 				}
-				const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
-				console.log("THIS MADE IT", lols);
+				// const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
+				// console.log("THIS MADE IT", lols);
 				const data = await getFullWorkoutAPI(workoutUrl);
 				if (data) {
 					// setWorkout(data); // setState workoutData
