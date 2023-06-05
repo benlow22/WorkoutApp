@@ -52,8 +52,11 @@ export const WorkoutPage = () => {
 		setIsLoading(true);
 		async function getWorkout() {
 			if (workoutUrl) {
+				console.log('coookies"', document.cookie);
 				// should always be true, if not it would be a different route (error claims type undefined)
-				const test = await getFullWorkoutThroughSupabaseWithAuth();
+				const test = await getFullWorkoutThroughSupabaseWithAuth(
+					workoutUrl
+				);
 				if (test) {
 					console.log(
 						"test data made it to Comp from supabase: ",
