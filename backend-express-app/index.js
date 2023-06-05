@@ -4,12 +4,6 @@ const express = require("express");
 const path = require("path");
 const env = require("dotenv");
 const cors = require("cors");
-// import express from "express";
-// import env from "dotenv";
-// import cors from "cors";
-// import logger from "morgan";
-
-// const logger = require("morgan");
 
 env.config();
 
@@ -57,14 +51,14 @@ const setResHeaders = (req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname)));
 
 app.use(cors());
 app.use(cookieParser());
 app.use(setTokens);
 app.use(setResHeaders);
 app.use("/workouts", router1);
-app.use("/workouts", workoutsRouter);
+// app.use("/workouts", workoutsRouter);
 
 // ROUTES
 
@@ -74,6 +68,15 @@ app.get("/", (req, res) => {
 
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
+});
+
+router1.get("/", async (req, res) => {
+	const { data, error } = await supabase.from("workouts").select("name,url");
+	if (error) {
+		console.error(error);
+		return;
+	}
+	res.send(data);
 });
 
 router1.get("/:workoutUrl", async (req, res) => {

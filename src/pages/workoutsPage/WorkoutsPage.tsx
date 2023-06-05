@@ -36,7 +36,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	if (!isLoading) {
 		return (
 			<div className="workouts-page">
-				<h2>Your Workouts</h2>
+				<h2 className="page-heading">Your Workouts</h2>
 				{workouts.map((workout, index) => (
 					<Link
 						to={`/workouts/${workout.url}`}
