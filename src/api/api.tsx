@@ -53,10 +53,10 @@ export const getAllUsersWorkoutsAPI = async () => {
 	// }
 	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 		credentials: "include",
-		// headers: {
-		// 	"Access-Control-Allow-Origin": "http://localhost:5173",
-		// 	"Access-Control-Allow-Credentials": "true",
-		// },
+		headers: {
+			"Access-Control-Allow-Origin": "http://localhost:5173",
+			"Access-Control-Allow-Credentials": "true",
+		},
 	});
 	const data = await response.json(); // returns an array of workouts
 	return data;
