@@ -63,6 +63,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cors());
 app.use(cookieParser());
+app.use(setResHeaders);
 app.use("/authorized", authorizedRouter);
 app.use("/public", publicRouter);
 
