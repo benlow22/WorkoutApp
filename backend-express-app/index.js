@@ -8,7 +8,7 @@ const cors = require("cors");
 env.config();
 
 var corsOptions = {
-	origin: "https://test-workout-app-vercel.vercel.app",
+	origin: "https://test-workout-app-vercel.vercel.app/authorized/workouts/sobs",
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
