@@ -23,7 +23,8 @@ const app = express();
 const port = process.env.PORT || 8000;
 //const workoutsRouter = require("./routes/workouts");
 
-const router1 = express.Router();
+const authorizedRouter = express.Router();
+const publicRouter = express.Router(); // create a router for all public routes
 
 //MIDDLEWARES
 const setTokens = async function (req, res, next) {
@@ -44,7 +45,8 @@ const setTokens = async function (req, res, next) {
 };
 
 const setResHeaders = (req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", process.env.ADDRESS);
+	// this is set for local host, vercel.json should handle this when deployed
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	next();
 };
@@ -56,12 +58,14 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cors());
 app.use(cookieParser());
-app.use("/workouts", router1);
+app.use("/authorized", authorizedRouter);
+app.use("/public", publicRouter);
+
 // app.use("/workouts", workoutsRouter);
 
 // ROUTES
 
-app.get("/", (req, res) => {
+publicRouter.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
@@ -69,25 +73,37 @@ app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
 
-router1.get("/", setTokens, setResHeaders, async (req, res) => {
-	const { data, error } = await supabase.from("workouts").select("name,url");
-	if (error) {
-		console.error(error);
-		return;
+authorizedRouter.get(
+	"/workouts",
+	setTokens,
+	setResHeaders,
+	async (req, res) => {
+		const { data, error } = await supabase
+			.from("workouts")
+			.select("name,url");
+		if (error) {
+			console.error(error);
+			return;
+		}
+		res.send(data);
 	}
-	res.send(data);
-});
+);
 
-router1.get("/:workoutUrl", setTokens, setResHeaders, async (req, res) => {
-	const workoutUrl = req.params.workoutUrl;
-	const { data, error } = await supabase
-		.from("workouts")
-		.select("name, url, id, last_performed, exercises(name, id)")
-		.eq("url", workoutUrl)
-		.single(); // get single row as object instead of arr
-	console.log("dad", data); // show in terminal
-	res.send(data);
-});
+authorizedRouter.get(
+	"/workouts/:workoutUrl",
+	setTokens,
+	setResHeaders,
+	async (req, res) => {
+		const workoutUrl = req.params.workoutUrl;
+		const { data, error } = await supabase
+			.from("workouts")
+			.select("name, url, id, last_performed, exercises(name, id)")
+			.eq("url", workoutUrl)
+			.single(); // get single row as object instead of arr
+		console.log("dad", data); // show in terminal
+		res.send(data);
+	}
+);
 
 // app.get("/workouts", async (req, res) => {
 // 	const response = await fetch(
@@ -97,6 +113,7 @@ router1.get("/:workoutUrl", setTokens, setResHeaders, async (req, res) => {
 // 	res.send(body);
 // });
 
+// does not need to be authenticated.
 app.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
 		.from("exercises")

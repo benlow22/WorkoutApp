@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Space, Input } from "antd";
 
-import { getWorkouts, postNewWorkout } from "../../api/api";
+import { postNewWorkout } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { toKebabCase, changeNameToUrl } from "../../utils/utils";
