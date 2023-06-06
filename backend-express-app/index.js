@@ -20,7 +20,7 @@ const supabase = createClient(
 );
 
 const app = express();
-app.use(cors({ origin: /test\-workout\-app\-vercel\.vercel\.app.*/ }));
+// app.use(cors({ origin: /test\-workout\-app\-vercel\.vercel\.app.*/ }));
 
 const port = process.env.PORT || 8000;
 //const workoutsRouter = require("./routes/workouts");
@@ -77,6 +77,9 @@ publicRouter.get("/", (req, res) => {
 
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
+});
+app.get("/", (req, res) => {
+	res.send("Homepage");
 });
 
 authorizedRouter.get(
