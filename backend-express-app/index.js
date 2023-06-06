@@ -78,6 +78,9 @@ publicRouter.get("/", (req, res) => {
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
+app.get("/", (req, res) => {
+	res.send("Homepage");
+});
 
 authorizedRouter.get(
 	"/workouts",
