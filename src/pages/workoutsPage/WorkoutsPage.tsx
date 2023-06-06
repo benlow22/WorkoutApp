@@ -5,7 +5,7 @@ import { Link, NavLink, Route, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { supabase } from "../../supabaseClient";
 import { IWorkout } from "../../data";
-import { pokemonAPI } from "../../api/api";
+import { getAllUsersWorkoutsAPI } from "../../api/api";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId } = useContext(AuthContext);
@@ -14,17 +14,17 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	useEffect(() => {
 		// get all of user's workouts to render list
 		const getAllUsersWorkouts = async () => {
-			const { data, error } = await supabase
-				.from("workouts")
-				.select("id, name, url, last_performed");
+			// const { data, error } = await supabase
+			// 	.from("workouts")
+			// 	.select("id, name, url, last_performed");
 			///
-			const pokemons = await pokemonAPI();
-			console.log("pokemons", pokemons);
-			if (error) {
-				console.error(error);
-				setIsLoading(false);
-				return;
-			}
+			const data = await getAllUsersWorkoutsAPI();
+			// console.log("pokemons", pokemons);
+			// if (error) {	move error handling to api
+			// 	console.error(error);
+			// 	setIsLoading(false);
+			// 	return;
+			// }
 			console.log("workouts", data);
 			setWorkouts(data);
 			setIsLoading(false);

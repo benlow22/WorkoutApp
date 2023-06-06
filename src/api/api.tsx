@@ -32,32 +32,33 @@ export const getWorkouts = async () => {
 export const getFullWorkoutThroughSupabaseWithAuth = async (
 	workoutUrl: string
 ) => {
-	const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`, {
-		credentials: "include",
-	});
+	const response = await fetch(
+		`${API_ENDPOINT}/authorized/workouts/${workoutUrl}`,
+		{
+			credentials: "include",
+		}
+	);
 	const data = await response.json();
 	console.log('did it make it to the api"', data);
 	return data;
 };
 
 //pokemonAPI
-export const pokemonAPI = async () => {
+export const getAllUsersWorkoutsAPI = async () => {
 	// get all of user's workouts
 	// const { data, error } = await supabase.from("workouts").select("name,url");
 	// if (error) {
 	// 	console.error(error);
 	// 	return;
 	// }
-	const response = await fetch(`${API_ENDPOINT}/workouts`, {
+	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 		credentials: "include",
 		// headers: {
 		// 	"Access-Control-Allow-Origin": "http://localhost:5173",
-		// Access-Control-Allow-Credentials: true}
-		// 	Cookie: ("my-refresh-token"=refreshToken ;my-access-token=accessToken,
+		// 	"Access-Control-Allow-Credentials": "true",
 		// },
 	});
-	const data = await response.json();
-
+	const data = await response.json(); // returns an array of workouts
 	return data;
 };
 
