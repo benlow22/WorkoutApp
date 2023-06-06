@@ -7,6 +7,12 @@ const cors = require("cors");
 
 env.config();
 
+var corsOptions = {
+	origin: "https://test-workout-app-vercel.vercel.app",
+	optionsSuccessStatus: 200,
+	credentials: true,
+};
+
 const supabase = createClient(
 	process.env.SUPABASE_URL,
 	process.env.SUPABASE_ANON_KEY,
@@ -46,24 +52,24 @@ const setTokens = async function (req, res, next) {
 	next();
 };
 
-const setResHeaders = (req, res, next) => {
-	// this is set for local host, vercel.json should handle this when deployed
-	res.setHeader(
-		"Access-Control-Allow-Origin",
-		"https://test-workout-app-vercel.vercel.app"
-	);
-	res.setHeader("Access-Control-Allow-Credentials", "true");
-	next();
-};
+// const setResHeaders = (req, res, next) => {
+// 	// this is set for local host, vercel.json should handle this when deployed
+// 	res.setHeader(
+// 		"Access-Control-Allow-Origin",
+// 		"https://test-workout-app-vercel.vercel.app"
+// 	);
+// 	res.setHeader("Access-Control-Allow-Credentials", "true");
+// 	next();
+// };
 
 // app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser());
-app.use(setResHeaders);
+// app.use(setResHeaders);
 app.use("/authorized", authorizedRouter);
 app.use("/public", publicRouter);
 
@@ -82,37 +88,25 @@ app.get("/", (req, res) => {
 	res.send("Homepage");
 });
 
-authorizedRouter.get(
-	"/workouts",
-	setTokens,
-	setResHeaders,
-	async (req, res) => {
-		const { data, error } = await supabase
-			.from("workouts")
-			.select("name,url");
-		if (error) {
-			console.error(error);
-			return;
-		}
-		res.send(data);
+authorizedRouter.get("/workouts", setTokens, async (req, res) => {
+	const { data, error } = await supabase.from("workouts").select("name,url");
+	if (error) {
+		console.error(error);
+		return;
 	}
-);
+	res.send(data);
+});
 
-authorizedRouter.get(
-	"/workouts/:workoutUrl",
-	setTokens,
-	setResHeaders,
-	async (req, res) => {
-		const workoutUrl = req.params.workoutUrl;
-		const { data, error } = await supabase
-			.from("workouts")
-			.select("name, url, id, last_performed, exercises(name, id)")
-			.eq("url", workoutUrl)
-			.single(); // get single row as object instead of arr
-		console.log("dad", data); // show in terminal
-		res.send(data);
-	}
-);
+authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
+	const workoutUrl = req.params.workoutUrl;
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name, url, id, last_performed, exercises(name, id)")
+		.eq("url", workoutUrl)
+		.single(); // get single row as object instead of arr
+	console.log("dad", data); // show in terminal
+	res.send(data);
+});
 
 // app.get("/workouts", async (req, res) => {
 // 	const response = await fetch(
