@@ -48,7 +48,10 @@ const setTokens = async function (req, res, next) {
 
 const setResHeaders = (req, res, next) => {
 	// this is set for local host, vercel.json should handle this when deployed
-	res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
+	res.setHeader(
+		"Access-Control-Allow-Origin",
+		"https://test-workout-app-vercel.vercel.app"
+	);
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	next();
 };
