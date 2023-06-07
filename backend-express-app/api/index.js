@@ -97,17 +97,18 @@ authorizedRouter.get(
 	"/workouts",
 	setTokens,
 	setResHeaders,
-	// async (req, res) => {
-	// 	const { data, error } = await supabase
-	// 		.from("workouts")
-	// 		.select("name,url");
-	// 	if (error) {
-	// 		console.error(error);
-	// 		return;
-	// 	}
-	// 	res.send(data);
-	// }
-	res.send("this is /api to workouts")
+	async (req, res) => {
+		// 	const { data, error } = await supabase
+		// 		.from("workouts")
+		// 		.select("name,url");
+		// 	if (error) {
+		// 		console.error(error);
+		// 		return;
+		// 	}
+		// 	res.send(data);
+		// }
+		res.send("this is /api to workouts");
+	}
 );
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
