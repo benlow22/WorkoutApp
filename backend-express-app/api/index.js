@@ -8,7 +8,7 @@ const cors = require("cors");
 env.config();
 
 var corsOptions = {
-	origin: /test-workout-app-vercel\.vercel\.app$/,
+	origin: true,
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
@@ -54,15 +54,15 @@ const setTokens = async function (req, res, next) {
 
 const setResHeaders = (req, res, next) => {
 	// this is set for local host, vercel.json should handle this when deployed
-	res.header(
-		"Access-Control-Allow-Origin",
-		"https://test-workout-app-vercel.vercel.app"
-	);
-	res.header("Access-Control-Allow-Credentials", "true");
-	res.header(
-		"Access-Control-Allow-Headers",
-		"Origin, X-Requested-With, Content-Type, Accept"
-	);
+	// res.header(
+	// 	"Access-Control-Allow-Origin",
+	// 	"https://test-workout-app-vercel.vercel.app"
+	// );
+	// res.header("Access-Control-Allow-Credentials", "true");
+	// res.header(
+	// 	"Access-Control-Allow-Headers",
+	// 	"Origin, X-Requested-With, Content-Type, Accept"
+	// );
 	next();
 };
 
@@ -71,7 +71,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(cors(corsOptions));
 // app.use(cors());
 app.use(cookieParser());
 // app.use(setResHeaders);
@@ -90,6 +89,8 @@ app.use((req, res, next) => {
 	}
 	next();
 });
+app.use(cors(corsOptions));
+
 app.use("/api/authorized", authorizedRouter);
 app.use("/public", publicRouter);
 
