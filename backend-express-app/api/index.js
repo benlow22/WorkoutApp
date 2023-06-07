@@ -7,11 +7,11 @@ const cors = require("cors");
 
 env.config();
 
-var corsOptions = {
-	origin: /test-workout-app-vercel\.vercel\.app$/,
-	optionsSuccessStatus: 200,
-	credentials: true,
-};
+// var corsOptions = {
+// 	origin: /test-workout-app-vercel\.vercel\.app$/,
+// 	optionsSuccessStatus: 200,
+// 	credentials: true,
+// };
 
 const supabase = createClient(
 	process.env.SUPABASE_URL,
@@ -54,10 +54,10 @@ const setTokens = async function (req, res, next) {
 
 const setResHeaders = (req, res, next) => {
 	// this is set for local host, vercel.json should handle this when deployed
-	// res.header(
-	// 	"Access-Control-Allow-Origin",
-	// 	"https://test-workout-app-vercel.vercel.app"
-	// );
+	res.header(
+		"Access-Control-Allow-Origin",
+		"https://test-workout-app-vercel.vercel.app"
+	);
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header(
 		"Access-Control-Allow-Headers",
