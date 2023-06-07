@@ -106,8 +106,8 @@ publicRouter.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
-app.get("/cats", (req, res) => {
-	res.send({ name: "catchy" });
+app.get("api/cats", (req, res) => {
+	res.send(...res.header);
 });
 app.get("/api/", (req, res) => {
 	res.send("Homepage");
