@@ -74,7 +74,7 @@ app.use(express.static("public"));
 app.use(cors(corsOptions));
 app.use(cookieParser());
 // app.use(setResHeaders);
-app.use("/authorized", authorizedRouter);
+app.use("/api/authorized", authorizedRouter);
 app.use("/public", publicRouter);
 
 // app.use("/workouts", workoutsRouter);
@@ -88,7 +88,7 @@ publicRouter.get("/", (req, res) => {
 app.get("/cats", (req, res) => {
 	res.send({ name: "catchy" });
 });
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
 	res.send("Homepage");
 });
 

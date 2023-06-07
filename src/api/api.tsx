@@ -51,7 +51,7 @@ export const getAllUsersWorkoutsAPI = async () => {
 	// 	console.error(error);
 	// 	return;
 	// }
-	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
+	const response = await fetch(`${API_ENDPOINT}/api/authorized/workouts`, {
 		credentials: "include",
 		headers: {
 			"Access-Control-Allow-Origin":
