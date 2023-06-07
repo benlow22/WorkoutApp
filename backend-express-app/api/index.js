@@ -127,6 +127,10 @@ authorizedRouter.get(
 		// 	}
 		// 	res.send(data);
 		// }
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://test-workout-app-vercel.vercel.app"
+		);
 		res.send("this is /api to workouts");
 	}
 );
