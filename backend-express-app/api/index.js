@@ -7,11 +7,11 @@ const cors = require("cors");
 
 env.config();
 
-// var corsOptions = {
-// 	origin: /test-workout-app-vercel\.vercel\.app$/,
-// 	optionsSuccessStatus: 200,
-// 	credentials: true,
-// };
+var corsOptions = {
+	origin: /test-workout-app-vercel\.vercel\.app$/,
+	optionsSuccessStatus: 200,
+	credentials: true,
+};
 
 const supabase = createClient(
 	process.env.SUPABASE_URL,
@@ -71,8 +71,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 app.use(cookieParser());
 // app.use(setResHeaders);
 app.use((req, res, next) => {

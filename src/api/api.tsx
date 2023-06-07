@@ -108,11 +108,11 @@ export const getAllExercisesAPI = async () => {
 	console.log("start to get all exercises");
 	const response = await fetch(`${API_ENDPOINT}/exercises`, {
 		credentials: "include",
-		headers: {
-			"Access-Control-Allow-Origin":
-				"https://test-workout-app-vercel.vercel.app",
-			"Access-Control-Allow-Credentials": "true",
-		},
+		// headers: {
+		// 	"Access-Control-Allow-Origin":
+		// 		"https://test-workout-app-vercel.vercel.app",
+		// 	"Access-Control-Allow-Credentials": "true",
+		// },
 	});
 	console.log("response from api = ", response);
 	const json = await response.json();
