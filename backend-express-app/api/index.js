@@ -75,6 +75,21 @@ app.use(express.static("public"));
 app.use(cors());
 app.use(cookieParser());
 // app.use(setResHeaders);
+app.use((req, res, next) => {
+	if (req.method === "OPTIONS") {
+		res.header(
+			"Access-Control-Allow-Methods",
+			"PUT, POST, PATCH, DELETE, GET"
+		);
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://test-workout-app-vercel.vercel.app"
+		);
+		res.header("Access-Control-Allow-Credentials", "true");
+		return res.status(200).json({});
+	}
+	next();
+});
 app.use("/api/authorized", authorizedRouter);
 app.use("/public", publicRouter);
 
