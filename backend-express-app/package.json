@@ -2,10 +2,10 @@
 	"name": "backend-express-app",
 	"version": "1.0.0",
 	"description": "",
-	"main": "./api/index.js",
+	"main": "./api/_index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon ./api/index.js"
+		"start": "nodemon ./api/_index.js"
 	},
 	"keywords": [],
 	"author": "",
