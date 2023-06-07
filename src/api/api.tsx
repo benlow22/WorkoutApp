@@ -54,7 +54,8 @@ export const getAllUsersWorkoutsAPI = async () => {
 	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 		credentials: "include",
 		headers: {
-			"Access-Control-Allow-Origin": "http://localhost:5173",
+			"Access-Control-Allow-Origin":
+				"https://test-workout-app-vercel.vercel.app",
 			"Access-Control-Allow-Credentials": "true",
 		},
 	});
@@ -102,7 +103,8 @@ export const getAllExercisesAPI = async () => {
 	const response = await fetch(`${API_ENDPOINT}/exercises`, {
 		credentials: "include",
 		headers: {
-			"Access-Control-Allow-Origin": "http://localhost:5173",
+			"Access-Control-Allow-Origin":
+				"https://test-workout-app-vercel.vercel.app",
 			"Access-Control-Allow-Credentials": "true",
 		},
 	});
