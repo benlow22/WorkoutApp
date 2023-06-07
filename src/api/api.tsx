@@ -9,7 +9,6 @@ import { IGetFullWorkoutResponse } from "./types";
 // 	.split("; ")
 // 	.find((row) => row.startsWith("my-refresh-token"))
 // 	?.split("=")[1];
-// co
 // const accessToken = document.cookie
 // 	.split("; ")
 // 	.find((row) => row.startsWith("my-access-token"))
