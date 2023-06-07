@@ -171,3 +171,5 @@ app.listen(port, () => {
 });
 
 /// AAAHH so to pass cookies to the server, you need to include {credentials= "include"} in the
+
+module.exports = app;
