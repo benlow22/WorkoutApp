@@ -52,15 +52,19 @@ const setTokens = async function (req, res, next) {
 	next();
 };
 
-// const setResHeaders = (req, res, next) => {
-// 	// this is set for local host, vercel.json should handle this when deployed
-// 	res.setHeader(
-// 		"Access-Control-Allow-Origin",
-// 		"https://test-workout-app-vercel.vercel.app"
-// 	);
-// 	res.setHeader("Access-Control-Allow-Credentials", "true");
-// 	next();
-// };
+const setResHeaders = (req, res, next) => {
+	// this is set for local host, vercel.json should handle this when deployed
+	res.header(
+		"Access-Control-Allow-Origin",
+		"https://test-workout-app-vercel.vercel.app"
+	);
+	res.header("Access-Control-Allow-Credentials", "true");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept"
+	);
+	next();
+};
 
 // app.use(logger("dev"));
 app.use(express.json());
@@ -88,14 +92,21 @@ app.get("/", (req, res) => {
 	res.send("Homepage");
 });
 
-authorizedRouter.get("/workouts", setTokens, async (req, res) => {
-	const { data, error } = await supabase.from("workouts").select("name,url");
-	if (error) {
-		console.error(error);
-		return;
+authorizedRouter.get(
+	"/workouts",
+	setTokens,
+	setResHeaders,
+	async (req, res) => {
+		const { data, error } = await supabase
+			.from("workouts")
+			.select("name,url");
+		if (error) {
+			console.error(error);
+			return;
+		}
+		res.send(data);
 	}
-	res.send(data);
-});
+);
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
