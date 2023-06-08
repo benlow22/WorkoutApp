@@ -8,7 +8,7 @@
 				{ "key": "Access-Control-Allow-Credentials", "value": "true" },
 				{
 					"key": "Access-Control-Allow-Origin",
-					"value": "https://test-workout-app-vercel.vercel.app"
+					"value": "https://localhost:5173"
 				},
 				{
 					"key": "Access-Control-Allow-Methods",
