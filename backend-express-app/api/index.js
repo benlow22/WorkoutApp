@@ -164,7 +164,7 @@ authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 // });
 
 // does not need to be authenticated.
-app.get("/exercises", async (req, res) => {
+app.get("/api/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
 		.from("exercises")
 		.select("name");
