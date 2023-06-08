@@ -99,7 +99,10 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://test-workout-app-vercel.vercel.app"
+		);
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
@@ -147,7 +150,7 @@ publicRouter.get("/workouts", async (req, res) => {
 			refresh_token: refreshToken,
 			access_token: accessToken,
 		});
-		console.log("authorized1231231", data);
+		// console.log("authorized1231231", data);
 	} else {
 		// make sure you handle this case!
 		throw new Error("User is not authenticated.");
