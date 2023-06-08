@@ -48,7 +48,11 @@ const setTokens = async function (req, res, next) {
 		console.log("acc", accessToken);
 	} else {
 		// make sure you handle this case!
-		throw new Error("User is not authenticated.");
+		throw new Error(
+			"User is not authenticated.",
+			refreshToken,
+			accessToken
+		);
 	}
 	next();
 };
