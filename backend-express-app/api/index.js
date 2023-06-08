@@ -142,14 +142,14 @@ publicRouter.get("/workouts", async (req, res) => {
 	// 		accessToken
 	// 	);
 	// }
-	const { data, error } = await supabase
-		.from("workouts")
-		.select("name,url")
-		.auth(accessToken);
-	if (error) {
-		console.error(error);
-		return;
-	}
+	// const { data, error } = await supabase
+	// 	.from("workouts")
+	// 	.select("name,url")
+	// 	.auth(accessToken);
+	// if (error) {
+	// 	console.error(error);
+	// 	return;
+	// }
 	res.send(accessToken);
 });
 
