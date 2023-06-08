@@ -5,6 +5,21 @@ const path = require("path");
 const env = require("dotenv");
 const cors = require("cors");
 const { v4 } = require("uuid");
+const jwt = require("jsonwebtoken");
+
+// function authMiddleware(req, res, next) {
+// 	const authHeader = req.headers.authorization;
+// 	if (!authHeader)
+// 		return res.status(401).json({ error: "Authorization header missing" });
+// 	const token = authHeader.split(" ")[1];
+// 	try {
+// 		const decoded = jwt.verify(token, "access_token");
+// 		req.user = decoded;
+// 		next();
+// 	} catch (err) {
+// 		return res.status(401).json({ error: "Invalid token" });
+// 	}
+// }
 
 env.config();
 
@@ -79,6 +94,8 @@ app.use(express.static("public"));
 // app.use(cors());
 app.use(cookieParser());
 // app.use(setResHeaders);
+app.use(cors(corsOptions));
+
 app.use((req, res, next) => {
 	if (req.method === "OPTIONS") {
 		res.header(
@@ -92,14 +109,13 @@ app.use((req, res, next) => {
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
-			"Origin, X-Requested-With, Content-Type, Accept"
+			"Origin, X-Requested-With, Content-Type, Accept, Authorization"
 		);
 		return res.status(200).json({});
 	}
 	next();
 });
-app.use(cors(corsOptions));
-
+// app.use(authMiddleware);
 app.use("/api/authorized", authorizedRouter);
 app.use("/api/public", publicRouter);
 
@@ -130,10 +146,23 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
+	const user_id = req.cookies.my_user_id;
+
+	if (refreshToken && accessToken) {
+		const { data, error } = await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+		console.log("authorized1231231", data);
+	} else {
+		// make sure you handle this case!
+		throw new Error("User is not authenticated.");
+	}
+
 	// if (refreshToken && accessToken) {
-	// 	await supabase.auth.setSession(accessToken);
+	// 	// return res.json({ cats: "MEWOW" });
 	// 	console.log("ref", refreshToken);
-	// 	console.log("acc", accessToken);
+	// 	console.log("acc", user_id);
 	// } else {
 	// 	// make sure you handle this case!
 	// 	throw new Error(
@@ -142,16 +171,30 @@ publicRouter.get("/workouts", async (req, res) => {
 	// 		accessToken
 	// 	);
 	// }
-	// const { data, error } = await supabase
-	// 	.from("workouts")
-	// 	.select("name,url")
-	// 	.auth(accessToken);
-	// if (error) {
-	// 	console.error(error);
-	// 	return;
-	// }
-	res.send(accessToken);
+
+	// const { data, error } = await supabase.auth.getSession();
+
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name,url")
+		.eq("user_id", user_id);
+	if (error) {
+		console.error(error);
+		return;
+	}
+	console.log("data 22 2 2 2 2 2 2 2", data);
+	// if (error) return res.status(401).json({ error: error.message });
+	res.json(data);
 });
+
+// app.get("/api/get-data", authMiddleware, async (req, res) => {
+// 	const { data, error } = await supabase
+// 		.from("your-table-name")
+// 		.select("*")
+// 		.eq("user_id", req.user.sub); // use RLS to only return data for the authenticated user
+// 	if (error) return res.status(401).json({ error: error.message });
+// 	res.json(data);
+// });
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;

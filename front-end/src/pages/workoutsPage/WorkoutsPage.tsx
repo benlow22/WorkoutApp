@@ -8,7 +8,7 @@ import { IWorkout } from "../../data";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId } = useContext(AuthContext);
+	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
@@ -18,16 +18,16 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			// 	.from("workouts")
 			// 	.select("id, name, url, last_performed");
 			///
-			const data = await getAllUsersWorkoutsAPI();
+			const data = await getAllUsersWorkoutsAPI(session);
 			// console.log("pokemons", pokemons);
 			// if (error) {	move error handling to api
 			// 	console.error(error);
 			// 	setIsLoading(false);
 			// 	return;
 			// }
-			console.log("workouts", data);
-			// setWorkouts(data); ^^
-			// setIsLoading(false); ^^
+			// console.log("session", session);
+			setWorkouts(data);
+			setIsLoading(false);
 			return data;
 		};
 		getAllUsersWorkouts();
