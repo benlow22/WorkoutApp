@@ -4,11 +4,12 @@ const express = require("express");
 const path = require("path");
 const env = require("dotenv");
 const cors = require("cors");
+const { v4 } = require("uuid");
 
 env.config();
 
 var corsOptions = {
-	origin: /test-workout-app-vercel\.vercel\.app$/,
+	origin: true,
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
@@ -18,9 +19,9 @@ const supabase = createClient(
 	process.env.SUPABASE_ANON_KEY,
 	{
 		auth: {
-			autoRefreshToken: false,
+			autoRefreshToken: true,
 			persistSession: false,
-			detectSessionInUrl: false,
+			detectSessionInUrl: true,
 		},
 	}
 );
@@ -47,54 +48,109 @@ const setTokens = async function (req, res, next) {
 		console.log("acc", accessToken);
 	} else {
 		// make sure you handle this case!
-		throw new Error("User is not authenticated.");
+		throw new Error(
+			"User is not authenticated.",
+			refreshToken,
+			accessToken
+		);
 	}
 	next();
 };
 
-// const setResHeaders = (req, res, next) => {
-// 	// this is set for local host, vercel.json should handle this when deployed
-// 	res.setHeader(
-// 		"Access-Control-Allow-Origin",
-// 		"https://test-workout-app-vercel.vercel.app"
-// 	);
-// 	res.setHeader("Access-Control-Allow-Credentials", "true");
-// 	next();
-// };
+const setResHeaders = (req, res, next) => {
+	// this is set for local host, vercel.json should handle this when deployed
+	res.header(
+		"Access-Control-Allow-Origin",
+		"https://test-workout-app-vercel.vercel.app"
+	);
+	res.header("Access-Control-Allow-Credentials", "true");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept"
+	);
+	next();
+};
 
 // app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(cors(corsOptions));
+// app.use(cors());
 app.use(cookieParser());
 // app.use(setResHeaders);
-app.use("/authorized", authorizedRouter);
-app.use("/public", publicRouter);
+app.use((req, res, next) => {
+	if (req.method === "OPTIONS") {
+		res.header(
+			"Access-Control-Allow-Methods",
+			"PUT, POST, PATCH, DELETE, GET"
+		);
+		res.header(
+			"Access-Control-Allow-Origin",
+			"https://test-workout-app-vercel.vercel.app"
+		);
+		res.header("Access-Control-Allow-Credentials", "true");
+		res.header(
+			"Access-Control-Allow-Headers",
+			"Origin, X-Requested-With, Content-Type, Accept"
+		);
+		return res.status(200).json({});
+	}
+	next();
+});
+app.use(cors(corsOptions));
+
+app.use("/api/authorized", authorizedRouter);
+app.use("/api/public", publicRouter);
 
 // app.use("/workouts", workoutsRouter);
 
 // ROUTES
 
+// publicRouter.get("/", (req, res) => {
+// 	res.send("Hello World!");
+// });
+
+publicRouter.get("/cats", (req, res) => {
+	res.send(res.header);
+});
+
 publicRouter.get("/", (req, res) => {
-	res.send("Hello World!");
+	const path = `/api/item/${v4()}`;
+	res.setHeader("Content-Type", "text/html");
+	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+	res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
-app.get("/cats", (req, res) => {
-	res.send({ name: "catchy" });
-});
-app.get("/", (req, res) => {
-	res.send("Homepage");
+publicRouter.get("/api/item/:slug", (req, res) => {
+	const { slug } = req.params;
+	res.end(`Item: ${slug}`);
 });
 
-authorizedRouter.get("/workouts", setTokens, async (req, res) => {
-	const { data, error } = await supabase.from("workouts").select("name,url");
-	if (error) {
-		console.error(error);
-		return;
-	}
-	res.send(data);
+publicRouter.get("/workouts", async (req, res) => {
+	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
+	const accessToken = req.cookies.my_access_token;
+	// if (refreshToken && accessToken) {
+	// 	await supabase.auth.setSession(accessToken);
+	// 	console.log("ref", refreshToken);
+	// 	console.log("acc", accessToken);
+	// } else {
+	// 	// make sure you handle this case!
+	// 	throw new Error(
+	// 		"User is not authenticated.",
+	// 		refreshToken,
+	// 		accessToken
+	// 	);
+	// }
+	// const { data, error } = await supabase
+	// 	.from("workouts")
+	// 	.select("name,url")
+	// 	.auth(accessToken);
+	// if (error) {
+	// 	console.error(error);
+	// 	return;
+	// }
+	res.send(accessToken);
 });
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
@@ -117,7 +173,7 @@ authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 // });
 
 // does not need to be authenticated.
-app.get("/exercises", async (req, res) => {
+publicRouter.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
 		.from("exercises")
 		.select("name");
@@ -133,3 +189,5 @@ app.listen(port, () => {
 });
 
 /// AAAHH so to pass cookies to the server, you need to include {credentials= "include"} in the
+
+module.exports = app;

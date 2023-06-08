@@ -2,10 +2,10 @@
 	"name": "backend-express-app",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "./api/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"start": "nodemon server.js"
+		"start": "nodemon ./api/index.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -17,6 +17,7 @@
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dotenv": "^16.1.3",
-		"express": "^4.18.2"
+		"express": "^4.18.2",
+		"uuid": "^9.0.0"
 	}
 }

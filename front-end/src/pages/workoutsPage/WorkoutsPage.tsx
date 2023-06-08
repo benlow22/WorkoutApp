@@ -26,8 +26,8 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			// 	return;
 			// }
 			console.log("workouts", data);
-			setWorkouts(data);
-			setIsLoading(false);
+			// setWorkouts(data); ^^
+			// setIsLoading(false); ^^
 			return data;
 		};
 		getAllUsersWorkouts();
