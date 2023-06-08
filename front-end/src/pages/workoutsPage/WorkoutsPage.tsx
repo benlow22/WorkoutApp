@@ -25,9 +25,9 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			// 	setIsLoading(false);
 			// 	return;
 			// }
-			console.log("session", session);
-			// setWorkouts(data); ^^
-			// setIsLoading(false); ^^
+			// console.log("session", session);
+			setWorkouts(data);
+			setIsLoading(false);
 			return data;
 		};
 		getAllUsersWorkouts();
