@@ -130,18 +130,18 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
-	if (refreshToken && accessToken) {
-		await supabase.auth.setSession(accessToken);
-		console.log("ref", refreshToken);
-		console.log("acc", accessToken);
-	} else {
-		// make sure you handle this case!
-		throw new Error(
-			"User is not authenticated.",
-			refreshToken,
-			accessToken
-		);
-	}
+	// if (refreshToken && accessToken) {
+	// 	await supabase.auth.setSession(accessToken);
+	// 	console.log("ref", refreshToken);
+	// 	console.log("acc", accessToken);
+	// } else {
+	// 	// make sure you handle this case!
+	// 	throw new Error(
+	// 		"User is not authenticated.",
+	// 		refreshToken,
+	// 		accessToken
+	// 	);
+	// }
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name,url")
