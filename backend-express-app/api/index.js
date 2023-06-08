@@ -137,20 +137,14 @@ publicRouter.get("/workouts", setTokens, setResHeaders, async (req, res) => {
 		// make sure you handle this case!
 		throw new Error("User is not authenticated.");
 	}
-	// 	const { data, error } = await supabase
-	// 		.from("workouts")
-	// 		.select("name,url");
-	// 	if (error) {
-	// 		console.error(error);
-	// 		return;
-	// 	}
-	// 	res.send(data);
-	// }
-	res.header(
-		"Access-Control-Allow-Origin",
-		"https://test-workout-app-vercel.vercel.app"
-	);
-	res.send("this is /api to workouts");
+	const { data, error } = await supabase.from("workouts").select("name,url");
+	if (error) {
+		console.error(error);
+		return;
+	}
+	res.send(data);
+
+	res.send(data);
 });
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
