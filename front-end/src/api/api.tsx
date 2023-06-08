@@ -66,7 +66,7 @@ export const getAllUsersWorkoutsAPI = async () => {
 		credentials: "include",
 	});
 	// const data = await response.json(); // returns an array of workouts
-	console.log("DAAATAAA", response);
+	console.log("DAAATAAA", response); // will be accesstoken
 	return response;
 };
 
