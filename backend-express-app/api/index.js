@@ -21,7 +21,7 @@ const supabase = createClient(
 		auth: {
 			autoRefreshToken: false,
 			persistSession: false,
-			detectSessionInUrl: false,
+			detectSessionInUrl: true,
 		},
 	}
 );
@@ -127,23 +127,21 @@ publicRouter.get("/workouts", setTokens, setResHeaders, async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	if (refreshToken && accessToken) {
-		await supabase.auth.setSession({
-			refresh_token: refreshToken,
-			access_token: accessToken,
-		});
+		await supabase.auth.setSession(accessToken);
 		console.log("ref", refreshToken);
 		console.log("acc", accessToken);
 	} else {
 		// make sure you handle this case!
 		throw new Error("User is not authenticated.");
 	}
-	const { data, error } = await supabase.from("workouts").select("name,url");
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name,url")
+		.auth(accessToken);
 	if (error) {
 		console.error(error);
 		return;
 	}
-	res.send(data);
-
 	res.send(data);
 });
 
