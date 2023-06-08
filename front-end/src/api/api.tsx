@@ -1,4 +1,4 @@
-const API_ENDPOINT = import.meta.env.VITE_API_ENDPOINT;
+const API_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/api`;
 import { IWorkoutWithExercises } from "../data";
 import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
@@ -50,7 +50,7 @@ export const getAllUsersWorkoutsAPI = async () => {
 	// 	console.error(error);
 	// 	return;
 	// }
-	const response = await fetch(`${API_ENDPOINT}/api/authorized/workouts`, {
+	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 		method: "GET", // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
