@@ -65,9 +65,9 @@ export const getAllUsersWorkoutsAPI = async () => {
 
 		credentials: "include",
 	});
-	const data = await response.json(); // returns an array of workouts
-	console.log("DAAATAAA", data);
-	return data;
+	// const data = await response.json(); // returns an array of workouts
+	console.log("DAAATAAA", response);
+	return response;
 };
 
 export const addExerciseToWorkout = async (
