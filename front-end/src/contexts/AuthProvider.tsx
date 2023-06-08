@@ -8,6 +8,7 @@ type IAuthContext = {
 	username: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
+	session: ISession | null;
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setUsername: (newName: string) => void;
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
@@ -16,11 +17,18 @@ type IAuthContext = {
 	auth: boolean;
 };
 
+interface ISession {
+	user: { id: string; email: string; role: string };
+	access_token: string;
+	refresh_token: string;
+	expires_at: number;
+}
 export const AuthContext = React.createContext<IAuthContext>({
 	userId: "",
 	username: "",
 	isLoggedIn: false,
 	workouts: [],
+	session: null,
 	setIsLoggedIn: () => {},
 	setUsername: () => {},
 	setWorkouts: () => {},
@@ -118,6 +126,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				username,
 				isLoggedIn,
 				workouts,
+				session,
 				setIsLoggedIn,
 				setUsername,
 				setWorkouts,
