@@ -43,7 +43,7 @@ export const getFullWorkoutThroughSupabaseWithAuth = async (
 };
 
 //pokemonAPI
-export const getAllUsersWorkoutsAPI = async () => {
+export const getAllUsersWorkoutsAPI = async (session: any) => {
 	// get all of user's workouts
 	// const { data, error } = await supabase.from("workouts").select("name,url");
 	// if (error) {
@@ -51,11 +51,13 @@ export const getAllUsersWorkoutsAPI = async () => {
 	// 	return;
 	// }
 	const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
-		method: "GET", // *GET, POST, PUT, DELETE, etc.
-		mode: "cors", // no-cors, *cors, same-origin
-		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+		// method: "GET", // *GET, POST, PUT, DELETE, etc.
+		// mode: "cors", // no-cors, *cors, same-origin
+		// cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 		// credentials: "same-origin", // include, *same-origin, omit
-		// headers: {
+		headers: {
+			Authorization: `Bearer ${session.access_token}`,
+		},
 		// 	"Content-Type": "application/json",
 		// 	// 'Content-Type': 'application/x-www-form-urlencoded',
 		// },
@@ -65,9 +67,10 @@ export const getAllUsersWorkoutsAPI = async () => {
 
 		credentials: "include",
 	});
-	// const data = await response.json(); // returns an array of workouts
-	console.log("DAAATAAA", response); // will be accesstoken
-	return response;
+	const data = await response.text(); // returns an array of workouts
+	console.log("DAAATAAA", data); // will be accesstoken
+
+	return data;
 };
 
 export const addExerciseToWorkout = async (
