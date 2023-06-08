@@ -50,7 +50,7 @@ export const getAllUsersWorkoutsAPI = async () => {
 	// 	console.error(error);
 	// 	return;
 	// }
-	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
+	const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
 		method: "GET", // *GET, POST, PUT, DELETE, etc.
 		mode: "cors", // no-cors, *cors, same-origin
 		cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
