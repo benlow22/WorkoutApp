@@ -123,7 +123,7 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 	res.end(`Item: ${slug}`);
 });
 
-publicRouter.get("/workouts", setTokens, setResHeaders, async (req, res) => {
+publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	if (refreshToken && accessToken) {
