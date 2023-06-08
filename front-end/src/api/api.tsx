@@ -55,9 +55,9 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 		// mode: "cors", // no-cors, *cors, same-origin
 		// cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 		// credentials: "same-origin", // include, *same-origin, omit
-		headers: {
-			Authorization: `Bearer ${session.access_token}`,
-		},
+		// headers: {
+		// 	Authorization: `Bearer ${session.access_token}`,
+		// },
 		// 	"Content-Type": "application/json",
 		// 	// 'Content-Type': 'application/x-www-form-urlencoded',
 		// },
@@ -67,7 +67,7 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 
 		credentials: "include",
 	});
-	const data = await response.text(); // returns an array of workouts
+	const data = await response.json(); // returns an array of workouts
 	console.log("DAAATAAA", data); // will be accesstoken
 
 	return data;
