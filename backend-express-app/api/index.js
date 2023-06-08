@@ -153,7 +153,7 @@ publicRouter.get("/workouts", async (req, res) => {
 			refresh_token: refreshToken,
 			access_token: accessToken,
 		});
-		console.log("authorized1231231", data);
+		// console.log("authorized1231231", data);
 	} else {
 		// make sure you handle this case!
 		throw new Error("User is not authenticated.");
