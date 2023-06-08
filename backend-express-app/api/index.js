@@ -123,27 +123,35 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 	res.end(`Item: ${slug}`);
 });
 
-authorizedRouter.get(
-	"/workouts",
-	setTokens,
-	setResHeaders,
-	async (req, res) => {
-		// 	const { data, error } = await supabase
-		// 		.from("workouts")
-		// 		.select("name,url");
-		// 	if (error) {
-		// 		console.error(error);
-		// 		return;
-		// 	}
-		// 	res.send(data);
-		// }
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://test-workout-app-vercel.vercel.app"
-		);
-		res.send("this is /api to workouts");
+publicRouter.get("/workouts", setTokens, setResHeaders, async (req, res) => {
+	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
+	const accessToken = req.cookies.my_access_token;
+	if (refreshToken && accessToken) {
+		await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+		console.log("ref", refreshToken);
+		console.log("acc", accessToken);
+	} else {
+		// make sure you handle this case!
+		throw new Error("User is not authenticated.");
 	}
-);
+	// 	const { data, error } = await supabase
+	// 		.from("workouts")
+	// 		.select("name,url");
+	// 	if (error) {
+	// 		console.error(error);
+	// 		return;
+	// 	}
+	// 	res.send(data);
+	// }
+	res.header(
+		"Access-Control-Allow-Origin",
+		"https://test-workout-app-vercel.vercel.app"
+	);
+	res.send("this is /api to workouts");
+});
 
 authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
