@@ -96,28 +96,28 @@ app.use((req, res, next) => {
 app.use(cors(corsOptions));
 
 app.use("/api/authorized", authorizedRouter);
-app.use("/public", publicRouter);
+app.use("/api/public", publicRouter);
 
 // app.use("/workouts", workoutsRouter);
 
 // ROUTES
 
-publicRouter.get("/", (req, res) => {
-	res.send("Hello World!");
-});
+// publicRouter.get("/", (req, res) => {
+// 	res.send("Hello World!");
+// });
 
-app.get("/api/cats", (req, res) => {
+publicRouter.get("/cats", (req, res) => {
 	res.send(res.header);
 });
 
-app.get("/api", (req, res) => {
+publicRouter.get("/", (req, res) => {
 	const path = `/api/item/${v4()}`;
 	res.setHeader("Content-Type", "text/html");
 	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
 	res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
 });
 
-app.get("/api/item/:slug", (req, res) => {
+publicRouter.get("/api/item/:slug", (req, res) => {
 	const { slug } = req.params;
 	res.end(`Item: ${slug}`);
 });
@@ -164,7 +164,7 @@ authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
 // });
 
 // does not need to be authenticated.
-app.get("/api/exercises", async (req, res) => {
+publicRouter.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase
 		.from("exercises")
 		.select("name");
