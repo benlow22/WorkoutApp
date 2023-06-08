@@ -136,7 +136,11 @@ publicRouter.get("/workouts", async (req, res) => {
 		console.log("acc", accessToken);
 	} else {
 		// make sure you handle this case!
-		throw new Error("User is not authenticated.");
+		throw new Error(
+			"User is not authenticated.",
+			refreshToken,
+			accessToken
+		);
 	}
 	const { data, error } = await supabase
 		.from("workouts")
