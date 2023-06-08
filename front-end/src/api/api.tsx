@@ -106,7 +106,7 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 // add error handling
 export const getAllExercisesAPI = async () => {
 	console.log("start to get all exercises");
-	const response = await fetch(`${API_ENDPOINT}/exercises`, {
+	const response = await fetch(`${API_ENDPOINT}/public/exercises`, {
 		credentials: "include",
 		// headers: {
 		// 	"Access-Control-Allow-Origin":
