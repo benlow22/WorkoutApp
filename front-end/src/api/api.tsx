@@ -75,6 +75,7 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 		});
 		if (response.ok) {
 			const jsonResponse = await response.json();
+			console.log("tokens???", jsonResponse);
 			return jsonResponse;
 		}
 		throw new Error("Request failed!");
