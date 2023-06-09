@@ -189,7 +189,7 @@ publicRouter.get("/workouts", async (req, res) => {
 		.eq("user_id", user_id);
 	if (error) return res.status(401).json({ error: error.message });
 	if (data) {
-		res.json(data);
+		res.status(200).json(data);
 	}
 });
 
