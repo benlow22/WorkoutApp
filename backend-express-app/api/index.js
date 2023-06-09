@@ -149,11 +149,16 @@ publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	const user_id = req.cookies.my_user_id;
+	console.log("ref tok ", refreshToken);
+	console.log("acc tok ", accessToken);
 	if (refreshToken && accessToken) {
 		const { data, error } = await supabase.auth.setSession({
 			refresh_token: refreshToken,
 			access_token: accessToken,
 		});
+		if (data) {
+			console.log("session Set", data);
+		}
 		console.log("get session");
 	} else {
 		// make sure you handle this case!
@@ -189,6 +194,7 @@ publicRouter.get("/workouts", async (req, res) => {
 		.eq("user_id", user_id);
 	if (error) return res.status(407).json({ error: error.message });
 	if (data) {
+		console.log("workouts gotten: ", data);
 		res.status(200).json(data);
 	}
 });

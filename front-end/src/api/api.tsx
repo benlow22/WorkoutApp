@@ -62,7 +62,7 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 			// cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 			// credentials: "same-origin", // include, *same-origin, omit
 			// headers: {
-			// 	Authorization: `Bearer ${session.access_token}`,
+			// 	"X-CSRF-Token": `${session.access_token}`,
 			// },
 			// 	"Content-Type": "application/json",
 			// 	// 'Content-Type': 'application/x-www-form-urlencoded',
