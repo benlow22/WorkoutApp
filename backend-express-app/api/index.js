@@ -150,56 +150,57 @@ publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.headers["refresh-token"]; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.headers["access-token"];
 	const user_id = req.headers["user-id"];
-	console.log("ref tok ", refreshToken);
-	console.log("acc tok ", accessToken);
-	const both = [accessToken, refreshToken];
-	res.status(222).json(both);
+	// console.log("ref tok ", refreshToken);
+	// console.log("acc tok ", accessToken);
+	if (refreshToken && accessToken) {
+		const { data, error } = await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+		if (error) {
+			console.log("ERROR still need to finish in SUpabase");
+		}
+		if (data) {
+			console.log("session Set", data);
+		}
+		console.log("get session");
+	} else {
+		// make sure you handle this case!
+		console.error("User is not authenticated.");
+		const error = new Error(
+			"User is not authenticated No access or refresh tokens"
+		);
+		res.status(402).json(error);
+		return;
+	}
+
+	// if (!refreshToken || !accessToken) {
+	// 	console.log("NO TOKENS");
+	// 	res.status(401).send("not authorized, no refresh or acces tokens");
+	// }
 	// if (refreshToken && accessToken) {
-	// 	const { data, error } = await supabase.auth.setSession({
-	// 		refresh_token: refreshToken,
-	// 		access_token: accessToken,
-	// 	});
-	// 	if (data) {
-	// 		console.log("session Set", data);
-	// 	}
-	// 	console.log("get session");
+	// 	// return res.json({ cats: "MEWOW" });
+	// 	console.log("ref", refreshToken);
+	// 	console.log("acc", user_id);
 	// } else {
 	// 	// make sure you handle this case!
-	// 	console.error("User is not authenticated.");
-	// 	const error = new Error(
-	// 		"User is not authenticated No access or refresh tokens"
+	// 	throw new Error(
+	// 		"User is not authenticated.",
+	// 		refreshToken,
+	// 		accessToken
 	// 	);
-	// 	res.status(402).json(error);
-	// 	return;
 	// }
+	// const { data, error } = await supabase.auth.getSession();
 
-	// // if (!refreshToken || !accessToken) {
-	// // 	console.log("NO TOKENS");
-	// // 	res.status(401).send("not authorized, no refresh or acces tokens");
-	// // }
-	// // if (refreshToken && accessToken) {
-	// // 	// return res.json({ cats: "MEWOW" });
-	// // 	console.log("ref", refreshToken);
-	// // 	console.log("acc", user_id);
-	// // } else {
-	// // 	// make sure you handle this case!
-	// // 	throw new Error(
-	// // 		"User is not authenticated.",
-	// // 		refreshToken,
-	// // 		accessToken
-	// // 	);
-	// // }
-	// // const { data, error } = await supabase.auth.getSession();
-
-	// const { data, error } = await supabase
-	// 	.from("workouts")
-	// 	.select("name,url")
-	// 	.eq("user_id", user_id);
-	// if (error) return res.status(407).json({ error: error.message });
-	// if (data) {
-	// 	console.log("workouts gotten: ", data);
-	// 	res.status(200).json(data);
-	// }
+	const { data, error } = await supabase
+		.from("workouts")
+		.select("name,url")
+		.eq("user_id", user_id);
+	if (error) return res.status(407).json({ error: error.message });
+	if (data) {
+		console.log("workouts gotten: ", data);
+		res.status(200).json(data);
+	}
 });
 
 // app.get("/api/get-data", authMiddleware, async (req, res) => {
