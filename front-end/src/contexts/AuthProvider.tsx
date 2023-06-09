@@ -84,9 +84,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
 						document.cookie = `my_refresh_token=${
 							session.refresh_token
-						}; path=/; max-age=${maxAge}; SameSite=None; Secure domain=${
-							import.meta.env.VITE_COOKIE_DOMAIN
-						}`;
+						}; path=/; max-age=${maxAge}; SameSite=None; Secure domain=${`.vercel.app`}`;
 						document.cookie = `my_user_id=${
 							session.user.id
 						}; path=/; max-age=${maxAge}; SameSite=None; Secure domain=${
