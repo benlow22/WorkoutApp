@@ -51,26 +51,26 @@ const authorizedRouter = express.Router();
 const publicRouter = express.Router(); // create a router for all public routes
 
 //MIDDLEWARES
-const setTokens = async function (req, res, next) {
-	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
-	const accessToken = req.cookies.my_access_token;
-	if (refreshToken && accessToken) {
-		await supabase.auth.setSession({
-			refresh_token: refreshToken,
-			access_token: accessToken,
-		});
-		console.log("ref", refreshToken);
-		console.log("acc", accessToken);
-	} else {
-		// make sure you handle this case!
-		throw new Error(
-			"User is not authenticated.",
-			refreshToken,
-			accessToken
-		);
-	}
-	next();
-};
+// const setTokens = async function (req, res, next) {
+// 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
+// 	const accessToken = req.cookies.my_access_token;
+// 	if (refreshToken && accessToken) {
+// 		await supabase.auth.setSession({
+// 			refresh_token: refreshToken,
+// 			access_token: accessToken,
+// 		});
+// 		console.log("ref", refreshToken);
+// 		console.log("acc", accessToken);
+// 	} else {
+// 		// make sure you handle this case!
+// 		throw new Error(
+// 			"User is not authenticated.",
+// 			refreshToken,
+// 			accessToken
+// 		);
+// 	}
+// 	next();
+// };
 
 const setResHeaders = (req, res, next) => {
 	// this is set for local host, vercel.json should handle this when deployed
@@ -102,10 +102,7 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://test-workout-app-vercel.vercel.app"
-		);
+		res.header("Access-Control-Allow-Origin", "http://localhost:5173");
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
@@ -143,22 +140,37 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 	res.end(`Item: ${slug}`);
 });
 
+publicRouter.get("/signout", async (req, res) => {
+	// res.clearCookie(req.cookies.my_refresh_token);
+	// res.clearCookie(req.cookies.my_access_token);
+	console.log("signed out");
+	res.send("cookies cleared");
+});
+
 publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	const user_id = req.cookies.my_user_id;
-
 	if (refreshToken && accessToken) {
 		const { data, error } = await supabase.auth.setSession({
 			refresh_token: refreshToken,
 			access_token: accessToken,
 		});
-		// console.log("authorized1231231", data);
+		console.log("get session");
 	} else {
 		// make sure you handle this case!
-		throw new Error("User is not authenticated.");
+		console.error("User is not authenticated.");
+		const error = new Error(
+			"User is not authenticated No access or refresh tokens"
+		);
+		res.status(401).json(error);
+		return;
 	}
 
+	// if (!refreshToken || !accessToken) {
+	// 	console.log("NO TOKENS");
+	// 	res.status(401).send("not authorized, no refresh or acces tokens");
+	// }
 	// if (refreshToken && accessToken) {
 	// 	// return res.json({ cats: "MEWOW" });
 	// 	console.log("ref", refreshToken);
@@ -171,20 +183,16 @@ publicRouter.get("/workouts", async (req, res) => {
 	// 		accessToken
 	// 	);
 	// }
-
 	// const { data, error } = await supabase.auth.getSession();
 
 	const { data, error } = await supabase
 		.from("workouts")
 		.select("name,url")
 		.eq("user_id", user_id);
-	if (error) {
-		console.error(error);
-		return;
+	if (error) return res.status(401).json({ error: error.message });
+	if (data) {
+		res.json(data);
 	}
-	console.log("data 22 2 2 2 2 2 2 2", data);
-	// if (error) return res.status(401).json({ error: error.message });
-	res.json(data);
 });
 
 // app.get("/api/get-data", authMiddleware, async (req, res) => {
@@ -196,7 +204,7 @@ publicRouter.get("/workouts", async (req, res) => {
 // 	res.json(data);
 // });
 
-authorizedRouter.get("/workouts/:workoutUrl", setTokens, async (req, res) => {
+authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")

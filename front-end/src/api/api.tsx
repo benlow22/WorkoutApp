@@ -27,6 +27,10 @@ export const getWorkouts = async () => {
 	return data;
 };
 
+export const getSignOut = async () => {
+	const response = await fetch(`${API_ENDPOINT}/public/signout`);
+	return response;
+};
 //test supabase auth
 export const getFullWorkoutThroughSupabaseWithAuth = async (
 	workoutUrl: string
@@ -61,7 +65,7 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 		// 	"Content-Type": "application/json",
 		// 	// 'Content-Type': 'application/x-www-form-urlencoded',
 		// },
-		redirect: "follow", // manual, *follow, error
+		// redirect: "follow", // manual, *follow, error
 		// referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
 		// body: JSON.stringify(data), // body data type must match "Content-Type" header
 
