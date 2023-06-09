@@ -104,7 +104,7 @@ app.use((req, res, next) => {
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
-			"Origin, X-Requested-With, Content-Type, Accept, Authorization"
+			"Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Token. Refresh-Token, User-Id"
 		);
 		return res.status(200).json({});
 	}
@@ -146,11 +146,10 @@ publicRouter.get("/signout", async (req, res) => {
 });
 
 publicRouter.get("/workouts", async (req, res) => {
-	res.set("Content-Type", "application/json");
-	console.log(req.cookies);
-	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
-	const accessToken = req.cookies.my_access_token;
-	const user_id = req.cookies.my_user_id;
+	console.log("refESH", req.headers["refresh-token"]);
+	const refreshToken = req.headers["refresh-token"]; // do not just use req.cookies, turn into bearer tokens
+	const accessToken = req.headers["access-token"];
+	const user_id = req.headers["user-id"];
 	console.log("ref tok ", refreshToken);
 	console.log("acc tok ", accessToken);
 	const both = [accessToken, refreshToken];

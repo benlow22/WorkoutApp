@@ -5,6 +5,18 @@ import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import { IGetFullWorkoutResponse } from "./types";
 
+const cookieValueAccessToken = document.cookie
+	.split("; ")
+	.find((row) => row.startsWith("my_access_token="))
+	?.split("=")[1];
+const cookieValueRefreshToken = document.cookie
+	.split("; ")
+	.find((row) => row.startsWith("my_refresh_token="))
+	?.split("=")[1];
+const cookieValueUserId = document.cookie
+	.split("; ")
+	.find((row) => row.startsWith("my_user_id="))
+	?.split("=")[1];
 // const refreshToken = document.cookie
 // 	.split("; ")
 // 	.find((row) => row.startsWith("my-refresh-token"))
@@ -54,16 +66,18 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 	// 	console.error(error);
 	// 	return;
 	// }
-
+	console.log("COOKS", cookieValueAccessToken, cookieValueRefreshToken);
 	try {
 		const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
 			method: "GET", // *GET, POST, PUT, DELETE, etc.
 			// mode: "cors", // no-cors, *cors, same-origin
 			// cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
 			// credentials: "same-origin", // include, *same-origin, omit
-			// headers: {
-			// 	"X-CSRF-Token": `${session.access_token}`,
-			// },
+			headers: {
+				"Access-Token": `${session.access_token}`,
+				"Refresh-Token": `${cookieValueRefreshToken}`,
+				"User-Id": `${cookieValueUserId}`,
+			},
 			// 	"Content-Type": "application/json",
 			// 	// 'Content-Type': 'application/x-www-form-urlencoded',
 			// },
