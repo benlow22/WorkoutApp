@@ -145,7 +145,7 @@ publicRouter.get("/signout", async (req, res) => {
 	res.send("cookies cleared");
 });
 
-publicRouter.get("/workouts", async (req, res) => {
+publicRouter.post("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	const user_id = req.cookies.my_user_id;
@@ -189,7 +189,7 @@ publicRouter.get("/workouts", async (req, res) => {
 		.eq("user_id", user_id);
 	if (error) return res.status(401).json({ error: error.message });
 	if (data) {
-		res.json(data);
+		res.status(200).json(data);
 	}
 });
 
