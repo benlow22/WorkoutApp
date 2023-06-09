@@ -145,7 +145,7 @@ publicRouter.get("/signout", async (req, res) => {
 	res.send("cookies cleared");
 });
 
-publicRouter.post("/workouts", async (req, res) => {
+publicRouter.get("/workouts", async (req, res) => {
 	const refreshToken = req.cookies.my_refresh_token; // do not just use req.cookies, turn into bearer tokens
 	const accessToken = req.cookies.my_access_token;
 	const user_id = req.cookies.my_user_id;
@@ -161,7 +161,7 @@ publicRouter.post("/workouts", async (req, res) => {
 		const error = new Error(
 			"User is not authenticated No access or refresh tokens"
 		);
-		res.status(401).json(error);
+		res.status(402).json(error);
 		return;
 	}
 
@@ -187,7 +187,7 @@ publicRouter.post("/workouts", async (req, res) => {
 		.from("workouts")
 		.select("name,url")
 		.eq("user_id", user_id);
-	if (error) return res.status(401).json({ error: error.message });
+	if (error) return res.status(407).json({ error: error.message });
 	if (data) {
 		res.status(200).json(data);
 	}
