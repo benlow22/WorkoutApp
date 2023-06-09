@@ -81,7 +81,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					console.log("did this work");
 					if (session) {
 						const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
+						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure; httpOnly=true;`;
 						document.cookie = `my_refresh_token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=None; Secure `;
 						// domain=${
 						// 	import.meta.env.VITE_COOKIE_DOMAIN
