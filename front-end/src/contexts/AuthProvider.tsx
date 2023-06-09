@@ -85,15 +85,17 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						document.cookie = `my_refresh_token=${
 							session.refresh_token
 						}; path=/; max-age=${maxAge}; SameSite=None; Secure domain=${
-							import.meta.env.VITE_DOMAIN
+							import.meta.env.VITE_COOKIE_DOMAIN
 						}`;
 						document.cookie = `my_user_id=${
 							session.user.id
 						}; path=/; max-age=${maxAge}; SameSite=None; Secure domain=${
-							import.meta.env.VITE_DOMAIN
+							import.meta.env.VITE_COOKIE_DOMAIN
 						}`;
 						setSession(session);
 						console.log("statechangeauth");
+						console.log("cookies:", document.cookie);
+
 						setAuth(true);
 						setUserId(session.user.id);
 						setUsername(session.user.user_metadata.username);
