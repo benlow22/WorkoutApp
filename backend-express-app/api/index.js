@@ -7,6 +7,7 @@ const cors = require("cors");
 const { v4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 
+//git pull origin a-exp -r 		pull updated branch, to rebase onto
 // function authMiddleware(req, res, next) {
 // 	const authHeader = req.headers.authorization;
 // 	if (!authHeader)
@@ -74,10 +75,7 @@ const publicRouter = express.Router(); // create a router for all public routes
 
 const setResHeaders = (req, res, next) => {
 	// this is set for local host, vercel.json should handle this when deployed
-	res.header(
-		"Access-Control-Allow-Origin",
-		"https://test-workout-app-vercel.vercel.app"
-	);
+	res.header("Access-Control-Allow-Origin", process.env.ORIGIN);
 	res.header("Access-Control-Allow-Credentials", "true");
 	res.header(
 		"Access-Control-Allow-Headers",
@@ -102,7 +100,7 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+		res.header("Access-Control-Allow-Origin", proccess.env.ORIGIN);
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
