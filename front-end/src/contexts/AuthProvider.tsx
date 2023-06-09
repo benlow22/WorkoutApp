@@ -93,11 +93,13 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						setUser(session.user);
 					}
 				} else if (event === "SIGNED_OUT") {
+					console.log("Auth Provider, signed OUT");
 					setAuth(false);
 					setUser(null);
 					const expires = new Date(0).toUTCString();
-					document.cookie = `my-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
-					document.cookie = `my-refresh-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
+					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
+					document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
+					document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
 				}
 			}
 		);
@@ -105,7 +107,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		return () => {
 			data.subscription.unsubscribe();
 		};
-	}, []);
+	}, [isLoggedIn]);
 
 	useEffect(() => {
 		setIsLoading(true);
