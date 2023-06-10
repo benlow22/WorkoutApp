@@ -15,6 +15,7 @@ type IAuthContext = {
 	setUserId: (userId: string) => void;
 	user: any;
 	auth: boolean | undefined;
+	contextIsLoading: boolean;
 };
 
 export interface ISession {
@@ -35,6 +36,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	setUserId: () => {},
 	user: null,
 	auth: false,
+	contextIsLoading: true,
 });
 
 type IChildren = {
@@ -49,7 +51,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [user, setUser] = useState<any>(null);
-	const [auth, setAuth] = useState<boolean | undefined>(undefined);
+	const [auth, setAuth] = useState<boolean>(false);
 
 	// when going to APP, get session, set if logged in
 	useEffect(() => {
@@ -138,6 +140,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				setUserId,
 				user,
 				auth,
+				contextIsLoading: isLoading,
 			}}
 		>
 			{!isLoading && children}
