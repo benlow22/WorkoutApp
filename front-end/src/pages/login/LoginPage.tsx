@@ -4,6 +4,7 @@ import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Navigate, useNavigate } from "react-router-dom";
+import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
@@ -19,7 +20,7 @@ export const LoginPage = () => {
 	}, [contextIsLoading, auth]);
 
 	if (isLoading) {
-		return <h1>LOADING</h1>;
+		return <SpiningLoadingIcon />;
 	}
 
 	if (auth && !isLoading) {

@@ -368,3 +368,14 @@ input[value].new-workout-input,
 .page-heading {
 	margin: 30px;
 }
+
+.spinning-loading-icon {
+	padding: 50px;
+	background: #101010;
+	border-radius: 4px;
+	height: 200px;
+}
+.ant-spin-text {
+	padding-top: 35px;
+	font-size: large;
+}
