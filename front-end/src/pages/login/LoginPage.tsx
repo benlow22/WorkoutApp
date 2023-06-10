@@ -7,18 +7,25 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
-	// const [isLoading, setIsLoading] = useState<boolean>(true);
-	const { auth } = useContext(AuthContext);
+	const { auth, contextIsLoading } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState<boolean>(true);
 
-	if (auth === undefined) {
-		return <h1>LOADING</h1>;
-	} else {
-		if (auth) {
-			return <Navigate to="/workouts" />;
+	useEffect(() => {
+		if (contextIsLoading) {
+			setIsLoading(true);
+		} else {
+			setIsLoading(false);
 		}
+	}, [contextIsLoading, auth]);
+
+	if (isLoading) {
+		return <h1>LOADING</h1>;
 	}
 
-	// if not auth = false, Auth page will render
+	if (auth && !isLoading) {
+		return <Navigate to="/workouts" />;
+	}
+
 	return (
 		<div className="auth-page">
 			<p>Please Login Below</p>
