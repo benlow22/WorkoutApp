@@ -39,6 +39,7 @@ export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
+	const { session } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
@@ -51,11 +52,12 @@ export const WorkoutPage = () => {
 	useEffect(() => {
 		setIsLoading(true);
 		async function getWorkout() {
-			if (workoutUrl) {
+			if (workoutUrl && session) {
 				//console.log('coookies"', document.cookie);
 				// should always be true, if not it would be a different route (error claims type undefined)
 				const test = await getFullWorkoutThroughSupabaseWithAuth(
-					workoutUrl
+					workoutUrl,
+					session
 				);
 				if (test) {
 					console.log(
