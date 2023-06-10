@@ -17,7 +17,7 @@ type IAuthContext = {
 	auth: boolean | undefined;
 };
 
-interface ISession {
+export interface ISession {
 	user: { id: string; email: string; role: string };
 	access_token: string;
 	refresh_token: string;

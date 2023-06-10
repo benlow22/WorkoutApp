@@ -4,27 +4,68 @@ import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import { IGetFullWorkoutResponse } from "./types";
+import { ISession } from "../contexts/AuthProvider";
 
-const cookieValueAccessToken = document.cookie
+// Get Cookies from Browser
+const cookieValue_AccessToken = document.cookie
 	.split("; ")
 	.find((row) => row.startsWith("my_access_token="))
 	?.split("=")[1];
-const cookieValueRefreshToken = document.cookie
+const cookieValue_RefreshToken = document.cookie
 	.split("; ")
 	.find((row) => row.startsWith("my_refresh_token="))
 	?.split("=")[1];
-const cookieValueUserId = document.cookie
+const cookieValue_UserId = document.cookie
 	.split("; ")
 	.find((row) => row.startsWith("my_user_id="))
 	?.split("=")[1];
-// const refreshToken = document.cookie
-// 	.split("; ")
-// 	.find((row) => row.startsWith("my-refresh-token"))
-// 	?.split("=")[1];
-// const accessToken = document.cookie
-// 	.split("; ")
-// 	.find((row) => row.startsWith("my-access-token"))
-// 	?.split("=")[1];
+
+/* Good FETCH API calls - to express BE on seperate App
+	// Example POST method implementation:
+	async function postData(url = "", data = {}) {
+		// Default options are marked with *
+		const response = await fetch(url, {
+			method: "POST", // *GET, POST, PUT, DELETE, etc.
+			mode: "cors", // no-cors, *cors, same-origin
+			cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: "same-origin", // include, *same-origin, omit
+			headers: {
+				"Content-Type": "application/json",
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			redirect: "follow", // manual, *follow, error
+			referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+			body: JSON.stringify(data), // body data type must match "Content-Type" header
+		});
+		return response.json(); // parses JSON response into native JavaScript objects
+	}
+
+	postData("https://example.com/answer", { answer: 42 }).then((data) => {
+	console.log(data); // JSON data parsed by `data.json()` call
+	});
+*/
+
+export const getAllUsersWorkoutsAPI = async (session: ISession) => {
+	try {
+		const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
+			headers: {
+				// headers for VERCEL deployment,
+				"Access-Token": `${session.access_token}`,
+				"Refresh-Token": `${cookieValue_RefreshToken}`,
+				"User-Id": `${cookieValue_UserId}`,
+			},
+			credentials: "include", // = will pass cookies (keeping incase i get my own domain)
+		});
+		if (response.ok) {
+			const jsonResponse = await response.json();
+			console.log("tokens???", jsonResponse);
+			return jsonResponse;
+		}
+		throw new Error("Request failed!");
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 export const getWorkouts = async () => {
 	// get all of user's workouts
@@ -59,45 +100,6 @@ export const getFullWorkoutThroughSupabaseWithAuth = async (
 };
 
 //pokemonAPI
-export const getAllUsersWorkoutsAPI = async (session: any) => {
-	// get all of user's workouts
-	// const { data, error } = await supabase.from("workouts").select("name,url");
-	// if (error) {
-	// 	console.error(error);
-	// 	return;
-	// }
-	console.log("SESSSS", session);
-	console.log("COOKS", cookieValueAccessToken, cookieValueRefreshToken);
-	try {
-		const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
-			method: "GET", // *GET, POST, PUT, DELETE, etc.
-			// mode: "cors", // no-cors, *cors, same-origin
-			// cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-			// credentials: "same-origin", // include, *same-origin, omit
-			headers: {
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${cookieValueRefreshToken}`,
-				"User-Id": `${cookieValueUserId}`,
-			},
-			// 	"Content-Type": "application/json",
-			// 	// 'Content-Type': 'application/x-www-form-urlencoded',
-			// },
-			// redirect: "follow", // manual, *follow, error
-			// referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-			// body: JSON.stringify(data), // body data type must match "Content-Type" header
-
-			credentials: "include",
-		});
-		if (response.ok) {
-			const jsonResponse = await response.json();
-			console.log("tokens???", jsonResponse);
-			return jsonResponse;
-		}
-		throw new Error("Request failed!");
-	} catch (error) {
-		console.log(error); // usually developers will redirect here
-	}
-};
 
 export const addExerciseToWorkout = async (
 	workoutId: any,
