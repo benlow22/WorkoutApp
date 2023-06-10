@@ -14,7 +14,7 @@ type IAuthContext = {
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
 	setUserId: (userId: string) => void;
 	user: any;
-	auth: boolean;
+	auth: boolean | undefined;
 };
 
 interface ISession {
@@ -49,9 +49,9 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [user, setUser] = useState<any>(null);
-	const [auth, setAuth] = useState(false);
+	const [auth, setAuth] = useState<boolean | undefined>(undefined);
 
-	// when going to AuthPage, get session, set if logged in
+	// when going to APP, get session, set if logged in
 	useEffect(() => {
 		setIsLoading(true);
 		const getSessionData = async () => {
@@ -64,13 +64,14 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setIsLoggedIn(true); // late can be removed and replaced with auth
 					setUser(session.user);
 				}
-				setIsLoading(false);
+				// setIsLoading(false); remove because next useEffect should also alway run atleast
 				return;
 			});
 		};
 		getSessionData();
 	}, []);
 
+	// changes Context and cookies when logged in changes
 	useEffect(() => {
 		const { data } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
@@ -84,12 +85,13 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						document.cookie = `my_refresh_token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=None; Secure `;
 						document.cookie = `my_user_id=${session.user.id}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
 						setSession(session);
-						console.log("Auth Provider / AuthContext"); // log whenever auth changes and is called
+						console.log("Auth Provider : init AuthContext"); // log whenever auth changes and is called
 						setAuth(true);
 						setUserId(session.user.id);
 						setUsername(session.user.user_metadata.username);
-						setIsLoggedIn(true); // late can be removed and replaced with auth
+						setIsLoggedIn(true); // later can be removed and replaced with auth
 						setUser(session.user);
+						setIsLoading(false);
 					}
 				} else if (event === "SIGNED_OUT") {
 					console.log("Auth Provider:  signed OUT");
@@ -100,6 +102,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
 					document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
 					document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
+					setIsLoading(false);
 				}
 			}
 		);
@@ -109,17 +112,17 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		};
 	}, [isLoggedIn]);
 
-	useEffect(() => {
-		setIsLoading(true);
-		const getUser = async () => {
-			const { data } = await supabase.auth.getUser();
-			const { user: currentUser } = data;
-			setUser(currentUser ?? null);
-			setIsLoading(false);
-		};
-		getUser();
-		// onAuthStateChange code below
-	}, []);
+	// useEffect(() => {
+	// 	setIsLoading(true);
+	// 	const getUser = async () => {
+	// 		const { data } = await supabase.auth.getUser();
+	// 		const { user: currentUser } = data;
+	// 		setUser(currentUser ?? null);
+	// 		setIsLoading(false);
+	// 	};
+	// 	getUser();
+	// 	// onAuthStateChange code below
+	// }, []);
 
 	return (
 		<AuthContext.Provider
