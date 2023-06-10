@@ -6,19 +6,19 @@ import { v4 as uuidv4 } from "uuid";
 import { IGetFullWorkoutResponse } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 
-// Get Cookies from Browser
-const cookieValue_AccessToken = document.cookie
-	.split("; ")
-	.find((row) => row.startsWith("my_access_token="))
-	?.split("=")[1];
-const cookieValue_RefreshToken = document.cookie
-	.split("; ")
-	.find((row) => row.startsWith("my_refresh_token="))
-	?.split("=")[1];
-const cookieValue_UserId = document.cookie
-	.split("; ")
-	.find((row) => row.startsWith("my_user_id="))
-	?.split("=")[1];
+// Get Cookies from Browser = redundant
+// const cookieValue_AccessToken = document.cookie
+// 	.split("; ")
+// 	.find((row) => row.startsWith("my_access_token="))
+// 	?.split("=")[1];
+// const cookieValue_RefreshToken = document.cookie
+// 	.split("; ")
+// 	.find((row) => row.startsWith("my_refresh_token="))
+// 	?.split("=")[1];
+// const cookieValue_UserId = document.cookie
+// 	.split("; ")
+// 	.find((row) => row.startsWith("my_user_id="))
+// 	?.split("=")[1];
 
 /* Good FETCH API calls - to express BE on seperate App
 	// Example POST method implementation:
@@ -46,13 +46,14 @@ const cookieValue_UserId = document.cookie
 */
 
 export const getAllUsersWorkoutsAPI = async (session: ISession) => {
+	console.log("SESSSS", session);
 	try {
 		const response = await fetch(`${API_ENDPOINT}/public/workouts`, {
 			headers: {
-				// headers for VERCEL deployment,
+				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
 				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${cookieValue_RefreshToken}`,
-				"User-Id": `${cookieValue_UserId}`,
+				"Refresh-Token": `${session.refresh_token}`,
+				"User-Id": `${session.user.id}`,
 			},
 			credentials: "include", // = will pass cookies (keeping incase i get my own domain)
 		});
