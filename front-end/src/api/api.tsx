@@ -66,6 +66,7 @@ export const getAllUsersWorkoutsAPI = async (session: any) => {
 	// 	console.error(error);
 	// 	return;
 	// }
+	console.log("SESSSS", session);
 	console.log("COOKS", cookieValueAccessToken, cookieValueRefreshToken);
 	try {
 		const response = await fetch(`${API_ENDPOINT}/public/workouts`, {

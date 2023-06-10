@@ -78,22 +78,13 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setAuth(false);
 				} else if (event === "SIGNED_IN") {
 					// everytime there is a sign in event, context states will be triggered
-					console.log("did this work");
 					if (session) {
 						const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure; httpOnly=true;`;
+						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
 						document.cookie = `my_refresh_token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=None; Secure `;
-						// domain=${
-						// 	import.meta.env.VITE_COOKIE_DOMAIN
-						// }`;
 						document.cookie = `my_user_id=${session.user.id}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
-						//  domain=${
-						// 	import.meta.env.VITE_COOKIE_DOMAIN
-						// }`;
 						setSession(session);
-						console.log("statechangeauth");
-						console.log("cookies:", document.cookie);
-
+						console.log("Auth Provider / AuthContext"); // log whenever auth changes and is called
 						setAuth(true);
 						setUserId(session.user.id);
 						setUsername(session.user.user_metadata.username);
@@ -101,9 +92,10 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						setUser(session.user);
 					}
 				} else if (event === "SIGNED_OUT") {
-					console.log("Auth Provider, signed OUT");
+					console.log("Auth Provider:  signed OUT");
 					setAuth(false);
 					setUser(null);
+					// remove cookies, when signed out
 					const expires = new Date(0).toUTCString();
 					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
 					document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
