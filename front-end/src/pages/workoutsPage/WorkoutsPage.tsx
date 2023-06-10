@@ -14,23 +14,13 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	useEffect(() => {
 		// get all of user's workouts to render list
 		const getAllUsersWorkouts = async () => {
-			// const { data, error } = await supabase
-			// 	.from("workouts")
-			// 	.select("id, name, url, last_performed");
-			///
-			const data = await getAllUsersWorkoutsAPI(session);
-			// console.log("pokemons", pokemons);
-			// if (error) {	move error handling to api
-			// 	console.error(error);
-			// 	setIsLoading(false);
-			// 	return;
-			// }
-			// console.log("session", session);
-			if (data) {
-				setWorkouts(data);
-				setIsLoading(false);
+			if (session) {
+				const data = await getAllUsersWorkoutsAPI(session);
+				if (data) {
+					setWorkouts(data);
+					setIsLoading(false);
+				}
 			}
-			// return data;
 		};
 		getAllUsersWorkouts();
 	}, []);
