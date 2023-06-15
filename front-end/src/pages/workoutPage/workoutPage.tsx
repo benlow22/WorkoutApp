@@ -39,7 +39,7 @@ export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const { session } = useContext(AuthContext);
+ 	const { session } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
