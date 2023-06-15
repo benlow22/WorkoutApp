@@ -16,7 +16,9 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		const getAllUsersWorkouts = async () => {
 			if (session) {
 				const data = await getAllUsersWorkoutsAPI(session);
-				if (data) {
+				if (data instanceof Error) {
+					console.error("", data.cause);
+				} else {
 					setWorkouts(data);
 					setIsLoading(false);
 				}

@@ -121,10 +121,10 @@ const setAuthorizedSessionMiddleware = async (req, res, next) => {
 		// make sure you handle this case!
 		console.error("User is not authenticated.");
 		const error = new Error(
-			"User is not authenticated No access or refresh tokens"
+			"User is not authenticated! Access and/or refresh token needed"
 		);
-		res.status(401).json(error);
-		return;
+		console.log(error);
+		return res.status(401).send(error.message);
 	}
 	next();
 };
@@ -133,15 +133,19 @@ authorizedRouter.use(setAuthorizedSessionMiddleware);
 
 // 	/api/authorized/workouts = All user's workouts
 authorizedRouter.get("/workouts", async (req, res) => {
-	console.log("SESSS");
+	console.log("Get All Workouts API");
 	const userId = req.headers["user-id"];
+
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("*")
+		.select("*as")
 		.eq("user_id", userId);
+
 	if (data) {
+		// if there is data, send it back = 200 status
 		res.send(data);
 	} else {
+		// if there is no data, send a 404 status with the err
 		res.status(404).send(error);
 	}
 });

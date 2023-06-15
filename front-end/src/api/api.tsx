@@ -48,25 +48,29 @@ import { ISession } from "../contexts/AuthProvider";
 // WORKOUTS
 export const getAllUsersWorkoutsAPI = async (
 	session: ISession
-): Promise<IWorkout[] | undefined> => {
-	try {
-		const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
-			headers: {
-				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${session.refresh_token}`,
-				"User-Id": `${session.user.id}`,
-			},
-			credentials: "include", // = will pass cookies (keeping incase i get my own domain)
+): Promise<IWorkout[] | Error> => {
+	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
+		headers: {
+			// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
+			"Access-Token": `${session.access_token}`,
+			"Refresh-Token": `${session.refresh_token}`,
+			"User-Id": `${session.user.id}`,
+		},
+		credentials: "include", // = will pass cookies (keeping incase i get my own domain)
+	});
+
+	console.log("RESPONSE???", response); // still a promise.
+
+	// if success
+	if (response.ok) {
+		const data: IWorkout[] = await response.json();
+		return data;
+	} else {
+		const err = await response.json();
+		const error = new Error("Getting workouts from Supabase", {
+			cause: err,
 		});
-		console.log("RESPONSE???", response);
-		if (response.ok) {
-			const jsonResponse = await response.json();
-			console.log("tokens???", jsonResponse);
-			return jsonResponse;
-		}
-	} catch (error) {
-		console.log(error);
+		return error;
 	}
 };
 
