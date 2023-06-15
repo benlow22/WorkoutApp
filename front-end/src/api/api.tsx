@@ -45,7 +45,10 @@ import { ISession } from "../contexts/AuthProvider";
 	});
 */
 
-export const getAllUsersWorkoutsAPI = async (session: ISession) => {
+// WORKOUTS
+export const getAllUsersWorkoutsAPI = async (
+	session: ISession
+): Promise<IWorkout[] | undefined> => {
 	try {
 		const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 			headers: {
@@ -56,6 +59,40 @@ export const getAllUsersWorkoutsAPI = async (session: ISession) => {
 			},
 			credentials: "include", // = will pass cookies (keeping incase i get my own domain)
 		});
+		console.log("RESPONSE???", response);
+		if (response.ok) {
+			const jsonResponse = await response.json();
+			console.log("tokens???", jsonResponse);
+			return jsonResponse;
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+type AnimalID<T> = {
+	id: T;
+	idAbrv: T;
+};
+
+// delete workout
+export const deleteWorkoutAPI = async (
+	session: ISession,
+	workout: IWorkout
+) => {
+	try {
+		const response = await fetch(
+			`${API_ENDPOINT}/authorized/workouts/${workout.id}`,
+			{
+				headers: {
+					"Access-Token": `${session.access_token}`,
+					"Refresh-Token": `${session.refresh_token}`,
+					"User-Id": `${session.user.id}`,
+				},
+				credentials: "include",
+			}
+		);
+
 		if (response.ok) {
 			const jsonResponse = await response.json();
 			console.log("tokens???", jsonResponse);
@@ -67,23 +104,11 @@ export const getAllUsersWorkoutsAPI = async (session: ISession) => {
 	}
 };
 
-export const getWorkouts = async () => {
-	// get all of user's workouts
-	// const { data, error } = await supabase.from("workouts").select("name,url");
-	// if (error) {
-	// 	console.error(error);
-	// 	return;
-	// }
-	const response = await fetch(`${API_ENDPOINT}/workouts`);
-	const data = await response.json();
-
-	return data;
-};
-
 export const getSignOut = async () => {
 	const response = await fetch(`${API_ENDPOINT}/public/signout`);
 	return response;
 };
+
 //test supabase auth
 export const getFullWorkoutThroughSupabaseWithAuth = async (
 	workoutUrl: string,
@@ -143,15 +168,16 @@ export const getWorkoutDay = async (workoutName: string = "") => {
 };
 
 // add error handling
-export const getAllExercisesAPI = async () => {
+export const getAllExercisesAPI = async (session: ISession) => {
+	// including private (not-public approved)
 	console.log("start to get all exercises");
 	const response = await fetch(`${API_ENDPOINT}/public/exercises`, {
 		credentials: "include",
-		// headers: {
-		// 	"Access-Control-Allow-Origin":
-		// 		"https://test-workout-app-vercel.vercel.app",
-		// 	"Access-Control-Allow-Credentials": "true",
-		// },
+		headers: {
+			"Access-Token": `${session.access_token}`,
+			"Refresh-Token": `${session.refresh_token}`,
+			"User-Id": `${session.user.id}`,
+		},
 	});
 	console.log("response from api = ", response);
 	const json = await response.json();

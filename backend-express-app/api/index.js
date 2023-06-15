@@ -131,16 +131,18 @@ const setAuthorizedSessionMiddleware = async (req, res, next) => {
 
 authorizedRouter.use(setAuthorizedSessionMiddleware);
 
+// 	/api/authorized/workouts = All user's workouts
 authorizedRouter.get("/workouts", async (req, res) => {
 	console.log("SESSS");
 	const userId = req.headers["user-id"];
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("name,url")
+		.select("*")
 		.eq("user_id", userId);
-	if (error) return res.status(407).json({ error: error.message });
 	if (data) {
-		res.status(200).json(data);
+		res.send(data);
+	} else {
+		res.status(404).send(error);
 	}
 });
 
