@@ -151,7 +151,7 @@ authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 		.select("name, url, id, last_performed, exercises(name, id)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
-	console.log("dad", data); // show in terminal
+	console.log(":workoutUrl DATA", data); // show in terminal
 	res.send(data);
 });
 
