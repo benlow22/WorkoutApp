@@ -70,7 +70,7 @@ export const getAllUsersWorkoutsAPI = async (
 			cause: err,
 		});
 	}
-	return { data: data, error: error };
+	return { data, error };
 };
 
 type AnimalID<T> = {

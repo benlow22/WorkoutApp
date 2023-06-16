@@ -138,7 +138,7 @@ authorizedRouter.get("/workouts", async (req, res) => {
 
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("*as")
+		.select("*")
 		.eq("user_id", userId);
 
 	if (data) {

@@ -49,7 +49,8 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [response, loading, error, request] = useRequest(
-		getAllUsersWorkoutsAPI
+		getAllUsersWorkoutsAPI,
+		session!
 	);
 	// const getAllUsersWorkouts = async () => {
 	// 	// if (session) {
@@ -74,17 +75,17 @@ export const WorkoutsPage: React.FC<{}> = () => {
 
 	useEffect(() => {
 		// get all of user's workouts to render list
-		if (response?.data) {
+		if (response) {
 			console.log(response);
-			setWorkouts(response.data);
+			setWorkouts(response);
 		}
 	}, [response]);
 
-	if (!loading && response) {
+	if (!loading) {
 		return (
 			<div className="workouts-page">
 				<h2 className="page-heading">Your Workouts</h2>
-				{response?.data?.map((workout, index) => (
+				{response?.map((workout, index) => (
 					<Link
 						to={`/workouts/${workout.url}`}
 						key={index}
