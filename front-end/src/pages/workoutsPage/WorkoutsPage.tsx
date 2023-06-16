@@ -4,7 +4,6 @@ import { Button } from "antd";
 import { Link, NavLink, Route, useLocation } from "react-router-dom";
 import { AuthContext, ISession } from "../../contexts/AuthProvider";
 import { supabase } from "../../supabaseClient";
-import { IWorkout } from "../../data";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";

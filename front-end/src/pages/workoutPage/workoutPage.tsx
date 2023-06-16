@@ -19,6 +19,7 @@ import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
 import { useRequest } from "../../hooks/useRequest";
 import { IExercise, IWorkout } from "../../api/types";
+import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 
 // type IExercise = {
 // 	name: any;
@@ -35,14 +36,11 @@ export const WorkoutPage = () => {
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
-	//need to check if workout URL is valid and grab workout from it, if not from buttons
-
 	const [response, loading, error, request] = useRequest(
 		getWorkoutAndExercisesAPI,
 		session!
 	);
-	// upon mount, take workoutId passed in
-	// get data for workout IWorkout
+
 	useEffect(() => {
 		if (workoutUrl) {
 			request(workoutUrl, session!);
@@ -99,81 +97,75 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	setIsLoading(true);
-	// 	console.log("new Exercises", exercises);
-	// 	setIsLoading(false);
-	// }, [addExercise]);
-
-	return (
-		<div>
-			{isLoading && <h1>LOADING</h1>}
-			{workout && (
-				<section className="new-workout-name">
-					<EditWorkoutNameButton workout={workout} />
-				</section>
-			)}
-			<div className="workout-controls">
-				<button className="side-workout-button expand-all-button">
-					Expand All
-				</button>
-				<div className="start-button-container">
-					<button className="start-button">
-						Start
-						<ClockCircleOutlined className="clock-icon" />
-					</button>
-					<div className="start-button-backing"></div>
+	if (!loading) {
+		if (error) {
+			return (
+				<div>
+					<p>No workout with URL {workoutUrl}</p>
+					<Button type="primary" onClick={redirectToWelcomepage}>
+						Return to Welcome Page
+					</Button>
 				</div>
+			);
+		}
+		return (
+			<div>
+				{workout && (
+					<section className="new-workout-name">
+						<EditWorkoutNameButton workout={workout} />
+					</section>
+				)}
+				<div className="workout-controls">
+					<button className="side-workout-button expand-all-button">
+						Expand All
+					</button>
+					<div className="start-button-container">
+						<button className="start-button">
+							Start
+							<ClockCircleOutlined className="clock-icon" />
+						</button>
+						<div className="start-button-backing"></div>
+					</div>
 
-				<div className="button-crecsent-spacer-right"></div>
-				<button className="side-workout-button edit-button">
-					Edit
-				</button>
-			</div>
-			{/* DISPLAY EXERCISES HERE */}
-			{exercises.map((exercise) => (
-				<TestFetchExercise exerciseId={exercise.id} key={exercise.id} />
-			))}
-			<Exercises exercises={exercises} />
-			<br></br>
-			{!addExercise ? (
+					<div className="button-crecsent-spacer-right"></div>
+					<button className="side-workout-button edit-button">
+						Edit
+					</button>
+				</div>
+				{/* DISPLAY EXERCISES HERE */}
+				{exercises.map((exercise) => (
+					<TestFetchExercise
+						exerciseId={exercise.id}
+						key={exercise.id}
+					/>
+				))}
+				<Exercises exercises={exercises} />
+				<br></br>
+				{!addExercise ? (
+					<Button
+						type="primary"
+						onClick={toggleButton}
+						className="add-exercise-button"
+					>
+						Add Exercise
+					</Button>
+				) : (
+					<SearchExercises
+						workout={workout}
+						// addExerciseToAll={addExerciseToAll}
+					/>
+				)}
+				<br></br>
 				<Button
 					type="primary"
-					onClick={toggleButton}
-					className="add-exercise-button"
+					onClick={deleteWorkout}
+					className="capitalize delete-button"
 				>
-					Add Exercise
+					Delete Workout
 				</Button>
-			) : (
-				<SearchExercises
-					workout={workout}
-					// addExerciseToAll={addExerciseToAll}
-				/>
-			)}
-			<br></br>
-			<Button
-				type="primary"
-				onClick={deleteWorkout}
-				className="capitalize delete-button"
-			>
-				Delete Workout
-			</Button>
-		</div>
-	);
-	// 	} else if (!location.state && !isLoading) {
-	// 		return (
-	// 			<div>
-	// 				<p>No workout with URL {workoutUrl}</p>
-	// 				<Button type="primary" onClick={redirectToWelcomepage}>
-	// 					Return to Welcome Page
-	// 				</Button>
-	// 			</div>
-	// 		);
-	// 	} else {
-	// 		return (
-	// 			<div>
-	// 				<h2></h2>
-	// 			</div>
-	// 		);
-	// 	}
+			</div>
+		);
+	} else {
+		return <SpiningLoadingIcon />;
+	}
 };
