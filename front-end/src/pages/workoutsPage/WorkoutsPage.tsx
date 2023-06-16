@@ -23,6 +23,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	}, []);
 
 	useEffect(() => {
+		// set workouts from response
 		if (response) {
 			console.log(response);
 			setWorkouts(response);

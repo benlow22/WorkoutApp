@@ -31,7 +31,6 @@ export const WorkoutPage = () => {
 	const navigate = useNavigate();
 
 	const { session } = useContext(AuthContext);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
@@ -54,16 +53,11 @@ export const WorkoutPage = () => {
 		}
 	}, [response]);
 
-	useEffect(() => {
-		if (exercises) {
-			setIsLoading(false);
-		}
-	}, [exercises]);
-
 	const redirectToWelcomepage = () => {
 		navigate("/");
 	};
 
+	// need to remove
 	const deleteWorkout = async () => {
 		if (workout) {
 			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {

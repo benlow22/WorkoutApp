@@ -43,6 +43,30 @@ import { ISession } from "../contexts/AuthProvider";
 	});
 */
 
+// fetcher = sets headers, method, and credentials so they do not have to be set in every call.
+const fetcher = async (
+	url: string,
+	session: ISession,
+	method: string | null = null
+): Promise<Response> => {
+	const myMethod = method ? method : "GET";
+	const myHeaders = {
+		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
+		"Access-Token": `${session.access_token}`,
+		"Refresh-Token": `${session.refresh_token}`,
+		"User-Id": `${session.user.id}`,
+	};
+	const myOptions = {
+		method: myMethod,
+		headers: myHeaders,
+	};
+	const response = await fetch(`${API_ENDPOINT}${url}`, {
+		...myOptions,
+		credentials: "include",
+	});
+	return response;
+};
+
 // WORKOUTS
 export const getAllUsersWorkoutsAPI = async (
 	session: ISession
@@ -78,17 +102,9 @@ export const getWorkoutAndExercisesAPI = async (
 	data: { workout: IWorkout; exercises: IExercise[] } | null;
 	error: TError;
 }> => {
-	const response = await fetch(
-		`${API_ENDPOINT}/authorized/workouts/${workoutUrl}`,
-		{
-			headers: {
-				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${session.refresh_token}`,
-				"User-Id": `${session.user.id}`,
-			},
-			credentials: "include",
-		}
+	const response = await fetcher(
+		`/authorized/workouts/${workoutUrl}`,
+		session
 	);
 	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
 	let error: Error | null = null;
