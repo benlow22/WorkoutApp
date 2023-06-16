@@ -2,14 +2,7 @@ import { useState } from "react";
 import { ISession } from "../contexts/AuthProvider";
 import { TError } from "../api/types";
 
-// const useApiCall = (apiFunc: (...args: any[]) => Promise<any>) => {
-// 	const [loading, setLoading] = useState(false);
-// 	const [error, setError] = useState<Error | null>(null);
-// 	const [response, setResponse] = useState({});
-
-// 	const request = async (...args) => {};
-// };
-
+// c
 export function useRequest<TApiParams extends any[], TResponseData>(
 	apiFunc: (
 		...args: TApiParams

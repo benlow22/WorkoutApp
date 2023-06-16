@@ -8,73 +8,21 @@ import { IWorkout } from "../../data";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
 
-// const useAPIcall = async <T,>(
-// 	api: (s: ISession) => Promise<{ data: T | null; error: Error | null }>,
-// 	session?: ISession
-// ): Promise<[data: T | null, isLoading: boolean, error: Error | null]> => {
-// 	const [isLoading, setIsLoading] = useState(true);
-// 	const { data, error } = await api(session!);
-
-// 	if (data) {
-// 		// setWorkouts(data);
-// 		setIsLoading(false);
-// 	}
-// 	if (error) {
-// 		console.error("", error.cause);
-// 		setIsLoading(false);
-// 	}
-
-// 	return [data, isLoading, error];
-// };
-
-// async function useApiCall<T>(
-// 	api: (s: ISession) => Promise<{ data: T; error: Error }>,
-// 	session?: ISession
-// ) {
-// 	const [isLoading, setIsLoading] = useState(true);
-// 	const { data, error } = await api(session!);
-
-// 	if (data) {
-// 		// setWorkouts(data);
-// 		setIsLoading(false);
-// 	}
-// 	if (error) {
-// 		console.error("", error.cause);
-// 		setIsLoading(false);
-// 	}
-
-// 	retur
-
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
-	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [response, loading, error, request] = useRequest(
 		getAllUsersWorkoutsAPI,
 		session!
 	);
-	// const getAllUsersWorkouts = async () => {
-	// 	// if (session) {
-	// 	const { data, error } = await getAllUsersWorkoutsAPI(session!);
-	// 	if (data) {
-	// 		setWorkouts(data);
-	// 		setIsLoading(false);
-	// 	}
-	// 	if (error) {
-	// 		console.error("", error.cause);
-	// 		setIsLoading(false);
-	// 	}
-	// 	// }
-	// };
 
 	useEffect(() => {
-		// get all of user's workouts to render list
+		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
 		if (session) {
 			request(session);
 		}
 	}, []);
 
 	useEffect(() => {
-		// get all of user's workouts to render list
 		if (response) {
 			console.log(response);
 			setWorkouts(response);
@@ -94,6 +42,11 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						<WorkoutButton workout={workout} />
 					</Link>
 				))}
+				{error && (
+					<div className="error-render">
+						<h5>Error: {error.message}</h5>
+					</div>
+				)}
 				<Link to={`/newWorkout`}>
 					<Button
 						type="primary"
