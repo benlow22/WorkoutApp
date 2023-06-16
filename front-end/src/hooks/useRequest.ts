@@ -14,7 +14,7 @@ export function useRequest<TApiParams extends any[], TResponseData>(
 	error: TError,
 	request: (...args: TApiParams) => Promise<void>
 ] {
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<TError>(null);
 	const [response, setResponse] = useState<TResponseData | null>(null);
 
@@ -31,7 +31,7 @@ export function useRequest<TApiParams extends any[], TResponseData>(
 			// @ts-expect-error
 			setError(e);
 			// @ts-expect-error
-			console.error("ERRRRPR", e.cause);
+			console.error("ERROR in UseRequest", e.cause);
 		} finally {
 			setLoading(false);
 		}
