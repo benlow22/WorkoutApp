@@ -7,6 +7,7 @@ import { supabase } from "../../supabaseClient";
 import { IWorkout } from "../../data";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
+import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
@@ -59,6 +60,6 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			</div>
 		);
 	} else {
-		return <p>LOADING</p>;
+		return <SpiningLoadingIcon />;
 	}
 };
