@@ -57,18 +57,19 @@ export const workouts = [
 // 	// { name: "Leg day", url: "legDay" },
 // ];
 
-export interface IWorkout {
+interface IWorkout {
 	id: string;
 	name: string;
 	url: string;
 	last_performed: string | null;
 }
 
-export interface IWorkoutWithExercises extends IWorkout {
+interface IWorkoutWithExercises {
+	workout: IWorkout;
 	exercises: IExercise[];
 }
 
-export interface IExercise {
+interface IExercise {
 	name: string;
 	id: string;
 }
