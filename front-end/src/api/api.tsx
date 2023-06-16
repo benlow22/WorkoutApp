@@ -1,9 +1,7 @@
 const API_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/api`;
-import { IWorkoutWithExercises } from "../data";
-import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
-import { IGetFullWorkoutResponse } from "./types";
+import { IExercise, IGetFullWorkoutResponse, IWorkout, TError } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 
 // Get Cookies from Browser = redundant
@@ -73,9 +71,39 @@ export const getAllUsersWorkoutsAPI = async (
 	return { data, error };
 };
 
-type AnimalID<T> = {
-	id: T;
-	idAbrv: T;
+export const getWorkoutAndExercisesAPI = async (
+	workoutUrl: string,
+	session: ISession
+): Promise<{
+	data: { workout: IWorkout; exercises: IExercise[] } | null;
+	error: TError;
+}> => {
+	const response = await fetch(
+		`${API_ENDPOINT}/authorized/workouts/${workoutUrl}`,
+		{
+			headers: {
+				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
+				"Access-Token": `${session.access_token}`,
+				"Refresh-Token": `${session.refresh_token}`,
+				"User-Id": `${session.user.id}`,
+			},
+			credentials: "include",
+		}
+	);
+	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+	let error: Error | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		const { exercises, id, name, url, last_performed } = respJSON;
+		data = { workout: { id, name, url, last_performed }, exercises };
+	} else {
+		const err = await response.json();
+		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+			cause: err,
+		});
+	}
+	return { data, error };
 };
 
 // delete workout
@@ -113,26 +141,6 @@ export const getSignOut = async () => {
 };
 
 //test supabase auth
-export const getFullWorkoutThroughSupabaseWithAuth = async (
-	workoutUrl: string,
-	session: ISession
-) => {
-	const response = await fetch(
-		`${API_ENDPOINT}/authorized/workouts/${workoutUrl}`,
-		{
-			headers: {
-				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${session.refresh_token}`,
-				"User-Id": `${session.user.id}`,
-			},
-			credentials: "include",
-		}
-	);
-	const data = await response.json();
-	console.log('did it make it to the api"', data);
-	return data;
-};
 
 //pokemonAPI
 
@@ -156,19 +164,19 @@ export const addExerciseToWorkout = async (
 };
 
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
-export const getWorkoutDay = async (workoutName: string = "") => {
-	const { data, error } = await supabase
-		.from("workouts")
-		.select("name, url, id")
-		.eq("url", workoutName);
-	console.log("API CALL = get workout:", data);
-	if (error) {
-		console.error(error);
-		return;
-	} else {
-		return data[0];
-	}
-};
+// export const getWorkoutDay = async (workoutName: string = "") => {
+// 	const { data, error } = await supabase
+// 		.from("workouts")
+// 		.select("name, url, id")
+// 		.eq("url", workoutName);
+// 	console.log("API CALL = get workout:", data);
+// 	if (error) {
+// 		console.error(error);
+// 		return;
+// 	} else {
+// 		return data[0];
+// 	}
+// };
 
 // add error handling
 export const getAllExercisesAPI = async (session: ISession) => {
@@ -190,38 +198,38 @@ export const getAllExercisesAPI = async (session: ISession) => {
 };
 
 // takes workoutId and get workout information + exercises, returns just exercises for now
-export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
-	// const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
-	// const json = await response.json(); // gets it out of a promise
-	// console.log("json", json);
-	// console.log("ressssss", response);
-	// return response;
-};
+// export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
+// const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
+// const json = await response.json(); // gets it out of a promise
+// console.log("json", json);
+// console.log("ressssss", response);
+// return response;
+// };
 
-export const getFullWorkoutAPI = async (
-	workoutUrl: string
-): Promise<
-	| {
-			exercises: IExercise[];
-			workout: IWorkout;
-	  }
-	| undefined
-> => {
-	// const response = await fetch(`${API_ENDPOINT}/`);
-	// console.log("restaurants from connected API", response);
-	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
-		.from("workouts")
-		.select("name, url, id, last_performed, exercises(name, id)")
-		.eq("url", workoutUrl)
-		.single(); // get single row as object instead of arr
-	console.log("API CALL = get workout data: ", workoutData);
-	if (workoutData) {
-		const { exercises, id, name, url, last_performed } = workoutData; // extract
-		return { exercises, workout: { id, name, url, last_performed } };
-	} else {
-		console.error(`No workout found with url ${workoutUrl}`, error);
-	}
-};
+// export const getFullWorkoutAPI = async (
+// 	workoutUrl: string
+// ): Promise<
+// 	| {
+// 			exercises: IExercise[];
+// 			workout: IWorkout;
+// 	  }
+// 	| undefined
+// > => {
+// 	// const response = await fetch(`${API_ENDPOINT}/`);
+// 	// console.log("restaurants from connected API", response);
+// 	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
+// 		.from("workouts")
+// 		.select("name, url, id, last_performed, exercises(name, id)")
+// 		.eq("url", workoutUrl)
+// 		.single(); // get single row as object instead of arr
+// 	console.log("API CALL = get workout data: ", workoutData);
+// 	if (workoutData) {
+// 		const { exercises, id, name, url, last_performed } = workoutData; // extract
+// 		return { exercises, workout: { id, name, url, last_performed } };
+// 	} else {
+// 		console.error(`No workout found with url ${workoutUrl}`, error);
+// 	}
+// };
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  
 	- making an uuid id 
 	- name

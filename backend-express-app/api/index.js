@@ -134,13 +134,9 @@ authorizedRouter.use(setAuthorizedSessionMiddleware);
 // 	/api/authorized/workouts = All user's workouts
 authorizedRouter.get("/workouts", async (req, res) => {
 	console.log("Get All Workouts API");
-	const userId = req.headers["user-id"];
+	// const userId = req.headers["user-id"];
 
-	const { data, error } = await supabase
-		.from("workouts")
-		.select("*")
-		.eq("user_id", userId);
-
+	const { data, error } = await supabase.from("workouts").select("*");
 	if (data) {
 		// if there is data, send it back = 200 status
 		res.send(data);
@@ -154,20 +150,12 @@ authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await supabase
 		.from("workouts")
-		.select("name, url, id, last_performed, exercises(name, id)")
+		.select("*, exercises(*)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	console.log(":workoutUrl DATA", data); // show in terminal
 	res.send(data);
 });
-
-// app.get("/workouts", async (req, res) => {
-// 	const response = await fetch(
-// 		"https://pogoapi.net/api/v1/raid_exclusive_pokemon.json"
-// 	);
-// 	const body = await response.text();
-// 	res.send(body);
-// });
 
 // does not need to be authenticated.
 publicRouter.get("/exercises", async (req, res) => {
