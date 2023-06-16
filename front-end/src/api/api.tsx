@@ -48,7 +48,7 @@ import { ISession } from "../contexts/AuthProvider";
 // WORKOUTS
 export const getAllUsersWorkoutsAPI = async (
 	session: ISession
-): Promise<IWorkout[] | Error> => {
+): Promise<{ data: IWorkout[] | null; error: null | Error }> => {
 	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
 		headers: {
 			// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
@@ -58,20 +58,19 @@ export const getAllUsersWorkoutsAPI = async (
 		},
 		credentials: "include", // = will pass cookies (keeping incase i get my own domain)
 	});
-
 	console.log("RESPONSE???", response); // still a promise.
-
+	let data: IWorkout[] | null = null;
+	let error: Error | null = null;
 	// if success
 	if (response.ok) {
-		const data: IWorkout[] = await response.json();
-		return data;
+		data = await response.json();
 	} else {
 		const err = await response.json();
-		const error = new Error("Getting workouts from Supabase", {
+		error = new Error("Getting workouts from Supabase", {
 			cause: err,
 		});
-		return error;
 	}
+	return { data: data, error: error };
 };
 
 type AnimalID<T> = {
