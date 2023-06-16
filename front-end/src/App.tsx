@@ -30,10 +30,10 @@ const router = createBrowserRouter(
 				{/* only authenticated users can use these routes  */}
 				<Route path="workouts" element={<WorkoutsPage />} />
 				<Route path="workouts/:workoutUrl" element={<WorkoutPage />} />
-				<Route
+				{/* <Route
 					path=":edit-workout/:workoutUrl"
 					element={<EditWorkoutPage />}
-				/>
+				/> */}
 				<Route path="exercises" element={<ExercisesPage />} />
 				<Route
 					path="exercises/:exerciseName/new"

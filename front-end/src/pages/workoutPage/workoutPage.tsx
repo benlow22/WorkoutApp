@@ -5,19 +5,7 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import {
-	IExercise,
-	IWorkout,
-	IWorkoutNameUrl,
-	IWorkoutWithExercises,
-	workouts,
-} from "../../data";
-import {
-	getFullWorkoutAPI,
-	getFullWorkoutAPIEXPRESS,
-	getFullWorkoutThroughSupabaseWithAuth,
-	getWorkoutDay,
-} from "../../api/api";
+import { getWorkoutAndExercisesAPI } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -29,6 +17,8 @@ import { ExercisesPage } from ".././ExercisesPage";
 import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
+import { useRequest } from "../../hooks/useRequest";
+import { IExercise, IWorkout } from "../../api/types";
 
 // type IExercise = {
 // 	name: any;
@@ -47,36 +37,24 @@ export const WorkoutPage = () => {
 	const { workoutUrl } = useParams<string>();
 	//need to check if workout URL is valid and grab workout from it, if not from buttons
 
+	const [response, loading, error, request] = useRequest(
+		getWorkoutAndExercisesAPI,
+		session!
+	);
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
-		setIsLoading(true);
-		async function getWorkout() {
-			if (workoutUrl && session) {
-				//console.log('coookies"', document.cookie);
-				// should always be true, if not it would be a different route (error claims type undefined)
-				const test = await getFullWorkoutThroughSupabaseWithAuth(
-					workoutUrl,
-					session
-				);
-				if (test) {
-					console.log(
-						"test data made it to Comp from supabase: ",
-						test
-					);
-				}
-				// const lols = await getFullWorkoutAPIEXPRESS(workoutUrl);
-				// console.log("THIS MADE IT", lols);
-				const data = await getFullWorkoutAPI(workoutUrl);
-				if (data) {
-					// setWorkout(data); // setState workoutData
-					setExercises(data.exercises);
-					setWorkout(data.workout);
-				}
-			}
+		if (workoutUrl) {
+			request(workoutUrl, session!);
 		}
-		getWorkout(); // if url is valid, then call GETworkout
 	}, []);
+
+	useEffect(() => {
+		if (response) {
+			setWorkout(response.workout);
+			setExercises(response.exercises);
+		}
+	}, [response]);
 
 	useEffect(() => {
 		if (exercises) {

@@ -5,8 +5,7 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { IWorkout, IWorkoutWithExercises, IExercise } from "../../data";
-import { getFullWorkoutAPI, getWorkoutDay } from "../../api/api";
+import { getWorkoutAndExercisesAPI } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -18,6 +17,7 @@ import { ExercisesPage } from "../ExercisesPage";
 import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
+import { IExercise, IWorkout } from "../../api/types";
 
 // type IExercise = {
 // 	name: any;
@@ -60,18 +60,18 @@ export const EditWorkoutPage = () => {
 	// upon mount, take workoutId passed in
 	// get data for workout IWorkout
 	useEffect(() => {
-		setIsLoading(true);
-		async function getWorkout() {
-			const data = await getFullWorkoutAPI(workout.id);
-			if (data) {
-				// setWorkout(data); // setState workoutData
-				setExercises(data.exercises);
-				console.log("should be exercises", data);
-				console.log("Workouts?", data.workout);
-				console.log("Workouts?", workout);
-			}
-		}
-		getWorkout();
+		// setIsLoading(true);
+		// async function getWorkout() {
+		// 	const data = await getFullWorkoutAPI(workout.id);
+		// 	if (data) {
+		// 		// setWorkout(data); // setState workoutData
+		// 		setExercises(data.exercises);
+		// 		console.log("should be exercises", data);
+		// 		console.log("Workouts?", data.workout);
+		// 		console.log("Workouts?", workout);
+		// 	}
+		// }
+		// getWorkout();
 	}, []);
 
 	useEffect(() => {
