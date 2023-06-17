@@ -162,6 +162,22 @@ authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 	}
 });
 
+// delete workout using id
+authorizedRouter.delete("/workouts/:workoutId", async (req, res) => {
+	const workoutId = req.params.workoutId;
+	const { data, error } = await supabase
+		.from("workouts")
+		.delete()
+		.eq("id", workoutId);
+	console.log("deleted workout: ", data); // show in terminal
+	if (error) {
+		// if there is data, send it back = 200 status
+		res.status(404).send(error);
+	} else {
+		res.status(204);
+	}
+});
+
 // does not need to be authenticated.
 publicRouter.get("/exercises", async (req, res) => {
 	let { data: exercises, error } = await supabase

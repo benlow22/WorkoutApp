@@ -151,33 +151,55 @@ export const _name_API = async (
 */
 
 // delete workout
-export const deleteWorkoutAPI = async (
-	session: ISession,
-	workout: IWorkout
-) => {
-	try {
-		const response = await fetch(
-			`${API_ENDPOINT}/authorized/workouts/${workout.id}`,
-			{
-				headers: {
-					"Access-Token": `${session.access_token}`,
-					"Refresh-Token": `${session.refresh_token}`,
-					"User-Id": `${session.user.id}`,
-				},
-				credentials: "include",
-			}
-		);
 
-		if (response.ok) {
-			const jsonResponse = await response.json();
-			console.log("tokens???", jsonResponse);
-			return jsonResponse;
-		}
-		throw new Error("Request failed!");
-	} catch (error) {
-		console.log(error);
+export const deleteWorkoutAPI = async (
+	workoutId: string,
+	session: ISession
+): Promise<{
+	data: any;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/authorized/workouts/${workoutId}`,
+		session,
+		"DELETE"
+	);
+	if (!response.ok) {
+		error = new Error(`Did not delete workout`, {
+			cause: error,
+		});
 	}
+	return { data: null, error };
 };
+
+// OG delete api
+// export const deleteWorkoutAPI = async (
+// 	session: ISession,
+// 	workout: IWorkout
+// ) => {
+// 	try {
+// 		const response = await fetch(
+// 			`${API_ENDPOINT}/authorized/workouts/${workout.id}`,
+// 			{
+// 				headers: {
+// 					"Access-Token": `${session.access_token}`,
+// 					"Refresh-Token": `${session.refresh_token}`,
+// 					"User-Id": `${session.user.id}`,
+// 				},
+// 				credentials: "include",
+// 			}
+// 		);
+
+// 		if (response.ok) {
+// 			const jsonResponse = await response.json();
+// 			console.log("tokens???", jsonResponse);
+// 			return jsonResponse;
+// 		}
+// 		throw new Error("Request failed!");
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
 
 export const getSignOut = async () => {
 	const response = await fetch(`${API_ENDPOINT}/public/signout`);

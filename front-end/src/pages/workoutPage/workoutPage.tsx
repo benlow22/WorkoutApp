@@ -5,7 +5,7 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { getWorkoutAndExercisesAPI } from "../../api/api";
+import { deleteWorkoutAPI, getWorkoutAndExercisesAPI } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -35,46 +35,36 @@ export const WorkoutPage = () => {
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
-	const [response, loading, error, request] = useRequest(
-		getWorkoutAndExercisesAPI,
-		session!
-	);
+	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
+		useRequest(getWorkoutAndExercisesAPI, session!);
+
+	const [
+		deleteWorkoutResponse,
+		deleteWorkoutLoading,
+		deleteWorkoutError,
+		deleteWorkoutRequest,
+	] = useRequest(deleteWorkoutAPI, session!);
 
 	useEffect(() => {
 		if (workoutUrl) {
-			request(workoutUrl, session!);
+			workoutRequest(workoutUrl, session!);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (response) {
-			setWorkout(response.workout);
-			setExercises(response.exercises);
+		if (workoutResponse) {
+			setWorkout(workoutResponse.workout);
+			setExercises(workoutResponse.exercises);
 		}
-	}, [response]);
+	}, [workoutResponse]);
 
 	const redirectToWelcomepage = () => {
 		navigate("/");
 	};
 
 	// need to remove
-	const deleteWorkout = async () => {
-		if (workout) {
-			if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
-				const { error } = await supabase
-					.from("workouts")
-					.delete()
-					.eq("id", workout.id);
-				if (error) {
-					console.error(error);
-					return;
-				}
-				console.log("workout deleted");
-				navigate("/workouts");
-			}
-		} else {
-			console.log("workout not deleted");
-		}
+	const deleteWorkout = () => {
+		deleteWorkoutRequest(workout.id, session!);
 	};
 
 	const toggleButton = () => {
@@ -91,8 +81,8 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	if (!loading) {
-		if (error) {
+	if (!workoutLoading) {
+		if (workoutError) {
 			return (
 				<div>
 					<p>No workout with URL {workoutUrl}</p>
