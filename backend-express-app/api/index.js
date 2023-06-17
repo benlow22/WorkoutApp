@@ -154,7 +154,12 @@ authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	console.log(":workoutUrl DATA", data); // show in terminal
-	res.send(data);
+	if (data) {
+		// if there is data, send it back = 200 status
+		res.send(data);
+	} else {
+		res.status(404).send(error);
+	}
 });
 
 // does not need to be authenticated.

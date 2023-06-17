@@ -44,11 +44,12 @@ import { ISession } from "../contexts/AuthProvider";
 */
 
 // fetcher = sets headers, method, and credentials so they do not have to be set in every call.
-const fetcher = async (
+
+const fetcher = async <TData,>(
 	url: string,
 	session: ISession,
 	method: string | null = null
-): Promise<Response> => {
+): Promise<[error: TError, response: Response]> => {
 	const myMethod = method ? method : "GET";
 	const myHeaders = {
 		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
@@ -64,32 +65,26 @@ const fetcher = async (
 		...myOptions,
 		credentials: "include",
 	});
-	return response;
+	let error: TError = null;
+	if (!response.ok) {
+		console.log("response with errrror, ", response);
+		error = await response.json();
+	}
+	return [error, response];
 };
 
 // WORKOUTS
 export const getAllUsersWorkoutsAPI = async (
 	session: ISession
-): Promise<{ data: IWorkout[] | null; error: null | Error }> => {
-	const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
-		headers: {
-			// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-			"Access-Token": `${session.access_token}`,
-			"Refresh-Token": `${session.refresh_token}`,
-			"User-Id": `${session.user.id}`,
-		},
-		credentials: "include", // = will pass cookies (keeping incase i get my own domain)
-	});
-	console.log("RESPONSE???", response); // still a promise.
-	let data: IWorkout[] | null = null;
-	let error: Error | null = null;
+): Promise<{ data: IWorkout[] | null; error: TError }> => {
+	let [error, response] = await fetcher(`/authorized/workouts`, session);
 	// if success
+	let data: IWorkout[] | null = null;
 	if (response.ok) {
 		data = await response.json();
 	} else {
-		const err = await response.json();
 		error = new Error("Getting workouts from Supabase", {
-			cause: err,
+			cause: error,
 		});
 	}
 	return { data, error };
@@ -102,25 +97,58 @@ export const getWorkoutAndExercisesAPI = async (
 	data: { workout: IWorkout; exercises: IExercise[] } | null;
 	error: TError;
 }> => {
-	const response = await fetcher(
+	let [error, response] = await fetcher(
 		`/authorized/workouts/${workoutUrl}`,
 		session
 	);
 	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
-	let error: Error | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		const { exercises, id, name, url, last_performed } = respJSON;
 		data = { workout: { id, name, url, last_performed }, exercises };
 	} else {
-		const err = await response.json();
 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
-			cause: err,
+			cause: error,
 		});
 	}
 	return { data, error };
 };
+
+// API TEMPLATE
+/*
+export const _name_API = async (
+	_args_
+	session: ISession,
+	_METHOD?_
+): Promise<{
+	data: EXPECTED_DATA_TYPE | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/_authorized or public_/_URL}`,
+		session
+	);
+	let data: EXPECTED_DATA_TYPE | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		const { exercises, id, name, url, last_performed } = respJSON;
+		data = { workout: { id, name, url, last_performed }, exercises };
+	} else {
+		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
+
+
+
+
+*/
 
 // delete workout
 export const deleteWorkoutAPI = async (
