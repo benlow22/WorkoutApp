@@ -19,7 +19,7 @@ import { ISession } from "../contexts/AuthProvider";
 // 	?.split("=")[1];
 
 /* Good FETCH API calls - to express BE on seperate App
-	// Example POST method implementation:
+	// Example POST met	hod implementation:
 	async function postData(url = "", data = {}) {
 		// Default options are marked with *
 		const response = await fetch(url, {
@@ -200,11 +200,6 @@ export const deleteWorkoutAPI = async (
 // 		console.log(error);
 // 	}
 // };
-
-export const getSignOut = async () => {
-	const response = await fetch(`${API_ENDPOINT}/public/signout`);
-	return response;
-};
 
 //test supabase auth
 

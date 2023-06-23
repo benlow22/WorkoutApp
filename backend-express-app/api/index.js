@@ -138,6 +138,7 @@ authorizedRouter.get("/workouts", async (req, res) => {
 
 	const { data, error } = await supabase.from("workouts").select("*");
 	if (data) {
+		console.log(data);
 		// if there is data, send it back = 200 status
 		res.send(data);
 	} else {
@@ -156,6 +157,7 @@ authorizedRouter.get("/workouts/:workoutUrl", async (req, res) => {
 	console.log(":workoutUrl DATA", data); // show in terminal
 	if (data) {
 		// if there is data, send it back = 200 status
+		console.log(data);
 		res.send(data);
 	} else {
 		res.status(404).send(error);
