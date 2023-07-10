@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts, IWorkoutNameUrl, IWorkout } from "../data";
+import { workouts, IWorkoutNameUrl } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
-import { getWorkouts, updateWorkoutName } from "../api/api";
+import { updateWorkoutName } from "../api/api";
 import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { changeNameToUrl, buttonClickTrue } from "../utils/utils";
+import { IWorkout } from "../api/types";
 
 // export interface IWorkout {
 // 	name: string;
