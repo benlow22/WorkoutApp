@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import App from "../App";
+import { IWorkout } from "../api/types";
 
 type IAuthContext = {
 	userId: string;
