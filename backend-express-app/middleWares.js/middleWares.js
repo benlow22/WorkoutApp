@@ -31,9 +31,9 @@ const setAuthorizedSessionMiddleware = async (req, res, next) => {
 		if (error) {
 			console.error("error fetching session from supabase: ", error);
 		}
-		if (data) {
-			console.log("session Set");
-		}
+		// if (data) {
+		// 	console.log("session Set");
+		// }
 	} else {
 		// make sure you handle this case!
 		console.error("User is not authenticated.");
