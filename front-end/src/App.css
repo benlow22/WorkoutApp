@@ -58,9 +58,13 @@ h2 {
 	background-color: rgb(0, 110, 255);
 	padding: 10px 75px;
 	width: 100%;
+}
+.content {
+	max-width: 1600px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	margin: auto;
 }
 /* 
 .header *, .workouts-page * {

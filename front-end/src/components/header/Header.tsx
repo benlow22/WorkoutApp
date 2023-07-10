@@ -27,33 +27,35 @@ export const Header: React.FC<{}> = () => {
 	if (!contextIsLoading) {
 		return (
 			<div className="header">
-				{auth ? (
-					<Link to="/workouts">
-						<h1>Workout Buddy</h1>
-					</Link>
-				) : (
-					<Link to="/">
-						<h1>Workout Buddy</h1>
-					</Link>
-				)}
-				{auth &&
-					!isLoading && ( // if authorized render "upsert username" link
-						<div className="account">
-							<Link to="/createUsername">
-								{!username
-									? "Create Username"
-									: displayUsername}
-							</Link>
-							<LogoutButton />
-						</div>
-					)}
-				{!auth &&
-					!isLoading &&
-					!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
-						<Link to="/login">
-							<LogInButton />
+				<div className="content">
+					{auth ? (
+						<Link to="/workouts">
+							<h1>Workout Buddy</h1>
+						</Link>
+					) : (
+						<Link to="/">
+							<h1>Workout Buddy</h1>
 						</Link>
 					)}
+					{auth &&
+						!isLoading && ( // if authorized render "upsert username" link
+							<div className="account">
+								<Link to="/createUsername">
+									{!username
+										? "Create Username"
+										: displayUsername}
+								</Link>
+								<LogoutButton />
+							</div>
+						)}
+					{!auth &&
+						!isLoading &&
+						!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
+							<Link to="/login">
+								<LogInButton />
+							</Link>
+						)}
+				</div>
 			</div>
 		);
 	} else {
