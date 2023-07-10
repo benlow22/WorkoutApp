@@ -1,9 +1,7 @@
 const API_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/api`;
-import { IWorkoutWithExercises } from "../data";
-import { IExercise, IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
-import { IGetFullWorkoutResponse } from "./types";
+import { IExercise, IGetFullWorkoutResponse, IWorkout, TError } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 
 // Get Cookies from Browser = redundant
@@ -21,7 +19,7 @@ import { ISession } from "../contexts/AuthProvider";
 // 	?.split("=")[1];
 
 /* Good FETCH API calls - to express BE on seperate App
-	// Example POST method implementation:
+	// Example POST met	hod implementation:
 	async function postData(url = "", data = {}) {
 		// Default options are marked with *
 		const response = await fetch(url, {
@@ -45,66 +43,165 @@ import { ISession } from "../contexts/AuthProvider";
 	});
 */
 
-export const getAllUsersWorkoutsAPI = async (session: ISession) => {
-	try {
-		const response = await fetch(`${API_ENDPOINT}/authorized/workouts`, {
-			headers: {
-				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${session.refresh_token}`,
-				"User-Id": `${session.user.id}`,
-			},
-			credentials: "include", // = will pass cookies (keeping incase i get my own domain)
-		});
-		if (response.ok) {
-			const jsonResponse = await response.json();
-			console.log("tokens???", jsonResponse);
-			return jsonResponse;
-		}
-		throw new Error("Request failed!");
-	} catch (error) {
-		console.log(error);
+// fetcher = sets headers, method, and credentials so they do not have to be set in every call.
+
+const fetcher = async <TData,>(
+	url: string,
+	session: ISession,
+	method: string | null = null
+): Promise<[error: TError, response: Response]> => {
+	const myMethod = method ? method : "GET";
+	const myHeaders = {
+		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
+		"Access-Token": `${session.access_token}`,
+		"Refresh-Token": `${session.refresh_token}`,
+		"User-Id": `${session.user.id}`,
+	};
+	const myOptions = {
+		method: myMethod,
+		headers: myHeaders,
+	};
+	const response = await fetch(`${API_ENDPOINT}${url}`, {
+		...myOptions,
+		credentials: "include",
+	});
+	let error: TError = null;
+	if (!response.ok) {
+		console.log("response with errrror, ", response);
+		error = await response.json();
 	}
+	return [error, response];
 };
 
-export const getWorkouts = async () => {
-	// get all of user's workouts
-	// const { data, error } = await supabase.from("workouts").select("name,url");
-	// if (error) {
-	// 	console.error(error);
-	// 	return;
-	// }
-	const response = await fetch(`${API_ENDPOINT}/workouts`);
-	const data = await response.json();
-
-	return data;
+// WORKOUTS
+export const getAllUsersWorkoutsAPI = async (
+	session: ISession
+): Promise<{ data: IWorkout[] | null; error: TError }> => {
+	let [error, response] = await fetcher(`/authorized/workouts`, session);
+	// if success
+	let data: IWorkout[] | null = null;
+	if (response.ok) {
+		data = await response.json();
+	} else {
+		error = new Error("Getting workouts from Supabase", {
+			cause: error,
+		});
+	}
+	return { data, error };
 };
 
-export const getSignOut = async () => {
-	const response = await fetch(`${API_ENDPOINT}/public/signout`);
-	return response;
-};
-//test supabase auth
-export const getFullWorkoutThroughSupabaseWithAuth = async (
+export const getWorkoutAndExercisesAPI = async (
 	workoutUrl: string,
 	session: ISession
-) => {
-	const response = await fetch(
-		`${API_ENDPOINT}/authorized/workouts/${workoutUrl}`,
-		{
-			headers: {
-				// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
-				"Access-Token": `${session.access_token}`,
-				"Refresh-Token": `${session.refresh_token}`,
-				"User-Id": `${session.user.id}`,
-			},
-			credentials: "include",
-		}
+): Promise<{
+	data: { workout: IWorkout; exercises: IExercise[] } | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/authorized/workouts/${workoutUrl}`,
+		session
 	);
-	const data = await response.json();
-	console.log('did it make it to the api"', data);
-	return data;
+	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		const { exercises, id, name, url, last_performed } = respJSON;
+		data = { workout: { id, name, url, last_performed }, exercises };
+	} else {
+		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
 };
+
+// API TEMPLATE
+/*
+export const _name_API = async (
+	_args_
+	session: ISession,
+	_METHOD?_
+): Promise<{
+	data: EXPECTED_DATA_TYPE | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/_authorized or public_/_URL}`,
+		session
+	);
+	let data: EXPECTED_DATA_TYPE | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		const { exercises, id, name, url, last_performed } = respJSON;
+		data = { workout: { id, name, url, last_performed }, exercises };
+	} else {
+		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
+
+
+
+
+*/
+
+// delete workout
+
+export const deleteWorkoutAPI = async (
+	workoutId: string,
+	session: ISession
+): Promise<{
+	data: any;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/authorized/workouts/${workoutId}`,
+		session,
+		"DELETE"
+	);
+	if (!response.ok) {
+		error = new Error(`Did not delete workout`, {
+			cause: error,
+		});
+	}
+	return { data: null, error };
+};
+
+// OG delete api
+// export const deleteWorkoutAPI = async (
+// 	session: ISession,
+// 	workout: IWorkout
+// ) => {
+// 	try {
+// 		const response = await fetch(
+// 			`${API_ENDPOINT}/authorized/workouts/${workout.id}`,
+// 			{
+// 				headers: {
+// 					"Access-Token": `${session.access_token}`,
+// 					"Refresh-Token": `${session.refresh_token}`,
+// 					"User-Id": `${session.user.id}`,
+// 				},
+// 				credentials: "include",
+// 			}
+// 		);
+
+// 		if (response.ok) {
+// 			const jsonResponse = await response.json();
+// 			console.log("tokens???", jsonResponse);
+// 			return jsonResponse;
+// 		}
+// 		throw new Error("Request failed!");
+// 	} catch (error) {
+// 		console.log(error);
+// 	}
+// };
+
+//test supabase auth
 
 //pokemonAPI
 
@@ -128,30 +225,31 @@ export const addExerciseToWorkout = async (
 };
 
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
-export const getWorkoutDay = async (workoutName: string = "") => {
-	const { data, error } = await supabase
-		.from("workouts")
-		.select("name, url, id")
-		.eq("url", workoutName);
-	console.log("API CALL = get workout:", data);
-	if (error) {
-		console.error(error);
-		return;
-	} else {
-		return data[0];
-	}
-};
+// export const getWorkoutDay = async (workoutName: string = "") => {
+// 	const { data, error } = await supabase
+// 		.from("workouts")
+// 		.select("name, url, id")
+// 		.eq("url", workoutName);
+// 	console.log("API CALL = get workout:", data);
+// 	if (error) {
+// 		console.error(error);
+// 		return;
+// 	} else {
+// 		return data[0];
+// 	}
+// };
 
 // add error handling
-export const getAllExercisesAPI = async () => {
+export const getAllExercisesAPI = async (session: ISession) => {
+	// including private (not-public approved)
 	console.log("start to get all exercises");
 	const response = await fetch(`${API_ENDPOINT}/public/exercises`, {
 		credentials: "include",
-		// headers: {
-		// 	"Access-Control-Allow-Origin":
-		// 		"https://test-workout-app-vercel.vercel.app",
-		// 	"Access-Control-Allow-Credentials": "true",
-		// },
+		headers: {
+			"Access-Token": `${session.access_token}`,
+			"Refresh-Token": `${session.refresh_token}`,
+			"User-Id": `${session.user.id}`,
+		},
 	});
 	console.log("response from api = ", response);
 	const json = await response.json();
@@ -161,38 +259,38 @@ export const getAllExercisesAPI = async () => {
 };
 
 // takes workoutId and get workout information + exercises, returns just exercises for now
-export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
-	// const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
-	// const json = await response.json(); // gets it out of a promise
-	// console.log("json", json);
-	// console.log("ressssss", response);
-	// return response;
-};
+// export const getFullWorkoutAPIEXPRESS = async (workoutUrl: string) => {
+// const response = await fetch(`${API_ENDPOINT}/workouts/${workoutUrl}`);
+// const json = await response.json(); // gets it out of a promise
+// console.log("json", json);
+// console.log("ressssss", response);
+// return response;
+// };
 
-export const getFullWorkoutAPI = async (
-	workoutUrl: string
-): Promise<
-	| {
-			exercises: IExercise[];
-			workout: IWorkout;
-	  }
-	| undefined
-> => {
-	// const response = await fetch(`${API_ENDPOINT}/`);
-	// console.log("restaurants from connected API", response);
-	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
-		.from("workouts")
-		.select("name, url, id, last_performed, exercises(name, id)")
-		.eq("url", workoutUrl)
-		.single(); // get single row as object instead of arr
-	console.log("API CALL = get workout data: ", workoutData);
-	if (workoutData) {
-		const { exercises, id, name, url, last_performed } = workoutData; // extract
-		return { exercises, workout: { id, name, url, last_performed } };
-	} else {
-		console.error(`No workout found with url ${workoutUrl}`, error);
-	}
-};
+// export const getFullWorkoutAPI = async (
+// 	workoutUrl: string
+// ): Promise<
+// 	| {
+// 			exercises: IExercise[];
+// 			workout: IWorkout;
+// 	  }
+// 	| undefined
+// > => {
+// 	// const response = await fetch(`${API_ENDPOINT}/`);
+// 	// console.log("restaurants from connected API", response);
+// 	const { data: workoutData, error }: IGetFullWorkoutResponse = await supabase // return should be of imported type
+// 		.from("workouts")
+// 		.select("name, url, id, last_performed, exercises(name, id)")
+// 		.eq("url", workoutUrl)
+// 		.single(); // get single row as object instead of arr
+// 	console.log("API CALL = get workout data: ", workoutData);
+// 	if (workoutData) {
+// 		const { exercises, id, name, url, last_performed } = workoutData; // extract
+// 		return { exercises, workout: { id, name, url, last_performed } };
+// 	} else {
+// 		console.error(`No workout found with url ${workoutUrl}`, error);
+// 	}
+// };
 /* postNewWorkout = checks if workout already exists by url ( since that is what will be searched and entered  backAndBi === back and bi), then adds to Workout table (including:  
 	- making an uuid id 
 	- name

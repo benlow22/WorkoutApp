@@ -6,6 +6,7 @@ import { AuthContext } from "../../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 export const CreateUsernamePage: React.FC<{}> = () => {
+	const { contextIsLoading } = useContext(AuthContext);
 	const [newUsername, setNewUsername] = useState<string>("");
 	const { userId, setUsername, username } = useContext(AuthContext);
 	const [allUsernames, setAllUsernames] = useState<string[]>([]);
@@ -66,7 +67,9 @@ export const CreateUsernamePage: React.FC<{}> = () => {
 
 	return (
 		<div>
-			<h2>{username ? "Change " : "Create "} Username</h2>
+			{!contextIsLoading && (
+				<h2>{username ? "Change " : "Create "} Username</h2>
+			)}
 			<form className="upsert-username-form">
 				<input
 					onChange={(e) => setNewUsername(e.target.value)}

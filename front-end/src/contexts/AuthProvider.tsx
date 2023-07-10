@@ -1,7 +1,7 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { IWorkout } from "../data";
 import { supabase } from "../supabaseClient";
 import App from "../App";
+import { IWorkout } from "../api/types";
 
 type IAuthContext = {
 	userId: string;
@@ -97,6 +97,10 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					}
 				} else if (event === "SIGNED_OUT") {
 					console.log("Auth Provider:  signed OUT");
+					setUserId("");
+					setUsername("");
+					setWorkouts([]);
+					setSession(null);
 					setAuth(false);
 					setUser(null);
 					// remove cookies, when signed out
@@ -113,6 +117,23 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			data.subscription.unsubscribe();
 		};
 	}, [isLoggedIn]);
+
+	// // when signing out, end session, if error, do not reset context.
+	// useEffect(() => {
+	// 	try {
+	// 		const { error } = await supabase.auth.signOut();
+	// 	} catch (err) {}
+
+	// 	setIsLoading(true);
+	// 	const getUser = async () => {
+	// 		const { data } = await supabase.auth.getUser();
+	// 		const { user: currentUser } = data;
+	// 		setUser(currentUser ?? null);
+	// 		setIsLoading(false);
+	// 	};
+	// 	getUser();
+	// 	// onAuthStateChange code below
+	// }, []);
 
 	// useEffect(() => {
 	// 	setIsLoading(true);

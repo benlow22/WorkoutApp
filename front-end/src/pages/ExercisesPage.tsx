@@ -16,7 +16,7 @@ interface IExercise {
 }
 
 export const ExercisesPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId } = useContext(AuthContext);
+	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [allExercises, setAllExercises] = useState<IExercise[]>([]); //change to appropriate type
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
@@ -25,9 +25,11 @@ export const ExercisesPage: React.FC<{}> = () => {
 
 	useEffect(() => {
 		const getAllExercises = async () => {
-			const data = await getAllExercisesAPI();
-			console.log("data made it to ExercisePage Component", data);
-			return data;
+			if (session) {
+				const data = await getAllExercisesAPI(session);
+				console.log("data made it to ExercisePage Component", data);
+				return data;
+			}
 		};
 
 		// // upon loading, fetch all exercise data to populate dropdown
