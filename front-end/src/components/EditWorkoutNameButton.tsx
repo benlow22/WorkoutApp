@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button, Space, Input } from "antd";
-import { workouts, IWorkoutNameUrl } from "../data";
 import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
 import { updateWorkoutName } from "../api/api";
