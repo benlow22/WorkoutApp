@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import {
@@ -46,17 +46,13 @@ const normFile = (e: any) => {
 	return e?.fileList;
 };
 
-const NewExercisePage: React.FC<{}> = () => {
+const NewExerciseForm: React.FC<{}> = () => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [editWorkoutName, setEditWorkoutName] = useState<boolean>(false);
 	const [linkList, setLinkList] = useState<string[]>(["asd"]);
 	const [newLink, setNewLink] = useState<string>("");
-	const { exerciseName } = useParams();
-	const [newExerciseName, setNewExerciseName] = useState<string | undefined>(
-		exerciseName
-	);
+	const { exerciseName: exerciseNameURL } = useParams();
 	const { userId } = useContext(AuthContext);
-	console.log("eercise name:", exerciseName);
 	const addToLinkList = () => {
 		setLinkList([...linkList, newLink]);
 	};
@@ -82,21 +78,29 @@ const NewExercisePage: React.FC<{}> = () => {
 		navigate(`/exercises`);
 	};
 
+	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL);
+	const [newExerciseName, setNewExerciseName] = useState<string>("");
+
+	const handleSubmit = () => {
+		setExerciseName(newExerciseName);
+		setEditWorkoutName(false);
+	};
+
+	useEffect(() => {
+		if (newExerciseName) {
+			setExerciseName(newExerciseName);
+			setNewExerciseName("");
+		}
+	}, [editWorkoutName]);
+
 	return (
-		<>
+		<form>
 			<h2 className="page-heading">New Exercise</h2>
-			<EditExerciseButton exercise={exerciseName!} />
-			<Form
-				name="validate_other"
-				{...formItemLayout}
-				onFinish={onFinish}
-				className="new-exercise-form"
-				style={{ maxWidth: 600 }}
-			>
+			<form className="new-exercise-form">
 				<div className="edit-new-workout-name">
 					{!editWorkoutName ? (
 						<div className="new-workout-name">
-							<h2>{newExerciseName}</h2>
+							<h2>{exerciseName}</h2>
 							<EditTwoTone
 								className="edit-exercise-name"
 								onClick={() => setEditWorkoutName(true)}
@@ -106,14 +110,11 @@ const NewExercisePage: React.FC<{}> = () => {
 						<Space.Compact>
 							<Input
 								onChange={(e) => {
-									setNewText(e.target.value),
-										setNewWorkoutUrl(
-											changeNameToUrl(e.target.value)
-										);
+									setNewExerciseName(e.target.value);
 								}}
-								value={newText}
-								placeholder={oldText.name}
-								className="new-workout-input"
+								value={newExerciseName}
+								placeholder={exerciseName}
+								className="new-exercise-input"
 								onPressEnter={handleSubmit}
 							/>
 							<Button type="primary" onClick={handleSubmit}>
@@ -121,23 +122,15 @@ const NewExercisePage: React.FC<{}> = () => {
 							</Button>
 						</Space.Compact>
 					)}
-
-					<Form.Item
-						hidden={!editWorkoutName}
-						label="Workout Name: "
-						name="workout"
-						rules={[
-							{
-								required: true,
-								message: "Please input your username!",
-							},
-						]}
-						initialValue={newExerciseName}
-					>
-						<Input value={newExerciseName} />
-					</Form.Item>
 				</div>
-
+				<button>+ Description</button>
+			</form>
+			<Form
+				name="validate_other"
+				{...formItemLayout}
+				onFinish={onFinish}
+				style={{ maxWidth: 600 }}
+			>
 				<Form.Item
 					name="description"
 					label="Description"
@@ -256,11 +249,11 @@ const NewExercisePage: React.FC<{}> = () => {
 					</Space>
 				</Form.Item>
 			</Form>
-		</>
+		</form>
 	);
 };
 
-export default NewExercisePage;
+export default NewExerciseForm;
 
 // description
 // name

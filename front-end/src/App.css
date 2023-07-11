@@ -148,21 +148,34 @@ input[value].new-workout-input,
 }
 
 .new-exercise-form {
-	background-color: rgb(101, 168, 255);
 	margin: auto;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	border-radius: 15px;
+	border: 3px dashed #4171b5;
+	width: 600px;
 }
 
-.new-exercise-form * {
+.new-exercise-form h2 {
+	margin-bottom: 15px;
+}
+
+/* .new-exercise-form * {
 	color: black;
-}
+} */
 
+.new-exercise-input {
+	margin-bottom: 12px;
+}
 .add-field-button {
 	margin: auto;
 }
 
+:where(.css-dev-only-do-not-override-htwhyh).ant-form-item
+	.ant-form-item-label
+	> label {
+	color: white;
+}
 /* .ant-form-item-control-input-content {
   justify-content: center;
 } */
@@ -187,6 +200,11 @@ input[value].new-workout-input,
 	position: relative;
 	left: 5px;
 	top: 30px;
+}
+.edit-exercise-name {
+	position: relative;
+	left: 1px;
+	top: 10px;
 }
 
 .new-workout-name {

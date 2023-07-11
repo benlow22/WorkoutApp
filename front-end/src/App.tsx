@@ -20,6 +20,7 @@ import { ExercisesPage } from "./pages/ExercisesPage";
 import Exercise from "./components/Exercise";
 import NewExercise from "./pages/NewExercisePage";
 import { WorkoutPage } from "./pages/workoutPage/workoutPage";
+import NewExerciseForm from "./pages/NewExerciseForm";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -37,7 +38,7 @@ const router = createBrowserRouter(
 				<Route path="exercises" element={<ExercisesPage />} />
 				<Route
 					path="exercises/:exerciseName/new"
-					element={<NewExercise />}
+					element={<NewExerciseForm />}
 				/>
 				<Route path="exercises/:exerciseId" element={<Exercise />} />
 				<Route path="createUsername" element={<CreateUsernamePage />} />
