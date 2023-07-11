@@ -69,4 +69,39 @@ router.get("/exercises", async (req, res) => {
 	}
 });
 
+// /api/authorized/:exerciseId = get users exercise id including sets and reps
+router.get("/:exerciseId", async (req, res) => {
+	const exerciseId = req.params.exerciseId;
+	const { data, error } = await req.supabase
+		.from("workouts")
+		.delete()
+		.eq("id", workoutId);
+	console.log("deleted workout: ", data); // show in terminal
+	if (error) {
+		// if there is data, send it back = 200 status
+		res.status(404).send(error);
+	} else {
+		res.status(204);
+	}
+});
+
+// POST /api/authorized/:workoutId/:exerciseId
+router.post("/:workoutId/:exerciseId", async (req, res) => {
+	const workoutId = req.params.workoutId;
+	const exerciseId = req.params.exerciseId;
+	const userId = req.headers["user-id"];
+	console.log(userId, workoutId, exerciseId);
+	const { data, error } = await supabase
+		.from("workouts_exercises")
+		.insert([
+			{
+				workout_id: workoutId,
+				exercise_id: exerciseId,
+				created_by: userId,
+			},
+		])
+		.select("*");
+	console.log("errrror", error);
+	console.log("updated workout exercises", data);
+});
 module.exports = router;

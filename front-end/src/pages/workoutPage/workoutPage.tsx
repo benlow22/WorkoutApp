@@ -5,7 +5,11 @@ import {
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { deleteWorkoutAPI, getWorkoutAndExercisesAPI } from "../../api/api";
+import {
+	deleteWorkoutAPI,
+	getWorkoutAndExercisesAPI,
+	usersAndPublicExercisesAPI,
+} from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
@@ -29,7 +33,7 @@ import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-
+	const [allExercises, setAllExercises] = useState<IExercise[]>([]);
 	const { session } = useContext(AuthContext);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
@@ -45,11 +49,26 @@ export const WorkoutPage = () => {
 		deleteWorkoutRequest,
 	] = useRequest(deleteWorkoutAPI, session!);
 
+	const [
+		usersAndPublicExercisesResponse,
+		usersAndPublicExercisesLoading,
+		usersAndPublicExercisesError,
+		usersAndPublicExercisesRequest,
+	] = useRequest(usersAndPublicExercisesAPI, session!);
+
 	useEffect(() => {
+		usersAndPublicExercisesRequest(session!);
 		if (workoutUrl) {
 			workoutRequest(workoutUrl, session!);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (!usersAndPublicExercisesLoading) {
+			if (usersAndPublicExercisesResponse)
+				setAllExercises(usersAndPublicExercisesResponse);
+		}
+	}, [usersAndPublicExercisesLoading]);
 
 	useEffect(() => {
 		if (workoutResponse) {
@@ -64,7 +83,14 @@ export const WorkoutPage = () => {
 
 	// need to remove
 	const deleteWorkout = () => {
-		deleteWorkoutRequest(workout.id, session!);
+		if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
+			deleteWorkoutRequest(workout.id, session!);
+			if (deleteWorkoutError) {
+				console.log("error deleting workout", deleteWorkoutError);
+			}
+		} else {
+			console.log("workout not deleted");
+		}
 	};
 
 	const toggleButton = () => {
@@ -136,6 +162,7 @@ export const WorkoutPage = () => {
 				) : (
 					<SearchExercises
 						workout={workout}
+						allExercises={allExercises}
 						// addExerciseToAll={addExerciseToAll}
 					/>
 				)}
@@ -144,6 +171,7 @@ export const WorkoutPage = () => {
 					type="primary"
 					onClick={deleteWorkout}
 					className="capitalize delete-button"
+					danger
 				>
 					Delete Workout
 				</Button>

@@ -45,7 +45,7 @@ const normFile = (e: any) => {
 	return e?.fileList;
 };
 
-const NewExercise: React.FC<{}> = () => {
+const NewExerciseForm: React.FC<{}> = () => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [editWorkoutName, setEditWorkoutName] = useState<boolean>(false);
 	const [linkList, setLinkList] = useState<string[]>(["asd"]);
@@ -239,7 +239,7 @@ const NewExercise: React.FC<{}> = () => {
 	);
 };
 
-export default NewExercise;
+export default NewExerciseForm;
 
 // description
 // name
