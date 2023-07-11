@@ -129,6 +129,11 @@ input[value].new-workout-input,
 .exercise-page {
 	text-align: center;
 }
+
+.search_container {
+	color: #101010;
+}
+
 .search-bar {
 	width: 260;
 }

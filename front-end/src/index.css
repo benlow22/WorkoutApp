@@ -333,9 +333,6 @@ button.primary,
 	}
 }
 
-.mainHeader {
-}
-
 .avatarPlaceholder {
 	border: var(--custom-border);
 	border-radius: var(--custom-border-radius);
