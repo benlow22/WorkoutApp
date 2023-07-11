@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import {
@@ -34,8 +34,7 @@ import { EditExerciseButton } from "../components/EditExerciseButton";
 const { Option } = Select;
 
 const formItemLayout = {
-	labelCol: { span: 6 },
-	wrapperCol: { span: 14 },
+	labelCol: { span: 10 },
 };
 
 const normFile = (e: any) => {
@@ -51,12 +50,8 @@ const NewExercisePage: React.FC<{}> = () => {
 	const [editWorkoutName, setEditWorkoutName] = useState<boolean>(false);
 	const [linkList, setLinkList] = useState<string[]>(["asd"]);
 	const [newLink, setNewLink] = useState<string>("");
-	const { exerciseName } = useParams();
-	const [newExerciseName, setNewExerciseName] = useState<string | undefined>(
-		exerciseName
-	);
+	const { exerciseName: exerciseNameURL } = useParams();
 	const { userId } = useContext(AuthContext);
-	console.log("eercise name:", exerciseName);
 	const addToLinkList = () => {
 		setLinkList([...linkList, newLink]);
 	};
@@ -82,21 +77,35 @@ const NewExercisePage: React.FC<{}> = () => {
 		navigate(`/exercises`);
 	};
 
+	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL);
+	const [newExerciseName, setNewExerciseName] = useState<string>("");
+
+	const handleSubmit = () => {
+		setExerciseName(newExerciseName);
+		setEditWorkoutName(false);
+	};
+
+	useEffect(() => {
+		if (newExerciseName) {
+			setExerciseName(newExerciseName);
+			setNewExerciseName("");
+		}
+	}, [editWorkoutName]);
+
 	return (
 		<>
 			<h2 className="page-heading">New Exercise</h2>
-			<EditExerciseButton exercise={exerciseName!} />
 			<Form
-				name="validate_other"
+				name="newExercise"
 				{...formItemLayout}
 				onFinish={onFinish}
 				className="new-exercise-form"
-				style={{ maxWidth: 600 }}
+				style={{ maxWidth: 400 }}
 			>
 				<div className="edit-new-workout-name">
 					{!editWorkoutName ? (
 						<div className="new-workout-name">
-							<h2>{newExerciseName}</h2>
+							<h2>{exerciseName}</h2>
 							<EditTwoTone
 								className="edit-exercise-name"
 								onClick={() => setEditWorkoutName(true)}
@@ -106,14 +115,11 @@ const NewExercisePage: React.FC<{}> = () => {
 						<Space.Compact>
 							<Input
 								onChange={(e) => {
-									setNewText(e.target.value),
-										setNewWorkoutUrl(
-											changeNameToUrl(e.target.value)
-										);
+									setNewExerciseName(e.target.value);
 								}}
-								value={newText}
-								placeholder={oldText.name}
-								className="new-workout-input"
+								value={newExerciseName}
+								placeholder={exerciseName}
+								className="new-exercise-input"
 								onPressEnter={handleSubmit}
 							/>
 							<Button type="primary" onClick={handleSubmit}>
@@ -121,20 +127,19 @@ const NewExercisePage: React.FC<{}> = () => {
 							</Button>
 						</Space.Compact>
 					)}
-
 					<Form.Item
-						hidden={!editWorkoutName}
-						label="Workout Name: "
-						name="workout"
+						hidden={true}
+						label="Exercise Name"
+						name="exercise"
 						rules={[
 							{
 								required: true,
-								message: "Please input your username!",
+								message: "Please input your exercise!",
 							},
 						]}
-						initialValue={newExerciseName}
+						initialValue={exerciseNameURL}
 					>
-						<Input value={newExerciseName} />
+						<Input value={exerciseName} />
 					</Form.Item>
 				</div>
 
@@ -143,13 +148,13 @@ const NewExercisePage: React.FC<{}> = () => {
 					label="Description"
 					hidden={hideDescription}
 				>
-					{/* <>
-						<Button
-							className="close-field-button"
-							icon={<CloseOutlined />}
-							onClick={() => setHideDescription(true)}
-							size="small"
-						></Button> */}
+					<Button
+						className="close-field-button"
+						icon={<CloseOutlined />}
+						onClick={() => setHideDescription(true)}
+						size="small"
+						type="primary"
+					></Button>
 					<TextArea
 						rows={4}
 						autoSize={{ minRows: 2, maxRows: 5 }}
@@ -160,7 +165,7 @@ const NewExercisePage: React.FC<{}> = () => {
 				<div className="form-item">
 					<Form.Item hidden={!hideDescription} noStyle>
 						<Button
-							type="dashed"
+							type="primary"
 							onClick={() => setHideDescription(!hideDescription)}
 							icon={<PlusOutlined />}
 							className="add-description-button"
@@ -171,15 +176,44 @@ const NewExercisePage: React.FC<{}> = () => {
 				</div>
 
 				<Form.Item
-					name="muscles"
-					label="Exercise Group"
+					name="fitnessElement"
+					label="Element of Fitness"
 					rules={[
 						{
 							required: true,
-							message: "Please select all categories that apply",
+							message: "Please select all groups that apply",
 							type: "array",
 						},
 					]}
+					className="black-font new-exercise-input"
+				>
+					<Select
+						mode="multiple"
+						placeholder="Please select all that apply"
+						className="medium-input"
+					>
+						<Option value="Cardio">Cardio</Option>
+						<Option value="Strength Training">
+							Strength Training
+						</Option>
+						<Option value="Muscular Endurance">
+							Muscular Endurance
+						</Option>
+						<Option value="Flexibility">Flexibility</Option>
+					</Select>
+				</Form.Item>
+
+				<Form.Item
+					name="muscleGroup"
+					label="Muscle Group"
+					rules={[
+						{
+							required: true,
+							message: "Please select all groups that apply",
+							type: "array",
+						},
+					]}
+					className="black-font new-exercise-input"
 				>
 					<Select
 						mode="multiple"
@@ -198,7 +232,7 @@ const NewExercisePage: React.FC<{}> = () => {
 
 				<Form.Item
 					name="equipment"
-					label="equipment"
+					label="Equipment"
 					hasFeedback
 					rules={[
 						{
@@ -206,6 +240,7 @@ const NewExercisePage: React.FC<{}> = () => {
 							message: "Please select which equipment to use!",
 						},
 					]}
+					className="black-font new-exercise-input"
 				>
 					<Select placeholder="Please select equipment">
 						<Option value="1">No Equipment</Option>
@@ -214,11 +249,8 @@ const NewExercisePage: React.FC<{}> = () => {
 						<Option value="4">Cables</Option>
 						<Option value="5">Yoga Matt</Option>
 						<Option value="6">Adjustable Bench</Option>
+						<Option value="7">Machine</Option>
 					</Select>
-				</Form.Item>
-
-				<Form.Item label="Notes" hidden>
-					<TextArea rows={3} />
 				</Form.Item>
 
 				<Form.Item
@@ -247,12 +279,22 @@ const NewExercisePage: React.FC<{}> = () => {
 					</>
 				</Form.Item>
 
+				<Form.Item label="Notes">
+					<TextArea rows={3} />
+				</Form.Item>
+
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
 					<Space>
 						<Button type="primary" htmlType="submit">
 							Submit
 						</Button>
-						<Button htmlType="reset">reset</Button>
+						<Button
+							type="default"
+							htmlType="reset"
+							className="black-font"
+						>
+							reset
+						</Button>
 					</Space>
 				</Form.Item>
 			</Form>

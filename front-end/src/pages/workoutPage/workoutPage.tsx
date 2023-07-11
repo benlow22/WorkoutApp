@@ -12,7 +12,7 @@ import {
 } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { ClockCircleOutlined, EditTwoTone } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -41,6 +41,14 @@ export const WorkoutPage = () => {
 	const { workoutUrl } = useParams<string>();
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
 		useRequest(getWorkoutAndExercisesAPI, session!);
+	const [messageApi, contextHolder] = message.useMessage();
+	const deleteWorkoutSuccess = () => {
+		messageApi.open({
+			type: "success",
+			content: "The workout was successfully deleted",
+			onClose: () => navigate("/"),
+		});
+	};
 
 	const [
 		deleteWorkoutResponse,
@@ -81,12 +89,13 @@ export const WorkoutPage = () => {
 		navigate("/");
 	};
 
-	// need to remove
 	const deleteWorkout = () => {
 		if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
 			deleteWorkoutRequest(workout.id, session!);
 			if (deleteWorkoutError) {
 				console.log("error deleting workout", deleteWorkoutError);
+			} else {
+				deleteWorkoutSuccess();
 			}
 		} else {
 			console.log("workout not deleted");
@@ -167,6 +176,7 @@ export const WorkoutPage = () => {
 					/>
 				)}
 				<br></br>
+				{contextHolder}
 				<Button
 					type="primary"
 					onClick={deleteWorkout}

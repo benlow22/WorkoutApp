@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../../components/WorkoutButton";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { Link, NavLink, Route, useLocation } from "react-router-dom";
 import { AuthContext, ISession } from "../../contexts/AuthProvider";
 import { supabase } from "../../supabaseClient";
@@ -14,6 +14,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		getAllUsersWorkoutsAPI,
 		session!
 	);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	useEffect(() => {
 		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
@@ -33,6 +34,8 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	if (!loading) {
 		return (
 			<div className="workouts-page">
+				{contextHolder}
+
 				<h2 className="page-heading">Your Workouts</h2>
 				{response?.map((workout, index) => (
 					<Link

@@ -123,7 +123,28 @@ const NewExerciseForm: React.FC<{}> = () => {
 						</Space.Compact>
 					)}
 				</div>
-				<button>+ Description</button>
+				<br></br>
+				{hideDescription ? (
+					<button
+						type="button"
+						onClick={() => setHideDescription(false)}
+					>
+						+ Description
+					</button>
+				) : (
+					<div
+						className="description-text-box"
+						hidden={hideDescription}
+					>
+						<label htmlFor="description">Description:</label>
+						<input
+							type="text"
+							id="description"
+							name="description"
+							className="input-field-large"
+						/>
+					</div>
+				)}
 			</form>
 			<Form
 				name="validate_other"

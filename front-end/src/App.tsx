@@ -38,7 +38,7 @@ const router = createBrowserRouter(
 				<Route path="exercises" element={<ExercisesPage />} />
 				<Route
 					path="exercises/:exerciseName/new"
-					element={<NewExerciseForm />}
+					element={<NewExercise />}
 				/>
 				<Route path="exercises/:exerciseId" element={<Exercise />} />
 				<Route path="createUsername" element={<CreateUsernamePage />} />
