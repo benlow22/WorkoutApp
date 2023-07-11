@@ -27,7 +27,7 @@ export const Header: React.FC<{}> = () => {
 	if (!contextIsLoading) {
 		return (
 			<div className="header">
-				<div className="content">
+				<div className="content white-font">
 					{auth ? (
 						<Link to="/workouts">
 							<h1>Workout Buddy</h1>

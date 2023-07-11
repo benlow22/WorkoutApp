@@ -102,9 +102,9 @@ const NewExercisePage: React.FC<{}> = () => {
 				className="new-exercise-form"
 				style={{ maxWidth: 400 }}
 			>
-				<div className="edit-new-workout-name">
+				<div className="edit-new-exercise-name">
 					{!editWorkoutName ? (
-						<div className="new-workout-name">
+						<div className="new-exercise-name">
 							<h2>{exerciseName}</h2>
 							<EditTwoTone
 								className="edit-exercise-name"

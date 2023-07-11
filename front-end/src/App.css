@@ -36,6 +36,7 @@
 }
 h2 {
 	margin: 0px;
+	color: white;
 }
 .card {
 	padding: 2em;
@@ -97,11 +98,13 @@ input[value].new-workout-input,
 .ant-select-item-empty {
 	color: black;
 }
-
+.new-workout-input {
+	margin-bottom: 12px;
+}
 .new-workout-name {
 	display: flex;
 	width: 400px;
-	margin: auto;
+	margin: 33px auto 22px;
 	justify-content: center;
 }
 
@@ -164,6 +167,11 @@ input[value].new-workout-input,
 	color: black;
 } */
 
+.new-exercise-name {
+	display: flex;
+	justify-content: center;
+}
+
 .new-exercise-input {
 	margin-bottom: 5px;
 }
@@ -218,10 +226,6 @@ input[value].new-workout-input,
 	position: relative;
 	left: 1px;
 	top: 10px;
-}
-
-.new-workout-name {
-	margin: auto;
 }
 
 .edit-new-workout-name {

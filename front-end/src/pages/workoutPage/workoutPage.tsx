@@ -45,7 +45,7 @@ export const WorkoutPage = () => {
 	const deleteWorkoutSuccess = () => {
 		messageApi.open({
 			type: "success",
-			content: "The workout was successfully deleted",
+			content: "The workout was successfully deleted. redirecting...",
 			onClose: () => navigate("/"),
 		});
 	};
@@ -128,7 +128,7 @@ export const WorkoutPage = () => {
 			);
 		}
 		return (
-			<div>
+			<div className="white-font">
 				{workout && (
 					<section className="new-workout-name">
 						<EditWorkoutNameButton workout={workout} />

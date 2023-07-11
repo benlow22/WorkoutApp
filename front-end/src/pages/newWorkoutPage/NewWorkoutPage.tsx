@@ -41,7 +41,7 @@ export const NewWorkoutPage = () => {
 
 	return (
 		<>
-			<h2>New Workout Name</h2>
+			<h2 className="page-heading">New Workout Name</h2>
 			<Space.Compact>
 				<Input
 					defaultValue="Username"

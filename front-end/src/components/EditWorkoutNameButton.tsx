@@ -64,13 +64,13 @@ export const EditWorkoutNameButton: React.FC<{
 	return (
 		<>
 			{!editName ? ( // if edit button is not clicked, show name
-				<h1>
+				<h2>
 					{oldWorkout.name}
 					<EditTwoTone
 						className="new-workout-edit-icon"
 						onClick={() => setEditName(true)}
 					/>
-				</h1>
+				</h2>
 			) : (
 				<Space.Compact>
 					<Input
