@@ -98,13 +98,13 @@ publicRouter.get("/api/item/:slug", (req, res) => {
 });
 
 // does not need to be authenticated.
-publicRouter.get("/exercises", async (req, res) => {
-	let { data: exercises, error } = await supabase
-		.from("exercises")
-		.select("name");
-	console.log(exercises);
-	res.send(exercises);
-});
+// publicRouter.get("/exercises", async (req, res) => {
+// 	let { data: exercises, error } = await supabase
+// 		.from("exercises")
+// 		.select("name");
+// 	console.log(exercises);
+// 	res.send(exercises);
+// });
 
 // app.use("/workouts", workoutsRouter);
 

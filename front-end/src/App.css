@@ -6,7 +6,18 @@
 /* .main {
 	margin: 30px;
 } */
-
+h2,
+h3,
+pre,
+#text,
+p,
+.white-font {
+	color: white;
+}
+/* textarea.andt-input,
+div.andt-select-selector {
+	width: 10px;
+} */
 .logo {
 	height: 6em;
 	padding: 1.5em;
@@ -137,6 +148,10 @@ input[value].new-workout-input,
 	color: #101010;
 }
 
+.sets-and-reps p {
+	position: relative;
+	top: -7px;
+}
 .search-bar {
 	width: 260;
 }
@@ -152,7 +167,7 @@ input[value].new-workout-input,
 
 .new-exercise-form {
 	margin: auto;
-	padding: 10px 14px;
+	padding: 10px 25px;
 	border-radius: 15px;
 	border: 3px dashed #4171b5;
 	width: 600px;
@@ -162,6 +177,7 @@ input[value].new-workout-input,
 .new-workout-name h2 {
 	margin-bottom: 15px;
 }
+
 /* 
 .new-exercise-form span {
 	color: black;
@@ -169,11 +185,12 @@ input[value].new-workout-input,
 
 .new-exercise-name {
 	display: flex;
+	margin-bottom: 7px;
 	justify-content: center;
 }
 
 .new-exercise-input {
-	margin-bottom: 5px;
+	/* margin-bottom: 5px; */
 }
 .add-field-button {
 	margin: auto;
@@ -189,6 +206,10 @@ input[value].new-workout-input,
 	.ant-form-item-label
 	> label {
 	color: white;
+}
+
+.exercise-form-button {
+	margin-bottom: 33px;
 }
 /* .ant-form-item-control-input-content {
   justify-content: center;
@@ -208,7 +229,6 @@ input[value].new-workout-input,
 
 .add-description-button {
 	width: 300px;
-	margin-bottom: 15px;
 }
 
 .close-field-button {
@@ -239,6 +259,19 @@ input[value].new-workout-input,
 	border: 1px solid blue;
 }
 
+.ant-form-item-control-input button.new-exercise-input {
+	width: 100px;
+}
+.ant-radio-button.ant-radio-button-checked {
+	background-color: rgb(124, 181, 255);
+}
+
+/* .radio-buttons {
+} */
+
+.reps-radio {
+	display: flex;
+}
 .set {
 	text-align: left;
 	width: 360px;
@@ -412,7 +445,8 @@ input[value].new-workout-input,
 	padding-left: 10px;
 }
 
-.page-heading {
+.page-heading,
+.exercise-heading {
 	margin: 30px;
 }
 
