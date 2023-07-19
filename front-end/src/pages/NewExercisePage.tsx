@@ -67,6 +67,10 @@ const NewExercisePage: React.FC<{}> = () => {
 	const [disabledReps, setDisabledReps] = useState<boolean>(true);
 	const [disabled, setDisabled] = useState(true);
 
+	const handleDelete = (index: number) => {
+		const newMuscleList = musclesList.filter((muscle, i) => index !== i);
+		setMusclesList(newMuscleList);
+	};
 	const warning = () => {
 		messageApi.open({
 			type: "warning",
@@ -88,35 +92,40 @@ const NewExercisePage: React.FC<{}> = () => {
 	};
 
 	const addToMuscleList = () => {
+		console.log("new muscle", newMuscle);
+		console.log("list of muscles", musclesList);
 		setMusclesList([...musclesList, newMuscle]);
+		setNewMuscle("");
 	};
 	const addToLinkList = () => {
 		if (isValidUrl(newLink)) {
 			setLinkList([...linkList, newLink]);
+			return linkList;
 		} else {
 			warning();
 		}
 	};
 	const navigate = useNavigate();
 	const onFinish = async (formValues: any) => {
-		console.log("Received values of form: ", formValues);
-		const { data, error } = await supabase.from("Exercises").insert([
-			{
-				name: formValues.workout,
-				description: formValues.description,
-				equipment: formValues.equipment,
-				created_by: userId,
-				muscles: formValues.muscles,
-			},
-		]);
-		if (data) {
-			console.log("successfull post", data);
-		}
+		const newForm = { ...formValues, muscles: musclesList };
+		console.log("Received values of form: ", newForm);
+		// const { data, error } = await supabase.from("Exercises").insert([
+		// 	{
+		// 		name: formValues.workout,
+		// 		description: formValues.description,
+		// 		equipment: formValues.equipment,
+		// 		created_by: userId,
+		// 		muscles: formValues.muscles,
+		// 	},
+		// ]);
+		// if (data) {
+		// 	console.log("successfull post", data);
+		// }
 
-		if (error) {
-			console.log(error);
-		}
-		navigate(`/exercises`);
+		// if (error) {
+		// 	console.log(error);
+		// }
+		// navigate(`/exercises`);
 	};
 
 	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL);
@@ -138,6 +147,30 @@ const NewExercisePage: React.FC<{}> = () => {
 		add();
 		setHideMuscles(false);
 	};
+
+	// const normFile = (e: any) => {
+	// 	console.log("Upload event:", e);
+	// 	return e;
+	// };
+
+	const checkList = (_: any, value: string[]) => {
+		if (linkList.length > 0) {
+			return Promise.resolve();
+		}
+		return Promise.reject(new Error("Price must be greater than zero!"));
+	};
+
+	const [linkArr, setLinkArr] = useState([]);
+	const [newArr, setNewArr] = useState("");
+
+	const handleArr = (e: any) => {
+		let url: string = e.target.value;
+		if (isValidUrl(url)) {
+			setLinkArr((prev) => [...prev, e.target.value]);
+			return url;
+		}
+	};
+
 	return (
 		<>
 			<h2 className="page-heading">New Exercise</h2>
@@ -149,33 +182,7 @@ const NewExercisePage: React.FC<{}> = () => {
 				style={{ maxWidth: 600 }}
 			>
 				<div className="edit-new-exercise-name">
-					{!editWorkoutName ? (
-						<div className="new-exercise-name exercise-heading">
-							<h2>{exerciseName}</h2>
-							<EditTwoTone
-								className="edit-exercise-name"
-								onClick={() => setEditWorkoutName(true)}
-							/>
-						</div>
-					) : (
-						<Space.Compact>
-							<Input
-								onChange={(e) => {
-									setNewExerciseName(e.target.value);
-								}}
-								value={newExerciseName}
-								placeholder={exerciseName}
-								className="new-exercise-input"
-								onPressEnter={handleSubmit}
-							/>
-							<Button type="primary" onClick={handleSubmit}>
-								Submit
-							</Button>
-						</Space.Compact>
-					)}
 					<Form.Item
-						hidden={true}
-						label="Exercise Name"
 						name="exercise"
 						rules={[
 							{
@@ -185,23 +192,45 @@ const NewExercisePage: React.FC<{}> = () => {
 						]}
 						initialValue={exerciseNameURL}
 					>
-						<Input value={exerciseName} />
+						{!editWorkoutName ? (
+							<div className="new-exercise-name exercise-heading">
+								<h2>{exerciseName}</h2>
+								<EditTwoTone
+									className="edit-exercise-name"
+									onClick={() => setEditWorkoutName(true)}
+								/>
+							</div>
+						) : (
+							<Space.Compact>
+								<Input
+									onChange={(e) => {
+										setNewExerciseName(e.target.value);
+									}}
+									placeholder={exerciseName}
+									className="new-exercise-input"
+									onPressEnter={handleSubmit}
+								/>
+								<Button type="primary" onClick={handleSubmit}>
+									Submit
+								</Button>
+							</Space.Compact>
+						)}
 					</Form.Item>
 				</div>
 
+				<Button
+					className="close-field-button"
+					icon={<CloseOutlined />}
+					onClick={() => setHideDescription(true)}
+					size="small"
+					type="primary"
+				></Button>
 				<Form.Item
 					name="description"
 					label="Description"
 					hidden={hideDescription}
 				>
-					<Button
-						className="close-field-button"
-						icon={<CloseOutlined />}
-						onClick={() => setHideDescription(true)}
-						size="small"
-						type="primary"
-					></Button>
-					<TextArea
+					<Input.TextArea
 						rows={4}
 						autoSize={{ minRows: 2, maxRows: 5 }}
 						defaultValue={""}
@@ -296,73 +325,92 @@ const NewExercisePage: React.FC<{}> = () => {
 						<Option value="Shoulder">Shoulder</Option>
 					</Select>
 				</Form.Item>
-				{/* 
-				<Form.List name="muscles">
-					{(fields, { add, remove }) => (
-						<>
-							{fields.map(({ key, name, ...restField }) => (
-								<Space
-									key={key}
-									style={{ display: "flex", marginBottom: 1 }}
-									align="baseline"
-								>
-									<Form.Item
-										{...restField}
-										name={[name, "muscle"]}
-										rules={[
-											{
-												required: true,
-												message: "Missing first name",
-											},
-										]}
-									>
-										<Input placeholder="First Name" />
-									</Form.Item>
-									<MinusCircleTwoTone
-										onClick={() => remove(name)}
-									/>
-								</Space>
-							))} */}
+
 				{hideMuscles ? (
-					<Form.Item noStyle>
-						<Button
-							type="primary"
-							onClick={() => setHideMuscles(false)}
-							block
-							icon={<PlusOutlined />}
-							className="small-add-muscles-button exercise-form-button"
-						>
-							Muscles
-						</Button>
-					</Form.Item>
+					<Button
+						type="primary"
+						onClick={() => setHideMuscles(false)}
+						block
+						icon={<PlusOutlined />}
+						className="small-add-muscles-button exercise-form-button"
+					>
+						Muscles
+					</Button>
 				) : (
-					<Space.Compact style={{ width: "40%" }}>
-						<Input onChange={(e) => setNewMuscle(e.target.value)} />
-						<Button
-							type="primary"
-							icon={<PlusCircleOutlined />}
-							onClick={addToMuscleList}
-						></Button>
-					</Space.Compact>
+					<Form.Item
+						label="Muscles"
+						name="muscles"
+						// shouldUpdate={(prev, cur) =>
+						// 	prev.muscles !== cur.muscles
+						// }
+						// getValueFromEvent={normFile}
+						// valuePropName=""
+					>
+						<Space.Compact style={{ width: "100%" }}>
+							<Input
+								onChange={(e) => setNewMuscle(e.target.value)}
+								value={newMuscle}
+							/>
+							<Button
+								type="primary"
+								icon={<PlusCircleOutlined />}
+								onClick={addToMuscleList}
+							></Button>
+						</Space.Compact>
+					</Form.Item>
 				)}
-				{/* </> */}
-				{/* )}
-				</Form.List> */}
+				<>
+					{musclesList.map((muscle, index) => {
+						return (
+							<p className="muscle-list-item">
+								{index + 1}. {muscle}
+								<Button
+									type="link"
+									icon={<MinusCircleOutlined />}
+									onClick={() => handleDelete(index)}
+								></Button>
+							</p>
+						);
+					})}
+				</>
 
 				<Form.Item
-					name="links"
-					label="Add Links"
-					valuePropName="fileList"
-					getValueFromEvent={normFile}
+					label="add link"
+					name="link"
 					rules={[
-						{ required: false },
-						{ type: "array" },
-						{ message: "Please select all groups that apply" },
+						{
+							required: false,
+							message: "Please input your exercise!",
+						},
 					]}
+				>
+					<Space.Compact style={{ width: "100%" }}>
+						<Input
+							onChange={(e) => {
+								setNewArr(e.target.value);
+							}}
+							placeholder={"enter list"}
+							className="new-exercise-input"
+							onPressEnter={handleArr}
+						/>
+						<Button type="primary" onClick={handleArr}>
+							Submit
+						</Button>
+					</Space.Compact>
+					{}
+				</Form.Item>
+				{/* 
+				<Form.Item
+					name="link"
+					label="Add Link"
+					rules={[{ required: false }]}
 					className="new-exercise-input"
 				>
 					<Space.Compact style={{ width: "100%" }}>
-						<Input onChange={(e) => setNewLink(e.target.value)} />
+						<Input
+							onChange={(e) => setNewLink(e.target.value)}
+							onPressEnter={handleArr}
+						/>
 						<Button
 							type="primary"
 							icon={<PlusCircleOutlined />}
@@ -370,9 +418,11 @@ const NewExercisePage: React.FC<{}> = () => {
 						></Button>
 					</Space.Compact>
 					<div className="white-font">
-						{linkList.map((link, index) => `${index}. ${link}`)}
+						{linkList.map(
+							(link, index) => `${index + 1}. ${link} \n `
+						)}
 					</div>
-				</Form.Item>
+				</Form.Item> */}
 				{/* 
 				<Form.Item
 					name="timeUnits"
@@ -455,21 +505,14 @@ const NewExercisePage: React.FC<{}> = () => {
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item
-							name="weightUnits"
-							rules={[
-								{
-									required: true,
-									message: "Please pick a unit",
-								},
-							]}
-						>
+						<Form.Item name="weightUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
 								style={{
 									alignItems: "flex-end",
 								}}
+								defaultValue="null"
 							>
 								<Radio.Button value="lbs">lbs</Radio.Button>
 								<Radio.Button value="kgs">kgs</Radio.Button>
@@ -492,21 +535,14 @@ const NewExercisePage: React.FC<{}> = () => {
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item
-							name="timeUnits"
-							rules={[
-								{
-									required: true,
-									message: "Please pick a unit",
-								},
-							]}
-						>
+						<Form.Item name="timeUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
 								style={{
 									alignItems: "flex-end",
 								}}
+								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
@@ -533,10 +569,23 @@ const NewExercisePage: React.FC<{}> = () => {
 				<Form.Item label="Notes">
 					<TextArea rows={3} />
 				</Form.Item>
-
 				<Form.Item
-					name="public-radio"
+					name="publish"
+					label="publishable"
+					rules={[{ required: true }]}
+					tooltip={{
+						title: "Public exercises will be reviewed for accuracy before publishing",
+					}}
+					style={{ color: "white" }}
+				>
+					<Radio.Group className="white-font">
+						<Radio value="true">Public</Radio>
+						<Radio value="false">Private</Radio>
+					</Radio.Group>
+				</Form.Item>
+				{/* <Form.Item
 					label="Publish"
+					name="public"
 					rules={[{ required: true }]}
 					labelCol={{ span: 8 }}
 					style={{
@@ -546,7 +595,7 @@ const NewExercisePage: React.FC<{}> = () => {
 					<Radio.Group className="white-font new-exercise-input">
 						<Radio value="true">Public</Radio>
 						<Radio value="false">Private</Radio>
-					</Radio.Group>{" "}
+					</Radio.Group>
 					<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
 						<Typography.Link href="#API">
 							<QuestionCircleOutlined
@@ -554,7 +603,7 @@ const NewExercisePage: React.FC<{}> = () => {
 							/>
 						</Typography.Link>
 					</Tooltip>
-				</Form.Item>
+				</Form.Item> */}
 
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
 					<Space>

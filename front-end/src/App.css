@@ -6,6 +6,7 @@
 /* .main {
 	margin: 30px;
 } */
+h1,
 h2,
 h3,
 pre,
@@ -186,7 +187,7 @@ input[value].new-workout-input,
 .new-exercise-name {
 	display: flex;
 	margin-bottom: 7px;
-	justify-content: center;
+	justify-self: center;
 }
 
 .new-exercise-input {
@@ -450,6 +451,10 @@ input[value].new-workout-input,
 	margin: 30px;
 }
 
+.exercise-heading {
+	justify-content: center;
+}
+
 .spinning-loading-icon {
 	padding: 50px;
 	background: #101010;
@@ -469,3 +474,7 @@ input[value].new-workout-input,
 	border-radius: 10px;
 	margin-bottom: 5px;
 }
+
+/* .muscle-list-item {
+	width: 100px;
+} */
