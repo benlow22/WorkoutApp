@@ -161,9 +161,9 @@ export const WorkoutPage = () => {
 					</Button>
 				) : (
 					<SearchExercises
-						workout={workout}
-						allExercises={allExercises}
-						// addExerciseToAll={addExerciseToAll}
+					// workout={workout}
+					// allExercises={allExercises}
+					// addExerciseToAll={addExerciseToAll}
 					/>
 				)}
 				<br></br>
