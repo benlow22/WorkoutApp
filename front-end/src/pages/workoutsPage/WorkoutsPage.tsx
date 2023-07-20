@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import WorkoutButton from "../../components/WorkoutButton";
 import { Button, message } from "antd";
-import { Link, NavLink, Route, useLocation } from "react-router-dom";
-import { AuthContext, ISession } from "../../contexts/AuthProvider";
-import { supabase } from "../../supabaseClient";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";

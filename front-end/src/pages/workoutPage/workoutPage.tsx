@@ -1,23 +1,14 @@
-import {
-	Navigate,
-	redirect,
-	useLocation,
-	useNavigate,
-	useParams,
-} from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
 	deleteWorkoutAPI,
 	getWorkoutAndExercisesAPI,
 	usersAndPublicExercisesAPI,
 } from "../../api/api";
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
 import { Button, message } from "antd";
-import { ClockCircleOutlined, EditTwoTone } from "@ant-design/icons";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import Exercise from "../../components/Exercise";
-import { ExercisesPage } from ".././ExercisesPage";
 import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";

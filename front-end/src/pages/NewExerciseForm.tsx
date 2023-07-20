@@ -2,34 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 
 import {
-	CloseOutlined,
 	EditTwoTone,
-	InboxOutlined,
 	PlusCircleOutlined,
 	PlusOutlined,
-	UploadOutlined,
 } from "@ant-design/icons";
-import {
-	Button,
-	Checkbox,
-	Col,
-	Form,
-	Input,
-	InputNumber,
-	Radio,
-	Rate,
-	Row,
-	Select,
-	Slider,
-	Space,
-	Switch,
-	Upload,
-} from "antd";
+import { Button, Form, Input, Select, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
 import { AuthContext } from "../contexts/AuthProvider";
-import { EditExerciseButton } from "../components/EditExerciseButton";
 
 const { Option } = Select;
 

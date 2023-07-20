@@ -1,12 +1,7 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Space, Input } from "antd";
-import { useLocation } from "react-router";
 import { EditTwoTone } from "@ant-design/icons";
-import { updateWorkoutName } from "../api/api";
-import { AuthContext } from "../contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
-import { changeNameToUrl, buttonClickTrue } from "../utils/utils";
-import { IWorkout } from "../api/types";
 
 export const EditExerciseButton: React.FC<{
 	exercise: string;
@@ -18,35 +13,35 @@ export const EditExerciseButton: React.FC<{
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
-		try {
-			if (newWorkoutUrl.length > 0) {
-				const updatedWorkout: IWorkout = await updateWorkoutName(
-					oldText.url,
-					newWorkoutUrl,
-					newText
-				);
-				if (updatedWorkout) {
-					// returned updated workout
-					console.log("updated workout data:", updatedWorkout);
-					navigate(`/workouts/${updatedWorkout.url}`, {
-						state: {
-							id: updatedWorkout.id,
-							name: updatedWorkout.name,
-							url: updatedWorkout.url,
-							last_performed: updatedWorkout.last_performed,
-						},
-					});
-					setEditName(false);
-					setNewWorkoutUrl("");
-					setNewText("");
-					setOldText(updatedWorkout);
-				}
-				//setOldWorkout(newWorkoutName);
-			}
-		} catch (error) {
-			console.log("error updated workout name", error);
-			setEditName(true);
-		}
+		// try {
+		// 	if (newWorkoutUrl.length > 0) {
+		// 		const updatedWorkout: IWorkout = await updateWorkoutName(
+		// 			oldText.url,
+		// 			newWorkoutUrl,
+		// 			newText
+		// 		);
+		// 		if (updatedWorkout) {
+		// 			// returned updated workout
+		// 			console.log("updated workout data:", updatedWorkout);
+		// 			navigate(`/workouts/${updatedWorkout.url}`, {
+		// 				state: {
+		// 					id: updatedWorkout.id,
+		// 					name: updatedWorkout.name,
+		// 					url: updatedWorkout.url,
+		// 					last_performed: updatedWorkout.last_performed,
+		// 				},
+		// 			});
+		// 			setEditName(false);
+		// 			setNewWorkoutUrl("");
+		// 			setNewText("");
+		// 			setOldText(updatedWorkout);
+		// 		}
+		// 		//setOldWorkout(newWorkoutName);
+		// 	}
+		// } catch (error) {
+		// 	console.log("error updated workout name", error);
+		// 	setEditName(true);
+		// }
 	};
 
 	return (
@@ -62,14 +57,14 @@ export const EditExerciseButton: React.FC<{
 			) : (
 				<Space.Compact>
 					<Input
-						onChange={(e) => {
-							setNewText(e.target.value),
-								setNewWorkoutUrl(
-									changeNameToUrl(e.target.value)
-								);
-						}}
-						value={newText}
-						placeholder={oldText.name}
+						// onChange={(e) => {
+						// 	setNewText(e.target.value),
+						// 		setNewWorkoutUrl(
+						// 			changeNameToUrl(e.target.value)
+						// 		);
+						// }}
+						// value={newText}
+						// placeholder={oldText.name}
 						className="new-workout-input"
 						onPressEnter={handleSubmit}
 					/>

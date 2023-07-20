@@ -5,40 +5,26 @@ import "../styles/exercises.css";
 import {
 	CloseOutlined,
 	EditTwoTone,
-	InboxOutlined,
 	MinusCircleOutlined,
-	MinusCircleTwoTone,
 	PlusCircleOutlined,
 	PlusOutlined,
 	QuestionCircleOutlined,
-	QuestionCircleTwoTone,
-	UploadOutlined,
 } from "@ant-design/icons";
 import {
 	Button,
-	Checkbox,
-	Col,
 	Form,
 	Input,
 	InputNumber,
 	Radio,
 	RadioChangeEvent,
-	Rate,
-	Row,
 	Select,
-	Slider,
 	Space,
-	Switch,
 	Tooltip,
-	Typography,
 	Upload,
 	message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { Link } from "react-router-dom";
-import { supabase } from "../supabaseClient";
 import { AuthContext } from "../contexts/AuthProvider";
-import { EditExerciseButton } from "../components/EditExerciseButton";
 import { shortenUrl } from "../utils/utils";
 
 const { Option } = Select;
