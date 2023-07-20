@@ -17,7 +17,6 @@ router.get("/workouts", async (req, res) => {
 	// const userId = req.headers["user-id"];
 	const { data, error } = await req.supabase.from("workouts").select("*");
 	if (data) {
-		console.log(data);
 		// if there is data, send it back = 200 status
 		res.send(data);
 	} else {

@@ -129,7 +129,7 @@ const NewExercisePage: React.FC<{}> = () => {
 		// navigate(`/exercises`);
 	};
 
-	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL);
+	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL!);
 	const [newExerciseName, setNewExerciseName] = useState<string>("");
 
 	const handleExerciseNameChange = () => {

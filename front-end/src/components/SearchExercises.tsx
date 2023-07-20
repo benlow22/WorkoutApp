@@ -172,11 +172,11 @@ TProps) => {
 
 	return (
 		<div className="search-container">
-			{addNewExerciseBox && isNewExercise ? (
+			{/* {addNewExerciseBox && isNewExercise ? (
 				<NewExerciseForm exerciseName={searchExercise} />
 			) : (
 				<AddExercise exercise={usersExerciseResponse} />
-			)}
+			)} */}
 			<h2>
 				{isNewExercise ? "new" : "old"} Exercise: {searchExercise}
 			</h2>
