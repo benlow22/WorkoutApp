@@ -149,10 +149,6 @@ input[value].new-workout-input,
 	color: #101010;
 }
 
-.sets-and-reps p {
-	position: relative;
-	top: -7px;
-}
 .search-bar {
 	width: 260;
 }
@@ -179,26 +175,11 @@ input[value].new-workout-input,
 	margin-bottom: 15px;
 }
 
-/* 
-.new-exercise-form span {
-	color: black;
+/* .new-exercise-input {
+	/* margin-bottom: 5px; 
 } */
-
-.new-exercise-name {
-	display: flex;
-	margin-bottom: 7px;
-	justify-self: center;
-}
-
-.new-exercise-input {
-	/* margin-bottom: 5px; */
-}
 .add-field-button {
 	margin: auto;
-}
-
-.description-text-box {
-	display: flex;
 }
 .input-field-large {
 	width: 350px;
@@ -209,9 +190,9 @@ input[value].new-workout-input,
 	color: white;
 }
 
-.exercise-form-button {
+/* .exercise-form-button {
 	margin-bottom: 33px;
-}
+} */
 /* .ant-form-item-control-input-content {
   justify-content: center;
 } */
@@ -221,32 +202,14 @@ input[value].new-workout-input,
   margin-bottom: 5px;
 } */
 
-/* .new-exercise-form .medium-input {
-	width: 200px;
-} */
 .black-font span {
 	color: #101010;
-}
-
-.add-description-button {
-	width: 300px;
-}
-
-.close-field-button {
-	position: absolute;
-	left: 360px;
-	top: 15px;
 }
 
 .edit-workout-name {
 	position: relative;
 	left: 5px;
 	top: 30px;
-}
-.edit-exercise-name {
-	position: relative;
-	left: 1px;
-	top: 10px;
 }
 
 .edit-new-workout-name {
@@ -260,9 +223,9 @@ input[value].new-workout-input,
 	border: 1px solid blue;
 }
 
-.ant-form-item-control-input button.new-exercise-input {
+/* .ant-form-item-control-input button.new-exercise-input {
 	width: 100px;
-}
+} */
 .ant-radio-button.ant-radio-button-checked {
 	background-color: rgb(124, 181, 255);
 }
@@ -446,13 +409,8 @@ input[value].new-workout-input,
 	padding-left: 10px;
 }
 
-.page-heading,
-.exercise-heading {
+.page-heading {
 	margin: 30px;
-}
-
-.exercise-heading {
-	justify-content: center;
 }
 
 .spinning-loading-icon {
@@ -475,6 +433,6 @@ input[value].new-workout-input,
 	margin-bottom: 5px;
 }
 
-/* .muscle-list-item {
-	width: 100px;
-} */
+.publish {
+	justify-content: space-between;
+}

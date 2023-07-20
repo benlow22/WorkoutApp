@@ -3,8 +3,9 @@ import { supabase } from "../../supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
+import "../../styles/index.css";
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in

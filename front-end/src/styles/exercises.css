@@ -1,0 +1,79 @@
+/* Exercise Name */
+
+.exercise-name,
+.exercise-name-input {
+	display: flex;
+}
+
+.exercise-name-container {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin-top: 20px;
+	height: 57px;
+}
+
+.edit-exercise-name {
+	position: relative;
+	left: 3px;
+	top: 12px;
+}
+
+/* description section */
+
+.description-text-input {
+	margin-bottom: 0px;
+}
+.add-description-button {
+	width: 300px;
+	margin-bottom: 24px;
+}
+.close-description-button {
+	position: absolute;
+	top: 238px;
+	right: 237px;
+}
+
+/* muscles */
+.add-muscles-button {
+	margin-bottom: 24px;
+}
+
+.muscle-list {
+	min-width: 100px;
+}
+
+.muscle-list-item {
+	width: 200px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0px auto;
+	font-size: 11px;
+	height: 18px;
+}
+
+/* links */
+.link-list-item {
+	width: 300px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 0px auto;
+	font-size: 11px;
+	min-height: 18px;
+}
+
+/* sets and reps  */
+.sets-input {
+	height: 32px;
+}
+
+.sets-and-reps p {
+	position: relative;
+	top: -12px;
+}
+
+label.ant-radio-button-wrapper {
+	width: 40px;
+}

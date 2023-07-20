@@ -20,7 +20,7 @@ body {
 	background-color: var(--custom-bg-color);
 }
 
-.white-font *{
+.white-font * {
 	color: white;
 }
 
@@ -175,8 +175,8 @@ body,
 
 label {
 	display: block;
-	margin: 5px 0;
-	color: white
+	margin: 0;
+	color: white;
 	font-size: 0.8rem;
 	/* text-transform: uppercase; */
 }
