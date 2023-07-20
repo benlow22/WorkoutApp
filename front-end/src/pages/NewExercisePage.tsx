@@ -98,25 +98,29 @@ const NewExercisePage: React.FC<TProps> = ({
 
 	const addToMuscleList = () => {
 		if (newMuscle.length > 0 && !musclesList.includes(newMuscle)) {
-			setMusclesList([...musclesList, newMuscle]);
+			setMusclesList((prev) => [...prev, newMuscle]);
 			setNewMuscle("");
+		} else {
+			alert("That muscle is already added");
 		}
 	};
 
 	const navigate = useNavigate();
 
 	const onFinish = async (formValues: any) => {
-		const description = hideDescription
-			? undefined
-			: formValues.description;
-		const newForm = {
-			...formValues,
-			muscles: musclesList,
-			links: linkList,
-			description: description,
-		};
+		if (confirm("done with form?")) {
+			const description = hideDescription
+				? undefined
+				: formValues.description;
+			const newForm = {
+				...formValues,
+				muscles: musclesList,
+				links: linkList,
+				description: description,
+			};
 
-		console.log("Received values of form: ", newForm);
+			console.log("Received values of form: ", newForm);
+		}
 		// const { data, error } = await supabase.from("Exercises").insert([
 		// 	{
 		// 		name: formValues.workout,
@@ -362,6 +366,9 @@ const NewExercisePage: React.FC<TProps> = ({
 							<Input
 								onChange={(e) => setNewMuscle(e.target.value)}
 								value={newMuscle}
+								onPressEnter={(e) => (
+									addToMuscleList(), e.preventDefault()
+								)}
 							/>
 							<Button
 								type="primary"
@@ -405,7 +412,9 @@ const NewExercisePage: React.FC<TProps> = ({
 								setNewLink(e.target.value);
 							}}
 							placeholder={"enter link"}
-							onPressEnter={handleArr}
+							onPressEnter={(e) => (
+								e.preventDefault(), handleArr()
+							)}
 							value={newLink}
 						/>
 						<Button
