@@ -60,3 +60,13 @@ export const changeNameToUrl = (workoutName: string) => {
 	let newUrl = toKebabCase(workoutName);
 	return newUrl;
 };
+
+export const shortenUrl = (s: string): string => {
+	const removeProtocol = s.split("//");
+	const url = removeProtocol[1];
+	let shortenedUrl: string = url;
+	if (shortenedUrl.length > 40) {
+		shortenedUrl = url.slice(0, 39).concat("...");
+	}
+	return shortenedUrl;
+};

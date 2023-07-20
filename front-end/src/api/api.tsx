@@ -150,6 +150,28 @@ export const _name_API = async (
 
 */
 
+// GET /api/authorized/exercises = get all users and public Exercises
+export const usersAndPublicExercisesAPI = async (
+	session: ISession
+): Promise<{
+	data: IExercise[] | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(`/authorized/exercises`, session);
+	let data: IExercise[] | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Getting all exercises from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
 // delete workout
 
 export const deleteWorkoutAPI = async (
@@ -201,27 +223,76 @@ export const deleteWorkoutAPI = async (
 // 	}
 // };
 
-//test supabase auth
+// export const addExerciseToWorkout = async (
+// 	workoutId: any,
+// 	exercise: any,
+// 	userId: string
+// ) => {
+// 	const { data, error } = await supabase
+// 		.from("workouts_exercises")
+// 		.insert([
+// 			{
+// 				workout_id: workoutId,
+// 				exercise_id: exercise.id,
+// 				created_by: userId,
+// 			},
+// 		])
+// 		.select("*");
+// 	console.log("errrror", error);
+// 	console.log("updated workout exercises", data);
+// };
 
-//pokemonAPI
+export const addExerciseToWorkoutAPI = async (
+	workoutId: string,
+	exerciseId: string,
+	session: ISession
+): Promise<{
+	data: IExercise | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/authorized/${workoutId}/${exerciseId}}`,
+		session,
+		"PUT"
+	);
+	let data: IExercise | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Adding exercise to workout from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
 
-export const addExerciseToWorkout = async (
-	workoutId: any,
-	exercise: any,
-	userId: string
-) => {
-	const { data, error } = await supabase
-		.from("workouts_exercises")
-		.insert([
-			{
-				workout_id: workoutId,
-				exercise_id: exercise.id,
-				created_by: userId,
-			},
-		])
-		.select("*");
-	console.log("errrror", error);
-	console.log("updated workout exercises", data);
+// GET users, sets and reps for single exercise
+export const getUsersExerciseDataAPI = async (
+	exerciseId: string,
+	session: ISession
+): Promise<{
+	data: IExercise | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(
+		`/authorized/${exerciseId}}`,
+		session
+	);
+	let data: IExercise | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Adding exercise to workout from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
 };
 
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout

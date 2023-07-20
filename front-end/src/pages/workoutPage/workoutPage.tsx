@@ -1,19 +1,14 @@
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
-	Navigate,
-	redirect,
-	useLocation,
-	useNavigate,
-	useParams,
-} from "react-router-dom";
-import { deleteWorkoutAPI, getWorkoutAndExercisesAPI } from "../../api/api";
+	deleteWorkoutAPI,
+	getWorkoutAndExercisesAPI,
+	usersAndPublicExercisesAPI,
+} from "../../api/api";
 import { useContext, useEffect, useState } from "react";
-import { supabase } from "../../supabaseClient";
-import { Button } from "antd";
-import { ClockCircleOutlined, EditTwoTone } from "@ant-design/icons";
+import { Button, message } from "antd";
+import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import Exercise from "../../components/Exercise";
-import { ExercisesPage } from ".././ExercisesPage";
 import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
@@ -29,7 +24,7 @@ import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-
+	const [allExercises, setAllExercises] = useState<IExercise[]>([]);
 	const { session } = useContext(AuthContext);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
@@ -37,6 +32,14 @@ export const WorkoutPage = () => {
 	const { workoutUrl } = useParams<string>();
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
 		useRequest(getWorkoutAndExercisesAPI, session!);
+	const [messageApi, contextHolder] = message.useMessage();
+	const deleteWorkoutSuccess = () => {
+		messageApi.open({
+			type: "success",
+			content: "The workout was successfully deleted. redirecting...",
+			onClose: () => navigate("/"),
+		});
+	};
 
 	const [
 		deleteWorkoutResponse,
@@ -45,11 +48,26 @@ export const WorkoutPage = () => {
 		deleteWorkoutRequest,
 	] = useRequest(deleteWorkoutAPI, session!);
 
+	const [
+		usersAndPublicExercisesResponse,
+		usersAndPublicExercisesLoading,
+		usersAndPublicExercisesError,
+		usersAndPublicExercisesRequest,
+	] = useRequest(usersAndPublicExercisesAPI, session!);
+
 	useEffect(() => {
+		usersAndPublicExercisesRequest(session!);
 		if (workoutUrl) {
 			workoutRequest(workoutUrl, session!);
 		}
 	}, []);
+
+	useEffect(() => {
+		if (!usersAndPublicExercisesLoading) {
+			if (usersAndPublicExercisesResponse)
+				setAllExercises(usersAndPublicExercisesResponse);
+		}
+	}, [usersAndPublicExercisesLoading]);
 
 	useEffect(() => {
 		if (workoutResponse) {
@@ -62,9 +80,17 @@ export const WorkoutPage = () => {
 		navigate("/");
 	};
 
-	// need to remove
 	const deleteWorkout = () => {
-		deleteWorkoutRequest(workout.id, session!);
+		if (confirm(`Are you sure you want to delete ${workout.name}?`)) {
+			deleteWorkoutRequest(workout.id, session!);
+			if (deleteWorkoutError) {
+				console.log("error deleting workout", deleteWorkoutError);
+			} else {
+				deleteWorkoutSuccess();
+			}
+		} else {
+			console.log("workout not deleted");
+		}
 	};
 
 	const toggleButton = () => {
@@ -93,7 +119,7 @@ export const WorkoutPage = () => {
 			);
 		}
 		return (
-			<div>
+			<div className="white-font">
 				{workout && (
 					<section className="new-workout-name">
 						<EditWorkoutNameButton workout={workout} />
@@ -135,15 +161,18 @@ export const WorkoutPage = () => {
 					</Button>
 				) : (
 					<SearchExercises
-						workout={workout}
-						// addExerciseToAll={addExerciseToAll}
+					// workout={workout}
+					// allExercises={allExercises}
+					// addExerciseToAll={addExerciseToAll}
 					/>
 				)}
 				<br></br>
+				{contextHolder}
 				<Button
 					type="primary"
 					onClick={deleteWorkout}
 					className="capitalize delete-button"
+					danger
 				>
 					Delete Workout
 				</Button>

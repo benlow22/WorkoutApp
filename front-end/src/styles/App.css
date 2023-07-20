@@ -6,7 +6,19 @@
 /* .main {
 	margin: 30px;
 } */
-
+h1,
+h2,
+h3,
+pre,
+#text,
+p,
+.white-font {
+	color: white;
+}
+/* textarea.andt-input,
+div.andt-select-selector {
+	width: 10px;
+} */
 .logo {
 	height: 6em;
 	padding: 1.5em;
@@ -36,6 +48,7 @@
 }
 h2 {
 	margin: 0px;
+	color: white;
 }
 .card {
 	padding: 2em;
@@ -58,9 +71,16 @@ h2 {
 	background-color: rgb(0, 110, 255);
 	padding: 10px 75px;
 	width: 100%;
+}
+
+.header .content {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+}
+.content {
+	max-width: 1600px;
+	margin: auto;
 }
 /* 
 .header *, .workouts-page * {
@@ -90,11 +110,13 @@ input[value].new-workout-input,
 .ant-select-item-empty {
 	color: black;
 }
-
+.new-workout-input {
+	margin-bottom: 12px;
+}
 .new-workout-name {
 	display: flex;
 	width: 400px;
-	margin: auto;
+	margin: 33px auto 22px;
 	justify-content: center;
 }
 
@@ -122,6 +144,11 @@ input[value].new-workout-input,
 .exercise-page {
 	text-align: center;
 }
+
+.search_container {
+	color: #101010;
+}
+
 .search-bar {
 	width: 260;
 }
@@ -136,21 +163,36 @@ input[value].new-workout-input,
 }
 
 .new-exercise-form {
-	background-color: rgb(101, 168, 255);
 	margin: auto;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding: 10px 25px;
 	border-radius: 15px;
+	border: 3px dashed #4171b5;
+	width: 600px;
 }
 
-.new-exercise-form * {
-	color: black;
+.new-exercise-form,
+.new-workout-name h2 {
+	margin-bottom: 15px;
 }
 
+/* .new-exercise-input {
+	/* margin-bottom: 5px; 
+} */
 .add-field-button {
 	margin: auto;
 }
+.input-field-large {
+	width: 350px;
+}
+:where(.css-dev-only-do-not-override-htwhyh).ant-form-item
+	.ant-form-item-label
+	> label {
+	color: white;
+}
 
+/* .exercise-form-button {
+	margin-bottom: 33px;
+} */
 /* .ant-form-item-control-input-content {
   justify-content: center;
 } */
@@ -160,25 +202,14 @@ input[value].new-workout-input,
   margin-bottom: 5px;
 } */
 
-.add-description-button {
-	width: 300px;
-	margin-bottom: 35px;
-}
-
-.close-field-button {
-	position: absolute;
-	left: 360px;
-	top: 15px;
+.black-font span {
+	color: #101010;
 }
 
 .edit-workout-name {
 	position: relative;
 	left: 5px;
 	top: 30px;
-}
-
-.new-workout-name {
-	margin: auto;
 }
 
 .edit-new-workout-name {
@@ -192,6 +223,19 @@ input[value].new-workout-input,
 	border: 1px solid blue;
 }
 
+/* .ant-form-item-control-input button.new-exercise-input {
+	width: 100px;
+} */
+.ant-radio-button.ant-radio-button-checked {
+	background-color: rgb(124, 181, 255);
+}
+
+/* .radio-buttons {
+} */
+
+.reps-radio {
+	display: flex;
+}
 .set {
 	text-align: left;
 	width: 360px;
@@ -387,4 +431,8 @@ input[value].new-workout-input,
 	border: solid red 2px;
 	border-radius: 10px;
 	margin-bottom: 5px;
+}
+
+.publish {
+	justify-content: space-between;
 }

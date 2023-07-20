@@ -21,3 +21,15 @@ export type IWorkoutWithExercises = {
 	workout: IWorkout;
 	exercises: IExercise[];
 };
+
+export interface IExercise {
+	description: string | null;
+	name: string;
+	equipment: number;
+	id: string;
+	created_by: string;
+	muscles: string[];
+	"Exercise Group": string[];
+	public: true;
+	default_sets: string[][];
+}

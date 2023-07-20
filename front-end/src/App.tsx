@@ -1,6 +1,4 @@
-import "./App.css";
-import "./index.css";
-
+import "./styles/App.css";
 import {
 	Route,
 	RouterProvider,
@@ -20,6 +18,7 @@ import { ExercisesPage } from "./pages/ExercisesPage";
 import Exercise from "./components/Exercise";
 import NewExercise from "./pages/NewExercisePage";
 import { WorkoutPage } from "./pages/workoutPage/workoutPage";
+import NewExerciseForm from "./pages/NewExerciseForm";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

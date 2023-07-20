@@ -1,19 +1,8 @@
-import {
-	Navigate,
-	redirect,
-	useLocation,
-	useNavigate,
-	useParams,
-} from "react-router-dom";
-import { getWorkoutAndExercisesAPI } from "../../api/api";
-import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { supabase } from "../../supabaseClient";
 import { Button } from "antd";
-import { EditTwoTone } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
-import { AuthContext } from "../../contexts/AuthProvider";
-import Exercise from "../../components/Exercise";
-import { ExercisesPage } from "../ExercisesPage";
 import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
@@ -129,8 +118,7 @@ export const EditWorkoutPage = () => {
 					</Button>
 				) : (
 					<SearchExercises
-						workout={workout}
-						// addExerciseToAll={addExerciseToAll}
+					// addExerciseToAll={addExerciseToAll}
 					/>
 				)}
 				<br></br>
