@@ -41,7 +41,15 @@ const normFile = (e: any) => {
 	return e?.fileList;
 };
 
-const NewExercisePage: React.FC<{}> = () => {
+type TProps = {
+	exerciseName: string;
+	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
+};
+
+const NewExercisePage: React.FC<TProps> = ({
+	exerciseName,
+	setExerciseName,
+}) => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
 	const [editExerciseName, setEditExerciseName] = useState<boolean>(false);
@@ -55,7 +63,6 @@ const NewExercisePage: React.FC<{}> = () => {
 	const [isPublic, setIsPublic] = useState<boolean>(false);
 	const [linkArr, setLinkArr] = useState([]);
 
-	const { exerciseName: exerciseNameURL } = useParams();
 	const { userId } = useContext(AuthContext);
 	const [messageApi, contextHolder] = message.useMessage();
 	const [disabledReps, setDisabledReps] = useState<boolean>(true);
@@ -129,7 +136,6 @@ const NewExercisePage: React.FC<{}> = () => {
 		// navigate(`/exercises`);
 	};
 
-	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL!);
 	const [newExerciseName, setNewExerciseName] = useState<string>("");
 
 	const handleExerciseNameChange = () => {
@@ -189,7 +195,7 @@ const NewExercisePage: React.FC<{}> = () => {
 								message: "Please input your exercise!",
 							},
 						]}
-						initialValue={exerciseNameURL}
+						initialValue={exerciseName}
 						wrapperCol={{ span: 24 }}
 					>
 						{!editExerciseName ? (
@@ -239,7 +245,7 @@ const NewExercisePage: React.FC<{}> = () => {
 						autoSize={true}
 					/>
 				</Form.Item>
-				{!hideDescription && (
+				{/* {!hideDescription && (
 					<Button
 						className="close-description-button"
 						icon={<CloseOutlined />}
@@ -247,7 +253,7 @@ const NewExercisePage: React.FC<{}> = () => {
 						size="small"
 						type="primary"
 					></Button>
-				)}
+				)} */}
 				<div className="form-item">
 					<Form.Item hidden={!hideDescription} noStyle>
 						<Button

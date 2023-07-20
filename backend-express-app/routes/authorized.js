@@ -74,7 +74,7 @@ router.get("/:exerciseId", async (req, res) => {
 	const { data, error } = await req.supabase
 		.from("workouts")
 		.delete()
-		.eq("id", workoutId);
+		.eq("id");
 	console.log("deleted workout: ", data); // show in terminal
 	if (error) {
 		// if there is data, send it back = 200 status
