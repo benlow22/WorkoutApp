@@ -196,7 +196,13 @@ export const SearchExercises = () =>
 					<Input.Search
 						size="large"
 						placeholder="input here"
-						enterButton
+						enterButton={
+							isNewExercise ? (
+								<PlusOutlined />
+							) : (
+								<SearchOutlined />
+							)
+						}
 						onSearch={handleSearch}
 					/>
 				</AutoComplete>
