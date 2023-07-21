@@ -221,7 +221,6 @@ const NewExercisePage: React.FC<TProps> = ({
 									}}
 									placeholder={exerciseName}
 									onPressEnter={handleExerciseNameChange}
-									defaultValue={exerciseName}
 								/>
 								<Button
 									type="primary"
@@ -258,18 +257,16 @@ const NewExercisePage: React.FC<TProps> = ({
 						type="primary"
 					></Button>
 				)} */}
-				<div className="form-item">
-					<Form.Item hidden={!hideDescription} noStyle>
-						<Button
-							type="primary"
-							onClick={() => setHideDescription(!hideDescription)}
-							icon={<PlusOutlined />}
-							className="add-description-button exercise-form-button"
-						>
-							Add Description
-						</Button>
-					</Form.Item>
-				</div>
+				<Form.Item hidden={!hideDescription} noStyle>
+					<Button
+						type="primary"
+						onClick={() => setHideDescription(!hideDescription)}
+						icon={<PlusOutlined />}
+						className="add-description-button exercise-form-button"
+					>
+						Add Description
+					</Button>
+				</Form.Item>
 
 				{/* EQUIPMENT */}
 				<Form.Item
@@ -362,36 +359,43 @@ const NewExercisePage: React.FC<TProps> = ({
 					</Button>
 				) : (
 					<Form.Item label="Muscles" name="muscles">
-						<Space.Compact style={{ width: "100%" }}>
-							<Input
-								onChange={(e) => setNewMuscle(e.target.value)}
-								value={newMuscle}
-								onPressEnter={(e) => (
-									addToMuscleList(), e.preventDefault()
-								)}
-							/>
-							<Button
-								type="primary"
-								icon={<PlusCircleOutlined />}
-								onClick={addToMuscleList}
-							></Button>
-						</Space.Compact>
-						<div className="muscle-list">
-							{musclesList.map((muscle, index) => {
-								return (
-									<p className="muscle-list-item" key={index}>
-										{index + 1}. {muscle}
-										<Button
-											type="link"
-											icon={<MinusCircleOutlined />}
-											onClick={() =>
-												handleDeleteMuscle(index)
-											}
-										></Button>
-									</p>
-								);
-							})}
-						</div>
+						<>
+							<Space.Compact style={{ width: "100%" }}>
+								<Input
+									onChange={(e) =>
+										setNewMuscle(e.target.value)
+									}
+									value={newMuscle}
+									onPressEnter={(e) => (
+										addToMuscleList(), e.preventDefault()
+									)}
+								/>
+								<Button
+									type="primary"
+									icon={<PlusCircleOutlined />}
+									onClick={addToMuscleList}
+								></Button>
+							</Space.Compact>
+							<div className="muscle-list">
+								{musclesList.map((muscle, index) => {
+									return (
+										<p
+											className="muscle-list-item"
+											key={index}
+										>
+											{index + 1}. {muscle}
+											<Button
+												type="link"
+												icon={<MinusCircleOutlined />}
+												onClick={() =>
+													handleDeleteMuscle(index)
+												}
+											></Button>
+										</p>
+									);
+								})}
+							</div>
+						</>
 					</Form.Item>
 				)}
 
@@ -406,38 +410,40 @@ const NewExercisePage: React.FC<TProps> = ({
 						},
 					]}
 				>
-					<Space.Compact style={{ width: "100%" }}>
-						<Input
-							onChange={(e) => {
-								setNewLink(e.target.value);
-							}}
-							placeholder={"enter link"}
-							onPressEnter={(e) => (
-								e.preventDefault(), handleArr()
-							)}
-							value={newLink}
-						/>
-						<Button
-							type="primary"
-							onClick={handleArr}
-							icon={<PlusOutlined />}
-						></Button>
-					</Space.Compact>
-					{linkList.map((link, index) => {
-						return (
-							<p className="link-list-item" key={index}>
-								{index + 1}.{" "}
-								<a href={link} target="_blank">
-									{shortenUrl(link)}
-								</a>
-								<Button
-									type="link"
-									icon={<MinusCircleOutlined />}
-									onClick={() => handleDeleteLink(index)}
-								></Button>
-							</p>
-						);
-					})}
+					<>
+						<Space.Compact style={{ width: "100%" }}>
+							<Input
+								onChange={(e) => {
+									setNewLink(e.target.value);
+								}}
+								placeholder={"enter link"}
+								onPressEnter={(e) => (
+									e.preventDefault(), handleArr()
+								)}
+								value={newLink}
+							/>
+							<Button
+								type="primary"
+								onClick={handleArr}
+								icon={<PlusOutlined />}
+							></Button>
+						</Space.Compact>
+						{linkList.map((link, index) => {
+							return (
+								<p className="link-list-item" key={index}>
+									{index + 1}.{" "}
+									<a href={link} target="_blank">
+										{shortenUrl(link)}
+									</a>
+									<Button
+										type="link"
+										icon={<MinusCircleOutlined />}
+										onClick={() => handleDeleteLink(index)}
+									></Button>
+								</p>
+							);
+						})}
+					</>
 				</Form.Item>
 
 				{/* Sets */}
@@ -484,7 +490,6 @@ const NewExercisePage: React.FC<TProps> = ({
 					label="Weights"
 					colon
 					labelAlign="right"
-					name="weight"
 				>
 					<Space
 						style={{
@@ -497,6 +502,7 @@ const NewExercisePage: React.FC<TProps> = ({
 								display: "inline-block",
 								width: "100px",
 							}}
+							name="weight"
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
@@ -507,7 +513,6 @@ const NewExercisePage: React.FC<TProps> = ({
 								style={{
 									alignItems: "flex-end",
 								}}
-								defaultValue="null"
 							>
 								<Radio.Button value="lbs">lbs</Radio.Button>
 								<Radio.Button
@@ -549,7 +554,6 @@ const NewExercisePage: React.FC<TProps> = ({
 								style={{
 									alignItems: "flex-end",
 								}}
-								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
@@ -583,24 +587,28 @@ const NewExercisePage: React.FC<TProps> = ({
 					<TextArea rows={3} allowClear />
 				</Form.Item>
 
-				<Form.Item
-					name="public"
-					label="Publish"
-					style={{ color: "white" }}
-					className="publish"
-				>
-					<Radio.Group
-						className="white-font"
-						defaultValue="false"
-						onChange={handlePublishRadio}
-					>
-						<Radio value="false">Private</Radio>
-						<Radio value="true">Public</Radio>
-					</Radio.Group>
+				<Form.Item label="Publish" className="white-font">
+					<Form.Item name="public">
+						<Radio.Group
+						// onChange={handlePublishRadio}
+						>
+							<Radio value={false}>Private</Radio>
+							<Radio value={true}>Public</Radio>
+						</Radio.Group>
+					</Form.Item>
 					<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
 						<QuestionCircleOutlined />
 					</Tooltip>
 				</Form.Item>
+
+				{/* <Form.Item label="radio" className="white-font">
+					<Form.Item name="radop">
+						<Radio.Group>
+							<Radio value={true}>A</Radio>
+							<Radio value={2}>B</Radio>
+						</Radio.Group>
+					</Form.Item>
+				</Form.Item> */}
 
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
 					<Space>

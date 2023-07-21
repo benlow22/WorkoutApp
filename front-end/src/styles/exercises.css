@@ -52,6 +52,7 @@ textarea.ant-input {
 
 .muscle-list {
 	min-width: 100px;
+	margin-top: 10px;
 }
 
 .muscle-list-item {
