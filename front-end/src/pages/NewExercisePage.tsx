@@ -162,7 +162,7 @@ const NewExercisePage: React.FC<TProps> = ({
 			>
 				<div className="exercise-name-container">
 					<Form.Item
-						name="exercise"
+						name="name"
 						rules={[
 							{
 								required: true,
