@@ -25,7 +25,7 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { AuthContext } from "../contexts/AuthProvider";
-import { shortenUrl } from "../utils/utils";
+import { isValidUrl, shortenUrl } from "../utils/utils";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -83,19 +83,6 @@ const NewExercisePage: React.FC<TProps> = ({
 		});
 	};
 
-	const isValidUrl = (urlString: string) => {
-		var urlPattern = new RegExp(
-			"^(https?:\\/\\/)?" + // validate protocol
-				"((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // validate domain name
-				"((\\d{1,3}\\.){3}\\d{1,3}))" + // validate OR ip (v4) address
-				"(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // validate port and path
-				"(\\?[;&a-z\\d%_.~+=-]*)?" + // validate query string
-				"(\\#[-a-z\\d_]*)?$",
-			"i"
-		); // validate fragment locator
-		return !!urlPattern.test(urlString);
-	};
-
 	const addToMuscleList = () => {
 		if (newMuscle.length > 0 && !musclesList.includes(newMuscle)) {
 			setMusclesList((prev) => [...prev, newMuscle]);
@@ -121,23 +108,6 @@ const NewExercisePage: React.FC<TProps> = ({
 
 			console.log("Received values of form: ", newForm);
 		}
-		// const { data, error } = await supabase.from("Exercises").insert([
-		// 	{
-		// 		name: formValues.workout,
-		// 		description: formValues.description,
-		// 		equipment: formValues.equipment,
-		// 		created_by: userId,
-		// 		muscles: formValues.muscles,
-		// 	},
-		// ]);
-		// if (data) {
-		// 	console.log("successfull post", data);
-		// }
-
-		// if (error) {
-		// 	console.log(error);
-		// }
-		// navigate(`/exercises`);
 	};
 
 	const [newExerciseName, setNewExerciseName] = useState<string>("");
