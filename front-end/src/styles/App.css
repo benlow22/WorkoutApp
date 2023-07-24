@@ -189,6 +189,10 @@ input[value].new-workout-input,
 	> label {
 	color: white;
 }
+/* 
+div.ant-space-item{
+	height:32px;
+} */
 
 /* .exercise-form-button {
 	margin-bottom: 33px;

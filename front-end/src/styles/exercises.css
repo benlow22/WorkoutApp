@@ -1,3 +1,14 @@
+/* .add-exercise-container span,
+.ant-input span,
+textarea.ant-input {
+	color: black;
+} */
+
+.add-exercise-container .ant-input,
+.add-exercise-container .ant-select-selection-item span {
+	color: black;
+}
+
 /* Exercise Name */
 
 .exercise-name,
@@ -41,6 +52,7 @@
 
 .muscle-list {
 	min-width: 100px;
+	margin-top: 10px;
 }
 
 .muscle-list-item {

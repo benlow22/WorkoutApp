@@ -15,6 +15,7 @@ import { TestFetchExercise } from "../../components/TestFetchExercises";
 import { useRequest } from "../../hooks/useRequest";
 import { IExercise, IWorkout } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
+import { AddExercise } from "../../components/exercises/AddExercise";
 
 // type IExercise = {
 // 	name: any;
@@ -31,7 +32,7 @@ export const WorkoutPage = () => {
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
-		useRequest(getWorkoutAndExercisesAPI, session!);
+		useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
 	const deleteWorkoutSuccess = () => {
 		messageApi.open({
@@ -46,14 +47,14 @@ export const WorkoutPage = () => {
 		deleteWorkoutLoading,
 		deleteWorkoutError,
 		deleteWorkoutRequest,
-	] = useRequest(deleteWorkoutAPI, session!);
+	] = useRequest(deleteWorkoutAPI);
 
 	const [
 		usersAndPublicExercisesResponse,
 		usersAndPublicExercisesLoading,
 		usersAndPublicExercisesError,
 		usersAndPublicExercisesRequest,
-	] = useRequest(usersAndPublicExercisesAPI, session!);
+	] = useRequest(usersAndPublicExercisesAPI);
 
 	useEffect(() => {
 		usersAndPublicExercisesRequest(session!);
@@ -119,13 +120,13 @@ export const WorkoutPage = () => {
 			);
 		}
 		return (
-			<div className="white-font">
+			<div>
 				{workout && (
-					<section className="new-workout-name">
+					<section className="new-workout-name white-font">
 						<EditWorkoutNameButton workout={workout} />
 					</section>
 				)}
-				<div className="workout-controls">
+				<div className="workout-controls white-font">
 					<button className="side-workout-button expand-all-button">
 						Expand All
 					</button>
@@ -151,21 +152,7 @@ export const WorkoutPage = () => {
 				))}
 				<Exercises exercises={exercises} />
 				<br></br>
-				{!addExercise ? (
-					<Button
-						type="primary"
-						onClick={toggleButton}
-						className="add-exercise-button"
-					>
-						Add Exercise
-					</Button>
-				) : (
-					<SearchExercises
-					// workout={workout}
-					// allExercises={allExercises}
-					// addExerciseToAll={addExerciseToAll}
-					/>
-				)}
+				<AddExercise />
 				<br></br>
 				{contextHolder}
 				<Button

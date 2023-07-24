@@ -1,8 +1,9 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import WorkoutButton from "../../components/WorkoutButton";
 import { Button, message } from "antd";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
+import { Link, NavLink, Route, useLocation } from "react-router-dom";
+import { AuthContext, ISession } from "../../contexts/AuthProvider";
+import { supabase } from "../../supabaseClient";
 import { getAllUsersWorkoutsAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
@@ -10,8 +11,7 @@ import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 	const [response, loading, error, request] = useRequest(
-		getAllUsersWorkoutsAPI,
-		session!
+		getAllUsersWorkoutsAPI
 	);
 	const [messageApi, contextHolder] = message.useMessage();
 

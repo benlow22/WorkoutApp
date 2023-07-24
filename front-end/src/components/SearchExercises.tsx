@@ -13,34 +13,41 @@ import {
 } from "../api/api";
 import { IExercise } from "../api/types";
 import { useRequest } from "../hooks/useRequest";
-import NewExerciseForm from "../pages/NewExercisePage";
 
 const { Search } = Input;
 
-type TProps = {
-	workout: {
-		name: string;
-		id: string;
-		url: string;
-		exercises?: [{ name: string }];
-	};
-	allExercises: IExercise[];
-	// addExerciseToAll: (name: string) => void;
-};
+// type TProps = {
+// 	workout: {
+// 		name: string;
+// 		id: string;
+// 		url: string;
+// 		exercises?: [{ name: string }];
+// 	};
+// 	allExercises: IExercise[];
+// 	// addExerciseToAll: (name: string) => void;
+// };
 
+type TProps = {
+	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
+	setIsNewExercise: React.Dispatch<React.SetStateAction<boolean>>;
+	isNewExercise: boolean;
+};
 /* SearchExercises component should:
 	- GET all public and users exercises
 	- drop down with autocomplete 
 	- return selected exercise
 	- if no previous exercise exists, redirect to create exercises page 
 */
-export const SearchExercises = () =>
+export const SearchExercises = ({
+	setExerciseName,
+	setIsNewExercise,
+	isNewExercise,
+}: TProps) =>
 	// addExerciseToAll
 	{
 		const { workouts, setWorkouts, userId, session } =
 			useContext(AuthContext);
 		const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
-		const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 		const [addNewExerciseBox, setAddNewExerciseBox] =
 			useState<boolean>(false);
 		const [addExistingExerciseBox, setAddExistingExerciseBox] =
@@ -61,43 +68,19 @@ export const SearchExercises = () =>
 			usersAndPublicExercisesLoading,
 			usersAndPublicExercisesError,
 			usersAndPublicExercisesRequest,
-		] = useRequest(usersAndPublicExercisesAPI, session!);
+		] = useRequest(usersAndPublicExercisesAPI);
 
 		const [
 			usersExerciseResponse,
 			usersExerciseLoading,
 			usersExerciseError,
 			usersExerciseRequest,
-		] = useRequest(getUsersExerciseDataAPI, session!);
-
-		// useEffect(() => {
-		// 	// upon loading, fetch all exercise data to populate dropdown
-		// 	console.log("exercises fetch", allExercises);
-		// 	async function fetchExercises() {
-		// 		const { data, error } = await supabase
-		// 			.from("exercises")
-		// 			.select("value: name, id"); // change name column to "value" to match options()
-		// 		if (error) {
-		// 			console.error("error fetching exercises", error);
-		// 			setIsLoading(false);
-		// 			return;
-		// 		}
-		// 		if (data.length > 0) {
-		// 			console.log("fetching exercises data: ", data);
-		// 			setAllExercises(data);
-		// 		}
-		// 		setIsLoading(false);
-		// 		return data;
-		// 	}
-		// 	fetchExercises();
-		// 	console.log("exercises fetch2", allExercises);
-		// }, []);
-
-		const onSearch = (value: string) => console.log(value);
+		] = useRequest(getUsersExerciseDataAPI);
 
 		useEffect(() => {
 			usersAndPublicExercisesRequest(session!);
 		}, []);
+
 		useEffect(() => {
 			if (usersAndPublicExercisesResponse) {
 				const listOfExerciseNamesAsValues =
@@ -105,7 +88,6 @@ export const SearchExercises = () =>
 						value: exercise.name,
 					}));
 				setAllExercisesNames(listOfExerciseNamesAsValues);
-				console.log("List o names", listOfExerciseNamesAsValues);
 			}
 		}, [usersAndPublicExercisesResponse]);
 
@@ -137,9 +119,10 @@ export const SearchExercises = () =>
 */
 			// if there is a search, and it's new
 			if (searchExercise) {
+				setExerciseName(searchExercise);
 				if (isNewExercise) {
 					console.log("Add New Exercise:", searchExercise);
-					setAddNewExerciseBox(true);
+					setIsNewExercise(true);
 					// add old exercise
 				} else {
 					let exercise = usersAndPublicExercisesResponse!.find(
@@ -173,11 +156,6 @@ export const SearchExercises = () =>
 
 		return (
 			<div className="search-container">
-				{/* {addNewExerciseBox && isNewExercise ? (
-				<NewExerciseForm exerciseName={searchExercise} />
-			) : (
-				<AddExercise exercise={usersExerciseResponse} />
-			)} */}
 				<h2>
 					{isNewExercise ? "new" : "old"} Exercise: {searchExercise}
 				</h2>
@@ -196,7 +174,13 @@ export const SearchExercises = () =>
 					<Input.Search
 						size="large"
 						placeholder="input here"
-						enterButton
+						enterButton={
+							isNewExercise ? (
+								<PlusOutlined />
+							) : (
+								<SearchOutlined />
+							)
+						}
 						onSearch={handleSearch}
 					/>
 				</AutoComplete>

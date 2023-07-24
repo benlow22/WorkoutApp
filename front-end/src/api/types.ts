@@ -33,3 +33,21 @@ export interface IExercise {
 	public: true;
 	default_sets: string[][];
 }
+
+export interface INewExerciseInput {
+	description: string | null;
+	name: string;
+	equipment: number[];
+	id: string;
+	created_by: string;
+	default_sets: string[][];
+	fitnessElement: string[];
+	links: string[];
+	muscleGroup: string[];
+	muscles: string[];
+	notes: string;
+	public: boolean;
+	time: boolean;
+	defaultWeightUnits: string;
+	defaultTimeUnits: string;
+}

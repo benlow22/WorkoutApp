@@ -1,7 +1,13 @@
 const API_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/api`;
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
-import { IExercise, IGetFullWorkoutResponse, IWorkout, TError } from "./types";
+import {
+	IExercise,
+	IGetFullWorkoutResponse,
+	INewExerciseInput,
+	IWorkout,
+	TError,
+} from "./types";
 import { ISession } from "../contexts/AuthProvider";
 
 // Get Cookies from Browser = redundant
@@ -48,18 +54,24 @@ import { ISession } from "../contexts/AuthProvider";
 const fetcher = async <TData,>(
 	url: string,
 	session: ISession,
-	method: string | null = null
+	method: string | null = null,
+	customHeaders: any | null = null,
+	body: any | null = null
 ): Promise<[error: TError, response: Response]> => {
 	const myMethod = method ? method : "GET";
+	const myBody = body ? body : null;
+	const extraHeaders = customHeaders ? customHeaders : null;
 	const myHeaders = {
 		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
 		"Access-Token": `${session.access_token}`,
 		"Refresh-Token": `${session.refresh_token}`,
 		"User-Id": `${session.user.id}`,
+		...extraHeaders,
 	};
 	const myOptions = {
 		method: myMethod,
 		headers: myHeaders,
+		body: myBody,
 	};
 	const response = await fetch(`${API_ENDPOINT}${url}`, {
 		...myOptions,
@@ -295,6 +307,31 @@ export const getUsersExerciseDataAPI = async (
 	return { data, error };
 };
 
+export const postNewExerciseAPI = async (
+	session: ISession,
+	newExerciseData: INewExerciseInput
+): Promise<{ data: any; error: TError }> => {
+	let exerciseId = uuidv4();
+	let [error, response] = await fetcher(
+		`/authorized/:${exerciseId}}`,
+		session,
+		"POST",
+		{ "Content-Type": "application/json" },
+		newExerciseData
+	);
+	let data: null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Adding exercise to workout from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
 // export const getWorkoutDay = async (workoutName: string = "") => {
 // 	const { data, error } = await supabase
