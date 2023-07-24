@@ -55,15 +55,18 @@ const fetcher = async <TData,>(
 	url: string,
 	session: ISession,
 	method: string | null = null,
+	customHeaders: any | null = null,
 	body: any | null = null
 ): Promise<[error: TError, response: Response]> => {
 	const myMethod = method ? method : "GET";
 	const myBody = body ? body : null;
+	const extraHeaders = customHeaders ? customHeaders : null;
 	const myHeaders = {
 		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
 		"Access-Token": `${session.access_token}`,
 		"Refresh-Token": `${session.refresh_token}`,
 		"User-Id": `${session.user.id}`,
+		...extraHeaders,
 	};
 	const myOptions = {
 		method: myMethod,
@@ -313,9 +316,10 @@ export const postNewExerciseAPI = async (
 		`/authorized/:${exerciseId}}`,
 		session,
 		"POST",
+		{ "Content-Type": "application/json" },
 		newExerciseData
 	);
-	let data: IExercise | null = null;
+	let data: null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();

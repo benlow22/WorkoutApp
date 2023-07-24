@@ -32,7 +32,7 @@ export const WorkoutPage = () => {
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
-		useRequest(getWorkoutAndExercisesAPI, session!);
+		useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
 	const deleteWorkoutSuccess = () => {
 		messageApi.open({
@@ -47,14 +47,14 @@ export const WorkoutPage = () => {
 		deleteWorkoutLoading,
 		deleteWorkoutError,
 		deleteWorkoutRequest,
-	] = useRequest(deleteWorkoutAPI, session!);
+	] = useRequest(deleteWorkoutAPI);
 
 	const [
 		usersAndPublicExercisesResponse,
 		usersAndPublicExercisesLoading,
 		usersAndPublicExercisesError,
 		usersAndPublicExercisesRequest,
-	] = useRequest(usersAndPublicExercisesAPI, session!);
+	] = useRequest(usersAndPublicExercisesAPI);
 
 	useEffect(() => {
 		usersAndPublicExercisesRequest(session!);

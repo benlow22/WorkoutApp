@@ -26,6 +26,8 @@ import {
 import TextArea from "antd/es/input/TextArea";
 import { AuthContext } from "../contexts/AuthProvider";
 import { isValidUrl, shortenUrl } from "../utils/utils";
+import { postNewExerciseAPI } from "../api/api";
+import { useRequest } from "../hooks/useRequest";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -63,10 +65,17 @@ const NewExercisePage: React.FC<TProps> = ({
 	const [isPublic, setIsPublic] = useState<boolean>(false);
 	const [linkArr, setLinkArr] = useState([]);
 
-	const { userId } = useContext(AuthContext);
+	const { userId, session } = useContext(AuthContext);
 	const [messageApi, contextHolder] = message.useMessage();
 	const [disabledReps, setDisabledReps] = useState<boolean>(true);
 	const [disabled, setDisabled] = useState(true);
+
+	const [
+		postNewExerciseResponse,
+		postNewExerciseLoading,
+		postNewExerciseError,
+		postNewExerciseRequest,
+	] = useRequest(postNewExerciseAPI);
 
 	const handleDeleteMuscle = (index: number) => {
 		const newMuscleList = musclesList.filter((muscle, i) => index !== i);
@@ -105,6 +114,7 @@ const NewExercisePage: React.FC<TProps> = ({
 				links: linkList,
 				description: description,
 			};
+			postNewExerciseAPI(session!, newForm);
 
 			console.log("Received values of form: ", newForm);
 		}

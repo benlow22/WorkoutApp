@@ -6,8 +6,7 @@ import { TError } from "../api/types";
 export function useRequest<TApiParams extends any[], TResponseData>(
 	apiFunc: (
 		...args: TApiParams
-	) => Promise<{ data: TResponseData | null; error: TError }>,
-	session: ISession
+	) => Promise<{ data: TResponseData | null; error: TError }>
 ): [
 	response: TResponseData | null,
 	loading: boolean,

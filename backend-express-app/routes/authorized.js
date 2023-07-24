@@ -104,3 +104,32 @@ router.post("/:workoutId/:exerciseId", async (req, res) => {
 	console.log("updated workout exercises", data);
 });
 module.exports = router;
+
+router.post("/:exerciseId", async (req, res) => {
+	const exerciseId = req.params.exerciseId;
+	const userId = req.headers["user-id"];
+	console.log("asdf", res.json({ requestBody: req.body })); // <==== req.body will be a parsed JSON object
+	// const { data, error } = await supabase
+	// 	.from("exercise")
+	// 	.insert([
+
+	// 			{description: },
+	// 			name: string;
+	// 			equipment: number[];
+	// 			id: string;
+	// 			created_by: string;
+	// 			default_sets: string[][];
+	// 			fitnessElement: string[];
+	// 			links: string[];
+	// 			muscleGroup: string[];
+	// 			muscles: string[];
+	// 			notes: string;
+	// 			public: boolean;
+	// 			time: boolean;
+	// 			defaultWeightUnits: string;
+	// 			defaultTimeUnits: string;
+	// 	])
+	// 	.select("*");
+	console.log("errrror", error);
+	console.log("updated workout exercises", data);
+});
