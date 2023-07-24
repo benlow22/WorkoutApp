@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
-import NewExercisePage from "../../pages/NewExercisePage";
+import { NewExercisePage } from "../../pages/NewExercisePage";
 
 export const AddExercise = () => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =

@@ -48,7 +48,7 @@ type TProps = {
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const NewExercisePage: React.FC<TProps> = ({
+export const NewExercisePage: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
 }) => {
@@ -608,8 +608,6 @@ const NewExercisePage: React.FC<TProps> = ({
 		</>
 	);
 };
-
-export default NewExercisePage;
 
 // description
 // name

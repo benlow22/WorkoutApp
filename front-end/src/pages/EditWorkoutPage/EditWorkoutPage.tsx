@@ -7,6 +7,7 @@ import { SearchExercises } from "../../components/SearchExercises";
 import { Exercises } from "../../components/Exercises";
 import { TestFetchExercise } from "../../components/TestFetchExercises";
 import { IExercise, IWorkout } from "../../api/types";
+import { AddExercise } from "../../components/exercises/AddExercise";
 
 // type IExercise = {
 // 	name: any;
@@ -117,9 +118,7 @@ export const EditWorkoutPage = () => {
 						Add Exercise
 					</Button>
 				) : (
-					<SearchExercises
-					// addExerciseToAll={addExerciseToAll}
-					/>
+					<AddExercise />
 				)}
 				<br></br>
 				<Button

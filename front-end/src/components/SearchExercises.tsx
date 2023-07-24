@@ -13,7 +13,6 @@ import {
 } from "../api/api";
 import { IExercise } from "../api/types";
 import { useRequest } from "../hooks/useRequest";
-import NewExerciseForm from "../pages/NewExercisePage";
 
 const { Search } = Input;
 
@@ -69,14 +68,14 @@ export const SearchExercises = ({
 			usersAndPublicExercisesLoading,
 			usersAndPublicExercisesError,
 			usersAndPublicExercisesRequest,
-		] = useRequest(usersAndPublicExercisesAPI, session!);
+		] = useRequest(usersAndPublicExercisesAPI);
 
 		const [
 			usersExerciseResponse,
 			usersExerciseLoading,
 			usersExerciseError,
 			usersExerciseRequest,
-		] = useRequest(getUsersExerciseDataAPI, session!);
+		] = useRequest(getUsersExerciseDataAPI);
 
 		useEffect(() => {
 			usersAndPublicExercisesRequest(session!);
