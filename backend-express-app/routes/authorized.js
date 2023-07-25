@@ -59,7 +59,7 @@ router.delete("/workouts/:workoutId", async (req, res) => {
 
 // EXERCISES
 router.get("/exercises", async (req, res) => {
-	const { data, error } = await req.supabase.from("exercises").select("*");
+	const { data, error } = await req.supabase.from("exercise").select("*");
 	console.log("get exercises. ", data); // show in terminal
 	if (data) {
 		res.send(data);
@@ -90,7 +90,7 @@ router.post("/:workoutId/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
 	const userId = req.headers["user-id"];
 	console.log(userId, workoutId, exerciseId);
-	const { data, error } = await supabase
+	const { data, error } = await req.supabase
 		.from("workouts_exercises")
 		.insert([
 			{
@@ -107,29 +107,33 @@ module.exports = router;
 
 router.post("/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
+	console.log("exerciseId", exerciseId);
 	const userId = req.headers["user-id"];
-	console.log("asdf", res.json({ requestBody: req.body })); // <==== req.body will be a parsed JSON object
-	// const { data, error } = await supabase
-	// 	.from("exercise")
-	// 	.insert([
-
-	// 			{description: },
-	// 			name: string;
-	// 			equipment: number[];
-	// 			id: string;
-	// 			created_by: string;
-	// 			default_sets: string[][];
-	// 			fitnessElement: string[];
-	// 			links: string[];
-	// 			muscleGroup: string[];
-	// 			muscles: string[];
-	// 			notes: string;
-	// 			public: boolean;
-	// 			time: boolean;
-	// 			defaultWeightUnits: string;
-	// 			defaultTimeUnits: string;
-	// 	])
-	// 	.select("*");
-	console.log("errrror", error);
-	console.log("updated workout exercises", data);
+	const { data, error } = await req.supabase
+		.from("exercise")
+		.insert([
+			{
+				description: req.body.description,
+				name: req.body.name,
+				id: exerciseId,
+				equipment: req.body.equipment,
+				created_by: userId,
+				default_sets: req.body.defaultSets,
+				fitness_element: req.body.fitnessElement,
+				links: req.body.links,
+				muscle_group: req.body.muscleGroup,
+				muscles: req.body.muscles,
+				notes: req.body.notes,
+				public: req.body.public,
+				default_weight_units: req.body.defaultWeightUnits,
+				default_time_units: req.body.defaultTimeUnits,
+				default_time: req.body.defaultTime,
+			},
+		])
+		.select("*");
+	if (error) {
+		console.log("errrror", error);
+	} else {
+		console.log("updated workout exercises", data);
+	}
 });

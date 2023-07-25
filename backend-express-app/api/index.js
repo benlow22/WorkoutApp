@@ -6,6 +6,7 @@ const env = require("dotenv");
 const cors = require("cors");
 const { v4 } = require("uuid");
 const jwt = require("jsonwebtoken");
+const bodyParser = require("body-parser");
 // const authorizedRouter = require("../routes/authorized");
 
 //git pull origin a-exp -r 		pull updated branch, to rebase onto
@@ -34,10 +35,6 @@ const app = express();
 // app.use(cors({ origin: /test\-workout\-app\-vercel\.vercel\.app.*/ }));
 
 const port = process.env.PORT || 8000;
-//const workoutsRouter = require("./routes/workouts");
-
-const authorizedRouter = express.Router();
-const publicRouter = express.Router(); // create a router for all public routes
 
 // THIRD-PARTY middlewares = add functionality
 // app.use(logger("dev"));
@@ -47,6 +44,7 @@ app.use(cookieParser());
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
 
 // Pre-Flight Request
 // IMPORTANT = allow origin, headers, credentials, for headers or cookies
@@ -72,30 +70,30 @@ app.use((req, res, next) => {
 //Routes
 app.use("/api", require("../routes/index"));
 
-// app.use("/api/authorized", authorizedRouter);
-app.use("/api/public", publicRouter);
+// // app.use("/api/authorized", authorizedRouter);
+// app.use("/api/public", publicRouter);
 
-// ROUTE Middleware = specific routes, like authorization
+// // ROUTE Middleware = specific routes, like authorization
 
-// EVENTUALLY SEPERATE TO OWN FILE and import in
-// public Routes
+// // EVENTUALLY SEPERATE TO OWN FILE and import in
+// // public Routes
 
 //TEST ROUTES (can delete)
-publicRouter.get("/cats", (req, res) => {
-	res.send(res.header);
-});
+// publicRouter.get("/cats", (req, res) => {
+// 	res.send(res.header);
+// });
 
-publicRouter.get("/", (req, res) => {
-	const path = `/api/item/${v4()}`;
-	res.setHeader("Content-Type", "text/html");
-	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-	res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-});
+// publicRouter.get("/", (req, res) => {
+// 	const path = `/api/item/${v4()}`;
+// 	res.setHeader("Content-Type", "text/html");
+// 	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+// 	res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
+// });
 
-publicRouter.get("/api/item/:slug", (req, res) => {
-	const { slug } = req.params;
-	res.end(`Item: ${slug}`);
-});
+// publicRouter.get("/api/item/:slug", (req, res) => {
+// 	const { slug } = req.params;
+// 	res.end(`Item: ${slug}`);
+// });
 
 // does not need to be authenticated.
 // publicRouter.get("/exercises", async (req, res) => {

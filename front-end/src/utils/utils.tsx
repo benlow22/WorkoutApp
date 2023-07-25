@@ -4,6 +4,9 @@
 // 	if ((ch1 >= "a" && ch1 <= "z") || (ch1 >= "A" && ch1 <= "Z")) {
 // 		newStr = ch1.toLowerCase();
 // 	}
+import { v4 as uuidv4 } from "uuid";
+
+import { INewExerciseInput } from "../api/types";
 
 // 	const capitalizeChAfterSpace = (ch: string) => {
 // 		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
@@ -82,4 +85,40 @@ export const isValidUrl = (urlString: string) => {
 		"i"
 	); // validate fragment locator
 	return !!urlPattern.test(urlString);
+};
+
+export const transformExercisePost = (
+	input: any,
+	userId: string
+): INewExerciseInput => {
+	const defaultSets = new Array(input.sets).fill([
+		input.defaultWeight,
+		input.reps,
+	]);
+	const transformedInput = { defaultSets: defaultSets, ...input };
+	delete transformedInput.reps;
+	delete transformedInput.sets;
+	delete transformedInput.defaultWeight;
+
+	// {
+	// 	description: input.description,
+	// 	equipment: ["2", "6"],
+	// 	fitnessElement: ["Strength Training"],
+	// 	links: [
+	// 		"https://www.muscleandstrength.com/exercises/incline-bench-press.html",
+	// 	],
+	// 	muscleGroup: ["Chest", "Arms"],
+	// 	muscles: ["Pectoralis Major"],
+	// 	name: "Incline Barbell Bench Press",
+	// 	notes: input.notes,
+	// 	public: input.public,
+	// 	time: input.time,
+	// 	id: uuidv4(),
+	// 	createdBy: userId,
+	// 	defaultSets: defaultSets,
+	// 	defaultWeightUnits: input.weightUnits,
+	// 	defaultTimeUnits: input.timeUnits,
+	// };
+
+	return transformedInput;
 };

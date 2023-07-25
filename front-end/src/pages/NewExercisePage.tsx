@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../styles/exercises.css";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	CloseOutlined,
@@ -25,9 +26,10 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { AuthContext } from "../contexts/AuthProvider";
-import { isValidUrl, shortenUrl } from "../utils/utils";
+import { isValidUrl, shortenUrl, transformExercisePost } from "../utils/utils";
 import { postNewExerciseAPI } from "../api/api";
 import { useRequest } from "../hooks/useRequest";
+import { newExerciseExample } from "../sample data/newExercise";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -48,27 +50,21 @@ type TProps = {
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const NewExercisePage: React.FC<TProps> = ({
+export const NewExerciseInput: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
 }) => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
 	const [editExerciseName, setEditExerciseName] = useState<boolean>(false);
-
+	const [newExerciseName, setNewExerciseName] = useState<string>("");
 	const [musclesList, setMusclesList] = useState<string[]>([]);
 	const [newMuscle, setNewMuscle] = useState<string>("");
 
 	const [linkList, setLinkList] = useState<string[]>([]);
 	const [newLink, setNewLink] = useState("");
 
-	const [isPublic, setIsPublic] = useState<boolean>(false);
-	const [linkArr, setLinkArr] = useState([]);
-
 	const { userId, session } = useContext(AuthContext);
-	const [messageApi, contextHolder] = message.useMessage();
-	const [disabledReps, setDisabledReps] = useState<boolean>(true);
-	const [disabled, setDisabled] = useState(true);
 
 	const [
 		postNewExerciseResponse,
@@ -85,12 +81,6 @@ export const NewExercisePage: React.FC<TProps> = ({
 		const newLinkList = linkList.filter((link, i) => index !== i);
 		setLinkList(newLinkList);
 	};
-	const warning = () => {
-		messageApi.open({
-			type: "warning",
-			content: "One of the links is not working",
-		});
-	};
 
 	const addToMuscleList = () => {
 		if (newMuscle.length > 0 && !musclesList.includes(newMuscle)) {
@@ -101,29 +91,7 @@ export const NewExercisePage: React.FC<TProps> = ({
 		}
 	};
 
-	const navigate = useNavigate();
-
-	const onFinish = async (formValues: any) => {
-		if (confirm("done with form?")) {
-			const description = hideDescription
-				? undefined
-				: formValues.description;
-			const newForm = {
-				...formValues,
-				muscles: musclesList,
-				links: linkList,
-				description: description,
-			};
-			postNewExerciseAPI(session!, newForm);
-
-			console.log("Received values of form: ", newForm);
-		}
-	};
-
-	const [newExerciseName, setNewExerciseName] = useState<string>("");
-
 	const handleExerciseNameChange = () => {
-		console.log("ex", exerciseName, "mew", newExerciseName);
 		if (!newExerciseName) {
 			setEditExerciseName(false);
 		}
@@ -140,6 +108,27 @@ export const NewExercisePage: React.FC<TProps> = ({
 		}
 	}, [editExerciseName]);
 
+	const onFinish = async (formValues: any) => {
+		if (confirm("done with form?")) {
+			const description = hideDescription
+				? undefined
+				: formValues.description;
+			const exerciseId = uuidv4();
+			const newForm = transformExercisePost(
+				{
+					...formValues,
+					id: exerciseId,
+					muscles: musclesList,
+					links: linkList,
+					description: description,
+				},
+				userId
+			);
+			postNewExerciseRequest(session!, newForm, exerciseId);
+			console.log("Received values of form: ", newForm);
+		}
+	};
+
 	const handleArr = () => {
 		let url: string = newLink;
 		if (isValidUrl(url)) {
@@ -155,11 +144,6 @@ export const NewExercisePage: React.FC<TProps> = ({
 		}
 	};
 
-	const handlePublishRadio = (e: RadioChangeEvent) => {
-		console.log(e.target.value);
-		setIsPublic(e.target.value);
-	};
-
 	return (
 		<>
 			<h2 className="page-heading">New Exercise</h2>
@@ -171,6 +155,11 @@ export const NewExercisePage: React.FC<TProps> = ({
 				style={{ maxWidth: 600 }}
 			>
 				<div className="exercise-name-container">
+					<Form.Item
+						name="createdBy"
+						hidden
+						initialValue={userId}
+					></Form.Item>
 					<Form.Item
 						name="name"
 						rules={[
@@ -482,11 +471,11 @@ export const NewExercisePage: React.FC<TProps> = ({
 								display: "inline-block",
 								width: "100px",
 							}}
-							name="weight"
+							name="defaultWeight"
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item name="weightUnits">
+						<Form.Item name="defaultWeightUnits">
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -523,17 +512,19 @@ export const NewExercisePage: React.FC<TProps> = ({
 								display: "inline-block",
 								width: "100px",
 							}}
-							name="time"
+							name="defaultTime"
+							initialValue={null}
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="timeUnits">
+						<Form.Item name="defaultTimeUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
 								style={{
 									alignItems: "flex-end",
 								}}
+								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
@@ -568,17 +559,19 @@ export const NewExercisePage: React.FC<TProps> = ({
 				</Form.Item>
 
 				<Form.Item label="Publish" className="white-font">
-					<Form.Item name="public">
-						<Radio.Group
-						// onChange={handlePublishRadio}
-						>
-							<Radio value={false}>Private</Radio>
-							<Radio value={true}>Public</Radio>
-						</Radio.Group>
-					</Form.Item>
-					<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
-						<QuestionCircleOutlined />
-					</Tooltip>
+					<Space>
+						<Form.Item name="public">
+							<Radio.Group
+							// onChange={handlePublishRadio}
+							>
+								<Radio value={false}>Private</Radio>
+								<Radio value={true}>Public</Radio>
+							</Radio.Group>
+						</Form.Item>
+						<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
+							<QuestionCircleOutlined />
+						</Tooltip>
+					</Space>
 				</Form.Item>
 
 				{/* <Form.Item label="radio" className="white-font">

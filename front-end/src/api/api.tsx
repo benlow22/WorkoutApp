@@ -59,7 +59,7 @@ const fetcher = async <TData,>(
 	body: any | null = null
 ): Promise<[error: TError, response: Response]> => {
 	const myMethod = method ? method : "GET";
-	const myBody = body ? body : null;
+	const myBody = body ? JSON.stringify(body) : null;
 	const extraHeaders = customHeaders ? customHeaders : null;
 	const myHeaders = {
 		// headers for VERCEL deployment = use SESSION data, which is passed in, faster than extracting from cookies
@@ -309,11 +309,11 @@ export const getUsersExerciseDataAPI = async (
 
 export const postNewExerciseAPI = async (
 	session: ISession,
-	newExerciseData: INewExerciseInput
+	newExerciseData: INewExerciseInput,
+	exerciseId: string
 ): Promise<{ data: any; error: TError }> => {
-	let exerciseId = uuidv4();
 	let [error, response] = await fetcher(
-		`/authorized/:${exerciseId}}`,
+		`/authorized/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },
