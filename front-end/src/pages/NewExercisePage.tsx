@@ -568,17 +568,19 @@ export const NewExerciseInput: React.FC<TProps> = ({
 				</Form.Item>
 
 				<Form.Item label="Publish" className="white-font">
-					<Form.Item name="public">
-						<Radio.Group
-						// onChange={handlePublishRadio}
-						>
-							<Radio value={false}>Private</Radio>
-							<Radio value={true}>Public</Radio>
-						</Radio.Group>
-					</Form.Item>
-					<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
-						<QuestionCircleOutlined />
-					</Tooltip>
+					<Space>
+						<Form.Item name="public">
+							<Radio.Group
+							// onChange={handlePublishRadio}
+							>
+								<Radio value={false}>Private</Radio>
+								<Radio value={true}>Public</Radio>
+							</Radio.Group>
+						</Form.Item>
+						<Tooltip title="Public exercises will be reviewed for accuracy before publishing">
+							<QuestionCircleOutlined />
+						</Tooltip>
+					</Space>
 				</Form.Item>
 
 				{/* <Form.Item label="radio" className="white-font">
