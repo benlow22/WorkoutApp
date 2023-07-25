@@ -309,11 +309,11 @@ export const getUsersExerciseDataAPI = async (
 
 export const postNewExerciseAPI = async (
 	session: ISession,
-	newExerciseData: INewExerciseInput
+	newExerciseData: INewExerciseInput,
+	exerciseId: string
 ): Promise<{ data: any; error: TError }> => {
-	let exerciseId = uuidv4();
 	let [error, response] = await fetcher(
-		`/authorized/:${exerciseId}}`,
+		`/authorized/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },

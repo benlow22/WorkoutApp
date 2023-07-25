@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import "../styles/exercises.css";
+import { v4 as uuidv4 } from "uuid";
 
 import {
 	CloseOutlined,
@@ -25,9 +26,10 @@ import {
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { AuthContext } from "../contexts/AuthProvider";
-import { isValidUrl, shortenUrl } from "../utils/utils";
+import { isValidUrl, shortenUrl, transformExercisePost } from "../utils/utils";
 import { postNewExerciseAPI } from "../api/api";
 import { useRequest } from "../hooks/useRequest";
+import { newExerciseExample } from "../sample data/newExercise";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -108,13 +110,16 @@ export const NewExerciseInput: React.FC<TProps> = ({
 			const description = hideDescription
 				? undefined
 				: formValues.description;
-			const newForm = {
-				...formValues,
-				muscles: musclesList,
-				links: linkList,
-				description: description,
-			};
-			postNewExerciseAPI(session!, newForm);
+			const exerciseId = uuidv4();
+			const newForm = transformExercisePost(formValues, userId);
+			// {
+			// 	...formValues,
+			// 	muscles: musclesList,
+			// 	links: linkList,
+			// 	description: description,
+			// };
+
+			// postNewExerciseAPI(session!, newForm, exerciseId);
 
 			console.log("Received values of form: ", newForm);
 		}
@@ -171,6 +176,11 @@ export const NewExerciseInput: React.FC<TProps> = ({
 				style={{ maxWidth: 600 }}
 			>
 				<div className="exercise-name-container">
+					<Form.Item
+						name="createdBy"
+						hidden
+						initialValue={userId}
+					></Form.Item>
 					<Form.Item
 						name="name"
 						rules={[
@@ -482,11 +492,11 @@ export const NewExerciseInput: React.FC<TProps> = ({
 								display: "inline-block",
 								width: "100px",
 							}}
-							name="weight"
+							name="defaultWeight"
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item name="weightUnits">
+						<Form.Item name="defaultWeightUnits">
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -523,17 +533,19 @@ export const NewExerciseInput: React.FC<TProps> = ({
 								display: "inline-block",
 								width: "100px",
 							}}
-							name="time"
+							name="defaultTime"
+							initialValue={null}
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="timeUnits">
+						<Form.Item name="defaultTimeUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
 								style={{
 									alignItems: "flex-end",
 								}}
+								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
