@@ -30,12 +30,13 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await req.supabase
 		.from("workouts")
-		.select("*, exercises(*)")
+		.select("*, exercises: exercise(*)")
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	// if there is data, send it back = 200 status
 	if (data) {
 		res.send(data);
+		console.log(data);
 	} else {
 		res.status(404).send(error);
 	}
@@ -60,7 +61,7 @@ router.delete("/workouts/:workoutId", async (req, res) => {
 // EXERCISES
 router.get("/exercises", async (req, res) => {
 	const { data, error } = await req.supabase.from("exercise").select("*");
-	console.log("get exercises. ", data); // show in terminal
+	// console.log("get exercises. ", data); // show in terminal
 	if (data) {
 		res.send(data);
 	} else {

@@ -31,6 +31,7 @@ export const WorkoutPage = () => {
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
+
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
 		useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
@@ -74,6 +75,7 @@ export const WorkoutPage = () => {
 		if (workoutResponse) {
 			setWorkout(workoutResponse.workout);
 			setExercises(workoutResponse.exercises);
+			console.log("EXERCISES", workoutResponse.exercises);
 		}
 	}, [workoutResponse]);
 
@@ -144,13 +146,10 @@ export const WorkoutPage = () => {
 					</button>
 				</div>
 				{/* DISPLAY EXERCISES HERE */}
-				{exercises.map((exercise) => (
-					<TestFetchExercise
-						exerciseId={exercise.id}
-						key={exercise.id}
-					/>
-				))}
-				<Exercises exercises={exercises} />
+				{/* {exercises.map((exercise) => (
+					<p>{exercise.name}</p>
+				))} */}
+				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
 				<AddExercise />
 				<br></br>

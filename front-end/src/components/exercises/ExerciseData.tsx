@@ -1,4 +1,6 @@
-export const ExerciseData = () => {
+import { INewExerciseInput } from "../../api/types";
+
+export const ExerciseData = (exercise: INewExerciseInput) => {
 	// get exercise data
 	//
 
