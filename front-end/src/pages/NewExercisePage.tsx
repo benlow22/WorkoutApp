@@ -48,7 +48,7 @@ type TProps = {
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const NewExercisePage: React.FC<TProps> = ({
+export const NewExerciseInput: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
 }) => {

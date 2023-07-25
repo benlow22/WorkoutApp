@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
-import { NewExercisePage } from "../../pages/NewExercisePage";
+import { NewExerciseInput } from "../../pages/NewExercisePage";
 
 export const AddExercise = () => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
@@ -49,11 +49,15 @@ export const AddExercise = () => {
 				/>
 			)}
 			{isNewExercise && exerciseName && (
-				<NewExercisePage
+				<NewExerciseInput
 					exerciseName={exerciseName}
 					setExerciseName={setExerciseName}
 				/>
 			)}
+			{
+				!isNewExercise && exerciseName
+				// <ExerciseInput />			)
+			}
 		</div>
 	);
 };
