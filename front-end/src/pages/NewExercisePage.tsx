@@ -57,20 +57,14 @@ export const NewExerciseInput: React.FC<TProps> = ({
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
 	const [editExerciseName, setEditExerciseName] = useState<boolean>(false);
-
+	const [newExerciseName, setNewExerciseName] = useState<string>("");
 	const [musclesList, setMusclesList] = useState<string[]>([]);
 	const [newMuscle, setNewMuscle] = useState<string>("");
 
 	const [linkList, setLinkList] = useState<string[]>([]);
 	const [newLink, setNewLink] = useState("");
 
-	const [isPublic, setIsPublic] = useState<boolean>(false);
-	const [linkArr, setLinkArr] = useState([]);
-
 	const { userId, session } = useContext(AuthContext);
-	const [messageApi, contextHolder] = message.useMessage();
-	const [disabledReps, setDisabledReps] = useState<boolean>(true);
-	const [disabled, setDisabled] = useState(true);
 
 	const [
 		postNewExerciseResponse,
@@ -87,12 +81,6 @@ export const NewExerciseInput: React.FC<TProps> = ({
 		const newLinkList = linkList.filter((link, i) => index !== i);
 		setLinkList(newLinkList);
 	};
-	const warning = () => {
-		messageApi.open({
-			type: "warning",
-			content: "One of the links is not working",
-		});
-	};
 
 	const addToMuscleList = () => {
 		if (newMuscle.length > 0 && !musclesList.includes(newMuscle)) {
@@ -103,32 +91,7 @@ export const NewExerciseInput: React.FC<TProps> = ({
 		}
 	};
 
-	const navigate = useNavigate();
-
-	const onFinish = async (formValues: any) => {
-		if (confirm("done with form?")) {
-			const description = hideDescription
-				? undefined
-				: formValues.description;
-			const exerciseId = uuidv4();
-			const newForm = transformExercisePost(formValues, userId);
-			// {
-			// 	...formValues,
-			// 	muscles: musclesList,
-			// 	links: linkList,
-			// 	description: description,
-			// };
-
-			// postNewExerciseAPI(session!, newForm, exerciseId);
-
-			console.log("Received values of form: ", newForm);
-		}
-	};
-
-	const [newExerciseName, setNewExerciseName] = useState<string>("");
-
 	const handleExerciseNameChange = () => {
-		console.log("ex", exerciseName, "mew", newExerciseName);
 		if (!newExerciseName) {
 			setEditExerciseName(false);
 		}
@@ -145,6 +108,27 @@ export const NewExerciseInput: React.FC<TProps> = ({
 		}
 	}, [editExerciseName]);
 
+	const onFinish = async (formValues: any) => {
+		if (confirm("done with form?")) {
+			const description = hideDescription
+				? undefined
+				: formValues.description;
+			const exerciseId = uuidv4();
+			const newForm = transformExercisePost(
+				{
+					...formValues,
+					id: exerciseId,
+					muscles: musclesList,
+					links: linkList,
+					description: description,
+				},
+				userId
+			);
+			postNewExerciseRequest(session!, newForm, exerciseId);
+			console.log("Received values of form: ", newForm);
+		}
+	};
+
 	const handleArr = () => {
 		let url: string = newLink;
 		if (isValidUrl(url)) {
@@ -158,11 +142,6 @@ export const NewExerciseInput: React.FC<TProps> = ({
 		} else {
 			alert("link is not a valid URL");
 		}
-	};
-
-	const handlePublishRadio = (e: RadioChangeEvent) => {
-		console.log(e.target.value);
-		setIsPublic(e.target.value);
 	};
 
 	return (
