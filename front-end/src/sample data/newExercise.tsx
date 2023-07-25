@@ -15,8 +15,8 @@ export const newExerciseExample: INewExerciseInput = {
 	public: false,
 	time: 0,
 	id: uuidv4(),
-	created_by: "d79ccff2-0177-46e8-93a2-ea3353691d28",
-	default_sets: [
+	createdBy: "d79ccff2-0177-46e8-93a2-ea3353691d28",
+	defaultSets: [
 		["25", "10"],
 		["25", "10"],
 		["25", "10"],
