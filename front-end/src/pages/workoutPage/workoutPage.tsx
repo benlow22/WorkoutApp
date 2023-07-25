@@ -146,9 +146,12 @@ export const WorkoutPage = () => {
 					</button>
 				</div>
 				{/* DISPLAY EXERCISES HERE */}
-				{/* {exercises.map((exercise) => (
-					<p>{exercise.name}</p>
-				))} */}
+				{exercises &&
+					exercises.map((exercise, index) => (
+						<p key={index}>
+							{index + 1}. {exercise.name}
+						</p>
+					))}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
 				<AddExercise />
