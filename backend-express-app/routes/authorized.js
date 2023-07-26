@@ -76,7 +76,7 @@ router.get("/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
 	const { data, error } = await req.supabase
 		.from("workouts")
-		.delete()
+		.select("*")
 		.eq("id");
 	console.log("deleted workout: ", data); // show in terminal
 	if (error) {
@@ -87,28 +87,7 @@ router.get("/:exerciseId", async (req, res) => {
 	}
 });
 
-// POST /api/authorized/:workoutId/:exerciseId
-router.post("/:workoutId/:exerciseId", async (req, res) => {
-	const workoutId = req.params.workoutId;
-	const exerciseId = req.params.exerciseId;
-	const userId = req.headers["user-id"];
-	console.log(userId, workoutId, exerciseId);
-	const { data, error } = await req.supabase
-		.from("workouts_exercises")
-		.insert([
-			{
-				workout_id: workoutId,
-				exercise_id: exerciseId,
-				created_by: userId,
-			},
-		])
-		.select("*");
-	console.log("errrror", error);
-	console.log("updated workout exercises", data);
-});
-module.exports = router;
-
-router.post("/:exerciseId", async (req, res) => {
+router.post("/exercises/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
 	console.log("exerciseId", exerciseId);
 	const userId = req.headers["user-id"];
@@ -144,3 +123,57 @@ router.post("/:exerciseId", async (req, res) => {
 		console.log("updated workout exercises", data);
 	}
 });
+
+router.post("/:exerciseId", async (req, res) => {
+	const exerciseId = req.params.exerciseId;
+	const userId = req.headers["user-id"];
+	const { data, error } = await req.supabase
+		.from("users_exercise")
+		.insert([
+			{
+				user_id: userId,
+				exercise_id: exerciseId,
+				sets: req.body.sets,
+				links: req.body.links,
+				notes: req.body.notes,
+				weight_units: req.body.weightUnits,
+				time_units: req.body.timeUnits,
+				time: req.body.time,
+			},
+		])
+		.select(
+			"name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units"
+		)
+		.single();
+	if (error) {
+		console.log("errrror", error);
+	} else {
+		res.send(data).status(204);
+		console.log("updated workout exercises", data);
+	}
+});
+
+// POST /api/authorized/:workoutId/:exerciseId
+router.post("/workout/:workoutId/:exerciseId", async (req, res) => {
+	const workoutId = req.params.workoutId;
+	const exerciseId = req.params.exerciseId;
+	const userId = req.headers["user-id"];
+	console.log(userId, workoutId, exerciseId);
+	const { data, error } = await req.supabase
+		.from("workouts_exercises")
+		.insert([
+			{
+				workout_id: workoutId,
+				exercise_id: exerciseId,
+				user_id: userId,
+			},
+		])
+		.select("*");
+	if (error) {
+		console.log("errrror", error);
+	} else {
+		res.send(data).status(204);
+		console.log("updated workout exercises", data);
+	}
+});
+module.exports = router;

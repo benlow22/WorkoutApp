@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { INewExerciseInput } from "../../api/types";
+import { INewExerciseInput, IWorkout } from "../../api/types";
 import { TExerciseTemplate } from "./AddExercise";
+import { useRequest } from "../../hooks/useRequest";
+import { addExerciseToWorkoutAPI } from "../../api/api";
+import AuthProvider, { AuthContext } from "../../contexts/AuthProvider";
 
 const testData = {
 	name: "Preacher Curls",
@@ -19,12 +22,21 @@ const testData = {
 
 type TProps = {
 	exercise: TExerciseTemplate;
+	workout: IWorkout;
 };
 
-export const AddExerciseData = ({ exercise }: TProps) => {
+export const AddExerciseData = ({ exercise, workout }: TProps) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
 	);
+
+	const { session } = useContext(AuthContext);
+	const [
+		addExerciseToWorkoutAPIResponse,
+		addExerciseToWorkoutAPILoading,
+		addExerciseToWorkoutAPIError,
+		addExerciseToWorkoutAPIRequest,
+	] = useRequest(addExerciseToWorkoutAPI);
 
 	useEffect(() => {
 		//GET personal set DATA
@@ -59,11 +71,13 @@ export const AddExerciseData = ({ exercise }: TProps) => {
 		}
 	};
 
-	const handleConfirm = ()-> {
-		// takes sets and posts to users_exercise 
+	const handleConfirm = () => {
+		// takes sets and posts to users_exercise
 		// also posts exercise to workouts_exercises
 		// CREATE API
-	}
+		console.log(workout, "workout");
+		addExerciseToWorkoutAPIRequest(workout.id, exercise.id, session!);
+	};
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>

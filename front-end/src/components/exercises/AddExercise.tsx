@@ -4,7 +4,7 @@ import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
 import { AddExerciseData } from "./AddExerciseData";
 import { TestFetchExercise } from "../TestFetchExercises";
-import { INewExerciseInput } from "../../api/types";
+import { INewExerciseInput, IWorkout } from "../../api/types";
 
 const testData = {
 	name: "Preacher Curls",
@@ -26,6 +26,7 @@ export type TExerciseTemplate = {
 	defaultTime: string | null;
 	defaultTimeUnits: string | null;
 	useTime: boolean;
+	id: string;
 };
 
 const convertStrArrToInt = (arrayOfSets: string[][]) => {};
@@ -38,7 +39,10 @@ type TAddExercise = {
 	defaultTimeUnits: string | null;
 	useTime: boolean;
 };
-export const AddExercise = () => {
+type TProps = {
+	workout: IWorkout;
+};
+export const AddExercise = ({ workout }: TProps) => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
 		useState<boolean>(true);
 	const [isShowSearchExerciseBar, setIsShowSearchExerciseBar] =
@@ -103,7 +107,10 @@ export const AddExercise = () => {
 				/>
 			)}
 			{exerciseTemplate && (
-				<AddExerciseData exercise={exerciseTemplate} />
+				<AddExerciseData
+					exercise={exerciseTemplate}
+					workout={workout}
+				/>
 			)}
 		</div>
 	);

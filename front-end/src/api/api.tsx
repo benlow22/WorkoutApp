@@ -265,9 +265,9 @@ export const addExerciseToWorkoutAPI = async (
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
-		`/authorized/${workoutId}/${exerciseId}}`,
+		`/authorized/workout/${workoutId}/${exerciseId}`,
 		session,
-		"PUT"
+		"POST"
 	);
 	let data: IExercise | null = null;
 	// if success
@@ -315,7 +315,7 @@ export const postNewExerciseAPI = async (
 	exerciseId: string
 ): Promise<{ data: any; error: TError }> => {
 	let [error, response] = await fetcher(
-		`/authorized/${exerciseId}`,
+		`/authorized/exercises/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },

@@ -138,7 +138,9 @@ export const WorkoutPage = () => {
 					))}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
-				<AddExercise />
+				{workoutResponse?.workout && (
+					<AddExercise workout={workoutResponse.workout} />
+				)}
 				<br></br>
 				{contextHolder}
 				<Button

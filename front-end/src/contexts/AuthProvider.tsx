@@ -57,7 +57,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	useEffect(() => {
 		setIsLoading(true);
 		const getSessionData = async () => {
-			supabase.auth.getSession().then(({ data: { session } }) => {
+			supabase.auth.refreshSession().then(({ data: { session } }) => {
 				if (session) {
 					setSession(session);
 					setAuth(true);
