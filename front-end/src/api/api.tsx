@@ -9,6 +9,7 @@ import {
 	TError,
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
+import { TExerciseTemplate } from "../components/exercises/AddExercise";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -320,7 +321,7 @@ export const postNewExerciseAPI = async (
 		{ "Content-Type": "application/json" },
 		newExerciseData
 	);
-	let data: null = null;
+	let data: TExerciseTemplate | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();

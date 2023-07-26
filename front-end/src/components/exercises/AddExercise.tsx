@@ -4,6 +4,7 @@ import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
 import { AddExerciseData } from "./AddExerciseData";
 import { TestFetchExercise } from "../TestFetchExercises";
+import { INewExerciseInput } from "../../api/types";
 
 const testData = {
 	name: "Preacher Curls",
@@ -16,6 +17,15 @@ const testData = {
 	defaultTime: null,
 	defaultTimeUnits: null,
 	useTime: false,
+};
+
+export type TExerciseTemplate = {
+	name: string;
+	defaultSets: string[][];
+	WeightUnits: string | null;
+	defaultTime: string | null;
+	defaultTimeUnits: string | null;
+	useTime: boolean;
 };
 
 const convertStrArrToInt = (arrayOfSets: string[][]) => {};
@@ -36,7 +46,9 @@ export const AddExercise = () => {
 	isShowSearchExerciseBar;
 	const [exerciseName, setExerciseName] = useState<string>("");
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
-
+	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
+	const [exerciseTemplate, setExerciseTemplate] =
+		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
 	useEffect(() => {
 		if (exerciseName) {
 			setIsShowSearchExerciseBar(false);
@@ -71,17 +83,19 @@ export const AddExercise = () => {
 					setExerciseName={setExerciseName}
 					setIsNewExercise={setIsNewExercise}
 					isNewExercise={isNewExercise}
+					setExercise={setExercise}
 				/>
 			)}
 			{isNewExercise && exerciseName && (
 				<CreateNewExerciseForm
 					exerciseName={exerciseName}
 					setExerciseName={setExerciseName}
+					setExercise={setExerciseTemplate}
 				/>
 			)}
 			{/* {!isNewExercise && exerciseName && ( */}
 
-			<AddExerciseData exercise={testData} />
+			<AddExerciseData exercise={exercise} />
 			{/* )} */}
 		</div>
 	);

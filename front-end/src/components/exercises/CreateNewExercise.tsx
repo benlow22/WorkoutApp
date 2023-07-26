@@ -33,6 +33,8 @@ import {
 } from "../../utils/utils";
 import { postNewExerciseAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
+import { INewExerciseInput } from "../../api/types";
+import { TExerciseTemplate } from "./AddExercise";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -51,11 +53,13 @@ const normFile = (e: any) => {
 type TProps = {
 	exerciseName: string;
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
+	setExercise: React.Dispatch<React.SetStateAction<TExerciseTemplate>>;
 };
 
 export const CreateNewExerciseForm: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
+	setExercise,
 }) => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
@@ -106,6 +110,15 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 	};
 
 	useEffect(() => {
+		console.log("yay");
+
+		console.log("SUICCESS", postNewExerciseResponse);
+		// let newExerciseTemplate = ({ defaultSets } =
+		// 	postNewExerciseResponse);
+		setExercise(postNewExerciseResponse);
+	}, [postNewExerciseResponse]);
+
+	useEffect(() => {
 		if (newExerciseName) {
 			setExerciseName(newExerciseName);
 			setNewExerciseName("");
@@ -128,7 +141,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 				},
 				userId
 			);
-			// postNewExerciseRequest(session!, newForm, exerciseId);
+			postNewExerciseRequest(session!, newForm, exerciseId);
 			console.log("Received values of form: ", newForm);
 		}
 	};
@@ -564,7 +577,14 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 
 				<Form.Item label="Publish" className="white-font">
 					<Space>
-						<Form.Item name="public">
+						<Form.Item
+							name="public"
+							rules={[
+								{
+									required: false,
+								},
+							]}
+						>
 							<Radio.Group
 							// onChange={handlePublishRadio}
 							>

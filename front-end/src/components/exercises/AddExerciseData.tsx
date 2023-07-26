@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
+import { INewExerciseInput } from "../../api/types";
 
 const testData = {
 	name: "Preacher Curls",
@@ -15,10 +16,14 @@ const testData = {
 	defaultTimeUnits: null,
 };
 
-export const AddExerciseData = ({ exercise }: any) => {
+export const AddExerciseData = (exercise: INewExerciseInput) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<string[][]>(
 		exercise.defaultSets
 	);
+
+	useEffect(() => {
+		//GET personal set DATA
+	}, []);
 	// get exercise data
 	//
 	const handleAddSet = () => {
@@ -50,15 +55,16 @@ export const AddExerciseData = ({ exercise }: any) => {
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
-			{weightAndRepsArr.map((set: string[], index: number) => (
-				<Set
-					set={set}
-					index={index}
-					weightUnits={exercise.defaultWeightUnits}
-					modifySets={handleModifySet}
-					deleteSets={handleDeleteSet}
-				/>
-			))}
+			{weightAndRepsArr &&
+				weightAndRepsArr.map((set: string[], index: number) => (
+					<Set
+						set={set}
+						index={index}
+						weightUnits={exercise.defaultWeightUnits}
+						modifySets={handleModifySet}
+						deleteSets={handleDeleteSet}
+					/>
+				))}
 			<div className="confirmation-buttons">
 				<Button
 					type="primary"

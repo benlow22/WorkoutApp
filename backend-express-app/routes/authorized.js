@@ -30,13 +30,15 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	const workoutUrl = req.params.workoutUrl;
 	const { data, error } = await req.supabase
 		.from("workouts")
-		.select("*, exercises: exercise(*)")
+		.select(
+			"*, exercises: exercise(name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units)"
+		)
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
 	// if there is data, send it back = 200 status
 	if (data) {
 		res.send(data);
-		console.log(data);
+		console.log("exerciseDATA", data);
 	} else {
 		res.status(404).send(error);
 	}
@@ -131,10 +133,13 @@ router.post("/:exerciseId", async (req, res) => {
 				default_time: req.body.defaultTime,
 			},
 		])
-		.select("*");
+		.select(
+			"name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units"
+		);
 	if (error) {
 		console.log("errrror", error);
 	} else {
+		res.send(data).status(204);
 		console.log("updated workout exercises", data);
 	}
 });
