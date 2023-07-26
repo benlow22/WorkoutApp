@@ -304,6 +304,7 @@ div.ant-space-item{
 
 .workout-controls {
 	display: flex;
+	position: relative;
 	width: 400px;
 	justify-content: space-around;
 	margin: auto;
@@ -340,6 +341,7 @@ div.ant-space-item{
 	z-index: 2;
 }
 .start-button-container {
+	height: 100%;
 	position: absolute;
 	display: flex;
 	align-items: center;

@@ -64,6 +64,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 	const [musclesList, setMusclesList] = useState<string[]>([]);
 	const [newMuscle, setNewMuscle] = useState<string>("");
 
+	const [isDisableForm, setIsDisableForm] = useState<boolean>(false);
 	const [linkList, setLinkList] = useState<string[]>([]);
 	const [newLink, setNewLink] = useState("");
 
@@ -127,7 +128,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 				},
 				userId
 			);
-			postNewExerciseRequest(session!, newForm, exerciseId);
+			// postNewExerciseRequest(session!, newForm, exerciseId);
 			console.log("Received values of form: ", newForm);
 		}
 	};
@@ -588,7 +589,11 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
 					<Space>
-						<Button type="primary" htmlType="submit">
+						<Button
+							type="primary"
+							htmlType="submit"
+							disabled={isDisableForm}
+						>
 							Submit
 						</Button>
 						<Button

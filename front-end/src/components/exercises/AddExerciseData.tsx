@@ -14,6 +14,7 @@ const testData = {
 	defaultTime: null,
 	defaultTimeUnits: null,
 };
+
 export const AddExerciseData = ({ exercise }: any) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<string[][]>(
 		exercise.defaultSets
@@ -39,6 +40,13 @@ export const AddExerciseData = ({ exercise }: any) => {
 		}
 	};
 
+	const handleModifySet = (newSet: string[], i: number) => {
+		const newExerciseSetData = new Array(...weightAndRepsArr);
+		newExerciseSetData[i] = newSet;
+		console.log("newSETTT", newExerciseSetData);
+		setWeightAndRepsArr(newExerciseSetData);
+	};
+
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
@@ -47,7 +55,7 @@ export const AddExerciseData = ({ exercise }: any) => {
 					set={set}
 					index={index}
 					weightUnits={exercise.defaultWeightUnits}
-					setWeightAndReps={setWeightAndRepsArr}
+					modifySets={handleModifySet}
 					deleteSets={handleDeleteSet}
 				/>
 			))}

@@ -5,7 +5,7 @@ type TProps = {
 	set: string[];
 	index: number;
 	weightUnits: string;
-	setWeightAndReps: React.Dispatch<React.SetStateAction<string[][]>>;
+	modifySets: (newSet: string[], i: number) => void;
 	deleteSets: (i: number) => void;
 };
 
@@ -13,7 +13,7 @@ export const Set = ({
 	set,
 	index,
 	weightUnits,
-	setWeightAndReps,
+	modifySets,
 	deleteSets,
 }: TProps) => {
 	return (
@@ -26,9 +26,9 @@ export const Set = ({
 					size="small"
 					type="primary"
 					icon={<MinusOutlined />}
-					// onClick={() => {
-					// 	setNumberOfReps((prev) => prev - 1);
-					// }}
+					onClick={() => {
+						modifySets([set[0] - 1, set[1]], index);
+					}}
 				/>
 				<Button
 					// disabled={disableSet}

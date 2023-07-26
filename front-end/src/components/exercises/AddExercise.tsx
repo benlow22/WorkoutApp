@@ -18,6 +18,8 @@ const testData = {
 	useTime: false,
 };
 
+const convertStrArrToInt = (arrayOfSets: string[][]) => {};
+
 type TAddExercise = {
 	name: string;
 	defaultSets: string[][];
