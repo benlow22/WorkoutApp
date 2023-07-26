@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../styles/exercises.css";
+import "../../styles/exercises.css";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -25,11 +25,14 @@ import {
 	message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { AuthContext } from "../contexts/AuthProvider";
-import { isValidUrl, shortenUrl, transformExercisePost } from "../utils/utils";
-import { postNewExerciseAPI } from "../api/api";
-import { useRequest } from "../hooks/useRequest";
-import { newExerciseExample } from "../sample data/newExercise";
+import { AuthContext } from "../../contexts/AuthProvider";
+import {
+	isValidUrl,
+	shortenUrl,
+	transformExercisePost,
+} from "../../utils/utils";
+import { postNewExerciseAPI } from "../../api/api";
+import { useRequest } from "../../hooks/useRequest";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -50,7 +53,7 @@ type TProps = {
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
 };
 
-export const NewExerciseInput: React.FC<TProps> = ({
+export const CreateNewExerciseForm: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
 }) => {

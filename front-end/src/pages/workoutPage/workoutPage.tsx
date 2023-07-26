@@ -9,23 +9,15 @@ import { Button, message } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { SearchExercises } from "../../components/SearchExercises";
-import { Exercises } from "../../components/Exercises";
-import { TestFetchExercise } from "../../components/TestFetchExercises";
 import { useRequest } from "../../hooks/useRequest";
 import { IExercise, IWorkout } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
 
-// type IExercise = {
-// 	name: any;
-// 	id?: any;
-// };
-
 export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const [allExercises, setAllExercises] = useState<IExercise[]>([]);
+
 	const { session } = useContext(AuthContext);
 	const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
@@ -58,18 +50,10 @@ export const WorkoutPage = () => {
 	] = useRequest(usersAndPublicExercisesAPI);
 
 	useEffect(() => {
-		usersAndPublicExercisesRequest(session!);
 		if (workoutUrl) {
 			workoutRequest(workoutUrl, session!);
 		}
 	}, []);
-
-	useEffect(() => {
-		if (!usersAndPublicExercisesLoading) {
-			if (usersAndPublicExercisesResponse)
-				setAllExercises(usersAndPublicExercisesResponse);
-		}
-	}, [usersAndPublicExercisesLoading]);
 
 	useEffect(() => {
 		if (workoutResponse) {

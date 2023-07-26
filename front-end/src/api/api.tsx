@@ -327,7 +327,7 @@ export const postNewExerciseAPI = async (
 		// alter data if need be
 		data = respJSON;
 	} else {
-		error = new Error(`Adding exercise to workout from Supabase`, {
+		error = new Error(`Adding exercise to DB`, {
 			cause: error,
 		});
 	}

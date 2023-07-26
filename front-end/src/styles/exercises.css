@@ -89,3 +89,23 @@ textarea.ant-input {
 label.ant-radio-button-wrapper {
 	width: 40px;
 }
+
+/* Add Exercise - verify sets before adding to workout */
+.add-exercise-data-box {
+	border: 4px solid #3586f8;
+	border-radius: 15px;
+}
+
+h3.add-exercise-data-exercise-name {
+	font-weight: normal;
+	font-size: 25px;
+	margin: 5px;
+}
+
+.exercise-set {
+	display: flex;
+	align-items: center;
+	width: 350px;
+	justify-content: space-between;
+	margin: auto;
+}

@@ -1,8 +1,31 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
-import { NewExerciseInput } from "../../pages/NewExercisePage";
+import { CreateNewExerciseForm } from "./CreateNewExercise";
+import { AddExerciseData } from "./AddExerciseData";
+import { TestFetchExercise } from "../TestFetchExercises";
 
+const testData = {
+	name: "Preacher Curls",
+	defaultSets: [
+		["25", "10"],
+		["30", "10"],
+		["35", "10"],
+	],
+	defaultWeightUnits: "lbs",
+	defaultTime: null,
+	defaultTimeUnits: null,
+	useTime: false,
+};
+
+type TAddExercise = {
+	name: string;
+	defaultSets: string[][];
+	defaultWeightUnits: string | null;
+	defaultTime: string | null;
+	defaultTimeUnits: string | null;
+	useTime: boolean;
+};
 export const AddExercise = () => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
 		useState<boolean>(true);
@@ -49,15 +72,15 @@ export const AddExercise = () => {
 				/>
 			)}
 			{isNewExercise && exerciseName && (
-				<NewExerciseInput
+				<CreateNewExerciseForm
 					exerciseName={exerciseName}
 					setExerciseName={setExerciseName}
 				/>
 			)}
-			{
-				!isNewExercise && exerciseName
-				// <ExerciseInput />			)
-			}
+			{/* {!isNewExercise && exerciseName && ( */}
+
+			<AddExerciseData exercise={testData} />
+			{/* )} */}
 		</div>
 	);
 };
