@@ -2,10 +2,10 @@ import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 
 type TProps = {
-	set: string[];
+	set: number[];
 	index: number;
 	weightUnits: string | null;
-	modifySets: (newSet: string[], i: number) => void;
+	modifySets: (newSet: number[], i: number) => void;
 	deleteSets: (i: number) => void;
 };
 
@@ -35,9 +35,9 @@ export const Set = ({
 					size="small"
 					type="primary"
 					icon={<PlusOutlined />}
-					// onClick={() => {
-					// 	setNumberOfReps((prev) => prev + 1);
-					// }}
+					onClick={() => {
+						modifySets([set[0] + 1, set[1]], index);
+					}}
 				/>
 			</div>
 			<p>x {set[1]} reps</p>
@@ -47,18 +47,18 @@ export const Set = ({
 					size="small"
 					type="primary"
 					icon={<MinusOutlined />}
-					// onClick={() => {
-					// 	updateSets([numberOfReps, weight - 2], index);
-					// }}
+					onClick={() => {
+						modifySets([set[0], set[1] - 1], index);
+					}}
 				/>
 				<Button
 					// disabled={disableSet}
 					size="small"
 					type="primary"
 					icon={<PlusOutlined />}
-					// onClick={() => {
-					// 	incrementWeight(index);
-					// }}
+					onClick={() => {
+						modifySets([set[0], set[1] + 1], index);
+					}}
 				/>
 			</div>
 			{/* {disableSet ? (

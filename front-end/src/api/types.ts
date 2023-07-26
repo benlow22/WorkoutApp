@@ -31,7 +31,7 @@ export interface IExercise {
 	muscles: string[];
 	"Exercise Group": string[];
 	public: true;
-	default_sets: string[][];
+	default_sets: number[][];
 }
 
 export interface INewExerciseInput {
@@ -40,7 +40,7 @@ export interface INewExerciseInput {
 	equipment: string[];
 	id: string;
 	createdBy: string;
-	defaultSets: string[][];
+	defaultSets: number[][];
 	fitnessElement: string[];
 	links: string[];
 	muscleGroup: string[];

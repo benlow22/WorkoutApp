@@ -22,7 +22,7 @@ type TProps = {
 };
 
 export const AddExerciseData = ({ exercise }: TProps) => {
-	const [weightAndRepsArr, setWeightAndRepsArr] = useState<string[][]>(
+	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
 	);
 
@@ -51,18 +51,24 @@ export const AddExerciseData = ({ exercise }: TProps) => {
 		}
 	};
 
-	const handleModifySet = (newSet: string[], i: number) => {
-		const newExerciseSetData = new Array(...weightAndRepsArr);
-		newExerciseSetData[i] = newSet;
-		console.log("newSETTT", newExerciseSetData);
-		setWeightAndRepsArr(newExerciseSetData);
+	const handleModifySet = (newSet: number[], i: number) => {
+		if (!newSet.some((element) => element < 0)) {
+			const newExerciseSetData = new Array(...weightAndRepsArr);
+			newExerciseSetData[i] = newSet;
+			setWeightAndRepsArr(newExerciseSetData);
+		}
 	};
 
+	const handleConfirm = ()-> {
+		// takes sets and posts to users_exercise 
+		// also posts exercise to workouts_exercises
+		// CREATE API
+	}
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
 			{weightAndRepsArr &&
-				weightAndRepsArr.map((set: string[], index: number) => (
+				weightAndRepsArr.map((set: number[], index: number) => (
 					<Set
 						key={index}
 						set={set}
@@ -84,7 +90,7 @@ export const AddExerciseData = ({ exercise }: TProps) => {
 				<Button
 					type="primary"
 					icon={<PlusOutlined />}
-					// onClick={handleAddSet}
+					onClick={handleConfirm}
 					className="add-set-button"
 					style={{ backgroundColor: "Green" }}
 				>

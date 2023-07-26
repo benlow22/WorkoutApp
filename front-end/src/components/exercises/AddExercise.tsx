@@ -21,7 +21,7 @@ const testData = {
 
 export type TExerciseTemplate = {
 	name: string;
-	defaultSets: string[][];
+	defaultSets: number[][];
 	defaultWeightUnits: string | null;
 	defaultTime: string | null;
 	defaultTimeUnits: string | null;
@@ -32,7 +32,7 @@ const convertStrArrToInt = (arrayOfSets: string[][]) => {};
 
 type TAddExercise = {
 	name: string;
-	defaultSets: string[][];
+	defaultSets: number[][];
 	defaultWeightUnits: string | null;
 	defaultTime: string | null;
 	defaultTimeUnits: string | null;

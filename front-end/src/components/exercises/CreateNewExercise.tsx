@@ -174,11 +174,9 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 				style={{ maxWidth: 600 }}
 			>
 				<div className="exercise-name-container">
-					<Form.Item
-						name="createdBy"
-						hidden
-						initialValue={userId}
-					></Form.Item>
+					<Form.Item name="createdBy" hidden initialValue={userId}>
+						<input value={userId}></input>
+					</Form.Item>
 					<Form.Item
 						name="name"
 						rules={[
@@ -542,7 +540,6 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 								style={{
 									alignItems: "flex-end",
 								}}
-								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
