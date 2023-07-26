@@ -6,9 +6,16 @@ type TProps = {
 	index: number;
 	weightUnits: string;
 	setWeightAndReps: React.Dispatch<React.SetStateAction<string[][]>>;
+	deleteSets: (i: number) => void;
 };
 
-export const Set = ({ set, index, weightUnits, setWeightAndReps }: TProps) => {
+export const Set = ({
+	set,
+	index,
+	weightUnits,
+	setWeightAndReps,
+	deleteSets,
+}: TProps) => {
 	return (
 		<div className="white-font exercise-set">
 			<p>{index + 1}.</p>
@@ -78,7 +85,7 @@ export const Set = ({ set, index, weightUnits, setWeightAndReps }: TProps) => {
 				className="delete-set-button"
 				type="text"
 				size="small"
-				// onClick={() => removeSet(index)}
+				onClick={() => deleteSets(index)}
 			/>
 		</div>
 	);

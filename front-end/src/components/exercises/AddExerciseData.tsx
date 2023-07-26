@@ -27,6 +27,18 @@ export const AddExerciseData = ({ exercise }: any) => {
 		setWeightAndRepsArr(newWeightAndRepsArr);
 	};
 
+	const handleDeleteSet = (i: number) => {
+		const newSets = weightAndRepsArr.filter((set, index) => index !== i);
+		const newWeightAndRepsArr = Array(...newSets);
+		if (newSets.length >= 1) {
+			setWeightAndRepsArr(newSets);
+		} else {
+			alert(
+				"cannot have 0 sets, if you want to delete the exercise, click the remove exercise Button"
+			);
+		}
+	};
+
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
@@ -36,6 +48,7 @@ export const AddExerciseData = ({ exercise }: any) => {
 					index={index}
 					weightUnits={exercise.defaultWeightUnits}
 					setWeightAndReps={setWeightAndRepsArr}
+					deleteSets={handleDeleteSet}
 				/>
 			))}
 			<div className="confirmation-buttons">
