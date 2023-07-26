@@ -13,6 +13,7 @@ import {
 } from "../api/api";
 import { IExercise, INewExerciseInput } from "../api/types";
 import { useRequest } from "../hooks/useRequest";
+import { TExerciseTemplate } from "./exercises/AddExercise";
 
 const { Search } = Input;
 
@@ -31,7 +32,9 @@ type TProps = {
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
 	setIsNewExercise: React.Dispatch<React.SetStateAction<boolean>>;
 	isNewExercise: boolean;
-	setExercise: React.Dispatch<React.SetStateAction<INewExerciseInput>>;
+	setExercise: React.Dispatch<
+		React.SetStateAction<TExerciseTemplate | undefined>
+	>;
 };
 /* SearchExercises component should:
 	- GET all public and users exercises

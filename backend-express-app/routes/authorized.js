@@ -135,7 +135,8 @@ router.post("/:exerciseId", async (req, res) => {
 		])
 		.select(
 			"name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units"
-		);
+		)
+		.single();
 	if (error) {
 		console.log("errrror", error);
 	} else {

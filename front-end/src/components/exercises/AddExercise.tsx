@@ -22,7 +22,7 @@ const testData = {
 export type TExerciseTemplate = {
 	name: string;
 	defaultSets: string[][];
-	WeightUnits: string | null;
+	defaultWeightUnits: string | null;
 	defaultTime: string | null;
 	defaultTimeUnits: string | null;
 	useTime: boolean;
@@ -49,12 +49,21 @@ export const AddExercise = () => {
 	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
 	const [exerciseTemplate, setExerciseTemplate] =
 		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
+
 	useEffect(() => {
 		if (exerciseName) {
 			setIsShowSearchExerciseBar(false);
 			setIsShowAddExerciseButton(false);
 		}
 	}, [exerciseName]);
+
+	useEffect(() => {
+		if (exerciseTemplate) {
+			console.log("MADE IT TO THE TOP", exerciseTemplate);
+			setExerciseName(exerciseTemplate.name);
+			setIsNewExercise(false);
+		}
+	}, [exerciseTemplate]);
 
 	return (
 		/* add exercise button 
@@ -83,7 +92,7 @@ export const AddExercise = () => {
 					setExerciseName={setExerciseName}
 					setIsNewExercise={setIsNewExercise}
 					isNewExercise={isNewExercise}
-					setExercise={setExercise}
+					setExercise={setExerciseTemplate}
 				/>
 			)}
 			{isNewExercise && exerciseName && (
@@ -93,10 +102,9 @@ export const AddExercise = () => {
 					setExercise={setExerciseTemplate}
 				/>
 			)}
-			{/* {!isNewExercise && exerciseName && ( */}
-
-			<AddExerciseData exercise={exercise} />
-			{/* )} */}
+			{exerciseTemplate && (
+				<AddExerciseData exercise={exerciseTemplate} />
+			)}
 		</div>
 	);
 };

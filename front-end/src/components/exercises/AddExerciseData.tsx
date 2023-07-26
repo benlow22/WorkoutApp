@@ -3,6 +3,7 @@ import { Set } from "./sets/set";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { INewExerciseInput } from "../../api/types";
+import { TExerciseTemplate } from "./AddExercise";
 
 const testData = {
 	name: "Preacher Curls",
@@ -16,13 +17,18 @@ const testData = {
 	defaultTimeUnits: null,
 };
 
-export const AddExerciseData = (exercise: INewExerciseInput) => {
+type TProps = {
+	exercise: TExerciseTemplate;
+};
+
+export const AddExerciseData = ({ exercise }: TProps) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<string[][]>(
 		exercise.defaultSets
 	);
 
 	useEffect(() => {
 		//GET personal set DATA
+		console.log(weightAndRepsArr, "weightAndRepsArr");
 	}, []);
 	// get exercise data
 	//
@@ -58,6 +64,7 @@ export const AddExerciseData = (exercise: INewExerciseInput) => {
 			{weightAndRepsArr &&
 				weightAndRepsArr.map((set: string[], index: number) => (
 					<Set
+						key={index}
 						set={set}
 						index={index}
 						weightUnits={exercise.defaultWeightUnits}

@@ -53,7 +53,9 @@ const normFile = (e: any) => {
 type TProps = {
 	exerciseName: string;
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
-	setExercise: React.Dispatch<React.SetStateAction<TExerciseTemplate>>;
+	setExercise: React.Dispatch<
+		React.SetStateAction<TExerciseTemplate | undefined>
+	>;
 };
 
 export const CreateNewExerciseForm: React.FC<TProps> = ({
@@ -323,7 +325,6 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 					>
 						<Option value="Arms">Arms</Option>
 						<Option value="Back">Back</Option>
-						<Option value="Cardio">Cardio</Option>
 						<Option value="Chest">Chest</Option>
 						<Option value="Core">Core</Option>
 						<Option value="Flexibility">Flexibility</Option>
@@ -581,7 +582,8 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 							name="public"
 							rules={[
 								{
-									required: false,
+									required: true,
+									message: "Publish is required",
 								},
 							]}
 						>
