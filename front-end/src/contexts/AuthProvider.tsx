@@ -61,7 +61,6 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 
 	// when going to APP, get session, set if logged in
 	useEffect(() => {
-		console.log("hi");
 		const getSessionData = async () => {
 			supabase.auth.refreshSession().then(({ data: { session } }) => {
 				if (session) {

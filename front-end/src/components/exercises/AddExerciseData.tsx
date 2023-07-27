@@ -6,7 +6,17 @@ import { INewExerciseInput, IWorkout } from "../../api/types";
 import { TExerciseTemplate } from "./AddExercise";
 import { useRequest } from "../../hooks/useRequest";
 import { addExerciseToWorkoutAPI } from "../../api/api";
-import AuthProvider, { AuthContext } from "../../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
+
+export type TUsersExerciseData = {
+	//updated Data
+	links?: string[] | null;
+	notes?: string[] | null;
+	sets: number[][];
+	weight_units: string | null;
+	time_units: string | null;
+	time: boolean;
+};
 
 const testData = {
 	name: "Preacher Curls",
@@ -23,12 +33,24 @@ const testData = {
 type TProps = {
 	exercise: TExerciseTemplate;
 	workout: IWorkout;
+	handleAddExercise: () => void;
 };
 
-export const AddExerciseData = ({ exercise, workout }: TProps) => {
+export const AddExerciseData = ({
+	exercise,
+	workout,
+	handleAddExercise,
+}: TProps) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
 	);
+	const [timeUnits, setTimeUnits] = useState<string | null>(
+		exercise.defaultTimeUnits
+	);
+	const [weightUnits, setWeightUnits] = useState<string | null>(
+		exercise.defaultWeightUnits
+	);
+	const [useTime, setUseTime] = useState<boolean>(exercise.useTime);
 
 	const { session } = useContext(AuthContext);
 	const [
@@ -40,7 +62,7 @@ export const AddExerciseData = ({ exercise, workout }: TProps) => {
 
 	useEffect(() => {
 		//GET personal set DATA
-		console.log(weightAndRepsArr, "weightAndRepsArr");
+		console.log("weightAndRepsArr", weightAndRepsArr);
 	}, []);
 	// get exercise data
 	//
@@ -73,6 +95,17 @@ export const AddExerciseData = ({ exercise, workout }: TProps) => {
 
 	const handleConfirm = () => {
 		// takes sets and posts to users_exercise
+		// sets: req.body.sets,
+		// links: req.body.links,
+		// notes: req.body.notes,
+		handleAddExercise();
+		const updatedExerciseData = {
+			sets: weightAndRepsArr,
+			weight_units: weightUnits,
+			time_units: timeUnits,
+			time: useTime,
+		};
+
 		// also posts exercise to workouts_exercises
 		// CREATE API
 		console.log(workout, "workout");
@@ -105,7 +138,7 @@ export const AddExerciseData = ({ exercise, workout }: TProps) => {
 					type="primary"
 					icon={<PlusOutlined />}
 					onClick={handleConfirm}
-					className="add-set-button"
+					className="confirm-exercise-button"
 					style={{ backgroundColor: "Green" }}
 				>
 					Confirm Exercise

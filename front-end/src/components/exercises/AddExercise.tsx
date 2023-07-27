@@ -51,7 +51,10 @@ export const AddExercise = ({ workout }: TProps) => {
 	const [exerciseName, setExerciseName] = useState<string>("");
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
-	const [exerciseTemplate, setExerciseTemplate] =
+	const [isShowExerciseConfirmation, setIsShowExerciseConfirmation] =
+		useState<boolean>(false);
+
+	const [exerciseDefaultValues, setExerciseDefaultValues] =
 		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
 
 	useEffect(() => {
@@ -62,12 +65,25 @@ export const AddExercise = ({ workout }: TProps) => {
 	}, [exerciseName]);
 
 	useEffect(() => {
-		if (exerciseTemplate) {
-			console.log("MADE IT TO THE TOP", exerciseTemplate);
-			setExerciseName(exerciseTemplate.name);
+		if (exerciseDefaultValues) {
+			console.log("MADE IT TO THE TOP", exerciseDefaultValues);
+			setExerciseName(exerciseDefaultValues.name);
 			setIsNewExercise(false);
 		}
-	}, [exerciseTemplate]);
+	}, [exerciseDefaultValues]);
+
+	const handleCreateNewExercise = (newExerciseDefault: TExerciseTemplate) => {
+		setExerciseDefaultValues(newExerciseDefault);
+		setIsShowExerciseConfirmation(true);
+	};
+
+	const handleAddExercise = () => {
+		// once exercise is submitted and customized
+		setIsShowAddExerciseButton(true);
+		setIsNewExercise(true);
+		setExerciseName("");
+		setIsShowExerciseConfirmation(false);
+	};
 
 	return (
 		/* add exercise button 
@@ -96,20 +112,22 @@ export const AddExercise = ({ workout }: TProps) => {
 					setExerciseName={setExerciseName}
 					setIsNewExercise={setIsNewExercise}
 					isNewExercise={isNewExercise}
-					setExercise={setExerciseTemplate}
+					setExercise={setExerciseDefaultValues}
 				/>
 			)}
 			{isNewExercise && exerciseName && (
 				<CreateNewExerciseForm
 					exerciseName={exerciseName}
 					setExerciseName={setExerciseName}
-					setExercise={setExerciseTemplate}
+					setExercise={setExerciseDefaultValues}
+					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{exerciseTemplate && (
+			{isShowExerciseConfirmation && (
 				<AddExerciseData
-					exercise={exerciseTemplate}
+					exercise={exerciseDefaultValues}
 					workout={workout}
+					handleAddExercise={handleAddExercise}
 				/>
 			)}
 		</div>

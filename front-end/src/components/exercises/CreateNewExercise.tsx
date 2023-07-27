@@ -56,12 +56,14 @@ type TProps = {
 	setExercise: React.Dispatch<
 		React.SetStateAction<TExerciseTemplate | undefined>
 	>;
+	handleCreateNewExercise: (newExerciseDefaults: TExerciseTemplate) => void;
 };
 
 export const CreateNewExerciseForm: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
 	setExercise,
+	handleCreateNewExercise,
 }) => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
@@ -113,11 +115,12 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 
 	useEffect(() => {
 		console.log("yay");
-
-		console.log("SUICCESS", postNewExerciseResponse);
-		// let newExerciseTemplate = ({ defaultSets } =
-		// 	postNewExerciseResponse);
-		setExercise(postNewExerciseResponse);
+		if (postNewExerciseResponse) {
+			console.log("SUICCESS", postNewExerciseResponse);
+			// let newExerciseTemplate = ({ defaultSets } =
+			// 	postNewExerciseResponse);
+			handleCreateNewExercise(postNewExerciseResponse);
+		}
 	}, [postNewExerciseResponse]);
 
 	useEffect(() => {
@@ -491,7 +494,10 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item name="defaultWeightUnits">
+						<Form.Item
+							name="defaultWeightUnits"
+							initialValue={"lbs"}
+						>
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -533,7 +539,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="defaultTimeUnits">
+						<Form.Item name="defaultTimeUnits" initialValue={"sec"}>
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"

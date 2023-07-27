@@ -10,6 +10,7 @@ import {
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 import { TExerciseTemplate } from "../components/exercises/AddExercise";
+import { TUsersExerciseData } from "../components/exercises/AddExerciseData";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -334,6 +335,32 @@ export const postNewExerciseAPI = async (
 	}
 	return { data, error };
 };
+export const upsertUsersExerciseDateAPI = async (
+	session: ISession,
+	usersExerciseData: TUsersExerciseData,
+	exerciseId: string
+): Promise<{ data: any; error: TError }> => {
+	let [error, response] = await fetcher(
+		`/authorized/exercises/${exerciseId}`,
+		session,
+		"POST",
+		{ "Content-Type": "application/json" },
+		usersExerciseData
+	);
+	let data: TExerciseTemplate | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Adding exercise to DB`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
 // export const getWorkoutDay = async (workoutName: string = "") => {
 // 	const { data, error } = await supabase

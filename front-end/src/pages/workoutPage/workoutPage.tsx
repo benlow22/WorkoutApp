@@ -19,7 +19,7 @@ export const WorkoutPage = () => {
 	const navigate = useNavigate();
 
 	const { session } = useContext(AuthContext);
-	const [addExercise, setAddExercise] = useState<boolean>(false);
+	// const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
@@ -27,6 +27,7 @@ export const WorkoutPage = () => {
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
 		useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
+
 	const deleteWorkoutSuccess = () => {
 		messageApi.open({
 			type: "success",
@@ -80,17 +81,16 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	const toggleButton = () => {
-		addExercise ? setAddExercise(false) : setAddExercise(true);
-	};
+	// const toggleButton = () => {
+	// 	addExercise ? setAddExercise(false) : setAddExercise(true);
+	// };
 
-	const addExerciseToAll = (name: string) => {
-		console.log("addExerciseToAll called");
-		let newExercise = { name: name };
-		if (!exercises.find((exercise) => exercise.name === name)) {
-			console.log("ahahsda");
-			// setExercises([...exercises, newExercise]);
-			setAddExercise(false);
+	const addExerciseToWorkout = (newExercise: IExercise) => {
+		console.log("addExerciseToWorkout called");
+		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
+			console.log("exercise not already in workout.");
+			const updatedExerciseList = new Array(...exercises, newExercise);
+			setExercises(updatedExerciseList);
 		}
 	};
 
