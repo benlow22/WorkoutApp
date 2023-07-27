@@ -9,6 +9,7 @@ type IAuthContext = {
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
 	session: ISession | null;
+	initialUrl: string;
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setUsername: (newName: string) => void;
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
@@ -16,6 +17,7 @@ type IAuthContext = {
 	user: any;
 	auth: boolean | undefined;
 	contextIsLoading: boolean;
+	setInitialUrl: (url: string) => void;
 };
 
 export interface ISession {
@@ -24,19 +26,22 @@ export interface ISession {
 	refresh_token: string;
 	expires_at: number;
 }
+
 export const AuthContext = React.createContext<IAuthContext>({
 	userId: "",
 	username: "",
 	isLoggedIn: false,
 	workouts: [],
 	session: null,
+	initialUrl: "",
 	setIsLoggedIn: () => {},
 	setUsername: () => {},
 	setWorkouts: () => {},
 	setUserId: () => {},
 	user: null,
-	auth: false,
+	auth: undefined,
 	contextIsLoading: true,
+	setInitialUrl: () => {},
 });
 
 type IChildren = {
@@ -51,11 +56,12 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [session, setSession] = useState<any | null>(null);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [user, setUser] = useState<any>(null);
-	const [auth, setAuth] = useState<boolean>(false);
+	const [auth, setAuth] = useState<boolean | undefined>(undefined);
+	const [initialUrl, setInitialUrl] = useState<string>("");
 
 	// when going to APP, get session, set if logged in
 	useEffect(() => {
-		setIsLoading(true);
+		console.log("hi");
 		const getSessionData = async () => {
 			supabase.auth.refreshSession().then(({ data: { session } }) => {
 				if (session) {
@@ -65,6 +71,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setUsername(session.user.user_metadata.username);
 					setIsLoggedIn(true); // late can be removed and replaced with auth
 					setUser(session.user);
+				} else {
+					setAuth(false);
 				}
 				// setIsLoading(false); remove because next useEffect should also alway run atleast
 				return;
@@ -93,7 +101,6 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						setUsername(session.user.user_metadata.username);
 						setIsLoggedIn(true); // later can be removed and replaced with auth
 						setUser(session.user);
-						setIsLoading(false);
 					}
 				} else if (event === "SIGNED_OUT") {
 					console.log("Auth Provider:  signed OUT");
@@ -108,7 +115,6 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
 					document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
 					document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
-					setIsLoading(false);
 				}
 			}
 		);
@@ -155,6 +161,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				isLoggedIn,
 				workouts,
 				session,
+				initialUrl,
 				setIsLoggedIn,
 				setUsername,
 				setWorkouts,
@@ -162,6 +169,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				user,
 				auth,
 				contextIsLoading: isLoading,
+				setInitialUrl,
 			}}
 		>
 			{!isLoading && children}
