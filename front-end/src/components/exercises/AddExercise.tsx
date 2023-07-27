@@ -123,7 +123,7 @@ export const AddExercise = ({ workout }: TProps) => {
 					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{isShowExerciseConfirmation && (
+			{isShowExerciseConfirmation && exerciseDefaultValues && (
 				<AddExerciseData
 					exercise={exerciseDefaultValues}
 					workout={workout}
