@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthProvider";
 import { SpiningLoadingIcon } from "./components/loading/LoadingIcon";
 
@@ -8,22 +8,16 @@ const AuthRoute = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		if (contextIsLoading) {
-			setIsLoading(true);
-		} else {
+		if (!contextIsLoading && auth !== undefined) {
 			setIsLoading(false);
 		}
-	}, [contextIsLoading, auth]);
+		console.log("what is AUTH", auth);
+	}, [auth]);
 
-	if (isLoading) {
+	if (!isLoading && auth !== undefined) {
+		return auth ? <Outlet /> : <Navigate to="/login" />;
+	} else {
 		return <SpiningLoadingIcon />;
 	}
-
-	if (!auth && !isLoading) {
-		return <Navigate to="/login" />;
-	}
-
-	return <Outlet />;
 };
-
 export default AuthRoute;
