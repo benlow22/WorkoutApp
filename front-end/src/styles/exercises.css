@@ -94,6 +94,9 @@ label.ant-radio-button-wrapper {
 .add-exercise-data-box {
 	border: 4px solid #3586f8;
 	border-radius: 15px;
+	max-width: 450px;
+	margin: auto;
+	padding-bottom: 10px;
 }
 
 h3.add-exercise-data-exercise-name {
@@ -108,4 +111,16 @@ h3.add-exercise-data-exercise-name {
 	width: 350px;
 	justify-content: space-between;
 	margin: auto;
+}
+
+.confirm-exercise-button,
+.add-set-button {
+	margin: 10px;
+}
+
+.confirmation-buttons {
+	display: flex;
+	margin: auto;
+	width: 300px;
+	justify-content: space-around;
 }
