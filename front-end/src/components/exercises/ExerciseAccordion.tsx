@@ -8,11 +8,18 @@ type TProps = {
 	index: number;
 };
 
-const ExerciseAccordion = ({ exercise }: TProps) => {
+const ExerciseAccordion = ({ exercise, index }: TProps) => {
 	return (
-		<Button type="primary" className="login-button">
-			{exercise.name}
-		</Button>
+		<div className="exercise-accordion">
+			<div className="exercise-accordion-heading">
+				<h3 className="index">{index + 1}.</h3>
+				<h3>{exercise.name}</h3>
+				<h5 className="right-side expand-summary">0/3 *</h5>
+			</div>
+			<Button type="primary" className="login-button">
+				{exercise.name}
+			</Button>
+		</div>
 	);
 };
 
