@@ -38,6 +38,8 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
+	// .order('date_completed', { ascending: false }) NEED TO ADD !!!
+
 	// if there is data, send it back = 200 status
 	if (data) {
 		res.send(data);

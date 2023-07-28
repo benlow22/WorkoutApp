@@ -13,6 +13,8 @@ import { useRequest } from "../../hooks/useRequest";
 import { IExercise, IWorkout, TUsersExerciseData } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
+import Exercise from "../../components/Exercise";
+import ExerciseAccordion from "../../components/exercises/ExerciseAccordion";
 
 export const WorkoutPage = () => {
 	const location = useLocation();
@@ -105,7 +107,7 @@ export const WorkoutPage = () => {
 			);
 		}
 		return (
-			<div>
+			<div className="workout-page">
 				{workout && (
 					<section className="new-workout-name white-font">
 						<EditWorkoutNameButton workout={workout} />
@@ -131,9 +133,11 @@ export const WorkoutPage = () => {
 				{/* DISPLAY EXERCISES HERE */}
 				{exercises &&
 					exercises.map((exercise, index) => (
-						<p key={index}>
-							{index + 1}. {exercise.name}
-						</p>
+						<ExerciseAccordion
+							exercise={exercise}
+							key={index}
+							index={index}
+						/>
 					))}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
