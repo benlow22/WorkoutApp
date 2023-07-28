@@ -81,6 +81,7 @@ export const AddExercise = ({ workout }: TProps) => {
 
 	const handleAddExercise = () => {
 		// once exercise is submitted and customized
+		addExerciseToWorkoutSuccess(exerciseName);
 		setIsShowAddExerciseButton(true);
 		setIsNewExercise(true);
 		setExerciseName("");
@@ -93,7 +94,15 @@ export const AddExercise = ({ workout }: TProps) => {
 		messageApi.open({
 			type: "success",
 			content: `New exercise "${newExerciseDefault.name}" created`,
-			duration: 5,
+			duration: 3,
+		});
+	};
+
+	const addExerciseToWorkoutSuccess = (exerciseName: string) => {
+		messageApi.open({
+			type: "success",
+			content: `"${exerciseName}" had been added to your workout`,
+			duration: 3,
 		});
 	};
 	return (
