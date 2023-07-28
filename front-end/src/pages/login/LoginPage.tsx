@@ -11,40 +11,37 @@ export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	const { auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	console.log("initial Login page");
 
 	useEffect(() => {
-		if (contextIsLoading) {
-			setIsLoading(true);
-		} else {
+		if (!contextIsLoading && auth !== undefined) {
 			setIsLoading(false);
 		}
-	}, [contextIsLoading, auth]);
+	}, [auth]);
 
-	if (isLoading) {
-		return <SpiningLoadingIcon />;
-	}
-
-	if (auth && !isLoading) {
-		return <Navigate to="/workouts" />;
-	}
-
-	return (
-		<div className="auth-page">
-			<p>Please Login Below</p>
-			<Auth
-				supabaseClient={supabase}
-				appearance={{
-					theme: ThemeSupa,
-					variables: {
-						default: {
-							colors: {
-								brand: "red",
-								brandAccent: "darkred",
+	return !isLoading ? (
+		auth ? (
+			<Navigate to="/workouts" />
+		) : (
+			<div className="auth-page">
+				<p>Please Login Below</p>
+				<Auth
+					supabaseClient={supabase}
+					appearance={{
+						theme: ThemeSupa,
+						variables: {
+							default: {
+								colors: {
+									brand: "red",
+									brandAccent: "darkred",
+								},
 							},
 						},
-					},
-				}}
-			/>
-		</div>
+					}}
+				/>
+			</div>
+		)
+	) : (
+		<SpiningLoadingIcon />
 	);
 };

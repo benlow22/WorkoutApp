@@ -1,9 +1,48 @@
 import { Button } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
-import { NewExerciseInput } from "../../pages/NewExercisePage";
+import { CreateNewExerciseForm } from "./CreateNewExercise";
+import { AddExerciseData } from "./AddExerciseData";
+import { TestFetchExercise } from "../TestFetchExercises";
+import { INewExerciseInput, IWorkout } from "../../api/types";
 
-export const AddExercise = () => {
+const testData = {
+	name: "Preacher Curls",
+	defaultSets: [
+		["25", "10"],
+		["30", "10"],
+		["35", "10"],
+	],
+	defaultWeightUnits: "lbs",
+	defaultTime: null,
+	defaultTimeUnits: null,
+	useTime: false,
+};
+
+export type TExerciseTemplate = {
+	name: string;
+	defaultSets: number[][];
+	defaultWeightUnits: string | null;
+	defaultTime: string | null;
+	defaultTimeUnits: string | null;
+	useTime: boolean;
+	id: string;
+};
+
+const convertStrArrToInt = (arrayOfSets: string[][]) => {};
+
+type TAddExercise = {
+	name: string;
+	defaultSets: number[][];
+	defaultWeightUnits: string | null;
+	defaultTime: string | null;
+	defaultTimeUnits: string | null;
+	useTime: boolean;
+};
+type TProps = {
+	workout: IWorkout;
+};
+export const AddExercise = ({ workout }: TProps) => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
 		useState<boolean>(true);
 	const [isShowSearchExerciseBar, setIsShowSearchExerciseBar] =
@@ -11,6 +50,12 @@ export const AddExercise = () => {
 	isShowSearchExerciseBar;
 	const [exerciseName, setExerciseName] = useState<string>("");
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
+	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
+	const [isShowExerciseConfirmation, setIsShowExerciseConfirmation] =
+		useState<boolean>(false);
+
+	const [exerciseDefaultValues, setExerciseDefaultValues] =
+		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
 
 	useEffect(() => {
 		if (exerciseName) {
@@ -18,6 +63,27 @@ export const AddExercise = () => {
 			setIsShowAddExerciseButton(false);
 		}
 	}, [exerciseName]);
+
+	useEffect(() => {
+		if (exerciseDefaultValues) {
+			console.log("MADE IT TO THE TOP", exerciseDefaultValues);
+			setExerciseName(exerciseDefaultValues.name);
+			setIsNewExercise(false);
+		}
+	}, [exerciseDefaultValues]);
+
+	const handleCreateNewExercise = (newExerciseDefault: TExerciseTemplate) => {
+		setExerciseDefaultValues(newExerciseDefault);
+		setIsShowExerciseConfirmation(true);
+	};
+
+	const handleAddExercise = () => {
+		// once exercise is submitted and customized
+		setIsShowAddExerciseButton(true);
+		setIsNewExercise(true);
+		setExerciseName("");
+		setIsShowExerciseConfirmation(false);
+	};
 
 	return (
 		/* add exercise button 
@@ -46,18 +112,24 @@ export const AddExercise = () => {
 					setExerciseName={setExerciseName}
 					setIsNewExercise={setIsNewExercise}
 					isNewExercise={isNewExercise}
+					setExercise={setExerciseDefaultValues}
 				/>
 			)}
 			{isNewExercise && exerciseName && (
-				<NewExerciseInput
+				<CreateNewExerciseForm
 					exerciseName={exerciseName}
 					setExerciseName={setExerciseName}
+					setExercise={setExerciseDefaultValues}
+					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{
-				!isNewExercise && exerciseName
-				// <ExerciseInput />			)
-			}
+			{isShowExerciseConfirmation && exerciseDefaultValues && (
+				<AddExerciseData
+					exercise={exerciseDefaultValues}
+					workout={workout}
+					handleAddExercise={handleAddExercise}
+				/>
+			)}
 		</div>
 	);
 };

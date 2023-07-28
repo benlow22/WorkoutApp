@@ -9,6 +9,8 @@ import {
 	TError,
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
+import { TExerciseTemplate } from "../components/exercises/AddExercise";
+import { TUsersExerciseData } from "../components/exercises/AddExerciseData";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -119,6 +121,7 @@ export const getWorkoutAndExercisesAPI = async (
 		let respJSON = await response.json();
 		const { exercises, id, name, url, last_performed } = respJSON;
 		data = { workout: { id, name, url, last_performed }, exercises };
+		console.log("DATA response", data);
 	} else {
 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
 			cause: error,
@@ -263,9 +266,9 @@ export const addExerciseToWorkoutAPI = async (
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
-		`/authorized/${workoutId}/${exerciseId}}`,
+		`/authorized/workout/${workoutId}/${exerciseId}`,
 		session,
-		"PUT"
+		"POST"
 	);
 	let data: IExercise | null = null;
 	// if success
@@ -313,25 +316,51 @@ export const postNewExerciseAPI = async (
 	exerciseId: string
 ): Promise<{ data: any; error: TError }> => {
 	let [error, response] = await fetcher(
-		`/authorized/${exerciseId}`,
+		`/authorized/exercises/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },
 		newExerciseData
 	);
-	let data: null = null;
+	let data: TExerciseTemplate | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
 		data = respJSON;
 	} else {
-		error = new Error(`Adding exercise to workout from Supabase`, {
+		error = new Error(`Adding exercise to DB`, {
 			cause: error,
 		});
 	}
 	return { data, error };
 };
+export const upsertUsersExerciseDateAPI = async (
+	session: ISession,
+	usersExerciseData: TUsersExerciseData,
+	exerciseId: string
+): Promise<{ data: any; error: TError }> => {
+	let [error, response] = await fetcher(
+		`/authorized/exercises/${exerciseId}`,
+		session,
+		"POST",
+		{ "Content-Type": "application/json" },
+		usersExerciseData
+	);
+	let data: TExerciseTemplate | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+		data = respJSON;
+	} else {
+		error = new Error(`Adding exercise to DB`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
 // getWorkoutDay = takes params sent in and returns SINGLE matching workout
 // export const getWorkoutDay = async (workoutName: string = "") => {
 // 	const { data, error } = await supabase

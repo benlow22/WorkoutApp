@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import "../styles/exercises.css";
+import "../../styles/exercises.css";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -25,11 +25,16 @@ import {
 	message,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { AuthContext } from "../contexts/AuthProvider";
-import { isValidUrl, shortenUrl, transformExercisePost } from "../utils/utils";
-import { postNewExerciseAPI } from "../api/api";
-import { useRequest } from "../hooks/useRequest";
-import { newExerciseExample } from "../sample data/newExercise";
+import { AuthContext } from "../../contexts/AuthProvider";
+import {
+	isValidUrl,
+	shortenUrl,
+	transformExercisePost,
+} from "../../utils/utils";
+import { postNewExerciseAPI } from "../../api/api";
+import { useRequest } from "../../hooks/useRequest";
+import { INewExerciseInput } from "../../api/types";
+import { TExerciseTemplate } from "./AddExercise";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -48,11 +53,17 @@ const normFile = (e: any) => {
 type TProps = {
 	exerciseName: string;
 	setExerciseName: React.Dispatch<React.SetStateAction<string>>;
+	setExercise: React.Dispatch<
+		React.SetStateAction<TExerciseTemplate | undefined>
+	>;
+	handleCreateNewExercise: (newExerciseDefaults: TExerciseTemplate) => void;
 };
 
-export const NewExerciseInput: React.FC<TProps> = ({
+export const CreateNewExerciseForm: React.FC<TProps> = ({
 	exerciseName,
 	setExerciseName,
+	setExercise,
+	handleCreateNewExercise,
 }) => {
 	const [hideDescription, setHideDescription] = useState<boolean>(true);
 	const [hideMuscles, setHideMuscles] = useState<boolean>(true);
@@ -61,6 +72,7 @@ export const NewExerciseInput: React.FC<TProps> = ({
 	const [musclesList, setMusclesList] = useState<string[]>([]);
 	const [newMuscle, setNewMuscle] = useState<string>("");
 
+	const [isDisableForm, setIsDisableForm] = useState<boolean>(false);
 	const [linkList, setLinkList] = useState<string[]>([]);
 	const [newLink, setNewLink] = useState("");
 
@@ -100,6 +112,16 @@ export const NewExerciseInput: React.FC<TProps> = ({
 			setEditExerciseName(false);
 		}
 	};
+
+	useEffect(() => {
+		console.log("yay");
+		if (postNewExerciseResponse) {
+			console.log("SUICCESS", postNewExerciseResponse);
+			// let newExerciseTemplate = ({ defaultSets } =
+			// 	postNewExerciseResponse);
+			handleCreateNewExercise(postNewExerciseResponse);
+		}
+	}, [postNewExerciseResponse]);
 
 	useEffect(() => {
 		if (newExerciseName) {
@@ -155,11 +177,9 @@ export const NewExerciseInput: React.FC<TProps> = ({
 				style={{ maxWidth: 600 }}
 			>
 				<div className="exercise-name-container">
-					<Form.Item
-						name="createdBy"
-						hidden
-						initialValue={userId}
-					></Form.Item>
+					<Form.Item name="createdBy" hidden initialValue={userId}>
+						<input value={userId}></input>
+					</Form.Item>
 					<Form.Item
 						name="name"
 						rules={[
@@ -306,7 +326,6 @@ export const NewExerciseInput: React.FC<TProps> = ({
 					>
 						<Option value="Arms">Arms</Option>
 						<Option value="Back">Back</Option>
-						<Option value="Cardio">Cardio</Option>
 						<Option value="Chest">Chest</Option>
 						<Option value="Core">Core</Option>
 						<Option value="Flexibility">Flexibility</Option>
@@ -475,7 +494,10 @@ export const NewExerciseInput: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item name="defaultWeightUnits">
+						<Form.Item
+							name="defaultWeightUnits"
+							initialValue={"lbs"}
+						>
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -517,14 +539,13 @@ export const NewExerciseInput: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="defaultTimeUnits">
+						<Form.Item name="defaultTimeUnits" initialValue={"sec"}>
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
 								style={{
 									alignItems: "flex-end",
 								}}
-								defaultValue={null}
 							>
 								<Radio.Button value="min">min</Radio.Button>
 								<Radio.Button value="sec">sec</Radio.Button>
@@ -560,7 +581,15 @@ export const NewExerciseInput: React.FC<TProps> = ({
 
 				<Form.Item label="Publish" className="white-font">
 					<Space>
-						<Form.Item name="public">
+						<Form.Item
+							name="public"
+							rules={[
+								{
+									required: true,
+									message: "Publish is required",
+								},
+							]}
+						>
 							<Radio.Group
 							// onChange={handlePublishRadio}
 							>
@@ -585,7 +614,11 @@ export const NewExerciseInput: React.FC<TProps> = ({
 
 				<Form.Item wrapperCol={{ span: 12, offset: 6 }}>
 					<Space>
-						<Button type="primary" htmlType="submit">
+						<Button
+							type="primary"
+							htmlType="submit"
+							disabled={isDisableForm}
+						>
 							Submit
 						</Button>
 						<Button

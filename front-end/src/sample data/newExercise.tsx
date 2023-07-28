@@ -17,9 +17,9 @@ export const newExerciseExample: INewExerciseInput = {
 	id: uuidv4(),
 	createdBy: "d79ccff2-0177-46e8-93a2-ea3353691d28",
 	defaultSets: [
-		["25", "10"],
-		["25", "10"],
-		["25", "10"],
+		[25, 10],
+		[25, 10],
+		[25, 1],
 	],
 	defaultWeightUnits: "lbs",
 	defaultTimeUnits: null,

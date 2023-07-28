@@ -9,31 +9,25 @@ import { Button, message } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { SearchExercises } from "../../components/SearchExercises";
-import { Exercises } from "../../components/Exercises";
-import { TestFetchExercise } from "../../components/TestFetchExercises";
 import { useRequest } from "../../hooks/useRequest";
 import { IExercise, IWorkout } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
 
-// type IExercise = {
-// 	name: any;
-// 	id?: any;
-// };
-
 export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
-	const [allExercises, setAllExercises] = useState<IExercise[]>([]);
+
 	const { session } = useContext(AuthContext);
-	const [addExercise, setAddExercise] = useState<boolean>(false);
+	// const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<IExercise[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
+
 	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
 		useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
+
 	const deleteWorkoutSuccess = () => {
 		messageApi.open({
 			type: "success",
@@ -57,23 +51,16 @@ export const WorkoutPage = () => {
 	] = useRequest(usersAndPublicExercisesAPI);
 
 	useEffect(() => {
-		usersAndPublicExercisesRequest(session!);
 		if (workoutUrl) {
 			workoutRequest(workoutUrl, session!);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (!usersAndPublicExercisesLoading) {
-			if (usersAndPublicExercisesResponse)
-				setAllExercises(usersAndPublicExercisesResponse);
-		}
-	}, [usersAndPublicExercisesLoading]);
-
-	useEffect(() => {
 		if (workoutResponse) {
 			setWorkout(workoutResponse.workout);
 			setExercises(workoutResponse.exercises);
+			console.log("EXERCISES", workoutResponse.exercises);
 		}
 	}, [workoutResponse]);
 
@@ -94,17 +81,16 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	const toggleButton = () => {
-		addExercise ? setAddExercise(false) : setAddExercise(true);
-	};
+	// const toggleButton = () => {
+	// 	addExercise ? setAddExercise(false) : setAddExercise(true);
+	// };
 
-	const addExerciseToAll = (name: string) => {
-		console.log("addExerciseToAll called");
-		let newExercise = { name: name };
-		if (!exercises.find((exercise) => exercise.name === name)) {
-			console.log("ahahsda");
-			// setExercises([...exercises, newExercise]);
-			setAddExercise(false);
+	const addExerciseToWorkout = (newExercise: IExercise) => {
+		console.log("addExerciseToWorkout called");
+		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
+			console.log("exercise not already in workout.");
+			const updatedExerciseList = new Array(...exercises, newExercise);
+			setExercises(updatedExerciseList);
 		}
 	};
 
@@ -144,15 +130,17 @@ export const WorkoutPage = () => {
 					</button>
 				</div>
 				{/* DISPLAY EXERCISES HERE */}
-				{exercises.map((exercise) => (
-					<TestFetchExercise
-						exerciseId={exercise.id}
-						key={exercise.id}
-					/>
-				))}
-				<Exercises exercises={exercises} />
+				{exercises &&
+					exercises.map((exercise, index) => (
+						<p key={index}>
+							{index + 1}. {exercise.name}
+						</p>
+					))}
+				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
-				<AddExercise />
+				{workoutResponse?.workout && (
+					<AddExercise workout={workoutResponse.workout} />
+				)}
 				<br></br>
 				{contextHolder}
 				<Button
