@@ -51,3 +51,15 @@ export interface INewExerciseInput {
 	defaultWeightUnits: string | null;
 	defaultTimeUnits: string | null;
 }
+
+export type TUsersExerciseData = {
+	name: string;
+	id: string;
+	links?: string[];
+	notes?: string[];
+	sets: number[][];
+	weight_units?: string;
+	time_units?: string;
+	time?: number;
+	useTime: boolean;
+};
