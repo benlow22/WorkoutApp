@@ -121,7 +121,6 @@ export const getWorkoutAndExercisesAPI = async (
 		let respJSON = await response.json();
 		const { exercises, id, name, url, last_performed } = respJSON;
 		data = { workout: { id, name, url, last_performed }, exercises };
-		console.log("DATA response", data);
 	} else {
 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
 			cause: error,

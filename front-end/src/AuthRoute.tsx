@@ -11,7 +11,6 @@ const AuthRoute = () => {
 		if (!contextIsLoading && auth !== undefined) {
 			setIsLoading(false);
 		}
-		console.log("what is AUTH", auth);
 	}, [auth]);
 
 	if (!isLoading && auth !== undefined) {

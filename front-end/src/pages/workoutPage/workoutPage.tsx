@@ -60,7 +60,6 @@ export const WorkoutPage = () => {
 		if (workoutResponse) {
 			setWorkout(workoutResponse.workout);
 			setExercises(workoutResponse.exercises);
-			console.log("EXERCISES", workoutResponse.exercises);
 		}
 	}, [workoutResponse]);
 
