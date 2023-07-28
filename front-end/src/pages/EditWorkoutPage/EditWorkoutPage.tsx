@@ -106,7 +106,7 @@ export const EditWorkoutPage = () => {
 						key={exercise.id}
 					/>
 				))}
-
+				{/* 
 				<Exercises exercises={exercises} />
 				<br></br>
 				{!addExercise ? (
@@ -127,7 +127,7 @@ export const EditWorkoutPage = () => {
 					className="delete-button capitalize"
 				>
 					Delete Workout
-				</Button>
+				</Button> */}
 			</div>
 		);
 	} else if (workout === undefined && !isLoading) {
