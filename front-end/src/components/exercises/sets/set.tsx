@@ -27,7 +27,7 @@ export const Set = ({
 					type="primary"
 					icon={<MinusOutlined />}
 					onClick={() => {
-						modifySets([set[0] - 1, set[1]], index);
+						modifySets([set[0] - 0.5, set[1]], index);
 					}}
 				/>
 				<Button
@@ -36,7 +36,7 @@ export const Set = ({
 					type="primary"
 					icon={<PlusOutlined />}
 					onClick={() => {
-						modifySets([set[0] + 1, set[1]], index);
+						modifySets([set[0] + 0.5, set[1]], index);
 					}}
 				/>
 			</div>
