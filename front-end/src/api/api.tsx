@@ -7,10 +7,10 @@ import {
 	INewExerciseInput,
 	IWorkout,
 	TError,
+	TUsersExerciseData,
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 import { TExerciseTemplate } from "../components/exercises/AddExercise";
-import { TUsersExerciseData } from "../components/exercises/AddExerciseData";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -109,20 +109,24 @@ export const getWorkoutAndExercisesAPI = async (
 	workoutUrl: string,
 	session: ISession
 ): Promise<{
-	data: any | null;
+	data: { workout: IWorkout; exercises: TUsersExerciseData[] } | null;
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
 		`/authorized/workouts/${workoutUrl}`,
 		session
 	);
-	let data: any | null = null;
+	let data: { workout: IWorkout; exercises: TUsersExerciseData[] } | null =
+		null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		console.log("exercise DAAATE", respJSON);
 		const { exercises, id, name, url, last_performed } = respJSON;
-		data = { workout: { id, name, url, last_performed }, exercises };
+		exercises.data = {
+			workout: { id, name, url, last_performed },
+			exercises,
+		};
 	} else {
 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
 			cause: error,

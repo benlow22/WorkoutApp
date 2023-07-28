@@ -53,13 +53,15 @@ export interface INewExerciseInput {
 }
 
 export type TUsersExerciseData = {
-	name: string;
+	defaultLinks?: string[];
+	description?: string;
 	id: string;
-	links?: string[];
+	name: string;
 	notes?: string[];
+	personalLinks?: string[];
 	sets: number[][];
-	weight_units?: string;
-	time_units?: string;
 	time?: number;
+	time_units?: string;
 	useTime: boolean;
+	weight_units?: string;
 };
