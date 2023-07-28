@@ -10,11 +10,10 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useRequest } from "../../hooks/useRequest";
-import { IExercise, IWorkout, TUsersExerciseData } from "../../api/types";
+import { IWorkout, TUsersExerciseData } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
-import Exercise from "../../components/Exercise";
-import ExerciseAccordion from "../../components/exercises/ExerciseAccordion";
+import ExerciseCollapse from "../../components/exercises/ExerciseCollapse";
 
 export const WorkoutPage = () => {
 	const location = useLocation();
@@ -133,7 +132,7 @@ export const WorkoutPage = () => {
 				{/* DISPLAY EXERCISES HERE */}
 				{exercises &&
 					exercises.map((exercise, index) => (
-						<ExerciseAccordion
+						<ExerciseCollapse
 							exercise={exercise}
 							key={index}
 							index={index}

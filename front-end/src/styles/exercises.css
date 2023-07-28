@@ -125,7 +125,7 @@ h3.add-exercise-data-exercise-name {
 	justify-content: space-around;
 }
 
-.exercise-accordion {
+.exercise-collapse {
 	border: 4px solid #3586f8;
 	border-radius: 15px;
 	max-width: 450px;
@@ -133,7 +133,7 @@ h3.add-exercise-data-exercise-name {
 	padding-bottom: 10px;
 }
 
-.exercise-accordion-heading {
+.exercise-collapse-heading {
 	display: flex;
 	margin: auto;
 	justify-content: space-between;
@@ -141,8 +141,8 @@ h3.add-exercise-data-exercise-name {
 	border-radius: 15px 15px 0px 0px;
 }
 
-.exercise-accordion-heading .expand-summary,
-.exercise-accordion-heading .index {
+.exercise-collapse-heading .expand-summary,
+.exercise-collapse-heading .index {
 	width: 50px;
 	color: white;
 }
