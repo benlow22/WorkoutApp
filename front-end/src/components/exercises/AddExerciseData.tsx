@@ -33,7 +33,7 @@ const testData = {
 type TProps = {
 	exercise: TExerciseTemplate;
 	workout: IWorkout;
-	handleAddExercise: () => void;
+	handleAddExercise: (newExercise: TUsersExerciseData) => void;
 };
 
 export const AddExerciseData = ({
@@ -98,13 +98,13 @@ export const AddExerciseData = ({
 		// sets: req.body.sets,
 		// links: req.body.links,
 		// notes: req.body.notes,
-		handleAddExercise();
 		const updatedExerciseData = {
 			sets: weightAndRepsArr,
 			weight_units: weightUnits,
 			time_units: timeUnits,
 			time: useTime,
 		};
+		handleAddExercise(updatedExerciseData);
 
 		// also posts exercise to workouts_exercises
 		// CREATE API

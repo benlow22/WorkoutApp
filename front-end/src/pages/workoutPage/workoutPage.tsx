@@ -80,10 +80,6 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	// const toggleButton = () => {
-	// 	addExercise ? setAddExercise(false) : setAddExercise(true);
-	// };
-
 	const addExerciseToWorkout = (newExercise: IExercise) => {
 		console.log("addExerciseToWorkout called");
 		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
@@ -138,7 +134,10 @@ export const WorkoutPage = () => {
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
 				{workoutResponse?.workout && (
-					<AddExercise workout={workoutResponse.workout} />
+					<AddExercise
+						workout={workoutResponse.workout}
+						addExerciseToWorkout={addExerciseToWorkout}
+					/>
 				)}
 				<br></br>
 				{contextHolder}

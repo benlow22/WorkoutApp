@@ -2,9 +2,9 @@ import { Button, message } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
-import { AddExerciseData } from "./AddExerciseData";
+import { AddExerciseData, TUsersExerciseData } from "./AddExerciseData";
 import { TestFetchExercise } from "../TestFetchExercises";
-import { INewExerciseInput, IWorkout } from "../../api/types";
+import { IExercise, INewExerciseInput, IWorkout } from "../../api/types";
 
 const testData = {
 	name: "Preacher Curls",
@@ -41,8 +41,9 @@ type TAddExercise = {
 };
 type TProps = {
 	workout: IWorkout;
+	addExerciseToWorkout: (exercise: IExercise) => void;
 };
-export const AddExercise = ({ workout }: TProps) => {
+export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
 		useState<boolean>(true);
 	const [isShowSearchExerciseBar, setIsShowSearchExerciseBar] =
@@ -74,21 +75,22 @@ export const AddExercise = ({ workout }: TProps) => {
 	}, [exerciseDefaultValues]);
 
 	const handleCreateNewExercise = (newExerciseDefault: TExerciseTemplate) => {
-		createNewExerciseSuccess(newExerciseDefault);
+		createNewExerciseSuccessMessage(newExerciseDefault);
 		setExerciseDefaultValues(newExerciseDefault);
 		setIsShowExerciseConfirmation(true);
 	};
 
-	const handleAddExercise = () => {
+	const handleAddExercise = (newExercise: TUsersExerciseData) => {
 		// once exercise is submitted and customized
-		addExerciseToWorkoutSuccess(exerciseName);
+		addExerciseToWorkout(newExercise);
+		addExerciseToWorkoutSuccessMessage(newExercise.name);
 		setIsShowAddExerciseButton(true);
 		setIsNewExercise(true);
 		setExerciseName("");
 		setIsShowExerciseConfirmation(false);
 	};
 
-	const createNewExerciseSuccess = (
+	const createNewExerciseSuccessMessage = (
 		newExerciseDefault: TExerciseTemplate
 	) => {
 		messageApi.open({
@@ -98,7 +100,7 @@ export const AddExercise = ({ workout }: TProps) => {
 		});
 	};
 
-	const addExerciseToWorkoutSuccess = (exerciseName: string) => {
+	const addExerciseToWorkoutSuccessMessage = (exerciseName: string) => {
 		messageApi.open({
 			type: "success",
 			content: `"${exerciseName}" had been added to your workout`,

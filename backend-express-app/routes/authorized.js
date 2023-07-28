@@ -51,7 +51,7 @@ router.delete("/workouts/:workoutId", async (req, res) => {
 		.from("workouts")
 		.delete()
 		.eq("id", workoutId);
-	console.log("deleted workout: ", data); // show in terminal
+	console.log("deleted workout: asdf", data); // show in terminal
 	if (error) {
 		// if there is data, send it back = 200 status
 		res.status(404).send(error);
@@ -74,10 +74,7 @@ router.get("/exercises", async (req, res) => {
 // /api/authorized/:exerciseId = get users exercise id including sets and reps
 router.get("/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
-	const { data, error } = await req.supabase
-		.from("workouts")
-		.select("*")
-		.eq("id");
+	const { data, error } = await req.supabase.from("workouts").select("*");
 	console.log("deleted workout: ", data); // show in terminal
 	if (error) {
 		// if there is data, send it back = 200 status
