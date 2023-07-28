@@ -2,21 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { INewExerciseInput, IWorkout } from "../../api/types";
+import { IWorkout, TUsersExerciseData } from "../../api/types";
 import { TExerciseTemplate } from "./AddExercise";
 import { useRequest } from "../../hooks/useRequest";
 import { addExerciseToWorkoutAPI } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
-
-export type TUsersExerciseData = {
-	//updated Data
-	links?: string[] | null;
-	notes?: string[] | null;
-	sets: number[][];
-	weight_units: string | null;
-	time_units: string | null;
-	time: boolean;
-};
 
 const testData = {
 	name: "Preacher Curls",

@@ -104,21 +104,23 @@ export const getAllUsersWorkoutsAPI = async (
 	return { data, error };
 };
 
+// GET (workoutURL) => workout data, all users custom sets and data for each exercise (TUsersExerciseData)
 export const getWorkoutAndExercisesAPI = async (
 	workoutUrl: string,
 	session: ISession
 ): Promise<{
-	data: { workout: IWorkout; exercises: IExercise[] } | null;
+	data: any | null;
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
 		`/authorized/workouts/${workoutUrl}`,
 		session
 	);
-	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+	let data: any | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
+		console.log("exercise DAAATE", respJSON);
 		const { exercises, id, name, url, last_performed } = respJSON;
 		data = { workout: { id, name, url, last_performed }, exercises };
 	} else {
@@ -128,6 +130,31 @@ export const getWorkoutAndExercisesAPI = async (
 	}
 	return { data, error };
 };
+// export const getWorkoutAndExercisesAPI = async (
+// 	workoutUrl: string,
+// 	session: ISession
+// ): Promise<{
+// 	data: { workout: IWorkout; exercises: IExercise[] } | null;
+// 	error: TError;
+// }> => {
+// 	let [error, response] = await fetcher(
+// 		`/authorized/workouts/${workoutUrl}`,
+// 		session
+// 	);
+// 	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+// 	// if success
+// 	if (response.ok) {
+// 		let respJSON = await response.json();
+// 		console.log("exercise DAAATE", respJSON);
+// 		const { exercises, id, name, url, last_performed } = respJSON;
+// 		data = { workout: { id, name, url, last_performed }, exercises };
+// 	} else {
+// 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+// 			cause: error,
+// 		});
+// 	}
+// 	return { data, error };
+// };
 
 // API TEMPLATE
 /*
@@ -463,6 +490,7 @@ export const postNewWorkout = async (
 			name: workoutName,
 			url: url,
 			user_id: user_id,
+			created_by: user_id,
 		};
 		console.log("uuid", newWorkoutObj.id);
 		// insert and return

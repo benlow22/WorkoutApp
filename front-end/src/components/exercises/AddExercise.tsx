@@ -2,9 +2,14 @@ import { Button, message } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
-import { AddExerciseData, TUsersExerciseData } from "./AddExerciseData";
+import { AddExerciseData } from "./AddExerciseData";
 import { TestFetchExercise } from "../TestFetchExercises";
-import { IExercise, INewExerciseInput, IWorkout } from "../../api/types";
+import {
+	IExercise,
+	INewExerciseInput,
+	IWorkout,
+	TUsersExerciseData,
+} from "../../api/types";
 
 const testData = {
 	name: "Preacher Curls",
