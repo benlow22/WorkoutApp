@@ -123,7 +123,7 @@ export const getWorkoutAndExercisesAPI = async (
 		let respJSON = await response.json();
 		console.log("exercise DAAATE", respJSON);
 		const { exercises, id, name, url, last_performed } = respJSON;
-		exercises.data = {
+		data = {
 			workout: { id, name, url, last_performed },
 			exercises,
 		};

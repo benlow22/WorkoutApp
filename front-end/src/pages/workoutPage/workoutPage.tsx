@@ -10,7 +10,7 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useRequest } from "../../hooks/useRequest";
-import { IExercise, IWorkout } from "../../api/types";
+import { IExercise, IWorkout, TUsersExerciseData } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
 
@@ -20,12 +20,16 @@ export const WorkoutPage = () => {
 
 	const { session } = useContext(AuthContext);
 	// const [addExercise, setAddExercise] = useState<boolean>(false);
-	const [exercises, setExercises] = useState<IExercise[]>([]);
+	const [exercises, setExercises] = useState<TUsersExerciseData[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
 
-	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
-		useRequest(getWorkoutAndExercisesAPI);
+	const [
+		getWorkoutAndExercisesResponse,
+		getWorkoutAndExercisesLoading,
+		getWorkoutAndExercisesError,
+		getWorkoutAndExercisesRequest,
+	] = useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const deleteWorkoutSuccess = () => {
@@ -52,16 +56,16 @@ export const WorkoutPage = () => {
 
 	useEffect(() => {
 		if (workoutUrl) {
-			workoutRequest(workoutUrl, session!);
+			getWorkoutAndExercisesRequest(workoutUrl, session!);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (workoutResponse) {
-			setWorkout(workoutResponse.workout);
-			setExercises(workoutResponse.exercises);
+		if (getWorkoutAndExercisesResponse) {
+			setWorkout(getWorkoutAndExercisesResponse.workout);
+			setExercises(getWorkoutAndExercisesResponse.exercises);
 		}
-	}, [workoutResponse]);
+	}, [getWorkoutAndExercisesResponse]);
 
 	const redirectToWelcomepage = () => {
 		navigate("/");
@@ -80,7 +84,7 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	const addExerciseToWorkout = (newExercise: IExercise) => {
+	const addExerciseToWorkout = (newExercise: TUsersExerciseData) => {
 		console.log("addExerciseToWorkout called");
 		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
 			console.log("exercise not already in workout.");
@@ -89,8 +93,8 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	if (!workoutLoading) {
-		if (workoutError) {
+	if (!getWorkoutAndExercisesLoading) {
+		if (getWorkoutAndExercisesError) {
 			return (
 				<div>
 					<p>No workout with URL {workoutUrl}</p>
@@ -133,9 +137,9 @@ export const WorkoutPage = () => {
 					))}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
-				{workoutResponse?.workout && (
+				{getWorkoutAndExercisesResponse?.workout && (
 					<AddExercise
-						workout={workoutResponse.workout}
+						workout={getWorkoutAndExercisesResponse.workout}
 						addExerciseToWorkout={addExerciseToWorkout}
 					/>
 				)}
