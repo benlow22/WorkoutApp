@@ -119,6 +119,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 			console.log("SUICCESS", postNewExerciseResponse);
 			// let newExerciseTemplate = ({ defaultSets } =
 			// 	postNewExerciseResponse);
+
 			handleCreateNewExercise(postNewExerciseResponse);
 		}
 	}, [postNewExerciseResponse]);

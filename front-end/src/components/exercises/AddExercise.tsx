@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 import { useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
@@ -53,6 +53,7 @@ export const AddExercise = ({ workout }: TProps) => {
 	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
 	const [isShowExerciseConfirmation, setIsShowExerciseConfirmation] =
 		useState<boolean>(false);
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const [exerciseDefaultValues, setExerciseDefaultValues] =
 		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
@@ -73,6 +74,7 @@ export const AddExercise = ({ workout }: TProps) => {
 	}, [exerciseDefaultValues]);
 
 	const handleCreateNewExercise = (newExerciseDefault: TExerciseTemplate) => {
+		createNewExerciseSuccess(newExerciseDefault);
 		setExerciseDefaultValues(newExerciseDefault);
 		setIsShowExerciseConfirmation(true);
 	};
@@ -85,6 +87,15 @@ export const AddExercise = ({ workout }: TProps) => {
 		setIsShowExerciseConfirmation(false);
 	};
 
+	const createNewExerciseSuccess = (
+		newExerciseDefault: TExerciseTemplate
+	) => {
+		messageApi.open({
+			type: "success",
+			content: `New exercise "${newExerciseDefault.name}" created`,
+			duration: 5,
+		});
+	};
 	return (
 		/* add exercise button 
             - if clicked searchbar shows up
@@ -95,6 +106,7 @@ export const AddExercise = ({ workout }: TProps) => {
                 = old exercise component 
         */
 		<div className="add-exercise-container">
+			{contextHolder}
 			{isShowAddExerciseButton && (
 				<Button
 					type="primary"
