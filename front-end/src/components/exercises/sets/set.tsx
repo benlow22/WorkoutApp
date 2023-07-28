@@ -4,7 +4,7 @@ import { Button } from "antd";
 type TProps = {
 	set: number[];
 	index: number;
-	weightUnits: string | null;
+	weightUnits?: string;
 	modifySets: (newSet: number[], i: number) => void;
 	deleteSets: (i: number) => void;
 };

@@ -27,9 +27,9 @@ const testData = {
 export type TExerciseTemplate = {
 	name: string;
 	defaultSets: number[][];
-	defaultWeightUnits: string | null;
-	defaultTime: string | null;
-	defaultTimeUnits: string | null;
+	defaultWeightUnits?: string;
+	defaultTime?: string;
+	defaultTimeUnits?: string;
 	useTime: boolean;
 	id: string;
 };
@@ -46,7 +46,7 @@ type TAddExercise = {
 };
 type TProps = {
 	workout: IWorkout;
-	addExerciseToWorkout: (exercise: IExercise) => void;
+	addExerciseToWorkout: (exercise: TUsersExerciseData) => void;
 };
 export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 	const [isShowAddExerciseButton, setIsShowAddExerciseButton] =
@@ -113,14 +113,6 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 		});
 	};
 	return (
-		/* add exercise button 
-            - if clicked searchbar shows up
-        exercise searched 
-            - if new 
-                = new exercise component 
-            - if old
-                = old exercise component 
-        */
 		<div className="add-exercise-container">
 			{contextHolder}
 			{isShowAddExerciseButton && (

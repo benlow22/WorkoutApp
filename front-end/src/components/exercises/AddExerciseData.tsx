@@ -34,10 +34,10 @@ export const AddExerciseData = ({
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
 	);
-	const [timeUnits, setTimeUnits] = useState<string | null>(
+	const [timeUnits, setTimeUnits] = useState<string | undefined>(
 		exercise.defaultTimeUnits
 	);
-	const [weightUnits, setWeightUnits] = useState<string | null>(
+	const [weightUnits, setWeightUnits] = useState<string | undefined>(
 		exercise.defaultWeightUnits
 	);
 	const [useTime, setUseTime] = useState<boolean>(exercise.useTime);
@@ -88,11 +88,13 @@ export const AddExerciseData = ({
 		// sets: req.body.sets,
 		// links: req.body.links,
 		// notes: req.body.notes,
-		const updatedExerciseData = {
+		const updatedExerciseData: TUsersExerciseData = {
 			sets: weightAndRepsArr,
 			weight_units: weightUnits,
 			time_units: timeUnits,
-			time: useTime,
+			useTime: useTime,
+			id: exercise.id,
+			name: exercise.name,
 		};
 		handleAddExercise(updatedExerciseData);
 
