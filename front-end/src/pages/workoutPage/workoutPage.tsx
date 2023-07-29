@@ -14,6 +14,7 @@ import { IWorkout, TUsersExerciseData } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
 import ExerciseCollapse from "../../components/exercises/ExerciseCollapse";
+import ExercisesCollapse from "../../components/exercises/ExerciseCollapse";
 
 export const WorkoutPage = () => {
 	const location = useLocation();
@@ -130,14 +131,7 @@ export const WorkoutPage = () => {
 					</button>
 				</div>
 				{/* DISPLAY EXERCISES HERE */}
-				{exercises &&
-					exercises.map((exercise, index) => (
-						<ExerciseCollapse
-							exercise={exercise}
-							key={index}
-							index={index}
-						/>
-					))}
+				{exercises && <ExercisesCollapse exercises={exercises} />}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
 				{getWorkoutAndExercisesResponse?.workout && (

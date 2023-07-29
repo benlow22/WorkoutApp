@@ -1,26 +1,39 @@
 import React from "react";
-import { Button } from "antd";
+import type { CollapseProps } from "antd";
+
+import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
+import ExercisesCollapseChild from "./ExerciseCollapseChild";
 
 type TProps = {
-	exercise: TUsersExerciseData;
-	index: number;
+	exercises: TUsersExerciseData[];
 };
 
-const ExerciseCollapse = ({ exercise, index }: TProps) => {
+const ExercisesCollapse = ({ exercises }: TProps) => {
+	console.log("exer", exercises);
+	const onChange = (key: string | string[]) => {
+		console.log(key);
+	};
+	const items = exercises.map((exercise, index) => ({
+		key: index + 1,
+		label: exercise.name,
+		children: <ExercisesCollapseChild exercise={exercise} index={index} />,
+	}));
+	console.log(items);
 	return (
-		<div className="exercise-collapse">
-			<div className="exercise-collapse-heading">
-				<h3 className="index">{index + 1}.</h3>
-				<h3>{exercise.name}</h3>
-				<h5 className="right-side expand-summary">0/3 *</h5>
-			</div>
-			<Button type="primary" className="login-button">
-				{exercise.name}
-			</Button>
-		</div>
+		<Collapse items={items} defaultActiveKey={["1"]} onChange={onChange} />
+		// <div className="exercise-collapse">
+		// 	<div className="exercise-collapse-heading">
+		// 		<h3 className="index">{index + 1}.</h3>
+		// 		<h3>{exercise.name}</h3>
+		// 		<h5 className="right-side expand-summary">0/3 *</h5>
+		// 	</div>
+		// 	<Button type="primary" className="login-button">
+		// 		{exercise.name}
+		// 	</Button>
+		// </div>
 	);
 };
 
-export default ExerciseCollapse;
+export default ExercisesCollapse;
