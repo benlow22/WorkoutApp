@@ -11,15 +11,21 @@ type TProps = {
 
 const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 	return (
-		<div className="">
-			{/* <div className="exercise-collapse-heading">
-				<h3 className="index">{index + 1}.</h3>
-				<h3>{exercise.name}</h3>
-				<h5 className="right-side expand-summary">0/3 *</h5>
-			</div>
+		<div
+			className=""
+			style={{
+				border: "1px solid rgb(30, 59, 146)",
+				backgroundColor: "#101010",
+				borderRadius: "0px 0px 10px 10px",
+				padding: "20px",
+			}}
+		>
+			<h3 className="index">{index + 1}.</h3>
+			<h3>{exercise.name}</h3>
+			<h5 className="right-side expand-summary">0/3 *</h5>
 			<Button type="primary" className="login-button">
 				{exercise.name}
-			</Button> */}
+			</Button>
 		</div>
 	);
 };

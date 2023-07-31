@@ -6,7 +6,7 @@ import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
 import ExercisesCollapseChild from "./ExerciseCollapseChild";
 import ExercisesCollapseHeader from "./ExerciseCollapseHeader";
-import { SettingOutlined } from "@ant-design/icons";
+import { FormOutlined, SettingOutlined } from "@ant-design/icons";
 
 type TProps = {
 	exercises: TUsersExerciseData[];
@@ -18,26 +18,40 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 		console.log(key);
 	};
 
-	const genExtra = () => (
-		<SettingOutlined
+	const genExtra = (index: number) => (
+		<FormOutlined
+			className="collapse-form-outlined"
 			onClick={(event) => {
 				// If you don't want click extra trigger collapse, you can prevent this:
-				event.stopPropagation();
+				// event.stopPropagation();
+				// but i want to make sure it is open and then editable
 			}}
 		/>
 	);
 	const items = exercises.map((exercise, index) => ({
 		key: index + 1,
 		label: (
-			<>
-				<h3>
-					{index + 1}. {exercise.name}
-				</h3>
-			</>
+			<div className="exercise-collapse-heading">
+				<h3 className="index">{index + 1}.</h3>
+				<h3>{exercise.name}</h3>
+				<h4
+					className="right-side expand-summary"
+					// style={{ fontWeight: "normal" }}
+				>
+					0/3
+				</h4>
+			</div>
 		),
 		// <ExercisesCollapseHeader exercise={exercise} index={index} />,
 		children: <ExercisesCollapseChild exercise={exercise} index={index} />,
-		extra: genExtra(),
+		extra: genExtra(index),
+		style: {
+			marginBottom: "15px",
+			border: "2px solid rgb(30, 59, 146)",
+			borderRadius: 15,
+			backgroundColor: "rgb(30, 59, 146)",
+			// color: "white",
+		},
 	}));
 	console.log("items", items);
 
@@ -47,7 +61,11 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 			onChange={onChange}
 			className="
 		exercise-collapse"
-			style={{ alignItems: "center" }}
+			style={{
+				alignItems: "center",
+				border: "none",
+				padding: "0px",
+			}}
 		/>
 		// <div className="exercise-collapse">
 		// 	<div className="exercise-collapse-heading">
