@@ -14,6 +14,7 @@ pre,
 p,
 .white-font {
 	color: white;
+	margin: 0px;
 }
 /* textarea.andt-input,
 div.andt-select-selector {

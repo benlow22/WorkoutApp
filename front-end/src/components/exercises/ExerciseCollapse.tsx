@@ -5,6 +5,8 @@ import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
 import ExercisesCollapseChild from "./ExerciseCollapseChild";
+import ExercisesCollapseHeader from "./ExerciseCollapseHeader";
+import { SettingOutlined } from "@ant-design/icons";
 
 type TProps = {
 	exercises: TUsersExerciseData[];
@@ -15,14 +17,38 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 	const onChange = (key: string | string[]) => {
 		console.log(key);
 	};
+
+	const genExtra = () => (
+		<SettingOutlined
+			onClick={(event) => {
+				// If you don't want click extra trigger collapse, you can prevent this:
+				event.stopPropagation();
+			}}
+		/>
+	);
 	const items = exercises.map((exercise, index) => ({
 		key: index + 1,
-		label: exercise.name,
+		label: (
+			<>
+				<h3>
+					{index + 1}. {exercise.name}
+				</h3>
+			</>
+		),
+		// <ExercisesCollapseHeader exercise={exercise} index={index} />,
 		children: <ExercisesCollapseChild exercise={exercise} index={index} />,
+		extra: genExtra(),
 	}));
-	console.log(items);
+	console.log("items", items);
+
 	return (
-		<Collapse items={items} defaultActiveKey={["1"]} onChange={onChange} />
+		<Collapse
+			items={items}
+			onChange={onChange}
+			className="
+		exercise-collapse"
+			style={{ alignItems: "center" }}
+		/>
 		// <div className="exercise-collapse">
 		// 	<div className="exercise-collapse-heading">
 		// 		<h3 className="index">{index + 1}.</h3>

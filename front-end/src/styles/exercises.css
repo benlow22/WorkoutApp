@@ -131,18 +131,26 @@ h3.add-exercise-data-exercise-name {
 	max-width: 450px;
 	margin: 10px auto;
 	padding-bottom: 10px;
+	background-color: rgb(97, 97, 97);
 }
 
 .exercise-collapse-heading {
 	display: flex;
-	margin: auto;
 	justify-content: space-between;
 	background-color: #25364e;
-	border-radius: 15px 15px 0px 0px;
+}
+
+h3.exercise-collapse-heading {
+	margin: 0px !important;
 }
 
 .exercise-collapse-heading .expand-summary,
 .exercise-collapse-heading .index {
 	width: 50px;
-	color: white;
+	color: rgb(148, 84, 84);
+}
+
+div.ant-collapse-header {
+	padding: 0px;
+	align-items: center !important;
 }
