@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
+import { Set } from "./sets/set";
+import { CheckCircleOutlined } from "@ant-design/icons";
 
 type TProps = {
 	exercise: TUsersExerciseData;
@@ -10,6 +12,9 @@ type TProps = {
 };
 
 const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
+	const [weightsRepsTime, setWeightRepsTime] = useState<number[][]>(
+		exercise.sets
+	);
 	return (
 		<div
 			className=""
@@ -20,12 +25,24 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 				padding: "20px",
 			}}
 		>
-			<h3 className="index">{index + 1}.</h3>
-			<h3>{exercise.name}</h3>
-			<h5 className="right-side expand-summary">0/3 *</h5>
-			<Button type="primary" className="login-button">
-				{exercise.name}
-			</Button>
+			{weightsRepsTime.map((sets: number[], index: number) => (
+				<div className="collapse-exercise-sets">
+					<Set
+						set={sets}
+						weightUnits={exercise.weight_units}
+						modifySets={() => {}}
+						index={index}
+						key={index}
+						deleteSets={() => {}}
+					/>
+					<Button
+						style={{ color: "green" }}
+						className="confirm-exercise"
+					>
+						<CheckCircleOutlined />
+					</Button>
+				</div>
+			))}
 		</div>
 	);
 };

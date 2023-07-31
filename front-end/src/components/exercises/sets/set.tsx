@@ -18,8 +18,10 @@ export const Set = ({
 }: TProps) => {
 	return (
 		<div className="white-font exercise-set">
-			<p>{index + 1}.</p>
-			{set[0]} {weightUnits}
+			<p className="set-index">{index + 1}.</p>
+			<p className="set-weight">
+				{set[0]} {weightUnits}
+			</p>
 			<div className="set-reps-buttons set-item">
 				<Button
 					// disabled={disableSet}
@@ -40,7 +42,7 @@ export const Set = ({
 					}}
 				/>
 			</div>
-			<p>x {set[1]} reps</p>
+			<p className="set-reps">x {set[1]} reps</p>
 			<div className="weight-buttons set-item">
 				<Button
 					// disabled={disableSet}

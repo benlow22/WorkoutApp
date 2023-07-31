@@ -86,6 +86,17 @@ textarea.ant-input {
 	top: -12px;
 }
 
+.set-index {
+	width: 25px;
+}
+
+.set-weight {
+	width: 60px;
+}
+
+.set-reps {
+	width: 75px;
+}
 label.ant-radio-button-wrapper {
 	width: 40px;
 }
@@ -108,9 +119,9 @@ h3.add-exercise-data-exercise-name {
 .exercise-set {
 	display: flex;
 	align-items: center;
-	width: 350px;
+	width: 375px;
 	justify-content: space-between;
-	margin: 3px auto;
+	margin: 3px 0px;
 }
 
 .confirm-exercise-button,
@@ -171,4 +182,16 @@ h3.add-exercise-data-exercise-name {
 
 .ant-collapse-content-box {
 	padding: 0px !important;
+}
+
+.collapse-exercise-sets {
+	display: flex;
+}
+
+.confirm-exercise {
+	background-color: green;
+	height: 25px;
+	width: 25px;
+	padding: 0px;
+	border: none;
 }
