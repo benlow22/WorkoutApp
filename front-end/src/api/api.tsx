@@ -11,6 +11,7 @@ import {
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
 import { TExerciseTemplate } from "../components/exercises/AddExercise";
+import { arrToNum } from "../utils/utils";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -357,7 +358,8 @@ export const postNewExerciseAPI = async (
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
-		data = respJSON;
+		const defaultSetsInNum = arrToNum(respJSON.defaultSets);
+		data = { defaultSets: defaultSetsInNum, ...respJSON };
 	} else {
 		error = new Error(`Adding exercise to DB`, {
 			cause: error,
