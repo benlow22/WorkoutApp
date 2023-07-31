@@ -110,7 +110,7 @@ h3.add-exercise-data-exercise-name {
 	align-items: center;
 	width: 350px;
 	justify-content: space-between;
-	margin: auto;
+	margin: 3px auto;
 }
 
 .confirm-exercise-button,
