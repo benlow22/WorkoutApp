@@ -130,7 +130,7 @@ router.post("/:exerciseId", async (req, res) => {
 	const userId = req.headers["user-id"];
 	const { data, error } = await req.supabase
 		.from("users_exercise")
-		.insert([
+		.upsert([
 			{
 				user_id: userId,
 				exercise_id: exerciseId,
@@ -140,10 +140,12 @@ router.post("/:exerciseId", async (req, res) => {
 				weight_units: req.body.weightUnits,
 				time_units: req.body.timeUnits,
 				time: req.body.time,
-				id: req.body.usersExerciseId,
+				users_exercise_id: req.body.usersExerciseId,
 			},
 		])
-		.select("*")
+		.select(
+			"createdAt: created_at, exerciseId: exercise_id, userId: user_id, sets, notes, weightUnits: weight_units, timeUnits: time_units, usersExerciseId: users_exercise_id"
+		)
 		.single();
 	if (error) {
 		console.log("error UPSERTING USER SETS", error);
