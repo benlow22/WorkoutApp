@@ -161,9 +161,9 @@ export const SearchExercises = ({
 
 		return (
 			<div className="search-container">
-				<h2>
+				{/* <h2>
 					{isNewExercise ? "new" : "old"} Exercise: {searchExercise}
-				</h2>
+				</h2> */}
 				<AutoComplete
 					style={{
 						width: 260,

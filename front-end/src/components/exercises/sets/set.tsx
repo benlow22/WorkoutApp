@@ -1,5 +1,6 @@
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, InputNumber } from "antd";
+import { useState } from "react";
 
 type TProps = {
 	set: number[];
@@ -16,12 +17,37 @@ export const Set = ({
 	modifySets,
 	deleteSets,
 }: TProps) => {
+	const [isInputWeight, setIsInputWeight] = useState<boolean>(false);
+
+	const handleInputWeightOnEnter = (e) => {
+		const value = Number(e.target.value);
+		if (value > 0 && typeof value === "number")
+			modifySets([e.target.value, set[1]], index);
+		setIsInputWeight(false);
+	};
+
 	return (
 		<div className="white-font exercise-set">
 			<p className="set-index">{index + 1}.</p>
-			<p className="set-weight">
-				{set[0]} {weightUnits}
-			</p>
+			{!isInputWeight ? (
+				<Button
+					type="link"
+					className="set-weight"
+					onClick={() => setIsInputWeight(!isInputWeight)}
+				>
+					{set[0]} {weightUnits}
+				</Button>
+			) : (
+				<div className="weight-input">
+					<InputNumber
+						size="small"
+						className="weight-input-box"
+						defaultValue={set[0]}
+						onPressEnter={handleInputWeightOnEnter}
+					/>
+					<p>{weightUnits}</p>
+				</div>
+			)}
 			<div className="set-reps-buttons set-item">
 				<Button
 					// disabled={disableSet}

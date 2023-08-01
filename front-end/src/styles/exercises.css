@@ -90,10 +90,17 @@ textarea.ant-input {
 	width: 25px;
 }
 
-.set-weight {
-	width: 60px;
+.set-weight,
+.weight-input {
+	width: 80px;
+	display: flex;
+	justify-content: space-evenly;
 }
 
+.weight-input-box {
+	padding-right: 3px;
+	width: 50px;
+}
 .set-reps {
 	width: 75px;
 }
@@ -186,12 +193,14 @@ h3.add-exercise-data-exercise-name {
 
 .collapse-exercise-sets {
 	display: flex;
+	align-items: center;
 }
 
-.confirm-exercise {
+.finish-exercise-button {
 	background-color: green;
 	height: 25px;
 	width: 25px;
 	padding: 0px;
 	border: none;
+	margin: 2px;
 }

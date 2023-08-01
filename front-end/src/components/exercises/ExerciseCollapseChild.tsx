@@ -15,6 +15,13 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 	const [weightsRepsTime, setWeightRepsTime] = useState<number[][]>(
 		exercise.sets
 	);
+	const handleModifySet = (newSet: number[], i: number) => {
+		if (!newSet.some((element) => element < 0)) {
+			const newExerciseSetData = new Array(...weightsRepsTime);
+			newExerciseSetData[i] = newSet;
+			setWeightRepsTime(newExerciseSetData);
+		}
+	};
 	return (
 		<div
 			className=""
@@ -30,14 +37,14 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 					<Set
 						set={sets}
 						weightUnits={exercise.weight_units}
-						modifySets={() => {}}
+						modifySets={handleModifySet}
 						index={index}
 						key={index}
 						deleteSets={() => {}}
 					/>
 					<Button
 						style={{ color: "green" }}
-						className="confirm-exercise"
+						className="finish-exercise-button"
 					>
 						<CheckCircleOutlined />
 					</Button>
