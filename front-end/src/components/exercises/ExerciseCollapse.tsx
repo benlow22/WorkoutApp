@@ -13,7 +13,7 @@ type TProps = {
 };
 
 const ExercisesCollapse = ({ exercises }: TProps) => {
-	console.log("exer", exercises);
+	// console.log("exer", exercises);
 	const onChange = (key: string | string[]) => {
 		console.log(key);
 	};
@@ -38,7 +38,7 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 					className="right-side expand-summary"
 					// style={{ fontWeight: "normal" }}
 				>
-					0/3
+					0/{exercise.sets.length}
 				</h4>
 			</div>
 		),
@@ -53,7 +53,7 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 			// color: "white",
 		},
 	}));
-	console.log("items", items);
+	// console.log("items", items);
 
 	return (
 		<Collapse

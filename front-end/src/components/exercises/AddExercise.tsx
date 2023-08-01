@@ -1,5 +1,5 @@
 import { Button, message } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SearchExercises } from "../SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
 import { AddExerciseData } from "./AddExerciseData";
@@ -10,6 +10,12 @@ import {
 	IWorkout,
 	TUsersExerciseData,
 } from "../../api/types";
+import { useRequest } from "../../hooks/useRequest";
+import {
+	addExerciseToWorkoutAPI,
+	upsertUsersExerciseDateAPI,
+} from "../../api/api";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const testData = {
 	name: "Preacher Curls",
@@ -33,8 +39,6 @@ export type TExerciseTemplate = {
 	useTime: boolean;
 	id: string;
 };
-
-const convertStrArrToInt = (arrayOfSets: string[][]) => {};
 
 type TAddExercise = {
 	name: string;
@@ -63,7 +67,38 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 
 	const [exerciseDefaultValues, setExerciseDefaultValues] =
 		useState<TExerciseTemplate>(); // after new exerc ise is created or the default sets for an existing exercise.
+	const { session } = useContext(AuthContext);
 
+	const [
+		addExerciseToWorkoutAPIResponse,
+		addExerciseToWorkoutAPILoading,
+		addExerciseToWorkoutAPIError,
+		addExerciseToWorkoutAPIRequest,
+	] = useRequest(addExerciseToWorkoutAPI);
+
+	const [
+		upsertUsersExerciseDateAPIResponse,
+		upsertUsersExerciseDateAPILoading,
+		upsertUsersExerciseDateAPIError,
+		upsertUsersExerciseDateAPIRequest,
+	] = useRequest(upsertUsersExerciseDateAPI);
+
+	useEffect(() => {
+		//GET personal set DATA
+		if (upsertUsersExerciseDateAPIResponse) {
+			console.log(
+				"user's updated info has been upserted",
+				upsertUsersExerciseDateAPIResponse
+			);
+			addExerciseToWorkoutAPIRequest(
+				workout.id,
+				upsertUsersExerciseDateAPIResponse.exerciseId,
+				upsertUsersExerciseDateAPIResponse.usersExerciseId,
+				session!
+			);
+		}
+	}, [upsertUsersExerciseDateAPILoading]);
+	//
 	useEffect(() => {
 		if (exerciseName) {
 			setIsShowSearchExerciseBar(false);
@@ -80,13 +115,23 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 	}, [exerciseDefaultValues]);
 
 	const handleCreateNewExercise = (newExerciseDefault: TExerciseTemplate) => {
+		console.log(
+			"Sent back data from new exercise POST:",
+			newExerciseDefault
+		);
 		createNewExerciseSuccessMessage(newExerciseDefault);
 		setExerciseDefaultValues(newExerciseDefault);
 		setIsShowExerciseConfirmation(true);
 	};
 
 	const handleAddExercise = (newExercise: TUsersExerciseData) => {
+		upsertUsersExerciseDateAPIRequest(
+			session!,
+			newExercise,
+			newExercise.exerciseId
+		);
 		// once exercise is submitted and customized
+		console.log("AddExercise: HandleAddExercise");
 		addExerciseToWorkout(newExercise);
 		addExerciseToWorkoutSuccessMessage(newExercise.name);
 		setIsShowAddExerciseButton(true);

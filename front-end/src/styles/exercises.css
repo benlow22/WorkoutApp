@@ -129,6 +129,7 @@ h3.add-exercise-data-exercise-name {
 	width: 375px;
 	justify-content: space-between;
 	margin: 3px 0px;
+	height: 32px;
 }
 
 .confirm-exercise-button,

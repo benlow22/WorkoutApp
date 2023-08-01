@@ -10,7 +10,7 @@ import {
 	upsertUsersExerciseDateAPI,
 } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { uuid } from "@supabase/supabase-js/src/lib/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 const testData = {
 	name: "Preacher Curls",
@@ -47,47 +47,7 @@ export const AddExerciseData = ({
 	const [useTime, setUseTime] = useState<boolean>(exercise.useTime);
 
 	const { session } = useContext(AuthContext);
-	const [
-		addExerciseToWorkoutAPIResponse,
-		addExerciseToWorkoutAPILoading,
-		addExerciseToWorkoutAPIError,
-		addExerciseToWorkoutAPIRequest,
-	] = useRequest(addExerciseToWorkoutAPI);
 
-	const [
-		upsertUsersExerciseDateAPIResponse,
-		upsertUsersExerciseDateAPILoading,
-		upsertUsersExerciseDateAPIError,
-		upsertUsersExerciseDateAPIRequest,
-	] = useRequest(upsertUsersExerciseDateAPI);
-
-	useEffect(() => {
-		//GET personal set DATA
-		if (addExerciseToWorkoutAPIResponse) {
-			console.log("weightAndRepsArr", weightAndRepsArr);
-		}
-	}, [addExerciseToWorkoutAPIResponse]);
-	// get exercise data
-
-	useEffect(() => {
-		//GET personal set DATA
-		if (
-			upsertUsersExerciseDateAPIResponse &&
-			!upsertUsersExerciseDateAPIError
-		) {
-			console.log(
-				"user's updated info has been upserted",
-				upsertUsersExerciseDateAPIResponse
-			);
-			addExerciseToWorkoutAPIRequest(
-				workout.id,
-				upsertUsersExerciseDateAPIResponse.id,
-				upsertUsersExerciseDateAPIResponse.usersExerciseId,
-				session!
-			);
-		}
-	}, [upsertUsersExerciseDateAPIResponse]);
-	//
 	const handleAddSet = () => {
 		const newSet = weightAndRepsArr[weightAndRepsArr.length - 1];
 		const newWeightAndRepsArr = new Array(...weightAndRepsArr);
@@ -99,7 +59,7 @@ export const AddExerciseData = ({
 		const newSets = weightAndRepsArr.filter((set, index) => index !== i);
 		const newWeightAndRepsArr = Array(...newSets);
 		if (newSets.length >= 1) {
-			setWeightAndRepsArr(newSets);
+			setWeightAndRepsArr(newWeightAndRepsArr);
 		} else {
 			alert(
 				"cannot have 0 sets, if you want to delete the exercise, click the remove exercise Button"
@@ -120,37 +80,28 @@ export const AddExerciseData = ({
 		// sets: req.body.sets,
 		// links: req.body.links,
 		// notes: req.body.notes,
-		const usersExerciseId = uuid();
+		const usersExerciseId = uuidv4();
 		//
+		console.log("UserSEXID", usersExerciseId);
 		const usersUpdatedExerciseData: TUsersExerciseData = {
 			sets: weightAndRepsArr,
 			weightUnits,
 			timeUnits,
 			useTime,
-			id: exercise.id,
+			exerciseId: exercise.id,
 			name: exercise.name,
-			usersExerciseId,
+			usersExerciseId: usersExerciseId,
 		};
 
 		console.log("updated Exercise", usersUpdatedExerciseData);
 		handleAddExercise(usersUpdatedExerciseData);
 
-		// also posts exercise to workouts_exercises
-		// CREATE API
-		// console.log(workout, "workout");
-		// const usersExerciseId = uuid();
 		// addExerciseToWorkoutAPIRequest(
 		// 	workout.id,
-		// 	exercise.id,
-		// 	{ usersExerciseId: usersExerciseId },
+		// 	usersUpdatedExerciseData.id,
+		// 	usersExerciseId,
 		// 	session!
 		// );
-		// FIRST upsert
-		upsertUsersExerciseDateAPIRequest(
-			session!,
-			usersUpdatedExerciseData,
-			usersUpdatedExerciseData.id
-		);
 	};
 	return (
 		<div className="add-exercise-data-box">

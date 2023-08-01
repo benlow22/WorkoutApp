@@ -1,5 +1,5 @@
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, InputNumber } from "antd";
+import { Button, Input, InputNumber } from "antd";
 import { useState } from "react";
 
 type TProps = {
@@ -19,10 +19,10 @@ export const Set = ({
 }: TProps) => {
 	const [isInputWeight, setIsInputWeight] = useState<boolean>(false);
 
-	const handleInputWeightOnEnter = (e) => {
+	const handleInputWeightOnEnter = (e: any) => {
 		const value = Number(e.target.value);
 		if (value > 0 && typeof value === "number")
-			modifySets([e.target.value, set[1]], index);
+			modifySets([value, set[1]], index);
 		setIsInputWeight(false);
 	};
 
@@ -39,7 +39,7 @@ export const Set = ({
 				</Button>
 			) : (
 				<div className="weight-input">
-					<InputNumber
+					<Input
 						size="small"
 						className="weight-input-box"
 						defaultValue={set[0]}

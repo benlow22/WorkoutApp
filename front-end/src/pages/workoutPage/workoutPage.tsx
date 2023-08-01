@@ -63,6 +63,12 @@ export const WorkoutPage = () => {
 	}, []);
 
 	useEffect(() => {
+		if (exercises) {
+			// console.log("new exercises");
+		}
+	}, [exercises]);
+
+	useEffect(() => {
 		if (getWorkoutAndExercisesResponse) {
 			setWorkout(getWorkoutAndExercisesResponse.workout);
 			setExercises(getWorkoutAndExercisesResponse.exercises);
@@ -87,9 +93,9 @@ export const WorkoutPage = () => {
 	};
 
 	const addExerciseToWorkout = (newExercise: TUsersExerciseData) => {
-		console.log("addExerciseToWorkout called");
-		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
-			console.log("exercise not already in workout.");
+		// console.log("addExerciseToWorkout called");
+		if (exercises.some((exercise) => exercise.name !== newExercise.name)) {
+			// console.log("exercise not already in workout.");
 			const updatedExerciseList = new Array(...exercises, newExercise);
 			setExercises(updatedExerciseList);
 		}

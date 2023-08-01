@@ -33,13 +33,12 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 			}}
 		>
 			{weightsRepsTime.map((sets: number[], index: number) => (
-				<div className="collapse-exercise-sets">
+				<div className="collapse-exercise-sets" key={index}>
 					<Set
 						set={sets}
-						weightUnits={exercise.weight_units}
+						weightUnits={exercise.weightUnits}
 						modifySets={handleModifySet}
 						index={index}
-						key={index}
 						deleteSets={() => {}}
 					/>
 					<Button
