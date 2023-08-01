@@ -16,12 +16,23 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 	const [weightsRepsTime, setWeightRepsTime] = useState<number[][]>(
 		arrToNum(exercise.sets) // double checks that type is number
 	);
+	const [isDisabledArr, setIsDisabledArr] = useState<boolean[]>(
+		new Array(weightsRepsTime.length).fill(true)
+	);
+
 	const handleModifySet = (newSet: number[], i: number) => {
 		if (!newSet.some((element) => element < 0)) {
 			const newExerciseSetData = new Array(...weightsRepsTime);
 			newExerciseSetData[i] = newSet;
 			setWeightRepsTime(newExerciseSetData);
 		}
+	};
+
+	const handleDisableSet = (index: number) => {
+		const newIsDisabledArr = new Array();
+		isDisabledArr.forEach((element) => newIsDisabledArr.push(element));
+		newIsDisabledArr[index] = !isDisabledArr[index];
+		setIsDisabledArr(newIsDisabledArr);
 	};
 	return (
 		<div
@@ -41,10 +52,14 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 						modifySets={handleModifySet}
 						index={index}
 						deleteSets={() => {}}
+						isDisabled={isDisabledArr[index]}
 					/>
 					<Button
 						style={{ color: "green" }}
 						className="finish-exercise-button"
+						onClick={() => {
+							handleDisableSet(index);
+						}}
 					>
 						<CheckCircleOutlined />
 					</Button>

@@ -30,7 +30,7 @@ export function useRequest<TApiParams extends any[], TResponseData>(
 			// @ts-expect-error
 			setError(e);
 			// @ts-expect-error
-			console.error("ERROR in UseRequest", e);
+			console.error("ERROR in UseRequest", e.cause);
 		} finally {
 			setLoading(false);
 		}

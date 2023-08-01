@@ -143,6 +143,12 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 		usersExerciseRequest(exercise.id, session!);
 	};
 
+	const handleRemoveExerciseData = () => {
+		setIsShowAddExerciseButton(true);
+		setExerciseName("");
+		setIsShowExerciseConfirmation(false);
+	};
+
 	useEffect(() => {
 		if (usersExerciseResponse?.usersExercise) {
 			if (usersExerciseResponse.usersExercise?.length > 0) {
@@ -212,11 +218,12 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{exerciseDefaultValues && exerciseName.length > 0 && (
+			{isShowExerciseConfirmation && exerciseDefaultValues && (
 				<AddExerciseData
 					exercise={exerciseDefaultValues}
 					workout={workout}
 					handleAddExercise={handleAddExercise}
+					handleRemoveExercise={handleRemoveExerciseData}
 				/>
 			)}
 		</div>

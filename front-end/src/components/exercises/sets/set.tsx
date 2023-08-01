@@ -8,6 +8,7 @@ type TProps = {
 	weightUnits?: string;
 	modifySets: (newSet: number[], i: number) => void;
 	deleteSets: (i: number) => void;
+	isDisabled: boolean;
 };
 
 export const Set = ({
@@ -16,6 +17,7 @@ export const Set = ({
 	weightUnits,
 	modifySets,
 	deleteSets,
+	isDisabled,
 }: TProps) => {
 	const [isInputWeight, setIsInputWeight] = useState<boolean>(false);
 
@@ -34,6 +36,7 @@ export const Set = ({
 					type="link"
 					className="set-weight"
 					onClick={() => setIsInputWeight(!isInputWeight)}
+					disabled={isDisabled}
 				>
 					{set[0]} {weightUnits}
 				</Button>
@@ -44,6 +47,7 @@ export const Set = ({
 						className="weight-input-box"
 						defaultValue={set[0]}
 						onPressEnter={handleInputWeightOnEnter}
+						disabled={isDisabled}
 					/>
 					<p>{weightUnits}</p>
 				</div>
@@ -57,6 +61,8 @@ export const Set = ({
 					onClick={() => {
 						modifySets([set[0] - 0.5, set[1]], index);
 					}}
+					ghost={isDisabled}
+					disabled={isDisabled}
 				/>
 				<Button
 					// disabled={disableSet}
@@ -66,6 +72,7 @@ export const Set = ({
 					onClick={() => {
 						modifySets([set[0] + 0.5, set[1]], index);
 					}}
+					disabled={isDisabled}
 				/>
 			</div>
 			<p className="set-reps">x {set[1]} reps</p>
@@ -78,6 +85,7 @@ export const Set = ({
 					onClick={() => {
 						modifySets([set[0], set[1] - 1], index);
 					}}
+					disabled={isDisabled}
 				/>
 				<Button
 					// disabled={disableSet}
@@ -87,6 +95,7 @@ export const Set = ({
 					onClick={() => {
 						modifySets([set[0], set[1] + 1], index);
 					}}
+					disabled={isDisabled}
 				/>
 			</div>
 			{/* {disableSet ? (
@@ -114,6 +123,7 @@ export const Set = ({
 				type="text"
 				size="small"
 				onClick={() => deleteSets(index)}
+				disabled={isDisabled}
 			/>
 		</div>
 	);

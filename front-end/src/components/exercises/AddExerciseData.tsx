@@ -1,7 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+	DeleteOutlined,
+	MinusSquareOutlined,
+	PlusOutlined,
+} from "@ant-design/icons";
 import {
 	IWorkout,
 	TExerciseTemplate,
@@ -31,12 +35,14 @@ type TProps = {
 	exercise: TExerciseTemplate;
 	workout: IWorkout;
 	handleAddExercise: (newExercise: TUsersExerciseData) => void;
+	handleRemoveExercise: () => void;
 };
 
 export const AddExerciseData = ({
 	exercise,
 	workout,
 	handleAddExercise,
+	handleRemoveExercise,
 }: TProps) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
@@ -111,6 +117,15 @@ export const AddExerciseData = ({
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
+			<Button
+				type="primary"
+				danger
+				size="small"
+				className="delete-exercise-button-in-add-exercise-data"
+				onClick={handleRemoveExercise}
+			>
+				<MinusSquareOutlined />
+			</Button>
 			{weightAndRepsArr &&
 				weightAndRepsArr.map((set: number[], index: number) => (
 					<Set
@@ -120,6 +135,7 @@ export const AddExerciseData = ({
 						weightUnits={exercise.defaultWeightUnits}
 						modifySets={handleModifySet}
 						deleteSets={handleDeleteSet}
+						isDisabled={false}
 					/>
 				))}
 			<div className="confirmation-buttons">
