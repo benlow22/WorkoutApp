@@ -79,13 +79,18 @@ router.get("/exercises", async (req, res) => {
 // /api/authorized/:exerciseId = get users exercise id including sets and reps
 router.get("/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
-	const { data, error } = await req.supabase.from("workouts").select("*");
-	console.log("get exercise: ", data); // show in terminal
-	if (error) {
-		// if there is data, send it back = 200 status
-		res.status(404).send(error);
+	const { data, error } = await req.supabase
+		.from("exercise")
+		.select(
+			"name, id, defaultSets: default_sets, defaultWeightUnits: default_weight_units, defaultTime: default_time, defaultTimeUnits: default_time_units,  usersExercise: users_exercise!users_exercise_exercise_id_fkey( createdAt: created_at, userId: user_id, sets, notes, weightUnits: weight_units, timeUnits: time_units, usersExerciseId: users_exercise_id)"
+		)
+		.eq("id", exerciseId)
+		.single();
+	console.log("GET authorized/:exerciseId : ", data); // show in terminal
+	if (data) {
+		res.status(200).send(data);
 	} else {
-		res.status(204);
+		res.status(404).send(error);
 	}
 });
 

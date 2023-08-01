@@ -2,8 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-import { IWorkout, TUsersExerciseData } from "../../api/types";
-import { TExerciseTemplate } from "./AddExercise";
+import {
+	IWorkout,
+	TExerciseTemplate,
+	TUsersExerciseData,
+} from "../../api/types";
 import { useRequest } from "../../hooks/useRequest";
 import {
 	addExerciseToWorkoutAPI,
@@ -44,7 +47,9 @@ export const AddExerciseData = ({
 	const [weightUnits, setWeightUnits] = useState<string | undefined>(
 		exercise.defaultWeightUnits
 	);
-	const [useTime, setUseTime] = useState<boolean>(exercise.useTime);
+	const [useTime, setUseTime] = useState<boolean | undefined>(
+		exercise.useTime
+	);
 
 	const { session } = useContext(AuthContext);
 

@@ -125,7 +125,7 @@ export const transformExercisePost = (
 
 //[['15','5'],['25','10']]
 
-export const arrToNum = (arr: string[][]) => {
+export const arrToNum = (arr: string[][] | number[][]) => {
 	const newArr = arr.map((sets) => sets.map((element) => Number(element)));
 	return newArr;
 };

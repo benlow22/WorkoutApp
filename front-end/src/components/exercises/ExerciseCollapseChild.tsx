@@ -5,6 +5,7 @@ import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
 import { Set } from "./sets/set";
 import { CheckCircleOutlined } from "@ant-design/icons";
+import { arrToNum } from "../../utils/utils";
 
 type TProps = {
 	exercise: TUsersExerciseData;
@@ -13,7 +14,7 @@ type TProps = {
 
 const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 	const [weightsRepsTime, setWeightRepsTime] = useState<number[][]>(
-		exercise.sets
+		arrToNum(exercise.sets) // double checks that type is number
 	);
 	const handleModifySet = (newSet: number[], i: number) => {
 		if (!newSet.some((element) => element < 0)) {

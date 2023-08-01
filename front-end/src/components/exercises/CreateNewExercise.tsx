@@ -33,8 +33,7 @@ import {
 } from "../../utils/utils";
 import { postNewExerciseAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
-import { INewExerciseInput } from "../../api/types";
-import { TExerciseTemplate } from "./AddExercise";
+import { INewExerciseInput, TExerciseTemplate } from "../../api/types";
 
 const { Option } = Select;
 const formItemLayout = {

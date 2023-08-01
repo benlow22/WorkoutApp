@@ -11,9 +11,8 @@ import {
 	getUsersExerciseDataAPI,
 	usersAndPublicExercisesAPI,
 } from "../api/api";
-import { IExercise, INewExerciseInput } from "../api/types";
+import { IExercise, INewExerciseInput, TExerciseTemplate } from "../api/types";
 import { useRequest } from "../hooks/useRequest";
-import { TExerciseTemplate } from "./exercises/AddExercise";
 
 const { Search } = Input;
 
@@ -87,6 +86,27 @@ export const SearchExercises = ({
 		}, []);
 
 		useEffect(() => {
+			if (usersExerciseResponse?.usersExercise) {
+				if (usersExerciseResponse.usersExercise?.length > 0) {
+					console.log("user's exercise response received");
+					const data = usersExerciseResponse.usersExercise[0];
+					const defaultExerciseReformat = {
+						name: usersExerciseResponse.name,
+						useTime: data.useTime,
+						defaultSets: data.sets,
+						defaultWeightUnits: data.weightUnits,
+						defaultTime: data.time?.toString(),
+						defaultTimeUnits: data.timeUnits,
+						id: usersExerciseResponse.id,
+					};
+					setExercise(defaultExerciseReformat);
+				} else {
+					setExercise(usersExerciseResponse);
+				}
+			}
+		}, [usersExerciseResponse]);
+
+		useEffect(() => {
 			if (usersAndPublicExercisesResponse) {
 				const listOfExerciseNamesAsValues =
 					usersAndPublicExercisesResponse.map((exercise) => ({
@@ -95,15 +115,6 @@ export const SearchExercises = ({
 				setAllExercisesNames(listOfExerciseNamesAsValues);
 			}
 		}, [usersAndPublicExercisesResponse]);
-
-		useEffect(() => {
-			if (usersAndPublicExercisesResponse) {
-				console.log(
-					"previous exercise made it ",
-					usersExerciseResponse
-				);
-			}
-		}, [usersExerciseResponse]);
 
 		useEffect(() => {
 			if (

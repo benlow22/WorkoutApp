@@ -8,6 +8,7 @@ import {
 	IExercise,
 	INewExerciseInput,
 	IWorkout,
+	TExerciseTemplate,
 	TUsersExerciseData,
 } from "../../api/types";
 import { useRequest } from "../../hooks/useRequest";
@@ -28,16 +29,6 @@ const testData = {
 	defaultTime: null,
 	defaultTimeUnits: null,
 	useTime: false,
-};
-
-export type TExerciseTemplate = {
-	name: string;
-	defaultSets: number[][];
-	defaultWeightUnits?: string;
-	defaultTime?: string;
-	defaultTimeUnits?: string;
-	useTime: boolean;
-	id: string;
 };
 
 type TAddExercise = {
@@ -104,6 +95,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 			setIsShowSearchExerciseBar(false);
 			setIsShowAddExerciseButton(false);
 		}
+		console.log('NAME"', exerciseName);
 	}, [exerciseName]);
 
 	useEffect(() => {
@@ -172,14 +164,14 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					Add Exercise
 				</Button>
 			)}
-			{isShowSearchExerciseBar && (
-				<SearchExercises
-					setExerciseName={setExerciseName}
-					setIsNewExercise={setIsNewExercise}
-					isNewExercise={isNewExercise}
-					setExercise={setExerciseDefaultValues}
-				/>
-			)}
+			{/* {isShowSearchExerciseBar && ( */}
+			<SearchExercises
+				setExerciseName={setExerciseName}
+				setIsNewExercise={setIsNewExercise}
+				isNewExercise={isNewExercise}
+				setExercise={setExerciseDefaultValues}
+			/>
+			{/* )} */}
 			{isNewExercise && exerciseName && (
 				<CreateNewExerciseForm
 					exerciseName={exerciseName}
@@ -188,7 +180,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{isShowExerciseConfirmation && exerciseDefaultValues && (
+			{exerciseDefaultValues && (
 				<AddExerciseData
 					exercise={exerciseDefaultValues}
 					workout={workout}
