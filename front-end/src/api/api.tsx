@@ -302,12 +302,13 @@ export const addExerciseToWorkoutAPI = async (
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },
-		usersExerciseId
+		{ usersExerciseId: usersExerciseId }
 	);
 	let data: IExercise | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
+
 		// alter data if need be
 		data = respJSON;
 	} else {
@@ -362,7 +363,7 @@ export const postNewExerciseAPI = async (
 		let respJSON = await response.json();
 		// alter data if need be
 		const defaultSetsInNum = arrToNum(respJSON.defaultSets);
-		data = { defaultSets: defaultSetsInNum, ...respJSON };
+		data = { ...respJSON, defaultSets: defaultSetsInNum };
 	} else {
 		error = new Error(`Adding exercise to DB`, {
 			cause: error,
@@ -388,7 +389,7 @@ export const upsertUsersExerciseDateAPI = async (
 		let respJSON = await response.json();
 		// alter data if need be
 		const setsInNum = arrToNum(respJSON.sets);
-		data = { sets: setsInNum, ...respJSON };
+		data = { ...respJSON, sets: setsInNum };
 		data = respJSON;
 	} else {
 		error = new Error(`Adding exercise to DB`, {
