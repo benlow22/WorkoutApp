@@ -115,7 +115,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 
 	useEffect(() => {
 		if (postNewExerciseResponse) {
-			console.log("exercise Posted", postNewExerciseResponse);
+			// console.log("exercise Posted", postNewExerciseResponse);
 			// let newExerciseTemplate = ({ defaultSets } =
 			// 	postNewExerciseResponse);
 			console.log(
@@ -178,6 +178,15 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 				onFinish={onFinish}
 				className="new-exercise-form"
 				style={{ maxWidth: 600 }}
+				initialValues={{
+					equipment: ["2"],
+					muscleGroup: ["Arms"],
+					sets: 3,
+					reps: 12,
+					defaultWeight: 15,
+					defaultWeightUnits: "lbs",
+					public: "false",
+				}}
 			>
 				<div className="exercise-name-container">
 					<Form.Item name="createdBy" hidden initialValue={userId}>
@@ -497,10 +506,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item
-							name="defaultWeightUnits"
-							initialValue={"lbs"}
-						>
+						<Form.Item name="defaultWeightUnits">
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -538,11 +544,10 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 								width: "100px",
 							}}
 							name="defaultTime"
-							initialValue={null}
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="defaultTimeUnits" initialValue={"sec"}>
+						<Form.Item name="defaultTimeUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"
