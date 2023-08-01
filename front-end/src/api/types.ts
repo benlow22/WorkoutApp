@@ -55,7 +55,7 @@ export interface INewExerciseInput {
 export type TUsersExerciseData = {
 	defaultLinks?: string[];
 	description?: string;
-	id: string;
+	exerciseId: string;
 	name: string;
 	notes?: string[];
 	personalLinks?: string[];
@@ -65,4 +65,5 @@ export type TUsersExerciseData = {
 	useTime: boolean;
 	weightUnits?: string;
 	usersExerciseId: string;
+	userId?: string;
 };
