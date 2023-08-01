@@ -61,7 +61,8 @@ export type TUsersExerciseData = {
 	personalLinks?: string[];
 	sets: number[][];
 	time?: number;
-	time_units?: string;
+	timeUnits?: string;
 	useTime: boolean;
-	weight_units?: string;
+	weightUnits?: string;
+	usersExerciseId: string;
 };

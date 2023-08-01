@@ -97,6 +97,15 @@ export const SearchExercises = ({
 		}, [usersAndPublicExercisesResponse]);
 
 		useEffect(() => {
+			if (usersAndPublicExercisesResponse) {
+				console.log(
+					"previous exercise made it ",
+					usersExerciseResponse
+				);
+			}
+		}, [usersExerciseResponse]);
+
+		useEffect(() => {
 			if (
 				allExercisesNames.some(
 					(exercise) =>
@@ -126,7 +135,6 @@ export const SearchExercises = ({
 			if (searchExercise) {
 				setExerciseName(searchExercise);
 				if (isNewExercise) {
-					console.log("Add New Exercise:", searchExercise);
 					setIsNewExercise(true);
 					// add old exercise
 				} else {

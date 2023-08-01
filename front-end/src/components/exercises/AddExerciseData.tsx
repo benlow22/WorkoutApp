@@ -5,8 +5,12 @@ import { PlusOutlined } from "@ant-design/icons";
 import { IWorkout, TUsersExerciseData } from "../../api/types";
 import { TExerciseTemplate } from "./AddExercise";
 import { useRequest } from "../../hooks/useRequest";
-import { addExerciseToWorkoutAPI } from "../../api/api";
+import {
+	addExerciseToWorkoutAPI,
+	upsertUsersExerciseDateAPI,
+} from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
+import { uuid } from "@supabase/supabase-js/src/lib/helpers";
 
 const testData = {
 	name: "Preacher Curls",
@@ -50,11 +54,39 @@ export const AddExerciseData = ({
 		addExerciseToWorkoutAPIRequest,
 	] = useRequest(addExerciseToWorkoutAPI);
 
+	const [
+		upsertUsersExerciseDateAPIResponse,
+		upsertUsersExerciseDateAPILoading,
+		upsertUsersExerciseDateAPIError,
+		upsertUsersExerciseDateAPIRequest,
+	] = useRequest(upsertUsersExerciseDateAPI);
+
 	useEffect(() => {
 		//GET personal set DATA
-		console.log("weightAndRepsArr", weightAndRepsArr);
-	}, []);
+		if (addExerciseToWorkoutAPIResponse) {
+			console.log("weightAndRepsArr", weightAndRepsArr);
+		}
+	}, [addExerciseToWorkoutAPIResponse]);
 	// get exercise data
+
+	useEffect(() => {
+		//GET personal set DATA
+		if (
+			upsertUsersExerciseDateAPIResponse &&
+			!upsertUsersExerciseDateAPIError
+		) {
+			console.log(
+				"user's updated info has been upserted",
+				upsertUsersExerciseDateAPIResponse
+			);
+			addExerciseToWorkoutAPIRequest(
+				workout.id,
+				upsertUsersExerciseDateAPIResponse.id,
+				upsertUsersExerciseDateAPIResponse.usersExerciseId,
+				session!
+			);
+		}
+	}, [upsertUsersExerciseDateAPIResponse]);
 	//
 	const handleAddSet = () => {
 		const newSet = weightAndRepsArr[weightAndRepsArr.length - 1];
@@ -88,20 +120,37 @@ export const AddExerciseData = ({
 		// sets: req.body.sets,
 		// links: req.body.links,
 		// notes: req.body.notes,
-		const updatedExerciseData: TUsersExerciseData = {
+		const usersExerciseId = uuid();
+		//
+		const usersUpdatedExerciseData: TUsersExerciseData = {
 			sets: weightAndRepsArr,
-			weight_units: weightUnits,
-			time_units: timeUnits,
-			useTime: useTime,
+			weightUnits,
+			timeUnits,
+			useTime,
 			id: exercise.id,
 			name: exercise.name,
+			usersExerciseId,
 		};
-		handleAddExercise(updatedExerciseData);
+
+		console.log("updated Exercise", usersUpdatedExerciseData);
+		handleAddExercise(usersUpdatedExerciseData);
 
 		// also posts exercise to workouts_exercises
 		// CREATE API
-		console.log(workout, "workout");
-		addExerciseToWorkoutAPIRequest(workout.id, exercise.id, session!);
+		// console.log(workout, "workout");
+		// const usersExerciseId = uuid();
+		// addExerciseToWorkoutAPIRequest(
+		// 	workout.id,
+		// 	exercise.id,
+		// 	{ usersExerciseId: usersExerciseId },
+		// 	session!
+		// );
+		// FIRST upsert
+		upsertUsersExerciseDateAPIRequest(
+			session!,
+			usersUpdatedExerciseData,
+			usersUpdatedExerciseData.id
+		);
 	};
 	return (
 		<div className="add-exercise-data-box">

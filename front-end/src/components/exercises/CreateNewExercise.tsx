@@ -114,12 +114,14 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 	};
 
 	useEffect(() => {
-		console.log("yay");
 		if (postNewExerciseResponse) {
-			console.log("SUICCESS", postNewExerciseResponse);
+			console.log("exercise Posted", postNewExerciseResponse);
 			// let newExerciseTemplate = ({ defaultSets } =
 			// 	postNewExerciseResponse);
-
+			console.log(
+				"are sets NUMBERS?",
+				postNewExerciseResponse.defaultSets
+			);
 			handleCreateNewExercise(postNewExerciseResponse);
 		}
 	}, [postNewExerciseResponse]);

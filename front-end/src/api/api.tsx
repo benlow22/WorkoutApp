@@ -122,7 +122,6 @@ export const getWorkoutAndExercisesAPI = async (
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
-		console.log("exercise DAAATE", respJSON);
 		const { exercises, id, name, url, last_performed } = respJSON;
 		data = {
 			workout: { id, name, url, last_performed },
@@ -291,15 +290,19 @@ export const deleteWorkoutAPI = async (
 export const addExerciseToWorkoutAPI = async (
 	workoutId: string,
 	exerciseId: string,
+	usersExerciseId: string,
 	session: ISession
 ): Promise<{
 	data: IExercise | null;
 	error: TError;
 }> => {
+	console.log("ADD EXERCISE TO WORKOUT");
 	let [error, response] = await fetcher(
 		`/authorized/workout/${workoutId}/${exerciseId}`,
 		session,
-		"POST"
+		"POST",
+		{ "Content-Type": "application/json" },
+		usersExerciseId
 	);
 	let data: IExercise | null = null;
 	// if success
@@ -345,7 +348,7 @@ export const postNewExerciseAPI = async (
 	session: ISession,
 	newExerciseData: INewExerciseInput,
 	exerciseId: string
-): Promise<{ data: any; error: TError }> => {
+): Promise<{ data: TExerciseTemplate | null; error: TError }> => {
 	let [error, response] = await fetcher(
 		`/authorized/exercises/${exerciseId}`,
 		session,
@@ -371,19 +374,21 @@ export const upsertUsersExerciseDateAPI = async (
 	session: ISession,
 	usersExerciseData: TUsersExerciseData,
 	exerciseId: string
-): Promise<{ data: any; error: TError }> => {
+): Promise<{ data: TUsersExerciseData | null; error: TError }> => {
 	let [error, response] = await fetcher(
-		`/authorized/exercises/${exerciseId}`,
+		`/authorized/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },
 		usersExerciseData
 	);
-	let data: TExerciseTemplate | null = null;
+	let data: TUsersExerciseData | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
+		const setsInNum = arrToNum(respJSON.sets);
+		data = { sets: setsInNum, ...respJSON };
 		data = respJSON;
 	} else {
 		error = new Error(`Adding exercise to DB`, {
