@@ -339,7 +339,6 @@ export const getUsersExerciseDataAPI = async (
 
 	if (response.ok) {
 		let respJSON = await response.json();
-		console.log("response", respJSON);
 		// alter data if need be
 		data = respJSON;
 		console.log("DATA", data);

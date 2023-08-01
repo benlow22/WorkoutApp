@@ -34,6 +34,7 @@ type TProps = {
 	setExercise: React.Dispatch<
 		React.SetStateAction<TExerciseTemplate | undefined>
 	>;
+	handleAddExistingExercise: (exercise: IExercise) => void;
 };
 /* SearchExercises component should:
 	- GET all public and users exercises
@@ -46,6 +47,7 @@ export const SearchExercises = ({
 	setIsNewExercise,
 	isNewExercise,
 	setExercise,
+	handleAddExistingExercise,
 }: TProps) =>
 	// addExerciseToAll
 	{
@@ -156,6 +158,7 @@ export const SearchExercises = ({
 						"Add Existing exercise to exercises list in state and inserting into workouts_exercises table"
 					);
 					if (exercise) {
+						handleAddExistingExercise(exercise);
 						usersExerciseRequest(exercise.id, session!);
 					}
 					setAddExistingExerciseBox(true);

@@ -14,6 +14,7 @@ import {
 import { useRequest } from "../../hooks/useRequest";
 import {
 	addExerciseToWorkoutAPI,
+	getUsersExerciseDataAPI,
 	upsertUsersExerciseDateAPI,
 } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
@@ -74,6 +75,13 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 		upsertUsersExerciseDateAPIRequest,
 	] = useRequest(upsertUsersExerciseDateAPI);
 
+	const [
+		usersExerciseResponse,
+		usersExerciseLoading,
+		usersExerciseError,
+		usersExerciseRequest,
+	] = useRequest(getUsersExerciseDataAPI);
+
 	useEffect(() => {
 		//GET personal set DATA
 		if (upsertUsersExerciseDateAPIResponse) {
@@ -95,7 +103,6 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 			setIsShowSearchExerciseBar(false);
 			setIsShowAddExerciseButton(false);
 		}
-		console.log('NAME"', exerciseName);
 	}, [exerciseName]);
 
 	useEffect(() => {
@@ -132,6 +139,30 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 		setIsShowExerciseConfirmation(false);
 	};
 
+	const handleAddExistingExercise = (exercise: IExercise) => {
+		usersExerciseRequest(exercise.id, session!);
+	};
+
+	useEffect(() => {
+		if (usersExerciseResponse?.usersExercise) {
+			if (usersExerciseResponse.usersExercise?.length > 0) {
+				console.log("user's exercise response received");
+				const data = usersExerciseResponse.usersExercise[0];
+				const defaultExerciseReformat = {
+					name: usersExerciseResponse.name,
+					useTime: data.useTime,
+					defaultSets: data.sets,
+					defaultWeightUnits: data.weightUnits,
+					defaultTime: data.time?.toString(),
+					defaultTimeUnits: data.timeUnits,
+					id: usersExerciseResponse.id,
+				};
+				setExerciseDefaultValues(defaultExerciseReformat);
+			} else {
+				setExerciseDefaultValues(usersExerciseResponse);
+			}
+		}
+	}, [usersExerciseResponse]);
 	const createNewExerciseSuccessMessage = (
 		newExerciseDefault: TExerciseTemplate
 	) => {
@@ -164,14 +195,15 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					Add Exercise
 				</Button>
 			)}
-			{/* {isShowSearchExerciseBar && ( */}
-			<SearchExercises
-				setExerciseName={setExerciseName}
-				setIsNewExercise={setIsNewExercise}
-				isNewExercise={isNewExercise}
-				setExercise={setExerciseDefaultValues}
-			/>
-			{/* )} */}
+			{isShowSearchExerciseBar && (
+				<SearchExercises
+					setExerciseName={setExerciseName}
+					setIsNewExercise={setIsNewExercise}
+					isNewExercise={isNewExercise}
+					setExercise={setExerciseDefaultValues}
+					handleAddExistingExercise={handleAddExistingExercise}
+				/>
+			)}
 			{isNewExercise && exerciseName && (
 				<CreateNewExerciseForm
 					exerciseName={exerciseName}
@@ -180,7 +212,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{exerciseDefaultValues && (
+			{exerciseDefaultValues && exerciseName.length > 0 && (
 				<AddExerciseData
 					exercise={exerciseDefaultValues}
 					workout={workout}
