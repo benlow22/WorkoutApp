@@ -10,9 +10,11 @@ import { ClockCircleOutlined } from "@ant-design/icons";
 import { EditWorkoutNameButton } from "../../components/EditWorkoutNameButton";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { useRequest } from "../../hooks/useRequest";
-import { IExercise, IWorkout } from "../../api/types";
+import { IWorkout, TUsersExerciseData } from "../../api/types";
 import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { AddExercise } from "../../components/exercises/AddExercise";
+import ExerciseCollapse from "../../components/exercises/ExerciseCollapse";
+import ExercisesCollapse from "../../components/exercises/ExerciseCollapse";
 
 export const WorkoutPage = () => {
 	const location = useLocation();
@@ -20,12 +22,16 @@ export const WorkoutPage = () => {
 
 	const { session } = useContext(AuthContext);
 	// const [addExercise, setAddExercise] = useState<boolean>(false);
-	const [exercises, setExercises] = useState<IExercise[]>([]);
+	const [exercises, setExercises] = useState<TUsersExerciseData[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
 	const { workoutUrl } = useParams<string>();
 
-	const [workoutResponse, workoutLoading, workoutError, workoutRequest] =
-		useRequest(getWorkoutAndExercisesAPI);
+	const [
+		getWorkoutAndExercisesResponse,
+		getWorkoutAndExercisesLoading,
+		getWorkoutAndExercisesError,
+		getWorkoutAndExercisesRequest,
+	] = useRequest(getWorkoutAndExercisesAPI);
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const deleteWorkoutSuccess = () => {
@@ -52,17 +58,22 @@ export const WorkoutPage = () => {
 
 	useEffect(() => {
 		if (workoutUrl) {
-			workoutRequest(workoutUrl, session!);
+			getWorkoutAndExercisesRequest(workoutUrl, session!);
 		}
 	}, []);
 
 	useEffect(() => {
-		if (workoutResponse) {
-			setWorkout(workoutResponse.workout);
-			setExercises(workoutResponse.exercises);
-			console.log("EXERCISES", workoutResponse.exercises);
+		if (exercises) {
+			// console.log("new exercises");
 		}
-	}, [workoutResponse]);
+	}, [exercises]);
+
+	useEffect(() => {
+		if (getWorkoutAndExercisesResponse) {
+			setWorkout(getWorkoutAndExercisesResponse.workout);
+			setExercises(getWorkoutAndExercisesResponse.exercises);
+		}
+	}, [getWorkoutAndExercisesResponse]);
 
 	const redirectToWelcomepage = () => {
 		navigate("/");
@@ -81,21 +92,17 @@ export const WorkoutPage = () => {
 		}
 	};
 
-	// const toggleButton = () => {
-	// 	addExercise ? setAddExercise(false) : setAddExercise(true);
-	// };
-
-	const addExerciseToWorkout = (newExercise: IExercise) => {
-		console.log("addExerciseToWorkout called");
-		if (!exercises.find((exercise) => exercise.name === exercise.name)) {
-			console.log("exercise not already in workout.");
+	const addExerciseToWorkout = (newExercise: TUsersExerciseData) => {
+		// console.log("addExerciseToWorkout called");
+		if (exercises.some((exercise) => exercise.name !== newExercise.name)) {
+			// console.log("exercise not already in workout.");
 			const updatedExerciseList = new Array(...exercises, newExercise);
 			setExercises(updatedExerciseList);
 		}
 	};
 
-	if (!workoutLoading) {
-		if (workoutError) {
+	if (!getWorkoutAndExercisesLoading) {
+		if (getWorkoutAndExercisesError) {
 			return (
 				<div>
 					<p>No workout with URL {workoutUrl}</p>
@@ -106,7 +113,7 @@ export const WorkoutPage = () => {
 			);
 		}
 		return (
-			<div>
+			<div className="workout-page">
 				{workout && (
 					<section className="new-workout-name white-font">
 						<EditWorkoutNameButton workout={workout} />
@@ -130,16 +137,14 @@ export const WorkoutPage = () => {
 					</button>
 				</div>
 				{/* DISPLAY EXERCISES HERE */}
-				{exercises &&
-					exercises.map((exercise, index) => (
-						<p key={index}>
-							{index + 1}. {exercise.name}
-						</p>
-					))}
+				{exercises && <ExercisesCollapse exercises={exercises} />}
 				{/* <Exercises exercises={exercises} /> */}
 				<br></br>
-				{workoutResponse?.workout && (
-					<AddExercise workout={workoutResponse.workout} />
+				{getWorkoutAndExercisesResponse?.workout && (
+					<AddExercise
+						workout={getWorkoutAndExercisesResponse.workout}
+						addExerciseToWorkout={addExerciseToWorkout}
+					/>
 				)}
 				<br></br>
 				{contextHolder}

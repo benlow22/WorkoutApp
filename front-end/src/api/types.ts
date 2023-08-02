@@ -51,3 +51,33 @@ export interface INewExerciseInput {
 	defaultWeightUnits: string | null;
 	defaultTimeUnits: string | null;
 }
+
+export type TUsersExerciseData = {
+	defaultLinks?: string[];
+	description?: string;
+	exerciseId: string;
+	name: string;
+	notes?: string[];
+	personalLinks?: string[];
+	sets: number[][];
+	time?: number;
+	timeUnits?: string;
+	useTime?: boolean;
+	weightUnits?: string;
+	usersExerciseId: string;
+	userId?: string;
+};
+
+export type TExerciseDataWithUsers = TExerciseTemplate & {
+	usersExercise?: TUsersExerciseData[];
+};
+
+export type TExerciseTemplate = {
+	name: string;
+	useTime?: boolean;
+	defaultSets: number[][];
+	defaultWeightUnits?: string;
+	defaultTime?: string;
+	defaultTimeUnits?: string;
+	id: string;
+};

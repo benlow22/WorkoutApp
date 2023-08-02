@@ -7,10 +7,12 @@ import {
 	INewExerciseInput,
 	IWorkout,
 	TError,
+	TExerciseDataWithUsers,
+	TExerciseTemplate,
+	TUsersExerciseData,
 } from "./types";
 import { ISession } from "../contexts/AuthProvider";
-import { TExerciseTemplate } from "../components/exercises/AddExercise";
-import { TUsersExerciseData } from "../components/exercises/AddExerciseData";
+import { arrToNum } from "../utils/utils";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie
@@ -104,24 +106,28 @@ export const getAllUsersWorkoutsAPI = async (
 	return { data, error };
 };
 
+// GET (workoutURL) => workout data, all users custom sets and data for each exercise (TUsersExerciseData)
 export const getWorkoutAndExercisesAPI = async (
 	workoutUrl: string,
 	session: ISession
 ): Promise<{
-	data: { workout: IWorkout; exercises: IExercise[] } | null;
+	data: { workout: IWorkout; exercises: TUsersExerciseData[] } | null;
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
 		`/authorized/workouts/${workoutUrl}`,
 		session
 	);
-	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+	let data: { workout: IWorkout; exercises: TUsersExerciseData[] } | null =
+		null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		const { exercises, id, name, url, last_performed } = respJSON;
-		data = { workout: { id, name, url, last_performed }, exercises };
-		console.log("DATA response", data);
+		data = {
+			workout: { id, name, url, last_performed },
+			exercises,
+		};
 	} else {
 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
 			cause: error,
@@ -129,6 +135,31 @@ export const getWorkoutAndExercisesAPI = async (
 	}
 	return { data, error };
 };
+// export const getWorkoutAndExercisesAPI = async (
+// 	workoutUrl: string,
+// 	session: ISession
+// ): Promise<{
+// 	data: { workout: IWorkout; exercises: IExercise[] } | null;
+// 	error: TError;
+// }> => {
+// 	let [error, response] = await fetcher(
+// 		`/authorized/workouts/${workoutUrl}`,
+// 		session
+// 	);
+// 	let data: { workout: IWorkout; exercises: IExercise[] } | null = null;
+// 	// if success
+// 	if (response.ok) {
+// 		let respJSON = await response.json();
+// 		console.log("exercise DAAATE", respJSON);
+// 		const { exercises, id, name, url, last_performed } = respJSON;
+// 		data = { workout: { id, name, url, last_performed }, exercises };
+// 	} else {
+// 		error = new Error(`Getting ${workoutUrl}'s exercises from Supabase`, {
+// 			cause: error,
+// 		});
+// 	}
+// 	return { data, error };
+// };
 
 // API TEMPLATE
 /*
@@ -260,20 +291,25 @@ export const deleteWorkoutAPI = async (
 export const addExerciseToWorkoutAPI = async (
 	workoutId: string,
 	exerciseId: string,
+	usersExerciseId: string,
 	session: ISession
 ): Promise<{
 	data: IExercise | null;
 	error: TError;
 }> => {
+	console.log("ADD EXERCISE TO WORKOUT");
 	let [error, response] = await fetcher(
 		`/authorized/workout/${workoutId}/${exerciseId}`,
 		session,
-		"POST"
+		"POST",
+		{ "Content-Type": "application/json" },
+		{ usersExerciseId: usersExerciseId }
 	);
 	let data: IExercise | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
+
 		// alter data if need be
 		data = respJSON;
 	} else {
@@ -289,21 +325,25 @@ export const getUsersExerciseDataAPI = async (
 	exerciseId: string,
 	session: ISession
 ): Promise<{
-	data: IExercise | null;
+	data: TExerciseDataWithUsers | null;
 	error: TError;
 }> => {
 	let [error, response] = await fetcher(
-		`/authorized/${exerciseId}}`,
-		session
+		`/authorized/${exerciseId}`,
+		session,
+		"GET",
+		{ "Content-Type": "application/json" }
 	);
-	let data: IExercise | null = null;
+	let data: any | null = null;
 	// if success
+
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
 		data = respJSON;
+		console.log("DATA", data);
 	} else {
-		error = new Error(`Adding exercise to workout from Supabase`, {
+		error = new Error(`Getting default or users data`, {
 			cause: error,
 		});
 	}
@@ -314,7 +354,7 @@ export const postNewExerciseAPI = async (
 	session: ISession,
 	newExerciseData: INewExerciseInput,
 	exerciseId: string
-): Promise<{ data: any; error: TError }> => {
+): Promise<{ data: TExerciseTemplate | null; error: TError }> => {
 	let [error, response] = await fetcher(
 		`/authorized/exercises/${exerciseId}`,
 		session,
@@ -327,7 +367,9 @@ export const postNewExerciseAPI = async (
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
-		data = respJSON;
+		const defaultSetsInNum = arrToNum(respJSON.defaultSets);
+		data = { ...respJSON, defaultSets: defaultSetsInNum };
+		console.log("thats; data", data);
 	} else {
 		error = new Error(`Adding exercise to DB`, {
 			cause: error,
@@ -339,19 +381,21 @@ export const upsertUsersExerciseDateAPI = async (
 	session: ISession,
 	usersExerciseData: TUsersExerciseData,
 	exerciseId: string
-): Promise<{ data: any; error: TError }> => {
+): Promise<{ data: TUsersExerciseData | null; error: TError }> => {
 	let [error, response] = await fetcher(
-		`/authorized/exercises/${exerciseId}`,
+		`/authorized/${exerciseId}`,
 		session,
 		"POST",
 		{ "Content-Type": "application/json" },
 		usersExerciseData
 	);
-	let data: TExerciseTemplate | null = null;
+	let data: TUsersExerciseData | null = null;
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
 		// alter data if need be
+		const setsInNum = arrToNum(respJSON.sets);
+		data = { ...respJSON, sets: setsInNum };
 		data = respJSON;
 	} else {
 		error = new Error(`Adding exercise to DB`, {
@@ -464,6 +508,7 @@ export const postNewWorkout = async (
 			name: workoutName,
 			url: url,
 			user_id: user_id,
+			created_by: user_id,
 		};
 		console.log("uuid", newWorkoutObj.id);
 		// insert and return

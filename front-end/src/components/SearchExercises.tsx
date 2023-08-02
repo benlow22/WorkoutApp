@@ -11,9 +11,8 @@ import {
 	getUsersExerciseDataAPI,
 	usersAndPublicExercisesAPI,
 } from "../api/api";
-import { IExercise, INewExerciseInput } from "../api/types";
+import { IExercise, INewExerciseInput, TExerciseTemplate } from "../api/types";
 import { useRequest } from "../hooks/useRequest";
-import { TExerciseTemplate } from "./exercises/AddExercise";
 
 const { Search } = Input;
 
@@ -35,6 +34,7 @@ type TProps = {
 	setExercise: React.Dispatch<
 		React.SetStateAction<TExerciseTemplate | undefined>
 	>;
+	handleAddExistingExercise: (exercise: IExercise) => void;
 };
 /* SearchExercises component should:
 	- GET all public and users exercises
@@ -47,6 +47,7 @@ export const SearchExercises = ({
 	setIsNewExercise,
 	isNewExercise,
 	setExercise,
+	handleAddExistingExercise,
 }: TProps) =>
 	// addExerciseToAll
 	{
@@ -85,6 +86,27 @@ export const SearchExercises = ({
 		useEffect(() => {
 			usersAndPublicExercisesRequest(session!);
 		}, []);
+
+		useEffect(() => {
+			if (usersExerciseResponse?.usersExercise) {
+				if (usersExerciseResponse.usersExercise?.length > 0) {
+					console.log("user's exercise response received");
+					const data = usersExerciseResponse.usersExercise[0];
+					const defaultExerciseReformat = {
+						name: usersExerciseResponse.name,
+						useTime: data.useTime,
+						defaultSets: data.sets,
+						defaultWeightUnits: data.weightUnits,
+						defaultTime: data.time?.toString(),
+						defaultTimeUnits: data.timeUnits,
+						id: usersExerciseResponse.id,
+					};
+					setExercise(defaultExerciseReformat);
+				} else {
+					setExercise(usersExerciseResponse);
+				}
+			}
+		}, [usersExerciseResponse]);
 
 		useEffect(() => {
 			if (usersAndPublicExercisesResponse) {
@@ -126,7 +148,6 @@ export const SearchExercises = ({
 			if (searchExercise) {
 				setExerciseName(searchExercise);
 				if (isNewExercise) {
-					console.log("Add New Exercise:", searchExercise);
 					setIsNewExercise(true);
 					// add old exercise
 				} else {
@@ -137,6 +158,7 @@ export const SearchExercises = ({
 						"Add Existing exercise to exercises list in state and inserting into workouts_exercises table"
 					);
 					if (exercise) {
+						handleAddExistingExercise(exercise);
 						usersExerciseRequest(exercise.id, session!);
 					}
 					setAddExistingExerciseBox(true);
@@ -161,9 +183,9 @@ export const SearchExercises = ({
 
 		return (
 			<div className="search-container">
-				<h2>
+				{/* <h2>
 					{isNewExercise ? "new" : "old"} Exercise: {searchExercise}
-				</h2>
+				</h2> */}
 				<AutoComplete
 					style={{
 						width: 260,

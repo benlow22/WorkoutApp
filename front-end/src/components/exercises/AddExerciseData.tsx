@@ -1,22 +1,23 @@
 import { useContext, useEffect, useState } from "react";
 import { Set } from "./sets/set";
 import { Button } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
-import { INewExerciseInput, IWorkout } from "../../api/types";
-import { TExerciseTemplate } from "./AddExercise";
+import {
+	DeleteOutlined,
+	MinusSquareOutlined,
+	PlusOutlined,
+} from "@ant-design/icons";
+import {
+	IWorkout,
+	TExerciseTemplate,
+	TUsersExerciseData,
+} from "../../api/types";
 import { useRequest } from "../../hooks/useRequest";
-import { addExerciseToWorkoutAPI } from "../../api/api";
+import {
+	addExerciseToWorkoutAPI,
+	upsertUsersExerciseDateAPI,
+} from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
-
-export type TUsersExerciseData = {
-	//updated Data
-	links?: string[] | null;
-	notes?: string[] | null;
-	sets: number[][];
-	weight_units: string | null;
-	time_units: string | null;
-	time: boolean;
-};
+import { v4 as uuidv4 } from "uuid";
 
 const testData = {
 	name: "Preacher Curls",
@@ -33,39 +34,31 @@ const testData = {
 type TProps = {
 	exercise: TExerciseTemplate;
 	workout: IWorkout;
-	handleAddExercise: () => void;
+	handleAddExercise: (newExercise: TUsersExerciseData) => void;
+	handleRemoveExercise: () => void;
 };
 
 export const AddExerciseData = ({
 	exercise,
 	workout,
 	handleAddExercise,
+	handleRemoveExercise,
 }: TProps) => {
 	const [weightAndRepsArr, setWeightAndRepsArr] = useState<number[][]>(
 		exercise.defaultSets
 	);
-	const [timeUnits, setTimeUnits] = useState<string | null>(
+	const [timeUnits, setTimeUnits] = useState<string | undefined>(
 		exercise.defaultTimeUnits
 	);
-	const [weightUnits, setWeightUnits] = useState<string | null>(
+	const [weightUnits, setWeightUnits] = useState<string | undefined>(
 		exercise.defaultWeightUnits
 	);
-	const [useTime, setUseTime] = useState<boolean>(exercise.useTime);
+	const [useTime, setUseTime] = useState<boolean | undefined>(
+		exercise.useTime
+	);
 
 	const { session } = useContext(AuthContext);
-	const [
-		addExerciseToWorkoutAPIResponse,
-		addExerciseToWorkoutAPILoading,
-		addExerciseToWorkoutAPIError,
-		addExerciseToWorkoutAPIRequest,
-	] = useRequest(addExerciseToWorkoutAPI);
 
-	useEffect(() => {
-		//GET personal set DATA
-		console.log("weightAndRepsArr", weightAndRepsArr);
-	}, []);
-	// get exercise data
-	//
 	const handleAddSet = () => {
 		const newSet = weightAndRepsArr[weightAndRepsArr.length - 1];
 		const newWeightAndRepsArr = new Array(...weightAndRepsArr);
@@ -77,7 +70,7 @@ export const AddExerciseData = ({
 		const newSets = weightAndRepsArr.filter((set, index) => index !== i);
 		const newWeightAndRepsArr = Array(...newSets);
 		if (newSets.length >= 1) {
-			setWeightAndRepsArr(newSets);
+			setWeightAndRepsArr(newWeightAndRepsArr);
 		} else {
 			alert(
 				"cannot have 0 sets, if you want to delete the exercise, click the remove exercise Button"
@@ -98,22 +91,41 @@ export const AddExerciseData = ({
 		// sets: req.body.sets,
 		// links: req.body.links,
 		// notes: req.body.notes,
-		handleAddExercise();
-		const updatedExerciseData = {
+		const usersExerciseId = uuidv4();
+		//
+		console.log("UserSEXID", usersExerciseId);
+		const usersUpdatedExerciseData: TUsersExerciseData = {
 			sets: weightAndRepsArr,
-			weight_units: weightUnits,
-			time_units: timeUnits,
-			time: useTime,
+			weightUnits,
+			timeUnits,
+			useTime,
+			exerciseId: exercise.id,
+			name: exercise.name,
+			usersExerciseId: usersExerciseId,
 		};
 
-		// also posts exercise to workouts_exercises
-		// CREATE API
-		console.log(workout, "workout");
-		addExerciseToWorkoutAPIRequest(workout.id, exercise.id, session!);
+		console.log("updated Exercise", usersUpdatedExerciseData);
+		handleAddExercise(usersUpdatedExerciseData);
+
+		// addExerciseToWorkoutAPIRequest(
+		// 	workout.id,
+		// 	usersUpdatedExerciseData.id,
+		// 	usersExerciseId,
+		// 	session!
+		// );
 	};
 	return (
 		<div className="add-exercise-data-box">
 			<h3 className="add-exercise-data-exercise-name">{exercise.name}</h3>
+			<Button
+				type="primary"
+				danger
+				size="small"
+				className="delete-exercise-button-in-add-exercise-data"
+				onClick={handleRemoveExercise}
+			>
+				<MinusSquareOutlined />
+			</Button>
 			{weightAndRepsArr &&
 				weightAndRepsArr.map((set: number[], index: number) => (
 					<Set
@@ -123,6 +135,7 @@ export const AddExerciseData = ({
 						weightUnits={exercise.defaultWeightUnits}
 						modifySets={handleModifySet}
 						deleteSets={handleDeleteSet}
+						isDisabled={false}
 					/>
 				))}
 			<div className="confirmation-buttons">

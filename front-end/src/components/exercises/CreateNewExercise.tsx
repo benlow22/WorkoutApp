@@ -33,8 +33,7 @@ import {
 } from "../../utils/utils";
 import { postNewExerciseAPI } from "../../api/api";
 import { useRequest } from "../../hooks/useRequest";
-import { INewExerciseInput } from "../../api/types";
-import { TExerciseTemplate } from "./AddExercise";
+import { INewExerciseInput, TExerciseTemplate } from "../../api/types";
 
 const { Option } = Select;
 const formItemLayout = {
@@ -114,11 +113,14 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 	};
 
 	useEffect(() => {
-		console.log("yay");
 		if (postNewExerciseResponse) {
-			console.log("SUICCESS", postNewExerciseResponse);
+			// console.log("exercise Posted", postNewExerciseResponse);
 			// let newExerciseTemplate = ({ defaultSets } =
 			// 	postNewExerciseResponse);
+			console.log(
+				"are sets NUMBERS?",
+				postNewExerciseResponse.defaultSets
+			);
 			handleCreateNewExercise(postNewExerciseResponse);
 		}
 	}, [postNewExerciseResponse]);
@@ -175,6 +177,15 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 				onFinish={onFinish}
 				className="new-exercise-form"
 				style={{ maxWidth: 600 }}
+				initialValues={{
+					equipment: ["2"],
+					muscleGroup: ["Arms"],
+					sets: 3,
+					reps: 12,
+					defaultWeight: 15,
+					defaultWeightUnits: "lbs",
+					public: "false",
+				}}
 			>
 				<div className="exercise-name-container">
 					<Form.Item name="createdBy" hidden initialValue={userId}>
@@ -494,10 +505,7 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 						>
 							<InputNumber min={1} placeholder="weight" />
 						</Form.Item>
-						<Form.Item
-							name="defaultWeightUnits"
-							initialValue={"lbs"}
-						>
+						<Form.Item name="defaultWeightUnits">
 							<Radio.Group
 								className="radio-weight-units"
 								size="small"
@@ -535,11 +543,10 @@ export const CreateNewExerciseForm: React.FC<TProps> = ({
 								width: "100px",
 							}}
 							name="defaultTime"
-							initialValue={null}
 						>
 							<InputNumber min={1} placeholder="time" />
 						</Form.Item>
-						<Form.Item name="defaultTimeUnits" initialValue={"sec"}>
+						<Form.Item name="defaultTimeUnits">
 							<Radio.Group
 								className="radio-buttons weight inline"
 								size="small"

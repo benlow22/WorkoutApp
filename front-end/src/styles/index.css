@@ -172,6 +172,9 @@ body,
 }
 
 /* Forms */
+.ant-form-item-label > label {
+	color: white !important;
+}
 
 label {
 	display: block;

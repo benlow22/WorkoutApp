@@ -86,6 +86,24 @@ textarea.ant-input {
 	top: -12px;
 }
 
+.set-index {
+	width: 25px;
+}
+
+.set-weight,
+.weight-input {
+	width: 80px;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.weight-input-box {
+	padding-right: 3px;
+	width: 50px;
+}
+.set-reps {
+	width: 75px;
+}
 label.ant-radio-button-wrapper {
 	width: 40px;
 }
@@ -97,6 +115,7 @@ label.ant-radio-button-wrapper {
 	max-width: 450px;
 	margin: auto;
 	padding-bottom: 10px;
+	position: relative;
 }
 
 h3.add-exercise-data-exercise-name {
@@ -108,9 +127,10 @@ h3.add-exercise-data-exercise-name {
 .exercise-set {
 	display: flex;
 	align-items: center;
-	width: 350px;
+	width: 375px;
 	justify-content: space-between;
-	margin: auto;
+	margin: 3px auto;
+	height: 32px;
 }
 
 .confirm-exercise-button,
@@ -123,4 +143,72 @@ h3.add-exercise-data-exercise-name {
 	margin: auto;
 	width: 300px;
 	justify-content: space-around;
+}
+
+.exercise-collapse {
+	/* border: 4px solid #3586f8;
+	border-radius: 15px; */
+	max-width: 450px;
+	margin: 10px auto;
+	/* padding-bottom: 10px;  */
+	/* background-color: rgb(30, 59, 146); */
+}
+
+.exercise-collapse path {
+	color: white;
+}
+.exercise-collapse-heading {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* h3.exercise-collapse-heading {
+	margin: 0px !important;
+} */
+
+.exercise-collapse-heading .expand-summary,
+.exercise-collapse-heading .index {
+	width: 50px;
+	align-self: center;
+}
+
+/* div.ant-collapse-header {
+	padding: 0px;
+	align-items: center !important;
+} */
+
+.collapse-form-outlined {
+	position: relative;
+	top: 2px;
+}
+
+:where(.css-dev-only-do-not-override-txh9fw).ant-collapse
+	.ant-collapse-content {
+	background-color: transparent;
+	border-top: none;
+	padding: 3px;
+}
+
+.ant-collapse-content-box {
+	padding: 0px !important;
+}
+
+.collapse-exercise-sets {
+	display: flex;
+	align-items: center;
+}
+
+.finish-exercise-button {
+	background-color: green;
+	height: 25px;
+	width: 25px;
+	padding: 0px;
+	border: none;
+	margin: 2px;
+}
+
+.delete-exercise-button-in-add-exercise-data {
+	position: absolute;
+	top: 10px;
+	right: 40px;
 }

@@ -10,33 +10,36 @@ import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 
 export const WorkoutsPage: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
-	const [response, loading, error, request] = useRequest(
-		getAllUsersWorkoutsAPI
-	);
+	const [
+		getAllUsersWorkoutsResponse,
+		getAllUsersWorkoutsLoading,
+		getAllUsersWorkoutsError,
+		getAllUsersWorkoutsRequest,
+	] = useRequest(getAllUsersWorkoutsAPI);
 	const [messageApi, contextHolder] = message.useMessage();
 
 	useEffect(() => {
 		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
 		if (session) {
-			request(session);
+			getAllUsersWorkoutsRequest(session);
 		}
 	}, []);
 
 	useEffect(() => {
 		// set workouts from response
-		if (response) {
-			console.log(response);
-			setWorkouts(response);
+		if (getAllUsersWorkoutsResponse) {
+			console.log(getAllUsersWorkoutsResponse);
+			setWorkouts(getAllUsersWorkoutsResponse);
 		}
-	}, [response]);
+	}, [getAllUsersWorkoutsResponse]);
 
-	if (!loading) {
+	if (!getAllUsersWorkoutsLoading) {
 		return (
 			<div className="workouts-page">
 				{contextHolder}
 
 				<h2 className="page-heading">Your Workouts</h2>
-				{response?.map((workout, index) => (
+				{getAllUsersWorkoutsResponse?.map((workout, index) => (
 					<Link
 						to={`/workouts/${workout.url}`}
 						key={index}
@@ -45,9 +48,9 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						<WorkoutButton workout={workout} />
 					</Link>
 				))}
-				{error && (
+				{getAllUsersWorkoutsError && (
 					<div className="error-render">
-						<h5>Error: {error.message}</h5>
+						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
 					</div>
 				)}
 				<Link to={`/newWorkout`}>

@@ -31,14 +31,19 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	const { data, error } = await req.supabase
 		.from("workouts")
 		.select(
-			"*, exercises: exercise(name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units)"
+			"*, exercises: users_exercise(sets, time, weight_units, time_units, useTime, notes, personal_links, ...exercise!users_exercise_exercise_id_fkey(name, id, description, defaultLinks: links))"
+			// "*, exercises: exercise(name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units,defaultTime: default_time, defaultTimeUnits: default_time_units)"
 		)
+		// can add extra info later? to tooltip
+
 		.eq("url", workoutUrl)
 		.single(); // get single row as object instead of arr
+	// .order('date_completed', { ascending: false }) NEED TO ADD !!!
+
 	// if there is data, send it back = 200 status
 	if (data) {
 		res.send(data);
-		console.log("exerciseDATA", data);
+		// console.log("exerciseDATA", data);
 	} else {
 		res.status(404).send(error);
 	}
@@ -51,7 +56,7 @@ router.delete("/workouts/:workoutId", async (req, res) => {
 		.from("workouts")
 		.delete()
 		.eq("id", workoutId);
-	console.log("deleted workout: ", data); // show in terminal
+	console.log("deleted workout: asdf", data); // show in terminal
 	if (error) {
 		// if there is data, send it back = 200 status
 		res.status(404).send(error);
@@ -75,21 +80,22 @@ router.get("/exercises", async (req, res) => {
 router.get("/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
 	const { data, error } = await req.supabase
-		.from("workouts")
-		.select("*")
-		.eq("id");
-	console.log("deleted workout: ", data); // show in terminal
-	if (error) {
-		// if there is data, send it back = 200 status
-		res.status(404).send(error);
+		.from("exercise")
+		.select(
+			"name, id, defaultSets: default_sets, defaultWeightUnits: default_weight_units, defaultTime: default_time, defaultTimeUnits: default_time_units,  usersExercise: users_exercise!users_exercise_exercise_id_fkey( createdAt: created_at, userId: user_id, sets, notes, weightUnits: weight_units, timeUnits: time_units, usersExerciseId: users_exercise_id)"
+		)
+		.eq("id", exerciseId)
+		.single();
+	console.log("GET authorized/:exerciseId : ", data); // show in terminal
+	if (data) {
+		res.status(200).send(data);
 	} else {
-		res.status(204);
+		res.status(404).send(error);
 	}
 });
 
 router.post("/exercises/:exerciseId", async (req, res) => {
 	const exerciseId = req.params.exerciseId;
-	console.log("exerciseId", exerciseId);
 	const userId = req.headers["user-id"];
 	const { data, error } = await req.supabase
 		.from("exercise")
@@ -120,7 +126,7 @@ router.post("/exercises/:exerciseId", async (req, res) => {
 		console.log("errrror", error);
 	} else {
 		res.send(data).status(204);
-		console.log("updated workout exercises", data);
+		// console.log("updated workout exercises", data);
 	}
 });
 
@@ -129,24 +135,25 @@ router.post("/:exerciseId", async (req, res) => {
 	const userId = req.headers["user-id"];
 	const { data, error } = await req.supabase
 		.from("users_exercise")
-		.insert([
+		.upsert([
 			{
 				user_id: userId,
 				exercise_id: exerciseId,
 				sets: req.body.sets,
-				links: req.body.links,
+				personal_links: req.body.links,
 				notes: req.body.notes,
 				weight_units: req.body.weightUnits,
 				time_units: req.body.timeUnits,
 				time: req.body.time,
+				users_exercise_id: req.body.usersExerciseId,
 			},
 		])
 		.select(
-			"name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units, 		defaultTime: default_time, defaultTimeUnits: default_time_units"
+			"createdAt: created_at, exerciseId: exercise_id, userId: user_id, sets, notes, weightUnits: weight_units, timeUnits: time_units, usersExerciseId: users_exercise_id"
 		)
 		.single();
 	if (error) {
-		console.log("errrror", error);
+		console.log("error UPSERTING USER SETS", error);
 	} else {
 		res.send(data).status(204);
 		console.log("updated workout exercises", data);
@@ -158,7 +165,13 @@ router.post("/workout/:workoutId/:exerciseId", async (req, res) => {
 	const workoutId = req.params.workoutId;
 	const exerciseId = req.params.exerciseId;
 	const userId = req.headers["user-id"];
-	console.log(userId, workoutId, exerciseId);
+	console.log(
+		"All THE GOODS",
+		userId,
+		workoutId,
+		exerciseId,
+		req.body.usersExerciseId
+	);
 	const { data, error } = await req.supabase
 		.from("workouts_exercises")
 		.insert([
@@ -166,6 +179,7 @@ router.post("/workout/:workoutId/:exerciseId", async (req, res) => {
 				workout_id: workoutId,
 				exercise_id: exerciseId,
 				user_id: userId,
+				users_exercise_id: req.body.usersExerciseId,
 			},
 		])
 		.select("*");
@@ -177,3 +191,7 @@ router.post("/workout/:workoutId/:exerciseId", async (req, res) => {
 	}
 });
 module.exports = router;
+// d79ccff2-0177-46e8-93a2-ea3353691d28
+// a71a2fae-c4ed-4f9d-900f-e99b125beb52
+// c161894e-d2d8-4b94-8ed2-5703ac2e90f4
+// 38172551-72fd-4920-8523-27639957cac8
