@@ -8,7 +8,8 @@ type TProps = {
 	weightUnits?: string;
 	modifySets: (newSet: number[], i: number) => void;
 	deleteSets: (i: number) => void;
-	isDisabled: boolean;
+	isDisabled?: boolean;
+	isGhost: boolean;
 };
 
 export const Set = ({
@@ -18,6 +19,7 @@ export const Set = ({
 	modifySets,
 	deleteSets,
 	isDisabled,
+	isGhost,
 }: TProps) => {
 	const [isInputWeight, setIsInputWeight] = useState<boolean>(false);
 
@@ -29,7 +31,7 @@ export const Set = ({
 	};
 
 	return (
-		<div className="white-font exercise-set">
+		<div className={`${isGhost ? "ghosted " : ""} white-font exercise-set`}>
 			<p className="set-index">{index + 1}.</p>
 			{!isInputWeight ? (
 				<Button
@@ -61,8 +63,8 @@ export const Set = ({
 					onClick={() => {
 						modifySets([set[0] - 0.5, set[1]], index);
 					}}
-					ghost={isDisabled}
 					disabled={isDisabled}
+					ghost={isGhost}
 				/>
 				<Button
 					// disabled={disableSet}
@@ -73,6 +75,7 @@ export const Set = ({
 						modifySets([set[0] + 0.5, set[1]], index);
 					}}
 					disabled={isDisabled}
+					ghost={isGhost}
 				/>
 			</div>
 			<p className="set-reps">x {set[1]} reps</p>
@@ -86,6 +89,7 @@ export const Set = ({
 						modifySets([set[0], set[1] - 1], index);
 					}}
 					disabled={isDisabled}
+					ghost={isGhost}
 				/>
 				<Button
 					// disabled={disableSet}
@@ -96,6 +100,7 @@ export const Set = ({
 						modifySets([set[0], set[1] + 1], index);
 					}}
 					disabled={isDisabled}
+					ghost={isGhost}
 				/>
 			</div>
 			{/* {disableSet ? (

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { Set } from "./sets/set";
 import { Button } from "antd";
 import {
 	DeleteOutlined,
@@ -18,6 +17,7 @@ import {
 } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
+import { Set } from "./sets/Set";
 
 const testData = {
 	name: "Preacher Curls",
@@ -136,6 +136,7 @@ export const AddExerciseData = ({
 						modifySets={handleModifySet}
 						deleteSets={handleDeleteSet}
 						isDisabled={false}
+						isGhost={false}
 					/>
 				))}
 			<div className="confirmation-buttons">
