@@ -31,7 +31,7 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	const { data, error } = await req.supabase
 		.from("workouts")
 		.select(
-			"*, exercises: users_exercise(sets, time, weight_units, time_units, useTime, notes, personal_links, ...exercise!users_exercise_exercise_id_fkey(name, id, description, defaultLinks: links))"
+			"*, exercises: users_exercise(sets, time, weightUnits: weight_units, time_units, useTime, notes, personal_links, ...exercise!users_exercise_exercise_id_fkey(name, id, description, defaultLinks: links))"
 			// "*, exercises: exercise(name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units,defaultTime: default_time, defaultTimeUnits: default_time_units)"
 		)
 		// can add extra info later? to tooltip
