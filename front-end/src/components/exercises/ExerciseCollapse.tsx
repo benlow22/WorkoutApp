@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { CollapseProps } from "antd";
 
 import { Button, Collapse } from "antd";
@@ -14,6 +14,20 @@ type TProps = {
 
 const ExercisesCollapse = ({ exercises }: TProps) => {
 	// console.log("exer", exercises);
+	const [completedSetsArr, setCompletedSetsArr] = useState<number[]>(
+		new Array(exercises.length).fill("0")
+	);
+
+	const handleUpdateCompletedSets = (value: number, index: number) => {
+		const newCompletedSetsArr = new Array();
+		completedSetsArr.forEach((element) =>
+			newCompletedSetsArr.push(element)
+		);
+		if (value < exercises[index].sets.length + 1) {
+			newCompletedSetsArr[index] = value;
+			setCompletedSetsArr(newCompletedSetsArr);
+		}
+	};
 	const onChange = (key: string | string[]) => {
 		console.log(key);
 	};
@@ -38,12 +52,18 @@ const ExercisesCollapse = ({ exercises }: TProps) => {
 					className="right-side expand-summary"
 					// style={{ fontWeight: "normal" }}
 				>
-					0/{exercise.sets.length}
+					{completedSetsArr[index] ?? "0"}/{exercise.sets.length}
 				</h4>
 			</div>
 		),
 		// <ExercisesCollapseHeader exercise={exercise} index={index} />,
-		children: <ExercisesCollapseChild exercise={exercise} index={index} />,
+		children: (
+			<ExercisesCollapseChild
+				exercise={exercise}
+				index={index}
+				handleUpdateCompletedSets={handleUpdateCompletedSets}
+			/>
+		),
 		extra: genExtra(index),
 		style: {
 			marginBottom: "15px",
