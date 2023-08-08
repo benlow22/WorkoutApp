@@ -16,6 +16,7 @@ import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
 import Exercise from "./components/Exercise";
 import { WorkoutPage } from "./pages/workoutPage/workoutPage";
+import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/AmiiboBuddyHomePage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -38,6 +39,7 @@ const router = createBrowserRouter(
 				<Route path="exercises/:exerciseId" element={<Exercise />} />
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
+				<Route path="amiiboBuddy" element={<AmiiboBuddyHomePage />} />
 			</Route>
 		</Route>
 	)
