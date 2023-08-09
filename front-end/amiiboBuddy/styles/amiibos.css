@@ -15,6 +15,12 @@
 	align-items: center;
 }
 
+.amiibo-name.two-lines {
+	font-size: 0.99em;
+}
+.amiibo-name.three-lines {
+	font-size: 0.85em;
+}
 .amiibo-image-container {
 	display: flex;
 	height: 150px;

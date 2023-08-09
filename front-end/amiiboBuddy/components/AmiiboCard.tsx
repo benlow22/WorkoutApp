@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { TAmiiboCard } from "../types/types";
 
 type TProps = {
@@ -7,10 +7,21 @@ type TProps = {
 export const AmiiboCard = ({
 	amiibo: { name, image, character, amiiboSeries },
 }: TProps) => {
-	console.log("amiibo Card render??");
+	const [amiiboNameSize, setAmiiboNameSize] = useState("");
+
+	useEffect(() => {
+		if (name.length < 15) {
+			setAmiiboNameSize("");
+		} else if (name.length < 30) {
+			setAmiiboNameSize("two-lines");
+		} else {
+			setAmiiboNameSize("three-lines");
+		}
+	}, [name]);
+
 	return (
 		<div className="amiibo-card">
-			<h3 className="amiibo-name">{name}</h3>
+			<h3 className={`amiibo-name ${amiiboNameSize}`}>{name}</h3>
 			<div className="amiibo-image-container">
 				<img
 					src={image}
