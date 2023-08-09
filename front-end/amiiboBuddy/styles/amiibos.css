@@ -39,3 +39,12 @@
 	min-width: 600px;
 	flex-wrap: wrap;
 }
+
+.amiibo-inventory-form-price {
+	display: flex;
+	justify-content: space-between;
+}
+
+.currency-select {
+	width: 150px;
+}

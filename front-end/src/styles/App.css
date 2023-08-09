@@ -186,7 +186,7 @@ input[value].new-workout-input,
 }
 
 .ant-select-auto-complete span {
-	color: white;
+	/* color: white; */
 	font-size: large;
 }
 

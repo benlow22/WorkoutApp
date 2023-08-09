@@ -14,7 +14,8 @@ export const Header: React.FC<{}> = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
-	const [domain, setDomain] = useState(domainFromUrl);
+	const splitUrl = location.pathname.split("/");
+	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
 		if (!contextIsLoading) {
@@ -37,7 +38,10 @@ export const Header: React.FC<{}> = () => {
 					auth ? (
 						domain && (
 							<>
-								<Link to="/workouts" key={domain}>
+								<Link
+									to={`${domains[domain].path}`}
+									key={domain}
+								>
 									{domain && (
 										<h1 key={domain}>
 											{domains[domain].name}
@@ -67,9 +71,7 @@ export const Header: React.FC<{}> = () => {
 						</>
 					)
 				) : (
-					<Link to="/">
-						<h1>Workout Buddy</h1>
-					</Link>
+					<Link to="/">{/* <h1>Workout Buddy</h1> */}</Link>
 				)}
 			</div>
 		</div>

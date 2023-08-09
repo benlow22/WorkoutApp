@@ -36,7 +36,8 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 			.select(
 				" amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail,type"
 			)
-			.eq("amiibo_series", "Super Smash Bros.");
+			.eq("type", "Figure")
+			.order("amiibo_series");
 		if (data) {
 			setAmiibos(data);
 			console.log("Amiibo Data", data);
