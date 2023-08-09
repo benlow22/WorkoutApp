@@ -6,7 +6,8 @@
 // 	}
 import { v4 as uuidv4 } from "uuid";
 
-import { INewExerciseInput } from "../api/types";
+import { INewExerciseInput, TDomains } from "../api/types";
+import { useLocation } from "react-router-dom";
 
 // 	const capitalizeChAfterSpace = (ch: string) => {
 // 		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
@@ -124,6 +125,38 @@ export const transformExercisePost = (
 };
 
 //[['15','5'],['25','10']]
+
+// get Domain from URL
+export const domainFromUrl = () => {
+	const location = useLocation();
+	const splitUrl = location.pathname.split("/");
+	if (splitUrl[1] in domains) {
+		console.log("its in ", splitUrl[1] in domains);
+		return splitUrl[1];
+	} else {
+		return "buddySystem";
+	}
+};
+
+export const domains: TDomains = {
+	workouts: {
+		name: "Workout Buddy",
+		path: "/workouts",
+		class: "workout-buddy",
+	},
+	amiiboBuddy: {
+		name: "Amiibo Buddy",
+		path: "/amiiboBuddy",
+		class: "amiibo-buddy",
+	},
+	buddySystem: {
+		name: "Buddy System",
+		path: "/buddySystem",
+		class: "buddy-system",
+	},
+};
+// create new array from old Array
+export const newArrForState = () => {};
 
 export const arrToNum = (arr: string[][] | number[][]) => {
 	const newArr = arr.map((sets) => sets.map((element) => Number(element)));
