@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { SpiningLoadingIcon } from "../../src/components/loading/LoadingIcon";
-
+import { amiiboFetchApi } from "../api/api";
 export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 	// const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 
@@ -19,6 +19,7 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 	// 	}
 	// }, [getAllUsersWorkoutsResponse]);
 
+	const response = amiiboFetchApi();
 	// if (!getAllUsersWorkoutsLoading) {
 	return (
 		<div className="amiibo-homepage">
