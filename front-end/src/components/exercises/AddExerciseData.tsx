@@ -8,7 +8,7 @@ import {
 } from "../../api/types";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
-import { Set } from "./sets/Set";
+import { Set } from "./Set";
 
 const testData = {
 	name: "Preacher Curls",
