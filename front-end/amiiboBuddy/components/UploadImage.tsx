@@ -14,7 +14,7 @@ import { Modal } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 
-export function UploadImages() {
+export function UploadImage() {
 	const [signUrl, setSignUrl] = useState("");
 	const [userId, setUserId] = useState("");
 	const [media, setMedia] = useState<FileObject[]>([]);
@@ -44,22 +44,22 @@ export function UploadImages() {
 		}
 	};
 
-	async function uploadImage(file) {
-		console.log('EVENT",', file);
-		const { data, error } = await supabase.storage
-			.from("upload-amiibo-images")
-			.upload(userId + "/" + uuidv4() + ".png", file, {
-				cacheControl: "3600",
-				contentType: "image/png",
-				upsert: true,
-			});
+	// async function uploadImage(file) {
+	// 	console.log('EVENT",', file);
+	// 	const { data, error } = await supabase.storage
+	// 		.from("upload-amiibo-images")
+	// 		.upload(userId + "/" + uuidv4() + ".png", file, {
+	// 			cacheControl: "3600",
+	// 			contentType: "image/png",
+	// 			upsert: true,
+	// 		});
 
-		if (data) {
-			getMedia();
-		} else {
-			console.log(error);
-		}
-	}
+	// 	if (data) {
+	// 		getMedia();
+	// 	} else {
+	// 		console.log(error);
+	// 	}
+	// }
 
 	async function getMedia() {
 		const { data, error } = await supabase.storage
@@ -138,8 +138,11 @@ export function UploadImages() {
 		);
 	};
 
-	const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+	const handleChange: UploadProps["onChange"] = ({
+		fileList: newFileList,
+	}) => {
 		setFileList(newFileList);
+	};
 
 	const uploadButton = (
 		<div>
@@ -149,33 +152,6 @@ export function UploadImages() {
 	);
 	const [uploading, setUploading] = useState(false);
 
-	const handleUpload = async () => {
-		await getBase64(File.originFileObj as RcFile);
-		fileList.forEach((file) => {
-			const jile = file as RcFile;
-			console.log(decode(jile));
-		});
-		setUploading(true);
-
-		console.log("FORMDATAE:", fileList); // Object { }
-
-		fetch("http://localhost:8000/api/authorized/amiiboBuddy/upload", {
-			method: "POST",
-			body: fileList,
-			headers: UploadHeaders,
-		})
-			.then((res) => res.json())
-			.then(() => {
-				setFileList([]);
-				message.success("upload successfully.");
-			})
-			.catch(() => {
-				message.error("upload failed.");
-			})
-			.finally(() => {
-				setUploading(false);
-			});
-	};
 	const props: UploadProps = {
 		onRemove: (file) => {
 			const index = fileList.indexOf(file);
@@ -190,30 +166,34 @@ export function UploadImages() {
 		},
 		fileList,
 	};
+
+	const basify = async (file) => {
+		const base64file = await getBase64(file.originFileObj as RcFile);
+		return base64file;
+	};
+
+	const uploadIt = async (file) => {
+		const { data, error } = await supabase.storage
+			.from("upload-amiibo-images")
+			.upload(userId + "/" + uuidv4() + ".png", file, {
+				cacheControl: "3600",
+				contentType: "image/png",
+			});
+		console.log("DATA", data);
+	};
+	const handleUpload = async () => {
+		console.log("file", fileList);
+		const base64fileList = fileList.map((file) =>
+			uploadIt(file.originFileObj)
+		);
+		console.log(base64fileList);
+		// base64fileList.forEach((file) => {
+		// 	uploadIt(file);
+		// });
+	};
+
 	return (
 		<div className="mt-5">
-			<Form.Item
-				name="images"
-				label="Images"
-				valuePropName="fileList"
-				getValueFromEvent={normFile}
-			>
-				<Upload
-					listType="picture"
-					// headers={UploadHeaders}
-					// withCredentials
-					onChange={(info) => handleOnChange(info)}
-				>
-					<Button icon={<UploadOutlined />}>Click to upload</Button>
-				</Upload>
-			</Form.Item>
-			<Form.Item>
-				<input
-					type="file"
-					onChange={(e) => uploadImage(e.target.files[0])}
-				/>
-			</Form.Item>
-
 			<>
 				<Upload
 					listType="picture-card"

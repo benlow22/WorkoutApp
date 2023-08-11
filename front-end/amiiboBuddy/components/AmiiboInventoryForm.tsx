@@ -9,7 +9,7 @@ import { AutoComplete, Button, Form, Input, Rate, Select, Upload } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { Option } from "antd/es/mentions";
 import { UploadOutlined } from "@ant-design/icons";
-import { UploadImages } from "./UploadImages";
+import { UploadImage } from "./UploadImage";
 type TAmiiboCache = {
 	[concatName: string]: TAmiiboCard;
 };
@@ -180,7 +180,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							</FormItem>
 						</div>
 					</FormItem>
-					<UploadImages />
+					<UploadImage />
 					{/* <FormItem name= label= ></FormItem> */}
 					{/* <FormItem name= label= ></FormItem> */}
 					{/* <FormItem name= label= ></FormItem> */}
