@@ -15,9 +15,9 @@ import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 
 export function UploadImage() {
-	const [signUrl, setSignUrl] = useState("");
+	const [signUrl, setSignUrl] = useState<any>("");
 	const [userId, setUserId] = useState("");
-	const [media, setMedia] = useState<FileObject[]>([]);
+	const [media, setMedia] = useState<any[]>([]);
 	const { session } = useContext(AuthContext);
 	const [mediaList, setMediaList] = useState();
 
@@ -100,17 +100,6 @@ export function UploadImage() {
 		return e?.fileList;
 	}; // if (!getAllUsersWorkoutsLoading) {
 
-	const UploadHeaders = {
-		"Access-Token": `${session.access_token}`,
-		"Refresh-Token": `${session.refresh_token}`,
-		"User-Id": `${session.user.id}`,
-		"Content-Type": "multipart/form-data",
-	};
-
-	const handleOnChange = (info) => {
-		uploadImage(info.file.originFileObj);
-	};
-
 	const getBase64 = (file: RcFile): Promise<string> =>
 		new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -167,12 +156,7 @@ export function UploadImage() {
 		fileList,
 	};
 
-	const basify = async (file) => {
-		const base64file = await getBase64(file.originFileObj as RcFile);
-		return base64file;
-	};
-
-	const uploadIt = async (file) => {
+	const uploadIt = async (file: any) => {
 		const { data, error } = await supabase.storage
 			.from("upload-amiibo-images")
 			.upload(userId + "/" + uuidv4() + ".png", file, {
@@ -186,10 +170,6 @@ export function UploadImage() {
 		const base64fileList = fileList.map((file) =>
 			uploadIt(file.originFileObj)
 		);
-		console.log(base64fileList);
-		// base64fileList.forEach((file) => {
-		// 	uploadIt(file);
-		// });
 	};
 
 	return (
