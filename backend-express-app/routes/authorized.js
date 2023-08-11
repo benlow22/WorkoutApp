@@ -9,6 +9,7 @@ var router = require("express").Router();
 
 // add verifying middle ware
 router.use(setAuthorizedSessionMiddleware);
+router.use("/amiiboBuddy", require("./amiiboBuddy/amiiboBuddy")); // api/products/
 
 //ROUTES
 // GET workouts = get all users workouts

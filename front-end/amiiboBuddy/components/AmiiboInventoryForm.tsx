@@ -9,7 +9,7 @@ import { AutoComplete, Button, Form, Input, Rate, Select, Upload } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import { Option } from "antd/es/mentions";
 import { UploadOutlined } from "@ant-design/icons";
-
+import { UploadImages } from "./UploadImages";
 type TAmiiboCache = {
 	[concatName: string]: TAmiiboCard;
 };
@@ -149,7 +149,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 					>
 						Awful
 						<Rate
-							count={10}
+							count={5}
 							style={{
 								backgroundColor: "grey",
 								padding: "0px 10px",
@@ -180,6 +180,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							</FormItem>
 						</div>
 					</FormItem>
+					<UploadImages />
 					{/* <FormItem name= label= ></FormItem> */}
 					{/* <FormItem name= label= ></FormItem> */}
 					{/* <FormItem name= label= ></FormItem> */}
@@ -189,7 +190,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 
 					{/* // <h3>{amiibo.type}</h3> */}
 					{/* <h1>{amiibo.id}</h1> */}
-					<Form.Item
+					{/* <Form.Item
 						name="images"
 						label="Images"
 						valuePropName="fileList"
@@ -204,7 +205,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 								Click to upload
 							</Button>
 						</Upload>
-					</Form.Item>
+					</Form.Item> */}
 				</Form>
 			</>
 		);
