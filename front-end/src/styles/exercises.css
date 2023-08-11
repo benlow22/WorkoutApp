@@ -125,12 +125,18 @@ h3.add-exercise-data-exercise-name {
 }
 
 .exercise-set {
+	width: 380px;
 	display: flex;
 	align-items: center;
-	width: 375px;
 	justify-content: space-between;
 	margin: 3px auto;
 	height: 32px;
+}
+
+.set-reps-buttons button.ant-btn-background-ghost.ant-btn,
+.weight-buttons button.ant-btn-background-ghost.ant-btn {
+	background-color: #2f2f2f;
+	border: 1px dashed rgb(92, 92, 92);
 }
 
 .confirm-exercise-button,
@@ -153,7 +159,10 @@ h3.add-exercise-data-exercise-name {
 	/* padding-bottom: 10px;  */
 	/* background-color: rgb(30, 59, 146); */
 }
-
+.ghosted *,
+.ghosted span path {
+	color: rgb(101, 101, 101);
+}
 .exercise-collapse path {
 	color: white;
 }
@@ -194,17 +203,29 @@ h3.add-exercise-data-exercise-name {
 }
 
 .collapse-exercise-sets {
+	width: 100%;
 	display: flex;
 	align-items: center;
+	flex-wrap: nowrap;
 }
 
-.finish-exercise-button {
+button.finish-exercise-button {
 	background-color: green;
 	height: 25px;
 	width: 25px;
 	padding: 0px;
 	border: none;
 	margin: 2px;
+}
+
+.collapse-exercise-sets button:disabled .ant-btn-icon path {
+	background-color: rgb(92, 92, 92);
+}
+button.finish-exercise-button.completed {
+	background-color: rgb(153, 0, 0);
+}
+button.finish-exercise-button:hover {
+	background-color: rgb(0, 153, 41);
 }
 
 .delete-exercise-button-in-add-exercise-data {

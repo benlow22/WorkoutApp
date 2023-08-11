@@ -22,6 +22,32 @@ p,
 div.andt-select-selector {
 	width: 10px;
 } */
+
+/* DOMAINS*/
+
+.buddy-system-header {
+	background-color: rgb(113, 143, 183);
+}
+.buddy-system-header .logout-button {
+	background-color: #8599b5;
+}
+
+.workout-buddy-header {
+	background-color: rgb(0, 110, 255);
+}
+.workout-buddy-header .logout-button {
+	background-color: #1677ff;
+}
+
+.amiibo-buddy-header {
+	background-color: rgb(148, 22, 22);
+}
+.amiibo-buddy-header .logout-button {
+	background-color: #bc4b4b;
+}
+.amiibo-buddy-header .logout-button button:hover {
+	background-color: #734b4b;
+}
 .logo {
 	height: 6em;
 	padding: 1.5em;
@@ -71,7 +97,6 @@ h2 {
 	background-color: rgb(0, 89, 205);
 }
 .header {
-	background-color: rgb(0, 110, 255);
 	padding: 10px 75px;
 	width: 100%;
 }
@@ -161,7 +186,7 @@ input[value].new-workout-input,
 }
 
 .ant-select-auto-complete span {
-	color: white;
+	/* color: white; */
 	font-size: large;
 }
 
@@ -272,6 +297,7 @@ div.ant-space-item{
 .weight-buttons {
 	width: 55px;
 }
+
 .delete-set-button {
 	margin-right: 2px;
 }

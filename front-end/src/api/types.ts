@@ -81,3 +81,11 @@ export type TExerciseTemplate = {
 	defaultTimeUnits?: string;
 	id: string;
 };
+
+export type TDomains = {
+	[domain: string]: {
+		name: string;
+		path: string;
+		class: string;
+	};
+};

@@ -1,0 +1,50 @@
+.amiibo-card {
+	width: 150px;
+	height: 250px;
+	background-color: rgb(77, 77, 77);
+	border: 2px solid white;
+	border-radius: 10px;
+	padding: 5px;
+	margin: 10px;
+}
+.amiibo-name {
+	display: flex;
+	height: 40px;
+	background-color: rgb(186, 134, 134);
+	justify-content: center;
+	align-items: center;
+}
+
+.amiibo-name.two-lines {
+	font-size: 0.99em;
+}
+.amiibo-name.three-lines {
+	font-size: 0.85em;
+}
+.amiibo-image-container {
+	display: flex;
+	height: 150px;
+	width: 100px;
+	align-items: center;
+	margin: 10px auto;
+	justify-content: center;
+}
+.amiibo-image {
+	max-height: 150px;
+	max-width: 100px;
+}
+
+.amiibo-grid {
+	display: flex;
+	min-width: 600px;
+	flex-wrap: wrap;
+}
+
+.amiibo-inventory-form-price {
+	display: flex;
+	justify-content: space-between;
+}
+
+.currency-select {
+	width: 150px;
+}

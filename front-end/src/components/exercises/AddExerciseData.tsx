@@ -1,23 +1,14 @@
-import { useContext, useEffect, useState } from "react";
-import { Set } from "./sets/set";
+import { useContext, useState } from "react";
 import { Button } from "antd";
-import {
-	DeleteOutlined,
-	MinusSquareOutlined,
-	PlusOutlined,
-} from "@ant-design/icons";
+import { MinusSquareOutlined, PlusOutlined } from "@ant-design/icons";
 import {
 	IWorkout,
 	TExerciseTemplate,
 	TUsersExerciseData,
 } from "../../api/types";
-import { useRequest } from "../../hooks/useRequest";
-import {
-	addExerciseToWorkoutAPI,
-	upsertUsersExerciseDateAPI,
-} from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
+import { Set } from "./Set";
 
 const testData = {
 	name: "Preacher Curls",
@@ -136,6 +127,7 @@ export const AddExerciseData = ({
 						modifySets={handleModifySet}
 						deleteSets={handleDeleteSet}
 						isDisabled={false}
+						isGhost={false}
 					/>
 				))}
 			<div className="confirmation-buttons">

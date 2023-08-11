@@ -1,25 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
 import { TUsersExerciseData } from "../../api/types";
-import { Set } from "./sets/set";
+import { Set } from "./Set";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { arrToNum } from "../../utils/utils";
 
 type TProps = {
 	exercise: TUsersExerciseData;
 	index: number;
+	handleUpdateCompletedSets: (value: number, index: number) => void;
 };
 
-const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
+const ExercisesCollapseChild = ({
+	exercise,
+	index,
+	handleUpdateCompletedSets,
+}: TProps) => {
 	const [weightsRepsTime, setWeightRepsTime] = useState<number[][]>(
 		arrToNum(exercise.sets) // double checks that type is number
 	);
-	const [isDisabledArr, setIsDisabledArr] = useState<boolean[]>(
-		new Array(weightsRepsTime.length).fill(true)
-	);
+	const initialArr = new Array(weightsRepsTime.length).fill(true);
+	initialArr[0] = false;
+	const [isGhostArr, setIsGhostArr] = useState<boolean[]>(initialArr);
+	const [isGhostCompletedButtonArr, setIsGhosCompletedButtonArr] =
+		useState<boolean[]>(initialArr);
 
+	const [isCompletedSetsArr, setIsCompletedSetsArr] = useState<boolean[]>(
+		new Array(weightsRepsTime.length).fill(false)
+	);
+	const [completedSets, setCompletedSets] = useState<number>(0);
 	const handleModifySet = (newSet: number[], i: number) => {
 		if (!newSet.some((element) => element < 0)) {
 			const newExerciseSetData = new Array(...weightsRepsTime);
@@ -28,12 +39,52 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 		}
 	};
 
-	const handleDisableSet = (index: number) => {
-		const newIsDisabledArr = new Array();
-		isDisabledArr.forEach((element) => newIsDisabledArr.push(element));
-		newIsDisabledArr[index] = !isDisabledArr[index];
-		setIsDisabledArr(newIsDisabledArr);
+	const handleGhostSet = (indexes: number[]) => {
+		const newIsGhostArr = new Array(...isGhostArr);
+		for (let i = 0; i < indexes.length; i++) {
+			if (isGhostArr[indexes[i]])
+				newIsGhostArr[indexes[i]] = !isGhostArr[indexes[i]];
+		}
+		setIsGhostArr(newIsGhostArr);
 	};
+
+	useEffect(() => {
+		handleUpdateCompletedSets(completedSets, index);
+	}, [completedSets]);
+
+	const handleCompleteSet = (index: number) => {
+		setCompletedSets(completedSets + 1);
+
+		const newIsCompletedSetsArr = new Array();
+		isCompletedSetsArr.forEach((element) =>
+			newIsCompletedSetsArr.push(element)
+		);
+		newIsCompletedSetsArr[index] = true;
+		setIsCompletedSetsArr(newIsCompletedSetsArr);
+
+		const newIsGhostArr = new Array();
+		isGhostArr.forEach((element) => newIsGhostArr.push(element));
+		console.log("ghostARR", newIsCompletedSetsArr);
+		newIsGhostArr[index] = true;
+		const nextToComplete = newIsCompletedSetsArr.findIndex(
+			(element) => element === false
+		);
+		console.log("ELE", nextToComplete);
+
+		const newIsGhostCompleteButtonArr = new Array();
+		isGhostCompletedButtonArr.forEach((element) =>
+			newIsGhostCompleteButtonArr.push(element)
+		);
+		newIsGhostCompleteButtonArr[index] = false;
+		if (nextToComplete > 0) {
+			newIsGhostArr[nextToComplete] = false;
+			newIsGhostCompleteButtonArr[nextToComplete] = false;
+		}
+
+		setIsGhostArr(newIsGhostArr);
+		setIsGhosCompletedButtonArr(newIsGhostCompleteButtonArr);
+	};
+
 	return (
 		<div
 			className=""
@@ -45,21 +96,25 @@ const ExercisesCollapseChild = ({ exercise, index }: TProps) => {
 			}}
 		>
 			{weightsRepsTime.map((sets: number[], index: number) => (
-				<div className="collapse-exercise-sets" key={index}>
+				<div className={`collapse-exercise-sets`} key={index}>
 					<Set
 						set={sets}
 						weightUnits={exercise.weightUnits}
 						modifySets={handleModifySet}
 						index={index}
 						deleteSets={() => {}}
-						isDisabled={isDisabledArr[index]}
+						isGhost={isGhostArr[index]}
 					/>
 					<Button
-						style={{ color: "green" }}
-						className="finish-exercise-button"
+						className={`${
+							isCompletedSetsArr[index] ? "completed" : ""
+						} finish-exercise-button ${
+							isGhostCompletedButtonArr[index] ? "ghosted" : ""
+						}`}
 						onClick={() => {
-							handleDisableSet(index);
+							handleCompleteSet(index);
 						}}
+						ghost={isGhostCompletedButtonArr[index]}
 					>
 						<CheckCircleOutlined />
 					</Button>
