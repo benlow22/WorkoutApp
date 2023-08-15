@@ -8,6 +8,7 @@ import "../styles/amiibos.css";
 import {
 	AutoComplete,
 	Button,
+	DatePicker,
 	Form,
 	Input,
 	InputNumber,
@@ -15,6 +16,7 @@ import {
 	Rate,
 	Select,
 	Space,
+	Switch,
 	Upload,
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
@@ -225,6 +227,38 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 					}}
 					labelCol={{ span: 4 }}
 				>
+					{amiibosArr[0] ? (
+						numberOfAmiibos > 1 ? (
+							<Form.Item
+								label="Pack Name"
+								name="price"
+								labelCol={{ span: 6 }}
+							>
+								<Input />
+							</Form.Item>
+						) : (
+							<p
+								style={{
+									height: "32px",
+									fontSize: "14px",
+									margin: "12px",
+								}}
+							>
+								{amiibovalArr[0]}
+							</p>
+						)
+					) : (
+						<p
+							style={{
+								height: "32px",
+								fontSize: "14px",
+								margin: "12px",
+							}}
+						>
+							hi{" "}
+						</p>
+					)}
+
 					<Space
 						style={{
 							display: "flex",
@@ -293,6 +327,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							</Select>
 						</Form.Item>
 					</Space>
+
 					{Array.from(amiibosArr, (amiibo, index) => (
 						<Form.Item
 							name={index > 0 ? `Amiibo ${index + 1}` : "Amiibo"}
@@ -478,10 +513,73 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 					</FormItem>
 					{/* </> */}
 					{/* )}{" "} */}
-					{/* <FormItem name= label= ></FormItem> */}
-					{/* <FormItem name= label= ></FormItem> */}
-					{/* <FormItem name= label= ></FormItem> */}
-					{/* <FormItem name= label= ></FormItem> */}
+					<FormItem name="location" label="Bought at">
+						<Input />
+					</FormItem>
+					<Space
+						style={{
+							width: "100%",
+							justifyContent: "space-between",
+						}}
+					>
+						<Form.Item
+							name="return"
+							label="Return?"
+							colon={false}
+							style={{ width: "200px" }}
+							labelCol={{ span: 9 }}
+							wrapperCol={{ span: 14 }}
+						>
+							<Select>
+								<Option value="Y">Yes</Option>
+								<Option value="N">No</Option>
+								<Option value="M">Maybe</Option>
+							</Select>
+						</Form.Item>
+						<Form.Item
+							name="returnBy"
+							label="Return By"
+							labelCol={{ span: 10 }}
+						>
+							<DatePicker />
+						</Form.Item>
+					</Space>
+					<Space
+						style={{
+							width: "100%",
+							justifyContent: "space-between",
+						}}
+					>
+						<FormItem
+							name="version"
+							label="Vers."
+							colon={false}
+							style={{ width: "200px" }}
+							labelCol={{ span: 9 }}
+							wrapperCol={{ span: 14 }}
+						>
+							<Select>
+								<Option value="NA">NA</Option>
+								<Option value="EU">EU</Option>
+								<Option value="AU">AU</Option>
+								<Option value="JP">JP</Option>
+
+								<Option value="CH">CH</Option>
+							</Select>
+						</FormItem>
+						<FormItem
+							name="replace"
+							label="Replace?"
+							colon={false}
+							labelCol={{ span: 9 }}
+							style={{ width: "200px" }}
+						>
+							<Radio.Group className="white-font">
+								<Radio value="true">Yes</Radio>
+								<Radio value="false">No</Radio>
+							</Radio.Group>
+						</FormItem>
+					</Space>
 					{/* // <h3>{amiibo.type}</h3> */}
 					{/* <h1>{amiibo.id}</h1> */}
 					{/* <Form.Item
