@@ -173,7 +173,7 @@ export function UploadImage() {
 	};
 
 	return (
-		<div className="mt-5">
+		<div className="mt-5 white-font" style={{ width: "250px" }}>
 			<>
 				<Upload
 					listType="picture-card"
@@ -183,9 +183,10 @@ export function UploadImage() {
 					withCredentials
 					{...props}
 				>
-					{fileList.length >= 8 ? null : uploadButton}
+					{fileList.length >= 6 ? null : uploadButton}
 				</Upload>
-				<Button
+				{/* <Button 	
+				instead add ONCLICK HANDLEUPLOAD TO FORM SUBMIT 
 					type="primary"
 					onClick={handleUpload}
 					disabled={fileList.length === 0}
@@ -193,7 +194,7 @@ export function UploadImage() {
 					style={{ marginTop: 16 }}
 				>
 					{uploading ? "Uploading" : "Start Upload"}
-				</Button>
+				</Button> */}
 				<Modal
 					open={previewOpen}
 					title={previewTitle}
