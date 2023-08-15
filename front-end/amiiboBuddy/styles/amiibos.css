@@ -48,3 +48,44 @@
 .currency-select {
 	width: 150px;
 }
+
+.amiibo-image-banner {
+	display: flex;
+	width: 450px;
+}
+
+.amiibo-image-card {
+	display: flex;
+	align-content: space-between;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.number-of-amiibo-packs {
+	width: 70px;
+}
+@media only screen and (max-width: 420px) {
+	.price-input-number {
+		width: 100px;
+	}
+	.price-label {
+		float: right;
+		width: 100%;
+	}
+	.number-of-amiibo-packs {
+		width: 100%;
+	}
+	.amiibo-image-banner {
+		display: flex;
+		flex-wrap: wrap;
+		max-width: 350px;
+		justify-content: space-evenly;
+	}
+	.amiibo-image-card {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+		width: 150px;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
