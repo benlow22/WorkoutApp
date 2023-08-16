@@ -14,13 +14,26 @@ import { Modal } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 
-export function UploadImage() {
+type TProps = {
+	fileList: UploadFile[];
+	setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+	submit: boolean;
+	packId: string;
+};
+
+export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 	const [signUrl, setSignUrl] = useState<any>("");
 	const [userId, setUserId] = useState("");
 	const [media, setMedia] = useState<any[]>([]);
 	const { session } = useContext(AuthContext);
 	const [mediaList, setMediaList] = useState();
 
+	useEffect(() => {
+		if (submit) {
+			console.log("submit worked and is true", submit);
+			handleUpload();
+		}
+	}, [submit]);
 	const getUser = async () => {
 		try {
 			const {
@@ -111,7 +124,6 @@ export function UploadImage() {
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
-	const [fileList, setFileList] = useState<UploadFile[]>([]);
 
 	const handleCancel = () => setPreviewOpen(false);
 
@@ -156,19 +168,20 @@ export function UploadImage() {
 		fileList,
 	};
 
-	const uploadIt = async (file: any) => {
+	const uploadIt = async (file: any, packid: string) => {
 		const { data, error } = await supabase.storage
 			.from("upload-amiibo-images")
-			.upload(userId + "/" + uuidv4() + ".png", file, {
+			.upload(userId + "/" + packid + "/" + uuidv4() + ".png", file, {
 				cacheControl: "3600",
 				contentType: "image/png",
 			});
 		console.log("DATA", data);
 	};
 	const handleUpload = async () => {
+		const packId = uuidv4();
 		console.log("file", fileList);
 		const base64fileList = fileList.map((file) =>
-			uploadIt(file.originFileObj)
+			uploadIt(file.originFileObj, packId)
 		);
 	};
 
@@ -185,8 +198,8 @@ export function UploadImage() {
 				>
 					{fileList.length >= 8 ? null : uploadButton}
 				</Upload>
-				{/* <Button 	
-				instead add ONCLICK HANDLEUPLOAD TO FORM SUBMIT 
+				{/* <Button
+					// instead a dd ONCLICK HANDLEUPLOAD TO FORM SUBMIT
 					type="primary"
 					onClick={handleUpload}
 					disabled={fileList.length === 0}

@@ -19,17 +19,37 @@ import {
 import "@reach/combobox/styles.css";
 import { Helmet } from "react-helmet";
 import { MapOptions } from "google-map-react";
+import { Library } from "@googlemaps/js-api-loader";
 
-export default function Places(props) {
+type TProps = {
+	selected: { lat: number; lng: number } | null;
+	setSelected: React.Dispatch<
+		React.SetStateAction<{ lat: number; lng: number } | null>
+	>;
+	setLocationName: React.Dispatch<React.SetStateAction<string | null>>;
+};
+
+export default function Places({
+	selected,
+	setSelected,
+	setLocationName,
+}: TProps) {
+	const [libraries] = useState<Library[]>(["places"]);
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
-		libraries: ["places"],
+		libraries,
 	});
 
 	if (!isLoaded) return <div>Loading...</div>;
-	return <Map props={props} />;
+	return (
+		<Map
+			selected={selected}
+			setSelected={setSelected}
+			setLocationName={setLocationName}
+		/>
+	);
 }
-function Map({ selected, setSelected, setLocationName }) {
+const Map = ({ selected, setSelected, setLocationName }: TProps) => {
 	const center = useMemo(() => {
 		if (selected) {
 			return selected;
@@ -48,6 +68,7 @@ function Map({ selected, setSelected, setLocationName }) {
 				<PlacesAutocomplete
 					setSelected={setSelected}
 					setLocationName={setLocationName}
+					selected={selected}
 				/>
 			</div>
 			<GoogleMap
@@ -60,14 +81,12 @@ function Map({ selected, setSelected, setLocationName }) {
 			</GoogleMap>
 		</div>
 	);
-}
+};
 
-// type TProps = {
-// 	setSelected: React.Dispatch<
-// 		React.SetStateAction<{ lat: number; lng: number } | null>
-// 	>;
-// };
-export const PlacesAutocomplete = ({ setSelected, setLocationName }) => {
+export const PlacesAutocomplete = ({
+	setSelected,
+	setLocationName,
+}: TProps) => {
 	const {
 		ready,
 		value,
