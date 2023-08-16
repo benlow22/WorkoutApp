@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SpiningLoadingIcon } from "../../src/components/loading/LoadingIcon";
-import { amiiboFetchApi } from "../api/api";
+import React, { useEffect, useMemo, useState } from "react";
 import { supabase } from "../../src/supabaseClient";
-import { AmiiboCard } from "../components/AmiiboCard";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import {
 	AutoComplete,
-	Button,
 	DatePicker,
 	Form,
 	Input,
@@ -16,22 +12,15 @@ import {
 	Rate,
 	Select,
 	Space,
-	Switch,
-	Upload,
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import {
-	MinusCircleOutlined,
-	PlusOutlined,
-	UploadOutlined,
-} from "@ant-design/icons";
 import { UploadImage } from "./UploadImage";
-import { uuid } from "@supabase/supabase-js/src/lib/helpers";
+import Places from "./Places";
 type TAmiiboCache = {
 	[concatName: string]: TAmiiboCard;
 };
-import { v4 as uuidv4 } from "uuid";
 const { Option } = Select;
+
 export const AmiiboInventoryForm: React.FC<{}> = () => {
 	// const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
 	const [userId, setUserId] = useState("");
@@ -45,7 +34,8 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 	const [numberOfAmiibos, setNumberOfAmiibos] = useState<number>(1);
 	const [amiibosArr, setAmiibosArr] = useState<TAmiiboCard[]>([]);
 	const [amiibosArrBackup, setAmiibosArrBackup] = useState<TAmiiboCard[]>([]);
-
+	const [selected, setSelected] = useState();
+	const [locationName, setLocationName] = useState();
 	const [amiibovalArr, setAmiibovalArr] = useState<string[]>([]);
 	const [currency, setCurrency] = useState("$");
 	useEffect(() => {
@@ -143,6 +133,9 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 			}
 		}
 	};
+	// const handleSearch = (input) => {
+	// 	setSearchLocation(input);
+	// };
 	const currencySelector = (
 		<Form.Item name="currency">
 			<Select style={{ width: 80, color: "white" }}>
@@ -182,6 +175,8 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 	// 	);
 	// });
 
+	// const handleApiLoaded = (map, maps) => {};
+
 	const handleCurrencyChange = (currencyAbr: string) => {
 		switch (currencyAbr) {
 			case "EUR":
@@ -213,10 +208,12 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		return e?.fileList;
 	}; // if (!getAllUsersWorkoutsLoading) {
 
+	const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+
 	if (!isLoading) {
 		return (
 			<>
-				<h2 className="page-heading"> Add Amiibo To COllection </h2>;
+				<h2 className="page-heading"> Add Amiibo To Collection </h2>;
 				<Form
 					style={{
 						maxWidth: "500px",
@@ -231,7 +228,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						numberOfAmiibos > 1 ? (
 							<Form.Item
 								label="Pack Name"
-								name="price"
+								name="packName"
 								labelCol={{ span: 6 }}
 							>
 								<Input />
@@ -248,15 +245,17 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							</p>
 						)
 					) : (
-						<p
+						<h1
 							style={{
 								height: "32px",
 								fontSize: "14px",
 								margin: "12px",
+								textAlign: "center",
+								borderBottom: "2px white solid",
 							}}
 						>
-							hi{" "}
-						</p>
+							Pick an Amiibo
+						</h1>
 					)}
 
 					<Space
@@ -405,117 +404,13 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						/>
 						Perfect
 					</Form.Item>
-					{/* <FormItem
-						name="isCombo"
-						label="Combo Pack?"
-						className="white-font"
-						style={{
-							height: "32px",
-							justifyContent: "space-between",
-							flexWrap: "nowrap",
-						}}
-						labelCol={{ span: 5 }}
-						initialValue={false}
-					>
-						<Space>
-							<Radio.Group
-								style={{
-									display: "flex",
-									width: "125px",
-									height: "32px",
-									float: "left",
-								}}
-								onChange={(e) => setIsCombo(e.target.value)}
-								defaultValue={false}
-							>
-								<Radio
-									value={true}
-									style={{
-										alignSelf: "center",
-									}}
-								>
-									{" "}
-									Yes{" "}
-								</Radio>
-								<Radio
-									style={{
-										alignSelf: "center",
-									}}
-									value={false}
-								>
-									{" "}
-									No{" "}
-								</Radio>
-							</Radio.Group>
 
-							<Form.Item
-								name="count"
-								label="# in pack"
-								rules={[{ required: true }]}
-								style={{
-									width: "200px",
-									paddingBottom: "0px",
-								}}
-								wrapperCol={{ span: 2 }}
-								className="white-font"
-								hidden={!isCombo}
-								initialValue={1}
-							>
-								<Select
-									allowClear
-									defaultValue={1}
-									style={{
-										width: "auto",
-										paddingBottom: "0px",
-									}}
-									className="black-font"
-									onSelect={(e) => setCombo(e)}
-								>
-									<Option value="1">1</Option>
-									<Option value="2">2</Option>
-									<Option value="3">3</Option>
-									<Option value="4">4</Option>
-								</Select>
-							</Form.Item>
-						</Space> */}
-					{/* </FormItem> */}
-					{/* {isCombo && combo > 1 && (
-						<>
-							<FormItem name="amiibo" label="Amiibo">
-								{options && (
-									<AutoComplete
-										options={options}
-										placeholder="try to type `b`"
-										filterOption={(inputValue, option) =>
-											option!.value
-												.toUpperCase()
-												.indexOf(
-													inputValue.toUpperCase()
-												) !== -1
-										}
-										onSelect={(value) =>
-											handleSelect(value)
-										}
-										style={{ color: "black" }}
-									/>
-								)}
-								<h1 style={{ textAlign: "center" }}>
-									{amiibo.name} - {amiibo.amiiboSeries}
-								</h1>
-
-								<img
-									src={amiibo.image}
-									style={{ width: "100px", padding: "10px" }}
-								/>
-							</FormItem> */}
 					<FormItem name="condition" label="Condition">
 						<Input.TextArea showCount />
 					</FormItem>
 					{/* </> */}
 					{/* )}{" "} */}
-					<FormItem name="location" label="Bought at">
-						<Input />
-					</FormItem>
+
 					<Space
 						style={{
 							width: "100%",
@@ -580,24 +475,21 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							</Radio.Group>
 						</FormItem>
 					</Space>
-					{/* // <h3>{amiibo.type}</h3> */}
-					{/* <h1>{amiibo.id}</h1> */}
-					{/* <Form.Item
-						name="images"
-						label="Images"
-						valuePropName="fileList"
-						getValueFromEvent={normFile}
+					<Form.Item
+						name="purchaseDate"
+						label="Purchased On"
+						labelCol={{ span: 10 }}
 					>
-						<Upload
-							name="logo"
-							action="/upload.do"
-							listType="picture"
-						>
-							<Button icon={<UploadOutlined />}>
-								Click to upload
-							</Button>
-						</Upload>
-					</Form.Item> */}
+						<DatePicker />
+					</Form.Item>
+					<FormItem name="location" label="Bought at">
+						<Places
+							selected={selected}
+							setSelected={setSelected}
+							setLocationName={setLocationName}
+						/>
+						<Input value={locationName} className="hidden" />
+					</FormItem>
 				</Form>
 			</>
 		);
@@ -605,13 +497,3 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		return <></>;
 	}
 };
-
-// description
-// name
-// equipment API CALL
-// muscles
-
-// } else {
-// 	return <SpiningLoadingIcon />;
-// }
-//
