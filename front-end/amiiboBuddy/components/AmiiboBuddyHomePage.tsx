@@ -18,7 +18,7 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 
 	useEffect(() => {
 		if (!isLoading) {
-			console.log("amiiiii", amiibos);
+			// console.log("amiiiii", amiibos);
 		}
 	}, [isLoading]);
 
@@ -40,7 +40,7 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 			.order("amiibo_series");
 		if (data) {
 			setAmiibos(data);
-			console.log("Amiibo Data", data);
+			// console.log("Amiibo Data", data);
 			setIsLoading(false);
 		} else {
 			console.error("ERROR", error);
@@ -54,7 +54,9 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 			<h2 className="page-heading">Amiibo Buddy</h2>
 			<div className="amiibo-grid">
 				{!isLoading &&
-					amiibos.map((amiibo) => <AmiiboCard amiibo={amiibo} />)}
+					amiibos.map((amiibo, index) => (
+						<AmiiboCard amiibo={amiibo} key={index} />
+					))}
 			</div>
 		</div>
 	);
