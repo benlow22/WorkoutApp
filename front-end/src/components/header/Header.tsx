@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 import { domainFromUrl } from "../../utils/utils";
-import { TDomains } from "../../api/types";
+import { TDomain, TDomains } from "../../api/types";
 import { domains } from "../../utils/utils";
 
 export const Header: React.FC<{}> = () => {
@@ -16,27 +16,28 @@ export const Header: React.FC<{}> = () => {
 	const location = useLocation();
 	const splitUrl = location.pathname.split("/");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
+	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
+
+	useEffect(() => {
+		setDomainObj(domains[domain]);
+	}, []);
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
 		if (!contextIsLoading) {
 			if (username) {
 				setDisplayUsername(username);
+				// console.log("LOCATION", domain);
 				setIsLoading(false);
-				console.log("LOCATION", domain);
 			}
 		}
-	}, [auth]);
-
-	useEffect(() => {
-		if (domain) console.log("domain", domain);
-	}, [domain]);
+	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
 		<div className={`header ${domains[domain].class}-header`} key={domain}>
 			<div className="content white-font">
-				{!isLoading ? (
-					auth ? (
-						domain && (
+				{!isLoading &&
+					(auth ? (
+						domainObj && (
 							<>
 								<Link
 									to={`${domains[domain].path}`}
@@ -60,20 +61,74 @@ export const Header: React.FC<{}> = () => {
 						)
 					) : (
 						<>
-							<Link to="/">
+							{/* <Link to="/">
 								<h1>{domain}</h1>
 							</Link>
 							{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
 								<Link to="/login">
 									<LogInButton />
 								</Link>
-							)}
+							)} */}
 						</>
-					)
-				) : (
-					<Link to="/">{/* <h1>Workout Buddy</h1> */}</Link>
-				)}
+					))}
 			</div>
 		</div>
 	);
 };
+
+/*
+
+1. once loading is false 
+	2. render DOMAIN as header 
+	3. set domain as helmet too 
+		2. if auth, render log out <button></button>
+		5. if NOT AUTH, render log in button, redirect to domain homepage. 
+
+		*/
+
+// return (
+// 	<div className={`header ${domains[domain].class}-header`} key={domain}>
+// 		<div className="content white-font">
+// 			{!isLoading ? (
+// 				auth ? (
+// 					domainObj && (
+// 						<>
+// 							<Link
+// 								to={`${domains[domain].path}`}
+// 								key={domain}
+// 							>
+// 								{domain && (
+// 									<h1 key={domain}>
+// 										{domains[domain].name}
+// 									</h1>
+// 								)}
+// 							</Link>
+// 							<div className="account">
+// 								<Link to="/createUsername">
+// 									{!username
+// 										? "Create Username"
+// 										: displayUsername}
+// 								</Link>
+// 								<LogoutButton />
+// 							</div>
+// 						</>
+// 					)
+// 				) : (
+// 					<>
+// 						<Link to="/">
+// 							<h1>{domain}</h1>
+// 						</Link>
+// 						{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
+// 							<Link to="/login">
+// 								<LogInButton />
+// 							</Link>
+// 						)}
+// 					</>
+// 				)
+// 			) : (
+// 				<Link to="/">{/* <h1>Workout Buddy</h1> */}</Link>
+// 			)}
+// 		</div>
+// 	</div>
+// );
+// };
