@@ -6,7 +6,11 @@ export const WelcomePage = () => {
 	const { auth } = useContext(AuthContext);
 
 	if (!auth) {
-		return <h1>Welcome to the WORKOUT APP</h1>;
+		return (
+			<div className="buddy-system-homepage">
+				<h1>Welcome to the Buddy System</h1>;
+			</div>
+		);
 	} else {
 		return <Navigate to={"workouts"} replace />;
 	}

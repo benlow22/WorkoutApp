@@ -7,6 +7,7 @@ import { useLocation } from "react-router-dom";
 import { domainFromUrl } from "../../utils/utils";
 import { TDomain, TDomains } from "../../api/types";
 import { domains } from "../../utils/utils";
+import { SpiningLoadingIcon } from "../loading/LoadingIcon";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =
@@ -26,10 +27,13 @@ export const Header: React.FC<{}> = () => {
 		if (!contextIsLoading) {
 			if (username) {
 				setDisplayUsername(username);
-				// console.log("LOCATION", domain);
 				setIsLoading(false);
 			}
 		}
+		if (domain === "buddySystem" && auth === false && !username) {
+			setIsLoading(false);
+		}
+		console.log("LOCATION", domainObj);
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
@@ -61,14 +65,14 @@ export const Header: React.FC<{}> = () => {
 						)
 					) : (
 						<>
-							{/* <Link to="/">
-								<h1>{domain}</h1>
+							<Link to="/">
+								<h1>{domainObj?.name}</h1>
 							</Link>
 							{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
 								<Link to="/login">
 									<LogInButton />
 								</Link>
-							)} */}
+							)}
 						</>
 					))}
 			</div>
