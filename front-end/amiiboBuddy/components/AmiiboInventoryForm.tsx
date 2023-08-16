@@ -270,6 +270,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							label="# of amiibos in pack"
 							labelCol={{ span: 17 }}
 							wrapperCol={{ span: 7 }}
+							style={{ width: "200px" }}
 							initialValue={"1"}
 						>
 							<Select
@@ -360,26 +361,19 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							(amiibo) =>
 								amiibo && (
 									<div className="amiibo-image-card">
-										<h4 style={{ textAlign: "center" }}>
+										<h4>
 											{amiibo.name} -{" "}
 											{amiibo.amiiboSeries}
 										</h4>
-										{/* <Space
-										// style={{
-										// 	display: "flex",
-										// 	justifyContent: "space-between",
-										// 	width: "450px",
-										// }}
-										> */}
+										{/* <div className="amiibo-input-form-image-container"> */}
 										<img
 											src={amiibo.image}
 											style={{
-												display: "flex",
-												maxWidth: "100px",
 												padding: "10px",
 											}}
+											className="amiibo-input-image"
 										/>
-										{/* </Space> */}
+										{/* </div> */}
 									</div>
 								)
 						)}
