@@ -48,9 +48,9 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		handleNumberOfAmiiboChange(numberOfAmiibos);
 	}, [numberOfAmiibos]);
 
-	useEffect(() => {
-		console.log("CHECL", amiibosArr, "hi", amiibovalArr);
-	}, [amiibosArr]);
+	// useEffect(() => {
+	// 	console.log("CHECL", amiibosArr, "hi", amiibovalArr);
+	// }, [amiibosArr]);
 
 	const getAmiibos = async () => {
 		let { data, error } = await supabase
@@ -65,7 +65,6 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 			const concatData = data.map((amiibo) => {
 				const concatName = `${amiibo.name} - ${amiibo.amiiboSeries} (${amiibo.type})`;
 				amiiboCache[concatName] = amiibo;
-				console.log("DATA", amiiboCache);
 
 				return {
 					value: concatName,
@@ -100,11 +99,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		if (cache) {
 			if (value in cache) {
 				let newAmiiboArr = new Array(...amiibosArr);
-				console.log("actualval", newAmiiboArr);
-
 				let newAmiibovalArr = new Array(...amiibovalArr);
-				console.log("value", newAmiibovalArr);
-
 				newAmiibovalArr[index] = value;
 				newAmiiboArr[index] = cache[value];
 				setAmiibovalArr(newAmiibovalArr);
@@ -114,14 +109,6 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		}
 	};
 
-	const currencySelector = (
-		<Form.Item name="currency">
-			<Select style={{ width: 80, color: "white" }}>
-				<Option value="CAD">CAD</Option>
-				<Option value="USD">USD</Option>
-			</Select>
-		</Form.Item>
-	);
 	const handleNumberOfAmiiboChange = (value: number) => {
 		setNumberOfAmiibos(value);
 		const amiiArr = new Array(Number(value));
@@ -172,6 +159,13 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		}
 	};
 
+	const onFinish = (values: any) => {
+		console.log("Success:", values);
+	};
+	const onFinishFailed = (errorInfo: any) => {
+		console.log("Failed:", errorInfo);
+	};
+
 	if (!isLoading) {
 		return (
 			<>
@@ -185,6 +179,8 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						borderRadius: "10px",
 					}}
 					labelCol={{ span: 4 }}
+					onFinish={onFinish}
+					onFinishFailed={onFinishFailed}
 				>
 					{amiibosArr[0] ? (
 						numberOfAmiibos > 1 ? (

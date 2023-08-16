@@ -20,20 +20,14 @@ import "@reach/combobox/styles.css";
 import { Helmet } from "react-helmet";
 import { MapOptions } from "google-map-react";
 
-export default function Places({ selected, setSelected, setLocationName }) {
+export default function Places(props) {
 	const { isLoaded } = useLoadScript({
 		googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
 		libraries: ["places"],
 	});
 
 	if (!isLoaded) return <div>Loading...</div>;
-	return (
-		<Map
-			selected={selected}
-			setSelected={setSelected}
-			setLocationName={setLocationName}
-		/>
-	);
+	return <Map props={props} />;
 }
 function Map({ selected, setSelected, setLocationName }) {
 	const center = useMemo(() => {
