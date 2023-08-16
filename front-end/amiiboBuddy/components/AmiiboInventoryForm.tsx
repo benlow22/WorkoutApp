@@ -382,19 +382,21 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						label="Rate"
 						style={{ color: "white", textAlign: "center" }}
 					>
-						Awful
-						<Rate
-							count={5}
-							style={{
-								backgroundColor: "grey",
-								padding: "0px 10px",
-								borderRadius: "10px",
-								margin: "0px 10px",
-							}}
-							allowHalf
-							onChange={(value) => handleRateChange(value)}
-						/>
-						Perfect
+						<>
+							Awful
+							<Rate
+								count={5}
+								style={{
+									backgroundColor: "grey",
+									padding: "0px 10px",
+									borderRadius: "10px",
+									margin: "0px 10px",
+								}}
+								allowHalf
+								onChange={(value) => handleRateChange(value)}
+							/>
+							Perfect
+						</>
 					</Form.Item>
 
 					<FormItem name="condition" label="Condition">
