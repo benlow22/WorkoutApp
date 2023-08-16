@@ -21,6 +21,11 @@
 .amiibo-name.three-lines {
 	font-size: 0.85em;
 }
+
+.amiibo-input-form-image-name.three-lines {
+	font-weight: bold;
+	font-size: 0.9em;
+}
 .amiibo-image-container {
 	display: flex;
 	height: 150px;
@@ -48,3 +53,126 @@
 .currency-select {
 	width: 150px;
 }
+
+.amiibo-image-banner {
+	display: flex;
+	height: 190px;
+	width: 450px;
+	justify-content: center;
+}
+
+.amiibo-image-card {
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	height: 190px;
+	max-width: 110px;
+	align-content: center;
+}
+.amiibo-input-form-image-container {
+	height: 124px;
+	display: flex;
+	align-items: flex-end;
+}
+.amiibo-input-image {
+	max-height: 100%;
+	max-width: 100%;
+}
+
+.number-of-amiibo-packs {
+	width: 70px;
+}
+
+.ant-upload-list {
+	margin: 20px;
+}
+@media only screen and (max-width: 420px) {
+	.price-input-number {
+		width: 100px;
+	}
+	.price-label {
+		float: right;
+		width: 100%;
+	}
+	.number-of-amiibo-packs {
+		width: 100px;
+	}
+	.ant-space-item .amiibo-pack-selector {
+		width: 100px;
+	}
+	.amiibo-image-banner {
+		display: flex;
+		flex-wrap: wrap;
+		max-width: 350px;
+		justify-content: space-evenly;
+		height: auto;
+	}
+	.amiibo-image-card {
+		display: flex;
+		flex-direction: column;
+		flex-wrap: nowrap;
+		max-width: 87.5px;
+		justify-content: space-between;
+		align-items: center;
+		height: auto;
+		padding: 5px 0px;
+		margin: 0px;
+	}
+	.ant-form-item,
+	.ant-form-item .ant-form-item-label {
+		margin-bottom: 0px;
+		padding: 0px;
+	}
+	.ant-upload-list {
+		margin-top: 10px;
+	}
+}
+
+.map-container {
+	height: 300px;
+	border-radius: 10px;
+	width: auto;
+}
+
+.combobox-input {
+	width: 100%;
+	padding: 0.5rem;
+	background-color: white;
+}
+
+/* .gmnoprint {
+	width: 10px;
+} */
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+.combobox-input a {
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+		Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	color: inherit;
+	text-decoration: none;
+}
+
+.places-container {
+	position: relative;
+	z-index: 10;
+	width: 100%;
+}
+
+.combobox-input {
+	width: 100%;
+	padding: 0.5rem;
+}
+
+.hidden {
+	visibility: hidden;
+}
+
+/* .gmnoprint {
+	visibility: hidden;
+} */
