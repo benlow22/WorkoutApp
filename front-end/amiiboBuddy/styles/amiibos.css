@@ -72,6 +72,8 @@
 }
 .amiibo-input-form-image-container {
 	height: 124px;
+	display: flex;
+	align-items: flex-end;
 }
 .amiibo-input-image {
 	max-height: 100%;
@@ -94,13 +96,16 @@
 		width: 100%;
 	}
 	.number-of-amiibo-packs {
-		width: 100%;
+		width: 100px;
+	}
+	.ant-space-item .amiibo-pack-selector {
+		width: 100px;
 	}
 	.amiibo-image-banner {
 		display: flex;
 		flex-wrap: wrap;
 		max-width: 350px;
-		justify-content: space-between;
+		justify-content: space-evenly;
 		height: auto;
 	}
 	.amiibo-image-card {
@@ -108,7 +113,7 @@
 		flex-direction: column;
 		flex-wrap: nowrap;
 		max-width: 87.5px;
-		justify-content: space-around;
+		justify-content: space-between;
 		align-items: center;
 		height: auto;
 		padding: 5px 0px;

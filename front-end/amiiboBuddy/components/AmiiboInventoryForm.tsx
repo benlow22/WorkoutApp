@@ -28,10 +28,10 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 	const [amiibos, setAmiibos] = useState<TAmiiboCard[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [options, setOptions] = useState<{ value: string }[]>([]);
-	const [amiibo, setAmiibo] = useState<any>("");
+	// const [amiibo, setAmiibo] = useState<any>("");
 	const [cache, setCache] = useState<TAmiiboCache>();
-	const [isCombo, setIsCombo] = useState<boolean>(false);
-	const [combo, setCombo] = useState<number>(2);
+	// const [isCombo, setIsCombo] = useState<boolean>(false);
+	// const [combo, setCombo] = useState<number>(2);
 	const [numberOfAmiibos, setNumberOfAmiibos] = useState<number>(1);
 	const [amiibosArr, setAmiibosArr] = useState<TAmiiboCard[]>([]);
 	const [amiibosArrBackup, setAmiibosArrBackup] = useState<TAmiiboCard[]>([]);
@@ -39,27 +39,10 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 	const [locationName, setLocationName] = useState();
 	const [amiibovalArr, setAmiibovalArr] = useState<string[]>([]);
 	const [currency, setCurrency] = useState("$");
-	const [amiiboNameSize, setAmiiboNameSize] = useState("");
-
-	useEffect(() => {
-		if (name.length < 15) {
-			setAmiiboNameSize("");
-		} else if (name.length < 30) {
-			setAmiiboNameSize("two-lines");
-		} else {
-			setAmiiboNameSize("three-lines");
-		}
-	}, [name]);
 
 	useEffect(() => {
 		getAmiibos();
 	}, []);
-
-	useEffect(() => {
-		if (!isLoading) {
-			console.log("amiiiii", amiibo);
-		}
-	}, [isLoading]);
 
 	useEffect(() => {
 		handleNumberOfAmiiboChange(numberOfAmiibos);
@@ -242,6 +225,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							display: "flex",
 							justifyContent: "space-between",
 							flexFlow: "nowrap",
+							width: "100%",
 						}}
 					>
 						<Form.Item
@@ -249,8 +233,9 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							label="# of amiibos in pack"
 							labelCol={{ span: 17 }}
 							wrapperCol={{ span: 7 }}
-							style={{ width: "200px" }}
+							style={{ width: "100%" }}
 							initialValue={"1"}
+							className="amiibo-pack-selector"
 						>
 							<Select
 								className="number-of-amiibo-packs"
