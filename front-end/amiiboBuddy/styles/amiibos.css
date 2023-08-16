@@ -21,6 +21,11 @@
 .amiibo-name.three-lines {
 	font-size: 0.85em;
 }
+
+.amiibo-input-form-image-name.three-lines {
+	font-weight: bold;
+	font-size: 0.9em;
+}
 .amiibo-image-container {
 	display: flex;
 	height: 150px;
@@ -69,12 +74,16 @@
 	height: 124px;
 }
 .amiibo-input-image {
-	height: 100%;
-	width: auto;
+	max-height: 100%;
+	max-width: 100%;
 }
 
 .number-of-amiibo-packs {
 	width: 70px;
+}
+
+.ant-upload-list {
+	margin: 20px;
 }
 @media only screen and (max-width: 420px) {
 	.price-input-number {

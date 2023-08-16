@@ -4,6 +4,7 @@ import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import {
 	AutoComplete,
+	Button,
 	DatePicker,
 	Form,
 	Input,
@@ -38,6 +39,18 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 	const [locationName, setLocationName] = useState();
 	const [amiibovalArr, setAmiibovalArr] = useState<string[]>([]);
 	const [currency, setCurrency] = useState("$");
+	const [amiiboNameSize, setAmiiboNameSize] = useState("");
+
+	useEffect(() => {
+		if (name.length < 15) {
+			setAmiiboNameSize("");
+		} else if (name.length < 30) {
+			setAmiiboNameSize("two-lines");
+		} else {
+			setAmiiboNameSize("three-lines");
+		}
+	}, [name]);
+
 	useEffect(() => {
 		getAmiibos();
 	}, []);
@@ -50,20 +63,11 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 
 	useEffect(() => {
 		handleNumberOfAmiiboChange(numberOfAmiibos);
-		// setAmiibosArr(amiibosArrBackup.slice(0, numberOfAmiibos + 1));
 	}, [numberOfAmiibos]);
 
 	useEffect(() => {
 		console.log("CHECL", amiibosArr, "hi", amiibovalArr);
 	}, [amiibosArr]);
-
-	// useEffect(() => {
-	// 	// set workouts from response
-	// 	if (getAllUsersWorkoutsResponse) {
-	// 		console.log(getAllUsersWorkoutsResponse);
-	// 		setWorkouts(getAllUsersWorkoutsResponse);
-	// 	}
-	// }, [getAllUsersWorkoutsResponse]);
 
 	const getAmiibos = async () => {
 		let { data, error } = await supabase
@@ -74,11 +78,12 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 			.eq("type", "Figure");
 		if (data) {
 			setAmiibos(data);
-			// let series = {};
 			const amiiboCache: TAmiiboCache = {};
 			const concatData = data.map((amiibo) => {
 				const concatName = `${amiibo.name} - ${amiibo.amiiboSeries} (${amiibo.type})`;
 				amiiboCache[concatName] = amiibo;
+				console.log("DATA", amiiboCache);
+
 				return {
 					value: concatName,
 					label: (
@@ -108,14 +113,6 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		}
 	};
 
-	const handleSelect = (value: string, index: number) => {
-		if (cache) {
-			if (value in cache) {
-				setAmiibo(cache[value]);
-			}
-		}
-	};
-
 	const handleAmiiboSelect = (value: string, index: number) => {
 		if (cache) {
 			if (value in cache) {
@@ -133,9 +130,7 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 			}
 		}
 	};
-	// const handleSearch = (input) => {
-	// 	setSearchLocation(input);
-	// };
+
 	const currencySelector = (
 		<Form.Item name="currency">
 			<Select style={{ width: 80, color: "white" }}>
@@ -144,7 +139,6 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 			</Select>
 		</Form.Item>
 	);
-	// const response = amiiboFetchApi();
 	const handleNumberOfAmiiboChange = (value: number) => {
 		setNumberOfAmiibos(value);
 		const amiiArr = new Array(Number(value));
@@ -155,27 +149,6 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		}
 		setAmiibosArr(amiiArr);
 	};
-
-	// const amiiboPack = amiibosArr.map((spot, index) => {
-	// 	console.log("hi");
-	// 	return (
-	// 		<Form.Item name="amiibo" label="Amiibo">
-	// 			<AutoComplete
-	// 				options={options}
-	// 				placeholder="pick an amiibo"
-	// 				filterOption={(inputValue, option) =>
-	// 					option!.value
-	// 						.toUpperCase()
-	// 						.indexOf(inputValue.toUpperCase()) !== -1
-	// 				}
-	// 				onSelect={(value) => handleSelect(value, index)}
-	// 				style={{ color: "black" }}
-	// 			/>
-	// 		</Form.Item>
-	// 	);
-	// });
-
-	// const handleApiLoaded = (map, maps) => {};
 
 	const handleCurrencyChange = (currencyAbr: string) => {
 		switch (currencyAbr) {
@@ -200,15 +173,21 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 		}
 	};
 
-	const normFile = (e: any) => {
-		console.log("Upload event:", e);
-		if (Array.isArray(e)) {
-			return e;
-		}
-		return e?.fileList;
-	}; // if (!getAllUsersWorkoutsLoading) {
+	const concatAmiiboNameAndSeries = (amiibo: TAmiiboCard) => {
+		return amiibo.name + " - " + amiibo.amiiboSeries;
+	};
 
-	const center = useMemo(() => ({ lat: 44, lng: -80 }), []);
+	const amiiboNameSizeFormater = (amiibo: TAmiiboCard) => {
+		const concatNameAndSeries = concatAmiiboNameAndSeries(amiibo);
+
+		if (concatNameAndSeries.length < 15) {
+			return "";
+		} else if (concatNameAndSeries.length < 30) {
+			return "two-lines";
+		} else {
+			return "three-lines";
+		}
+	};
 
 	if (!isLoading) {
 		return (
@@ -361,9 +340,14 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							(amiibo) =>
 								amiibo && (
 									<div className="amiibo-image-card">
-										<h4 style={{ fontWeight: "lighter" }}>
-											{amiibo.name} -{" "}
-											{amiibo.amiiboSeries}
+										<h4
+											style={{ fontWeight: "lighter" }}
+											className={
+												"amiibo-input-form-image-name " +
+												amiiboNameSizeFormater(amiibo)
+											}
+										>
+											{concatAmiiboNameAndSeries(amiibo)}
 										</h4>
 										<div className="amiibo-input-form-image-container">
 											<img
@@ -484,6 +468,11 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						/>
 						<Input value={locationName} className="hidden" />
 					</FormItem>
+					<Form.Item wrapperCol={{ span: 24 }}>
+						<Button type="primary" htmlType="submit">
+							Add to Inventory
+						</Button>
+					</Form.Item>
 				</Form>
 			</>
 		);
