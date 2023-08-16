@@ -361,19 +361,19 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 							(amiibo) =>
 								amiibo && (
 									<div className="amiibo-image-card">
-										<h4>
+										<h4 style={{ fontWeight: "lighter" }}>
 											{amiibo.name} -{" "}
 											{amiibo.amiiboSeries}
 										</h4>
-										{/* <div className="amiibo-input-form-image-container"> */}
-										<img
-											src={amiibo.image}
-											style={{
-												padding: "10px",
-											}}
-											className="amiibo-input-image"
-										/>
-										{/* </div> */}
+										<div className="amiibo-input-form-image-container">
+											<img
+												src={amiibo.image}
+												style={{
+													padding: "10px",
+												}}
+												className="amiibo-input-image"
+											/>
+										</div>
 									</div>
 								)
 						)}
