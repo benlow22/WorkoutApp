@@ -41,29 +41,28 @@ export const Header: React.FC<{}> = () => {
 	// };
 
 	useEffect(() => {
-		if (location.state?.isLoggedOutCompletely) {
-			console.log(
-				"SHOULD BE LOGGED OUT COMPLETELY",
-				location.state.previousDomain
-			);
-			setCurrentDomain("buddySystem");
-			setPreviousDomain(location.state.previousDomain);
+		let curDom = "";
+		let prevDom = undefined;
+		if (auth === false) {
+			curDom = "buddySystem";
+			prevDom = location.state.previousDomain;
 		} else {
 			console.log("Location header = ", location);
 			const splitPathName = location.pathname.split("/");
 			console.log("Location header = ", splitPathName);
 			const subDomain =
 				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
-			setCurrentDomain(subDomain);
-			console.log("currentDomain", subDomain);
+			curDom = subDomain;
 			if (location.state?.previousDomain) {
-				const previousDomainnn = location.state.previousDomain;
-				console.log("previousDomainnn", previousDomainnn);
-				setPreviousDomain(previousDomainnn);
-			} else {
-				console.log("previousDomain", previousDomain);
+				prevDom = location.state.previousDomain;
 			}
 		}
+		if (prevDom === curDom || !prevDom) {
+			setHeaderTransition(`${curDom}-header`);
+		} else {
+			setHeaderTransition(`${prevDom}-to-${curDom}-header`);
+		}
+		setDomainObj(domains[curDom]);
 	}, [location, auth]);
 
 	// useEffect(() => {
@@ -119,11 +118,6 @@ export const Header: React.FC<{}> = () => {
 		// 	setHeaderTransition(`${previousDomain}-to-${domain}`);
 		// 	console.log("TEST", `${previousDomain}-to-${domain}`);
 		// }
-		if (previousDomain === currentDomain || !previousDomain) {
-			setHeaderTransition(`${currentDomain}-header`);
-		} else {
-			setHeaderTransition(`${previousDomain}-to-${currentDomain}-header`);
-		}
 	}, [currentDomain, previousDomain]);
 
 	useEffect(() => {
