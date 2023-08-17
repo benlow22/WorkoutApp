@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import LogoutButton from "./LogOutButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { Link, Location } from "react-router-dom";
+import { Link, Location, useNavigate } from "react-router-dom";
 import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 import { domainFromUrl } from "../../utils/utils";
@@ -23,9 +23,11 @@ export const Header: React.FC<{}> = () => {
 	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
 	const [currentDomain, setCurrentDomain] = useState<string>();
 	const [headerTransition, setHeaderTransition] = useState<string>("/");
-	// SET HEADING AFFECT FROM PREVIOUS URL = TAKE THE DOMAIN FROM IT, and you can compare
+	const navigate = useNavigate(); // SET HEADING AFFECT FROM PREVIOUS URL = TAKE THE DOMAIN FROM IT, and you can compare
 	// "poreviousDomain " + "-" + "current Domain" + " +  fade"
 	useEffect(() => {
+		// navigate(location.pathname, { state: { AHHH: "cows" } });
+		// setPreviousDomain(undefined);
 		setDomainObj(domains[domain]);
 	}, []);
 
@@ -39,19 +41,28 @@ export const Header: React.FC<{}> = () => {
 	// };
 
 	useEffect(() => {
-		console.log("Location header = ", location);
-		const splitPathName = location.pathname.split("/");
-		console.log("Location header = ", splitPathName);
-		const subDomain =
-			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
-		setCurrentDomain(subDomain);
-		console.log("currentDomain", subDomain);
-		if (location.state?.previousDomain) {
-			const previousDomainnn = location.state.previousDomain;
-			console.log("previousDomainnn", previousDomainnn);
-			setPreviousDomain(previousDomainnn);
+		if (location.state?.isLoggedOutCompletely) {
+			console.log(
+				"SHOULD BE LOGGED OUT COMPLETELY",
+				location.state.previousDomain
+			);
+			setCurrentDomain("buddySystem");
+			setPreviousDomain(location.state.previousDomain);
 		} else {
-			console.log("previousDomain", previousDomain);
+			console.log("Location header = ", location);
+			const splitPathName = location.pathname.split("/");
+			console.log("Location header = ", splitPathName);
+			const subDomain =
+				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+			setCurrentDomain(subDomain);
+			console.log("currentDomain", subDomain);
+			if (location.state?.previousDomain) {
+				const previousDomainnn = location.state.previousDomain;
+				console.log("previousDomainnn", previousDomainnn);
+				setPreviousDomain(previousDomainnn);
+			} else {
+				console.log("previousDomain", previousDomain);
+			}
 		}
 	}, [location, auth]);
 

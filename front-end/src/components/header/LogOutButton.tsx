@@ -3,11 +3,14 @@ import { Button } from "antd";
 import { supabase } from "../../supabaseClient";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { domains } from "../../utils/utils";
 // import { getSignOut } from "../../api/api";
 const LogoutButton: React.FC<{}> = () => {
 	const { setUsername, setIsLoggedIn, setUserId, user } =
 		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [previousDomain, setPreviousDomain] = useState<string>();
+
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -16,8 +19,19 @@ const LogoutButton: React.FC<{}> = () => {
 			setIsLoading(true);
 			const previousDomain = location.pathname;
 			console.log("logoutbutton prevdomain", previousDomain);
+			const splitPathName = location.pathname.split("/");
+			console.log("split URL ", splitPathName);
+			const subDomain =
+				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+			setPreviousDomain(subDomain);
 			// const res = await getSignOut();
 			// console.log("what is the res ");
+			navigate(location.pathname, {
+				state: {
+					isLoggedOutCompletely: true,
+					previousDomain: subDomain,
+				},
+			});
 			const { error } = await supabase.auth.signOut();
 			if (error) {
 				throw error;

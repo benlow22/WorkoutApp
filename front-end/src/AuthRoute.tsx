@@ -24,7 +24,10 @@ const AuthRoute = () => {
 			setIsLoading(false);
 		}
 		if (!contextIsLoading && auth === false) {
-			console.log("AuthRoute: location of URL, ", location);
+			console.log(
+				"AuthRoute: location of URL, prev URL when logging out",
+				location
+			);
 			// extract just DOMAIN
 			const splitPathName = location.pathname.split("/");
 			console.log("split URL ", splitPathName);
