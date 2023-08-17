@@ -74,6 +74,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setAuth(false);
 				}
 				// setIsLoading(false); remove because next useEffect should also alway run atleast
+				setIsLoading(false);
+
 				return;
 			});
 		};

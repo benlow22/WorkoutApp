@@ -17,11 +17,27 @@ export const Header: React.FC<{}> = () => {
 	const location = useLocation();
 	const splitUrl = location.pathname.split("/");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
+	const [subdomain, setSubdomain] = useState<string>(domain);
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
+	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<boolean>();
 
 	useEffect(() => {
 		setDomainObj(domains[domain]);
 	}, []);
+
+	useEffect(() => {
+		if (!auth && domain === "/login") {
+			console.log("Just logged out from ", location.state.previousDomain);
+		}
+		// if (domainObj) {
+		// 	if (splitUrl[1] !== domain) {
+		// 		console.log("NEW SUBDOMAIN", splitUrl[1], domain, location);
+		// 	}
+		// }
+		console.log("change in domain", location, domain);
+		setDomainObj(domains[domain]);
+	}, [location]);
+
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
 		if (!contextIsLoading) {
@@ -29,11 +45,15 @@ export const Header: React.FC<{}> = () => {
 				setDisplayUsername(username);
 				setIsLoading(false);
 			}
+			if (domain === "buddySystem" && !username) {
+				setIsLoading(false);
+			}
 		}
-		if (domain === "buddySystem" && auth === false && !username) {
-			setIsLoading(false);
+		if (domainObj && auth === false) {
+			if (domain === "buddySystem") {
+				setIsLoading(false);
+			}
 		}
-		console.log("LOCATION", domainObj);
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
