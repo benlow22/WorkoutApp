@@ -113,7 +113,7 @@ export const Header: React.FC<{}> = () => {
 		} else {
 			setHeaderTransition(`${previousDomain}-to-${currentDomain}-header`);
 		}
-	}, [currentDomain]);
+	}, [currentDomain, previousDomain]);
 
 	useEffect(() => {
 		console.log("HEADER TRANSITION", headerTransition);
