@@ -23,18 +23,92 @@ div.andt-select-selector {
 	width: 10px;
 } */
 
-/* DOMAINS*/
+@keyframes fadeIn {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(0, 110, 255);
+	}
+}
+@keyframes fadeInAmiibo {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(148, 22, 22);
+	}
+}
+
+@keyframes fadeout {
+	0% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+	}
+}
+
+@keyframes fadeWorkoutToBuddySystem {
+	0% {
+		background-color: rgb(0, 110, 255);
+	}
+	100% {
+		background-color: rgb(69, 150, 86);
+	}
+}
+
+@keyframes fadeAmiiboBuddyToBuddySystem {
+	0% {
+		background-color: rgb(148, 22, 22);
+	}
+	100% {
+		background-color: rgb(69, 150, 86);
+	}
+}
+
+@keyframes fadeBuddySystemToWorkouts {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(0, 110, 255);
+	}
+}
+
+@keyframes fadeBuddySystemToAmiiboBuddy {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(148, 22, 22);
+	}
+}
+
+/* \DOMAINS */
+/* 
+.buddy-system-homepage h1 {
+	text-align: center;
+	margin: 30px auto;
+}
 
 .buddy-system-header {
-	background-color: rgb(113, 143, 183);
+	background-color: rgb(69, 150, 86);
+	animation: fadeOut 1s linear;
 }
 .buddy-system-header .logout-button {
-	background-color: #8599b5;
+	background-color: rgb(69, 150, 86);
+}
+
+.buddy-system-header .login-button {
+	background-color: rgb(56, 122, 70);
 }
 
 .workout-buddy-header {
 	background-color: rgb(0, 110, 255);
+	animation: fadeIn 1s linear;
 }
+
 .workout-buddy-header .logout-button {
 	background-color: #1677ff;
 }
@@ -42,11 +116,65 @@ div.andt-select-selector {
 .amiibo-buddy-header {
 	background-color: rgb(148, 22, 22);
 }
-.amiibo-buddy-header .logout-button {
+
+.amiibo-buddy-header.from-login {
+	background-color: rgb(148, 22, 22);
+	animation: fadeInAmiibo 1s linear;
+}*/
+
+.amiiboBuddy-header .logout-button {
 	background-color: #bc4b4b;
 }
-.amiibo-buddy-header .logout-button button:hover {
+.amiiboBuddy-header .logout-button button:hover {
 	background-color: #734b4b;
+}
+
+/* Fade Headers */
+.workouts-to-buddySystem-header {
+	background-color: rgb(69, 150, 86);
+	animation: fadeWorkoutToBuddySystem 1s linear;
+}
+
+.amiiboBuddy-to-buddySystem-header {
+	background-color: rgb(69, 150, 86);
+	animation: fadeAmiiboBuddyToBuddySystem 1s linear;
+}
+
+.buddySystem-to-workouts-header {
+	background-color: rgb(0, 110, 255);
+	animation: fadeBuddySystemToWorkouts 1s linear;
+}
+
+.buddySystem-to-amiiboBuddy-header {
+	background-color: rgb(148, 22, 22);
+
+	animation: fadeBuddySystemToAmiiboBuddy 1s linear;
+}
+
+.workouts-header {
+	background-color: rgb(0, 110, 255);
+}
+
+.buddySystem-header {
+	background-color: rgb(69, 150, 86);
+}
+
+.amiiboBuddy-header {
+	background-color: rgb(148, 22, 22);
+}
+
+/* no fade, just login = GREEN */
+
+.fade-undefined-to-buddySystem {
+	background-color: rgb(69, 150, 86);
+}
+
+.fade-amiiboBuddy-to-buddySystem {
+	background-color: rgb(69, 80, 150);
+}
+
+.fade-buddySystem-to-amiiboBuddy {
+	background-color: rgb(69, 80, 150);
 }
 .logo {
 	height: 6em;
@@ -99,6 +227,7 @@ h2 {
 .header {
 	padding: 10px 75px;
 	width: 100%;
+	height: 58px;
 }
 
 .header .content {

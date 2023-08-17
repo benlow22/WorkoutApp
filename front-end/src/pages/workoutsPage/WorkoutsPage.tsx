@@ -17,12 +17,13 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		getAllUsersWorkoutsRequest,
 	] = useRequest(getAllUsersWorkoutsAPI);
 	const [messageApi, contextHolder] = message.useMessage();
-
+	const location = useLocation();
 	useEffect(() => {
 		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
 		if (session) {
 			getAllUsersWorkoutsRequest(session);
 		}
+		console.log("location workouts", location);
 	}, []);
 
 	useEffect(() => {

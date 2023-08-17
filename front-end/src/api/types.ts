@@ -89,3 +89,9 @@ export type TDomains = {
 		class: string;
 	};
 };
+
+export type TDomain = {
+	name: string;
+	path: string;
+	class: string;
+};
