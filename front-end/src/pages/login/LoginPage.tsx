@@ -15,14 +15,11 @@ export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	const { auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	console.log("initial Login page");
 	const location = useLocation();
 
 	// if entered Auth Url => send back to that URL once Auth
 	// if not from Auth URL (homepage) => then no state will be given
-	const redirectLocation = location.state
-		? location.state.from.pathname
-		: "/";
+	const redirectLocation = location.state ? location.state.initialUrl : "/";
 
 	useEffect(() => {
 		if (!contextIsLoading && auth !== undefined) {
@@ -33,7 +30,10 @@ export const LoginPage = () => {
 
 	return !isLoading ? (
 		auth ? (
-			<Navigate to={redirectLocation} state={{ fromLogin: true }} />
+			<Navigate
+				to={redirectLocation}
+				state={{ ...location.state, fromLogin: true }}
+			/>
 		) : (
 			<div className="auth-page">
 				<p>Please Login Below</p>

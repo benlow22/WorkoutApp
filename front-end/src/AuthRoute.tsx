@@ -21,7 +21,10 @@ const AuthRoute = () => {
 		return auth ? (
 			<Outlet />
 		) : (
-			<Navigate to="/login" state={{ from: location }} />
+			<Navigate
+				to="/login"
+				state={{ initialUrl: location, fromLogin: false }}
+			/>
 		);
 	} else {
 		return <SpiningLoadingIcon />;

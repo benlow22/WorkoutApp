@@ -17,18 +17,29 @@ export const Header: React.FC<{}> = () => {
 	const location = useLocation();
 	const splitUrl = location.pathname.split("/");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
-	const [subdomain, setSubdomain] = useState<string>(domain);
+	// const [subdomain, setSubdomain] = useState<string>(domain);
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
-	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<boolean>();
+	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<string>();
 
 	useEffect(() => {
 		setDomainObj(domains[domain]);
 	}, []);
 
+	const getDomainFromPathName = (pathname: string) => {
+		const splitPathName = pathname.split("/");
+		const subDomain =
+			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+		return subDomain;
+	};
 	useEffect(() => {
-		if (!auth && domain === "/login") {
-			console.log("Just logged out from ", location.state.previousDomain);
+		if (location.state) {
+			if (location.state.fromLogin) {
+				console.log("from login?", location.state);
+				setFromLoginHeaderClass("from-login");
+				console.log("afterAlter?", location.state);
+			}
 		}
+
 		// if (domainObj) {
 		// 	if (splitUrl[1] !== domain) {
 		// 		console.log("NEW SUBDOMAIN", splitUrl[1], domain, location);
@@ -57,7 +68,10 @@ export const Header: React.FC<{}> = () => {
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
-		<div className={`header ${domains[domain].class}-header`} key={domain}>
+		<div
+			className={`header ${domains[domain].class}-header ${fromLoginHeaderClass}`}
+			key={domain}
+		>
 			<div className="content white-font">
 				{!isLoading &&
 					(auth ? (

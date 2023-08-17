@@ -31,6 +31,14 @@ div.andt-select-selector {
 		background-color: rgb(0, 110, 255);
 	}
 }
+@keyframes fadeInAmiibo {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(148, 22, 22);
+	}
+}
 
 @keyframes fadeout {
 	0% {
@@ -62,12 +70,18 @@ div.andt-select-selector {
 	background-color: rgb(0, 110, 255);
 	animation: fadeIn 1s linear;
 }
+
 .workout-buddy-header .logout-button {
 	background-color: #1677ff;
 }
 
 .amiibo-buddy-header {
 	background-color: rgb(148, 22, 22);
+}
+
+.amiibo-buddy-header.from-login {
+	background-color: rgb(148, 22, 22);
+	animation: fadeInAmiibo 1s linear;
 }
 .amiibo-buddy-header .logout-button {
 	background-color: #bc4b4b;
