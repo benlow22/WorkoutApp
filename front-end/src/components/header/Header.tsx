@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import LogoutButton from "./LogOutButton";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, Location } from "react-router-dom";
 import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 import { domainFromUrl } from "../../utils/utils";
@@ -20,34 +20,104 @@ export const Header: React.FC<{}> = () => {
 	// const [subdomain, setSubdomain] = useState<string>(domain);
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
 	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<string>();
-
+	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
+	const [currentDomain, setCurrentDomain] = useState<string>();
+	const [headerTransition, setHeaderTransition] = useState<string>("/");
+	// SET HEADING AFFECT FROM PREVIOUS URL = TAKE THE DOMAIN FROM IT, and you can compare
+	// "poreviousDomain " + "-" + "current Domain" + " +  fade"
 	useEffect(() => {
 		setDomainObj(domains[domain]);
 	}, []);
 
-	const getDomainFromPathName = (pathname: string) => {
-		const splitPathName = pathname.split("/");
+	// const getDomainFromPathName = (location: Location) => {
+	// 	if (location.pathname.length > 0) {
+	// 		const splitPathName = location.pathname.split("/");
+	// 		const subDomain =
+	// 			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+	// 		return subDomain;
+	// 	}
+	// };
+
+	useEffect(() => {
+		console.log("Location header = ", location);
+		const splitPathName = location.pathname.split("/");
+		console.log("Location header = ", splitPathName);
 		const subDomain =
 			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
-		return subDomain;
-	};
-	useEffect(() => {
-		if (location.state) {
-			if (location.state.fromLogin) {
-				console.log("from login?", location.state);
-				setFromLoginHeaderClass("from-login");
-				console.log("afterAlter?", location.state);
-			}
+		setCurrentDomain(subDomain);
+		console.log("currentDomain", subDomain);
+		if (location.state?.previousDomain) {
+			const previousDomainnn = location.state.previousDomain;
+			console.log("previousDomainnn", previousDomainnn);
+			setPreviousDomain(previousDomainnn);
+		} else {
+			console.log("previousDomain", previousDomain);
 		}
+	}, [location, auth]);
 
-		// if (domainObj) {
-		// 	if (splitUrl[1] !== domain) {
-		// 		console.log("NEW SUBDOMAIN", splitUrl[1], domain, location);
-		// 	}
+	// useEffect(() => {
+	// 	console.log("location by header", location);
+	// 	if (contextIsLoading && location) {
+	// 		if (location.state?.previousUrl) {
+	// 			console.log(location.state.previousUrl);
+	// 			const getPreviousDomain = getDomainFromPathName(
+	// 				location.state.previousUrl
+	// 			);
+	// 			setPreviousDomain(getPreviousDomain);
+	// 			console.log("getPreviousDomain", getPreviousDomain);
+	// 		}
+	// 		console.log("PREVIOUS DOMAIN :", previousDomain);
+	// 		setCurrentDomain(domain);
+	// 		console.log("DOMAIN          :", domain);
+	// 	}
+	// }, []);
+
+	// useEffect(() => {
+	// 	// if (location.state) {
+	// 	// 	if (location.state.fromLogin) {
+	// 	// 		console.log("from login?", location.state);
+	// 	// 		setFromLoginHeaderClass("from-login");
+	// 	// 		console.log("afterAlter?", location.state);
+	// 	// 	}
+	// 	// 	if (location.state.previousUrl) {
+	// 	// 		console.log("from login?", location.state);
+	// 	// 		setFromLoginHeaderClass("from-login");
+	// 	// 		console.log("afterAlter?", location.state);
+	// 	// 	}
+	// 	// }
+	// 	setCurrentDomain(domain);
+	// 	// if (domainObj) {
+	// 	// 	if (splitUrl[1] !== domain) {
+	// 	// 		console.log("NEW SUBDOMAIN", splitUrl[1], domain, location);
+	// 	// 	}
+	// 	// }
+
+	// 	// console.log("test", `fade-${previousDomain}-to-${domain}`);
+
+	// 	setDomainObj(domains[domain]);
+	// }, []);
+
+	useEffect(() => {
+		// console.log("current location", location);
+		// console.log("PREVIOUS Domain:", previousDomain);
+		// console.log("CURRENT domain :", domain);
+		// if (!previousDomain || previousDomain === currentDomain) {
+		// 	setHeaderTransition(`${domain}`);
+		// 	console.log("TEST           :", `${domain}`);
+		// } else {
+		// 	setHeaderTransition(`${previousDomain}-to-${domain}`);
+		// 	console.log("TEST", `${previousDomain}-to-${domain}`);
 		// }
-		console.log("change in domain", location, domain);
-		setDomainObj(domains[domain]);
-	}, [location]);
+		if (previousDomain === currentDomain || !previousDomain) {
+			setHeaderTransition(`${currentDomain}-header`);
+		} else {
+			setHeaderTransition(`${previousDomain}-to-${currentDomain}-header`);
+		}
+	}, [currentDomain]);
+
+	useEffect(() => {
+		console.log("HEADER TRANSITION", headerTransition);
+	}, [currentDomain]);
 
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
@@ -66,12 +136,13 @@ export const Header: React.FC<{}> = () => {
 			}
 		}
 	}, [auth, contextIsLoading, domainObj, username]);
+	// ${previousDomain}-previous-domain-header
+	// ${domains[domain].class}-header
+	// 		${headerTransition}
+	// 		  ${fromLoginHeaderClass}
 
 	return (
-		<div
-			className={`header ${domains[domain].class}-header ${fromLoginHeaderClass}`}
-			key={domain}
-		>
+		<div className={`header ${headerTransition}`} key={domain}>
 			<div className="content white-font">
 				{!isLoading &&
 					(auth ? (

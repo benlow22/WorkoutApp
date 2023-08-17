@@ -23,6 +23,26 @@ const AuthRoute = () => {
 			setPreviousDomain(subDomain);
 			setIsLoading(false);
 		}
+		if (!contextIsLoading && auth === false) {
+			console.log("AuthRoute: location of URL, ", location);
+			// extract just DOMAIN
+			const splitPathName = location.pathname.split("/");
+			console.log("split URL ", splitPathName);
+			const subDomain =
+				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+			setPreviousDomain(subDomain);
+			setIsLoading(false);
+		}
+		if (!contextIsLoading && auth === true) {
+			console.log("AuthRoute: location of URL, TRUE", location);
+			// extract just DOMAIN
+			const splitPathName = location.pathname.split("/");
+			console.log("split URL ", splitPathName);
+			const subDomain =
+				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
+			setPreviousDomain(subDomain);
+			setIsLoading(false);
+		}
 	}, [auth]);
 
 	useEffect(() => {
