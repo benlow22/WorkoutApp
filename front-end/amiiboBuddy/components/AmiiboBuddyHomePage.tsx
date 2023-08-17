@@ -16,20 +16,6 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 		getAmiibos();
 	}, []);
 
-	useEffect(() => {
-		if (!isLoading) {
-			// console.log("amiiiii", amiibos);
-		}
-	}, [isLoading]);
-
-	// useEffect(() => {
-	// 	// set workouts from response
-	// 	if (getAllUsersWorkoutsResponse) {
-	// 		console.log(getAllUsersWorkoutsResponse);
-	// 		setWorkouts(getAllUsersWorkoutsResponse);
-	// 	}
-	// }, [getAllUsersWorkoutsResponse]);
-
 	const getAmiibos = async () => {
 		let { data, error } = await supabase
 			.from("amiibo")
@@ -47,8 +33,6 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 		}
 	};
 
-	// const response = amiiboFetchApi();
-	// if (!getAllUsersWorkoutsLoading) {
 	return (
 		<div className="amiibo-homepage">
 			<h2 className="page-heading">Amiibo Buddy</h2>
@@ -60,7 +44,4 @@ export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 			</div>
 		</div>
 	);
-	// } else {
-	// 	return <SpiningLoadingIcon />;
-	// }
 };

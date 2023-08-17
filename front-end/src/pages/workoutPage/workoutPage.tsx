@@ -105,7 +105,9 @@ export const WorkoutPage = () => {
 		if (getWorkoutAndExercisesError) {
 			return (
 				<div>
-					<p>No workout with URL {workoutUrl}</p>
+					<h2 className="page-heading">
+						No workout with URL {workoutUrl}
+					</h2>
 					<Button type="primary" onClick={redirectToWelcomepage}>
 						Return to Welcome Page
 					</Button>

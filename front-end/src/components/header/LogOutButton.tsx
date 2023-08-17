@@ -18,14 +18,10 @@ const LogoutButton: React.FC<{}> = () => {
 		try {
 			setIsLoading(true);
 			const previousDomain = location.pathname;
-			console.log("logoutbutton prevdomain", previousDomain);
 			const splitPathName = location.pathname.split("/");
-			console.log("split URL ", splitPathName);
 			const subDomain =
 				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
 			setPreviousDomain(subDomain);
-			// const res = await getSignOut();
-			// console.log("what is the res ");
 			navigate(location.pathname, {
 				state: {
 					isLoggedOutCompletely: true,
@@ -35,30 +31,7 @@ const LogoutButton: React.FC<{}> = () => {
 			const { error } = await supabase.auth.signOut();
 			if (error) {
 				throw error;
-			} else {
-				// navigate("/login", {
-				// 	state: { previousDomain: previousDomain },
-				// });
-				setIsLoggedIn(false);
-				return (
-					<Navigate
-						to={"/login"}
-						state={{
-							previousUrl: location.pathname,
-							fromLogout: true,
-						}}
-					/>
-				);
 			}
-			// const expires = new Date(0).toUTCString();
-			// document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
-			// document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
-			// // document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
-			// setUserId("");
-			// setUsername("");
-			// setIsLoggedIn(false);
-			// navigate("/");
-			// setIsLoading(false);
 		} catch (error) {
 			console.error("Error while signing out", error);
 		}
