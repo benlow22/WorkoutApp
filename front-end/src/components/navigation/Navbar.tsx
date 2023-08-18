@@ -32,7 +32,7 @@ export const Navbar = () => {
 								now with react v6 active class name is within className =   
 								className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""  } */}
 								<NavLink
-									to={`${window.location.origin}${domain.path}${page.path}`}
+									to={`${domain.path}${page.path}`}
 									key={page.name}
 									className={({ isActive, isPending }) =>
 										isPending

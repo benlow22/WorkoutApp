@@ -3,6 +3,9 @@
 	text-align: center;
 }
 
+body {
+	overflow-y: scroll;
+}
 /* .main {
 	margin: 30px;
 } */
