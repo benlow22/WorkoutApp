@@ -9,6 +9,7 @@ import { TDomain, TDomains } from "../../api/types";
 import { domains } from "../../utils/utils";
 import { SpiningLoadingIcon } from "../loading/LoadingIcon";
 import { Navbar } from "../navigation/Navbar";
+import { HomeOutlined } from "@ant-design/icons";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =
@@ -97,6 +98,12 @@ export const Header: React.FC<{}> = () => {
 											: displayUsername}
 									</Link>
 									<LogoutButton />
+									<Link
+										to={`buddySystem`}
+										className="home-button"
+									>
+										<HomeOutlined />
+									</Link>
 								</div>
 							</>
 						)

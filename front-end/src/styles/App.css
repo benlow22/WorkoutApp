@@ -78,6 +78,14 @@ div.andt-select-selector {
 		background-color: rgb(0, 110, 255);
 	}
 }
+@keyframes fadeBuddySystemToWorkoutBuddyLogoutButton {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: #1677ff;
+	}
+}
 
 @keyframes fadeBuddySystemToAmiiboBuddy {
 	0% {
@@ -146,6 +154,11 @@ div.andt-select-selector {
 .workoutBuddy-to-buddySystem-header {
 	background-color: rgb(69, 150, 86);
 	animation: fadeWorkoutToBuddySystem 1s linear;
+}
+
+.buddySystem-to-workoutBuddy-header .ant-btn-primary {
+	background-color: #1677ff;
+	animation: fadeBuddySystemToWorkoutBuddyLogoutButton 1s linear;
 }
 
 .amiiboBuddy-to-buddySystem-header {
@@ -233,6 +246,7 @@ h2 {
 
 .logout-button {
 	margin-left: 20px;
+	margin-right: 20px;
 }
 .add-new-workout-button {
 	background-color: rgb(0, 89, 205);
@@ -608,11 +622,19 @@ div.ant-space-item{
 	justify-content: space-between;
 }
 
-@media only screen and (max-width: 420px) {
-	.header {
-		padding: 15px;
+@media only screen and (min-width: 40px) {
+	body {
+		min-width: 400px;
 	}
+}
 
+@media only screen and (max-width: 650px) {
+	.site-banner {
+		padding: 10px 20px;
+	}
+}
+
+@media only screen and (max-width: 500px) {
 	h1 {
 		font-size: 20px;
 	}
@@ -633,5 +655,11 @@ div.ant-space-item{
 	}
 	.workouts-page {
 		width: 100%;
+	}
+	.logout-button {
+		margin: 8px;
+	}
+	.site-banner {
+		padding: 10px 15px;
 	}
 }

@@ -12,6 +12,6 @@ export const WelcomePage = () => {
 			</div>
 		);
 	} else {
-		return <Navigate to={"workouts"} replace />;
+		return <Navigate to={"workoutBuddy"} replace />;
 	}
 };

@@ -47,6 +47,19 @@
 	background-color: rgb(44, 129, 239);
 }
 
+@keyframes fadeBuddySystemToWorkoutBuddyNavLinks {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: rgb(44, 129, 239);
+	}
+}
+.buddySystem-to-workoutBuddy-header .nav-links {
+	background-color: rgb(44, 129, 239);
+	animation: fadeBuddySystemToWorkoutBuddyNavLinks 1s linear;
+}
+
 .buddySystem-header .nav-links a.active {
 	background-color: rgb(107, 185, 124);
 }
