@@ -15,10 +15,6 @@ export const Navbar = () => {
 			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
 		const currentDomain = curDomain;
 		setPages(domains[currentDomain].pages);
-		console.log(
-			"list of pages to render in nav bar",
-			domains[currentDomain].pages
-		);
 		setDomain(domains[currentDomain]);
 	}, [location]);
 
@@ -34,8 +30,8 @@ export const Navbar = () => {
 								<NavLink
 									to={
 										domain.name === "Buddy System"
-											? `${page.path}`
-											: `${domain.path}${page.path} `
+											? `/${page.path}`
+											: `/${domain.path}/${page.path} `
 									}
 									key={page.name}
 									className={({ isActive, isPending }) =>
@@ -45,6 +41,7 @@ export const Navbar = () => {
 											? "active"
 											: "nav-link"
 									}
+									state={{ previousDomain: domain.path }}
 								>
 									{page.name}
 								</NavLink>

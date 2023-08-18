@@ -50,8 +50,10 @@ export const Header: React.FC<{}> = () => {
 		}
 		if (prevDom === curDom || !prevDom) {
 			setHeaderTransition(`${curDom}-header`);
+			console.log(`${curDom}-header`);
 		} else {
 			setHeaderTransition(`${prevDom}-to-${curDom}-header`);
+			console.log(`${prevDom}-to-${curDom}-header`);
 		}
 		setCurrentDomain(curDom);
 		setPreviousDomain(prevDom);
@@ -84,7 +86,7 @@ export const Header: React.FC<{}> = () => {
 						domainObj && (
 							<>
 								<Link
-									to={`${domains[domain].path}`}
+									to={`/${domains[domain].path}`}
 									key={domain}
 								>
 									{domain && (
@@ -101,7 +103,7 @@ export const Header: React.FC<{}> = () => {
 									</Link>
 									<LogoutButton />
 									<Link
-										to={`buddySystem`}
+										to={`/buddySystem`}
 										className="home-button"
 										state={{
 											previousDomain: currentDomain,
