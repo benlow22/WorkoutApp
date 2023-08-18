@@ -30,6 +30,7 @@ router.get("/:workoutUrl", async (req, res) => {
 	// } else {
 	// 	console.error(`No workout found with url ${workoutUrl}`, error);
 	// }
+	return true;
 });
 
 // export const getFullWorkoutAPI = async (

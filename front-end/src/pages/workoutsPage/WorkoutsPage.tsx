@@ -23,13 +23,11 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		if (session) {
 			getAllUsersWorkoutsRequest(session);
 		}
-		console.log("location workouts", location);
 	}, []);
 
 	useEffect(() => {
 		// set workouts from response
 		if (getAllUsersWorkoutsResponse) {
-			console.log(getAllUsersWorkoutsResponse);
 			setWorkouts(getAllUsersWorkoutsResponse);
 		}
 	}, [getAllUsersWorkoutsResponse]);

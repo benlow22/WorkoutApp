@@ -24,22 +24,15 @@ export const LoginPage = () => {
 	const redirectLocation = location.state ? location.state.initialUrl : "/";
 	// if there is no state = straight to login page = redirect to "/"']
 
-	// useEffect(() => {
-	// 	console.log("location login ", location);
-	// }, []);
-
 	useEffect(() => {
 		if (!contextIsLoading && auth !== undefined) {
 			if (location.pathname) {
 				const splitPathName = location.pathname.split("/");
-				console.log("split URL ", splitPathName);
 				const subDomain =
 					splitPathName[1] in domains
 						? splitPathName[1]
 						: "buddySystem";
 				setPreviousDomain(subDomain);
-
-				console.log("prev domain", subDomain);
 			} else {
 				setPreviousDomain(undefined);
 			}
@@ -47,7 +40,6 @@ export const LoginPage = () => {
 			setIsLoading(false);
 		}
 	}, [auth]);
-
 	// if location = null = no location.state = went STRAIGHT to login page
 
 	return !isLoading ? (

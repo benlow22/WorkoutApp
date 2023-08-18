@@ -111,6 +111,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setSession(null);
 					setAuth(false);
 					setUser(null);
+					setIsLoggedIn(false);
+
 					// remove cookies, when signed out
 					const expires = new Date(0).toUTCString();
 					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
