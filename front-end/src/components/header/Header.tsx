@@ -127,7 +127,7 @@ export const Header: React.FC<{}> = () => {
 						</>
 					))}
 			</div>
-			{auth && <Navbar />}
+			<Navbar />
 		</div>
 	);
 };

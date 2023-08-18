@@ -49,7 +49,7 @@
 
 @keyframes fadeBuddySystemToWorkoutBuddyNavLinks {
 	0% {
-		background-color: rgb(69, 150, 86);
+		background-color: rgb(86, 164, 103);
 	}
 	100% {
 		background-color: rgb(44, 129, 239);
@@ -65,4 +65,52 @@
 }
 .buddySystem-header .nav-links {
 	background-color: rgb(86, 164, 103);
+}
+
+@keyframes fadeBuddySystemToAmiiboBuddyNavLinks {
+	0% {
+		background-color: rgb(86, 164, 103);
+	}
+	100% {
+		background-color: rgb(156, 45, 45);
+	}
+}
+
+.buddySystem-header .nav-links a.active {
+	background-color: rgb(107, 185, 124);
+}
+.buddySystem-header .nav-links {
+	background-color: rgb(86, 164, 103);
+}
+
+.buddySystem-to-amiiboBuddy-header .nav-links {
+	background-color: rgb(156, 45, 45);
+	animation: fadeBuddySystemToAmiiboBuddyNavLinks 1s linear;
+}
+
+@keyframes fadeAmiiboBuddyToBuddySystemNavLinks {
+	0% {
+		background-color: rgb(156, 45, 45);
+	}
+	100% {
+		background-color: rgb(86, 164, 103);
+	}
+}
+.amiiboBuddy-to-buddySystem-header .nav-links {
+	background-color: rgb(86, 164, 103);
+	animation: fadeAmiiboBuddyToBuddySystemNavLinks 1s linear;
+}
+
+@keyframes fadeWorkoutBuddytoBuddySystemNavLinks {
+	0% {
+		background-color: rgb(44, 129, 239);
+	}
+	100% {
+		background-color: rgb(86, 164, 103);
+	}
+}
+
+.workoutBuddy-to-buddySystem-header .nav-links {
+	background-color: rgb(86, 164, 103);
+	animation: fadeWorkoutBuddytoBuddySystemNavLinks 1s linear;
 }

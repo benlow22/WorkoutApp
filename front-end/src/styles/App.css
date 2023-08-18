@@ -151,24 +151,25 @@ div.andt-select-selector {
 }
 
 /* Fade Headers */
-.workoutBuddy-to-buddySystem-header {
-	background-color: rgb(69, 150, 86);
-	animation: fadeWorkoutToBuddySystem 1s linear;
+/* TO workoutBuddy */
+.buddySystem-to-workoutBuddy-header {
+	background-color: rgb(0, 110, 255);
+	animation: fadeBuddySystemToWorkouts 1s linear;
 }
-
 .buddySystem-to-workoutBuddy-header .ant-btn-primary {
 	background-color: #1677ff;
 	animation: fadeBuddySystemToWorkoutBuddyLogoutButton 1s linear;
 }
 
+/* To BS */
+.workoutBuddy-to-buddySystem-header {
+	background-color: rgb(69, 150, 86);
+	animation: fadeWorkoutToBuddySystem 1s linear;
+}
+
 .amiiboBuddy-to-buddySystem-header {
 	background-color: rgb(69, 150, 86);
 	animation: fadeAmiiboBuddyToBuddySystem 1s linear;
-}
-
-.buddySystem-to-workoutBuddy-header {
-	background-color: rgb(0, 110, 255);
-	animation: fadeBuddySystemToWorkouts 1s linear;
 }
 
 .buddySystem-to-amiiboBuddy-header {
