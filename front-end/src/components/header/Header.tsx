@@ -53,6 +53,8 @@ export const Header: React.FC<{}> = () => {
 		} else {
 			setHeaderTransition(`${prevDom}-to-${curDom}-header`);
 		}
+		setCurrentDomain(curDom);
+		setPreviousDomain(prevDom);
 		setDomainObj(domains[curDom]);
 	}, [location, auth]);
 
@@ -101,6 +103,9 @@ export const Header: React.FC<{}> = () => {
 									<Link
 										to={`buddySystem`}
 										className="home-button"
+										state={{
+											previousDomain: currentDomain,
+										}}
 									>
 										<HomeOutlined />
 									</Link>
