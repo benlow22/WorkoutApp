@@ -86,6 +86,14 @@ div.andt-select-selector {
 		background-color: #1677ff;
 	}
 }
+@keyframes fadeBuddySystemToAmiiboBuddyLogoutButton {
+	0% {
+		background-color: rgb(69, 150, 86);
+	}
+	100% {
+		background-color: #bc4b4b;
+	}
+}
 
 @keyframes fadeBuddySystemToAmiiboBuddy {
 	0% {
@@ -178,7 +186,12 @@ div.andt-select-selector {
 	animation: fadeBuddySystemToAmiiboBuddy 1s linear;
 }
 
-.workoutBuddy-header {
+.buddySystem-to-amiiboBuddy-header .ant-btn-primary {
+	background-color: #bc4b4b;
+	animation: fadeBuddySystemToAmiiboBuddyLogoutButton 1s linear;
+}
+
+fadeBuddySystemToAmiiboBuddyLogoutButton .workoutBuddy-header {
 	background-color: rgb(0, 110, 255);
 }
 
