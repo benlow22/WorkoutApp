@@ -20,9 +20,9 @@ import { WorkoutPage } from "./pages/workoutPage/workoutPage";
 import { BrowsePage } from "../amiiboBuddy/components/BrowsePage";
 import { AmiiboInventoryForm } from "../amiiboBuddy/components/AmiiboInventoryForm";
 import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/HomePage";
-import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard";
 import { AmiiboBuddyDashboard } from "./pages/AmiiboBuddyDashboard";
 import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
+import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
