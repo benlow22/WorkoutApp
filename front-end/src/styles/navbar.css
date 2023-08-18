@@ -40,10 +40,10 @@
 .amiiboBuddy-header .nav-links {
 	background-color: rgb(156, 45, 45);
 }
-.workouts-header .nav-links a.active {
+.workoutBuddy-header .nav-links a.active {
 	background-color: rgb(75, 148, 245);
 }
-.workouts-header .nav-links {
+.workoutBuddy-header .nav-links {
 	background-color: rgb(44, 129, 239);
 }
 

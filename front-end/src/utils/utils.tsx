@@ -139,7 +139,7 @@ export const domainFromUrl = () => {
 };
 
 export const domains: TDomains = {
-	workouts: {
+	workoutBuddy: {
 		name: "Workout Buddy",
 		path: "/workoutBuddy",
 		class: "workout-buddy",

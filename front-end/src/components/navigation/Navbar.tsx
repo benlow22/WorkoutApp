@@ -33,8 +33,8 @@ export const Navbar = () => {
 								className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""  } */}
 								<NavLink
 									to={
-										domain.name === "buddySystem"
-											? `/${page.path}`
+										domain.name === "Buddy System"
+											? `${page.path}`
 											: `${domain.path}${page.path} `
 									}
 									key={page.name}
