@@ -21,3 +21,12 @@
 	padding: 6px 24px;
 	font-size: 17px;
 }
+
+.nav-links a.active {
+	background-color: rgb(227, 227, 227);
+	color: white;
+	text-decoration: none;
+	border-radius: 18px;
+	padding: 6px 24px;
+	font-size: 17px;
+}

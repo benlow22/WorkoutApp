@@ -34,7 +34,13 @@ export const Navbar = () => {
 								<NavLink
 									to={`${window.location.origin}${domain.path}${page.path}`}
 									key={page.name}
-									className="nav-link"
+									className={({ isActive, isPending }) =>
+										isPending
+											? "pending"
+											: isActive
+											? "active"
+											: "nav-link"
+									}
 								>
 									{page.name}
 								</NavLink>
