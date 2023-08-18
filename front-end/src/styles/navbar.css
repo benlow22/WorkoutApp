@@ -6,9 +6,10 @@
 	display: flex;
 	flex-direction: row;
 	width: 100%;
-	height: 40px;
+	height: 100%;
 	flex-wrap: nowrap;
 	margin: 0;
+	padding: 5px;
 	list-style: none;
 	justify-content: center;
 	align-items: center;
@@ -20,13 +21,35 @@
 	border-radius: 18px;
 	padding: 6px 24px;
 	font-size: 17px;
+	height: 100%;
 }
 
 .nav-links a.active {
-	background-color: rgb(227, 227, 227);
 	color: white;
 	text-decoration: none;
-	border-radius: 18px;
-	padding: 6px 24px;
+	border-radius: 14px;
+	padding: 5px 24px;
 	font-size: 17px;
+	margin: 5px;
+}
+
+.amiiboBuddy-header .nav-links a.active {
+	background-color: rgb(182, 78, 78);
+}
+
+.amiiboBuddy-header .nav-links {
+	background-color: rgb(156, 45, 45);
+}
+.workouts-header .nav-links a.active {
+	background-color: rgb(75, 148, 245);
+}
+.workouts-header .nav-links {
+	background-color: rgb(44, 129, 239);
+}
+
+.buddySystem-header .nav-links a.active {
+	background-color: rgb(69, 150, 86);
+}
+.buddySystem-header .nav-links {
+	background-color: rgb(156, 45, 45);
 }
