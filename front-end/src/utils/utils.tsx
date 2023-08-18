@@ -141,7 +141,7 @@ export const domainFromUrl = () => {
 export const domains: TDomains = {
 	workouts: {
 		name: "Workout Buddy",
-		path: "/workouts",
+		path: "/workoutBuddy",
 		class: "workout-buddy",
 		pages: [
 			{ name: "workouts", path: "/workouts" },

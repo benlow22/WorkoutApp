@@ -135,6 +135,12 @@ div.andt-select-selector {
 .amiiboBuddy-header button.ant-btn-primary:hover {
 	background-color: #c76565 !important;
 }
+.buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+}
+.buddySystem-header button.ant-btn-primary:hover {
+	background-color: rgb(107, 185, 124) !important;
+}
 
 /* Fade Headers */
 .workouts-to-buddySystem-header {
