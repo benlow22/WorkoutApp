@@ -80,7 +80,7 @@ div.andt-select-selector {
 }
 @keyframes fadeBuddySystemToWorkoutBuddyLogoutButton {
 	0% {
-		background-color: rgb(69, 150, 86);
+		background-color: rgb(81, 166, 99);
 	}
 	100% {
 		background-color: #1677ff;
@@ -88,13 +88,30 @@ div.andt-select-selector {
 }
 @keyframes fadeBuddySystemToAmiiboBuddyLogoutButton {
 	0% {
-		background-color: rgb(69, 150, 86);
+		background-color: rgb(81, 166, 99);
 	}
 	100% {
 		background-color: #bc4b4b;
 	}
 }
 
+@keyframes fadeAmiiboBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: #bc4b4b;
+	}
+	100% {
+		background-color: rgb(81, 166, 99);
+	}
+}
+
+@keyframes fadeWorkoutBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: #1677ff;
+	}
+	100% {
+		background-color: rgb(81, 166, 99);
+	}
+}
 @keyframes fadeBuddySystemToAmiiboBuddy {
 	0% {
 		background-color: rgb(69, 150, 86);
@@ -148,13 +165,16 @@ div.andt-select-selector {
 .amiiboBuddy-header .ant-btn-primary {
 	background-color: #bc4b4b;
 }
-.amiiboBuddy-header button.ant-btn-primary:hover {
+.amiiboBuddy-header button.ant-btn-primary:hover,
+.buddySystem-to-amiiboBuddy-header button.ant-btn-primary:hover {
 	background-color: #c76565 !important;
 }
 .buddySystem-header .ant-btn-primary {
 	background-color: rgb(81, 166, 99);
 }
-.buddySystem-header button.ant-btn-primary:hover {
+.buddySystem-header button.ant-btn-primary:hover,
+.workoutBuddy-to-buddySystem-header button.ant-btn-primary:hover,
+.amiiboBuddy-to-buddySystem-header button.ant-btn-primary:hover {
 	background-color: rgb(107, 185, 124) !important;
 }
 
@@ -190,9 +210,18 @@ div.andt-select-selector {
 	background-color: #bc4b4b;
 	animation: fadeBuddySystemToAmiiboBuddyLogoutButton 1s linear;
 }
-
-fadeBuddySystemToAmiiboBuddyLogoutButton .workoutBuddy-header {
+.workoutBuddy-header {
 	background-color: rgb(0, 110, 255);
+}
+
+.amiiboBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+	animation: fadeAmiiboBuddytoBuddySystemLogoutButton 1s linear;
+}
+
+.workoutBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+	animation: fadeWorkoutBuddytoBuddySystemLogoutButton 1s linear;
 }
 
 .buddySystem-header {
