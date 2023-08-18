@@ -143,16 +143,34 @@ export const domains: TDomains = {
 		name: "Workout Buddy",
 		path: "/workouts",
 		class: "workout-buddy",
+		pages: [
+			{ name: "workouts", path: "/workouts" },
+			{ name: "exercises", path: "/exercises" },
+			{ name: "explore", path: "/explore" },
+			{ name: "tips", path: "/tips" },
+		],
 	},
 	amiiboBuddy: {
 		name: "Amiibo Buddy",
 		path: "/amiiboBuddy",
 		class: "amiibo-buddy",
+		pages: [
+			{ name: "Browse", path: "/browse" },
+			{ name: "My Collection", path: "/myCollection" },
+			{ name: "Wishlist", path: "/wishlist" },
+			{ name: "Returns", path: "/returns" },
+			{ name: "Add Amiibo", path: "/addAmiibo" },
+		],
 	},
 	buddySystem: {
 		name: "Buddy System",
 		path: "/buddySystem",
 		class: "buddy-system",
+		pages: [
+			{ name: "Workout Buddy", path: "/workoutBuddy" },
+			{ name: "AmiiboBuddy", path: "/amiiboBuddy" },
+			{ name: "PokeBuddy", path: "/pokeBuddy" },
+		],
 	},
 };
 // create new array from old Array

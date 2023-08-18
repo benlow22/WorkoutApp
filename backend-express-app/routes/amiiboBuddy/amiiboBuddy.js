@@ -11,5 +11,6 @@ router.post("/upload", async (req, res) => {
 	// 	res.send(data).status(204);
 	// 	console.log("updated workout exercises", data);
 	// }
+	return true;
 });
 module.exports = router;

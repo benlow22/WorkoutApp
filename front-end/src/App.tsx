@@ -1,4 +1,5 @@
 import "./styles/App.css";
+
 import {
 	Route,
 	RouterProvider,
@@ -16,8 +17,9 @@ import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
 import Exercise from "./components/Exercise";
 import { WorkoutPage } from "./pages/workoutPage/workoutPage";
-import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/AmiiboBuddyHomePage";
+import { BrowsePage } from "../amiiboBuddy/components/BrowsePage";
 import { AmiiboInventoryForm } from "../amiiboBuddy/components/AmiiboInventoryForm";
+import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/HomePage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -41,8 +43,9 @@ const router = createBrowserRouter(
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
 				<Route path="amiiboBuddy" element={<AmiiboBuddyHomePage />} />
+				<Route path="amiiboBuddy/browse" element={<BrowsePage />} />
 				<Route
-					path="amiiboBuddy/add"
+					path="amiiboBuddy/addAmiibo"
 					element={<AmiiboInventoryForm />}
 				/>
 			</Route>

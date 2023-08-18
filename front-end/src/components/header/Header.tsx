@@ -8,6 +8,7 @@ import { domainFromUrl } from "../../utils/utils";
 import { TDomain, TDomains } from "../../api/types";
 import { domains } from "../../utils/utils";
 import { SpiningLoadingIcon } from "../loading/LoadingIcon";
+import { Navbar } from "../navigation/Navbar";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =
@@ -74,7 +75,7 @@ export const Header: React.FC<{}> = () => {
 
 	return (
 		<div className={`header ${headerTransition}`} key={domain}>
-			<div className="content white-font">
+			<div className="site-banner white-font">
 				{!isLoading &&
 					(auth ? (
 						domainObj && (
@@ -112,6 +113,7 @@ export const Header: React.FC<{}> = () => {
 						</>
 					))}
 			</div>
+			{auth && <Navbar />}
 		</div>
 	);
 };
