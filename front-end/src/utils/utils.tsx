@@ -155,11 +155,11 @@ export const domains: TDomains = {
 		path: "/amiiboBuddy",
 		class: "amiibo-buddy",
 		pages: [
-			{ name: "browse", path: "/browse" },
-			{ name: "my collection", path: "/myCollection" },
-			{ name: "wishlist", path: "/wishlist" },
-			{ name: "returns", path: "/returns" },
-			{ name: "add amiibo", path: "/addAmiibo" },
+			{ name: "Browse", path: "/browse" },
+			{ name: "My Collection", path: "/myCollection" },
+			{ name: "Wishlist", path: "/wishlist" },
+			{ name: "Returns", path: "/returns" },
+			{ name: "Add Amiibo", path: "/addAmiibo" },
 		],
 	},
 	buddySystem: {

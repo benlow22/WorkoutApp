@@ -95,7 +95,7 @@ export type TDomain = {
 	name: string;
 	path: string;
 	class: string;
-	pages: string[];
+	pages: TPage[];
 };
 
 export type TPage = {

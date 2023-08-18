@@ -43,6 +43,7 @@
 	display: flex;
 	min-width: 600px;
 	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 
 .amiibo-inventory-form-price {

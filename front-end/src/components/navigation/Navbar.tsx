@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { domains } from "../../../src/utils/utils";
-import { TPage } from "../../../src/api/types";
+import { domains } from "../../utils/utils";
+import { TDomain, TPage } from "../../api/types";
+import "../../styles/navbar.css";
 
 export const Navbar = () => {
 	const [pages, setPages] = useState<TPage[]>([]);
 	const location = useLocation();
+	const [domain, setDomain] = useState<TDomain>();
 
 	useEffect(() => {
 		const splitPathName = location.pathname.split("/");
@@ -17,28 +19,28 @@ export const Navbar = () => {
 			"list of pages to render in nav bar",
 			domains[currentDomain].pages
 		);
+		setDomain(domains[currentDomain]);
 	}, [location]);
 
 	return (
-		<nav>
+		<nav className="navbar">
 			<ul className="nav-links">
-				{pages
-					? pages.map((page) => (
+				{domain
+					? domain.pages.map((page) => (
 							<li key={page.name}>
 								{/* These links should have an activeClassName prop 
 								now with react v6 active class name is within className =   
 								className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""  } */}
 								<NavLink
-									to={`/${page.path}`}
+									to={`${window.location.origin}${domain.path}${page.path}`}
 									key={page.name}
 									className="nav-link"
 								>
-									{page.name}s
-								</NavLink>{" "}
+									{page.name}
+								</NavLink>
 							</li>
 					  ))
 					: "Loading..."}
-				``
 			</ul>
 		</nav>
 	);
