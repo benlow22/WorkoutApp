@@ -22,7 +22,7 @@ import { AmiiboInventoryForm } from "../amiiboBuddy/components/AmiiboInventoryFo
 import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/HomePage";
 import { AmiiboBuddyDashboard } from "./pages/AmiiboBuddyDashboard";
 import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
-import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard";
+import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard/WorkoutBuddyDashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
