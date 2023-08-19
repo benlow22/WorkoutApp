@@ -3,6 +3,9 @@
 	text-align: center;
 }
 
+body {
+	overflow-y: scroll;
+}
 /* .main {
 	margin: 30px;
 } */
@@ -75,7 +78,40 @@ div.andt-select-selector {
 		background-color: rgb(0, 110, 255);
 	}
 }
+@keyframes fadeBuddySystemToWorkoutBuddyLogoutButton {
+	0% {
+		background-color: rgb(81, 166, 99);
+	}
+	100% {
+		background-color: #1677ff;
+	}
+}
+@keyframes fadeBuddySystemToAmiiboBuddyLogoutButton {
+	0% {
+		background-color: rgb(81, 166, 99);
+	}
+	100% {
+		background-color: #bc4b4b;
+	}
+}
 
+@keyframes fadeAmiiboBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: #bc4b4b;
+	}
+	100% {
+		background-color: rgb(81, 166, 99);
+	}
+}
+
+@keyframes fadeWorkoutBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: #1677ff;
+	}
+	100% {
+		background-color: rgb(81, 166, 99);
+	}
+}
 @keyframes fadeBuddySystemToAmiiboBuddy {
 	0% {
 		background-color: rgb(69, 150, 86);
@@ -122,19 +158,39 @@ div.andt-select-selector {
 	animation: fadeInAmiibo 1s linear;
 }*/
 
-.amiiboBuddy-header .logout-button {
+/* .amiiboBuddy-header .logout-button {
 	/* background-color: #bc4b4b; */
-}
+/* }  */
 
 .amiiboBuddy-header .ant-btn-primary {
 	background-color: #bc4b4b;
 }
-.amiiboBuddy-header button.ant-btn-primary:hover {
+.amiiboBuddy-header button.ant-btn-primary:hover,
+.buddySystem-to-amiiboBuddy-header button.ant-btn-primary:hover {
 	background-color: #c76565 !important;
+}
+.buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+}
+.buddySystem-header button.ant-btn-primary:hover,
+.workoutBuddy-to-buddySystem-header button.ant-btn-primary:hover,
+.amiiboBuddy-to-buddySystem-header button.ant-btn-primary:hover {
+	background-color: rgb(107, 185, 124) !important;
 }
 
 /* Fade Headers */
-.workouts-to-buddySystem-header {
+/* TO workoutBuddy */
+.buddySystem-to-workoutBuddy-header {
+	background-color: rgb(0, 110, 255);
+	animation: fadeBuddySystemToWorkouts 1s linear;
+}
+.buddySystem-to-workoutBuddy-header .ant-btn-primary {
+	background-color: #1677ff;
+	animation: fadeBuddySystemToWorkoutBuddyLogoutButton 1s linear;
+}
+
+/* To BS */
+.workoutBuddy-to-buddySystem-header {
 	background-color: rgb(69, 150, 86);
 	animation: fadeWorkoutToBuddySystem 1s linear;
 }
@@ -144,19 +200,28 @@ div.andt-select-selector {
 	animation: fadeAmiiboBuddyToBuddySystem 1s linear;
 }
 
-.buddySystem-to-workouts-header {
-	background-color: rgb(0, 110, 255);
-	animation: fadeBuddySystemToWorkouts 1s linear;
-}
-
 .buddySystem-to-amiiboBuddy-header {
 	background-color: rgb(148, 22, 22);
 
 	animation: fadeBuddySystemToAmiiboBuddy 1s linear;
 }
 
-.workouts-header {
+.buddySystem-to-amiiboBuddy-header .ant-btn-primary {
+	background-color: #bc4b4b;
+	animation: fadeBuddySystemToAmiiboBuddyLogoutButton 1s linear;
+}
+.workoutBuddy-header {
 	background-color: rgb(0, 110, 255);
+}
+
+.amiiboBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+	animation: fadeAmiiboBuddytoBuddySystemLogoutButton 1s linear;
+}
+
+.workoutBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: rgb(81, 166, 99);
+	animation: fadeWorkoutBuddytoBuddySystemLogoutButton 1s linear;
 }
 
 .buddySystem-header {
@@ -224,19 +289,17 @@ h2 {
 
 .logout-button {
 	margin-left: 20px;
+	margin-right: 20px;
 }
 .add-new-workout-button {
 	background-color: rgb(0, 89, 205);
 }
 .header {
 	width: 100%;
-	padding-bottom: 10px;
 }
 
 .site-banner {
-	padding-top: 10px;
-	padding-left: 75px;
-	padding-right: 75px;
+	padding: 10px 75px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -602,11 +665,19 @@ div.ant-space-item{
 	justify-content: space-between;
 }
 
-@media only screen and (max-width: 420px) {
-	.header {
-		padding: 15px;
+@media only screen and (min-width: 40px) {
+	body {
+		min-width: 400px;
 	}
+}
 
+@media only screen and (max-width: 650px) {
+	.site-banner {
+		padding: 10px 20px;
+	}
+}
+
+@media only screen and (max-width: 500px) {
 	h1 {
 		font-size: 20px;
 	}
@@ -627,5 +698,11 @@ div.ant-space-item{
 	}
 	.workouts-page {
 		width: 100%;
+	}
+	.logout-button {
+		margin: 8px;
+	}
+	.site-banner {
+		padding: 10px 15px;
 	}
 }

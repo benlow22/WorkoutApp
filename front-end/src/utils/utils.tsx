@@ -139,37 +139,37 @@ export const domainFromUrl = () => {
 };
 
 export const domains: TDomains = {
-	workouts: {
+	workoutBuddy: {
 		name: "Workout Buddy",
-		path: "/workouts",
+		path: "workoutBuddy",
 		class: "workout-buddy",
 		pages: [
-			{ name: "workouts", path: "/workouts" },
-			{ name: "exercises", path: "/exercises" },
-			{ name: "explore", path: "/explore" },
-			{ name: "tips", path: "/tips" },
+			{ name: "workouts", path: "workouts" },
+			{ name: "exercises", path: "exercises" },
+			{ name: "explore", path: "explore" },
+			{ name: "tips", path: "tips" },
 		],
 	},
 	amiiboBuddy: {
 		name: "Amiibo Buddy",
-		path: "/amiiboBuddy",
+		path: "amiiboBuddy",
 		class: "amiibo-buddy",
 		pages: [
-			{ name: "Browse", path: "/browse" },
-			{ name: "My Collection", path: "/myCollection" },
-			{ name: "Wishlist", path: "/wishlist" },
-			{ name: "Returns", path: "/returns" },
-			{ name: "Add Amiibo", path: "/addAmiibo" },
+			{ name: "Browse", path: "browse" },
+			{ name: "My Collection", path: "myCollection" },
+			{ name: "Wishlist", path: "wishlist" },
+			{ name: "Returns", path: "returns" },
+			{ name: "Add Amiibo", path: "addAmiibo" },
 		],
 	},
 	buddySystem: {
 		name: "Buddy System",
-		path: "/buddySystem",
+		path: "buddySystem",
 		class: "buddy-system",
 		pages: [
-			{ name: "Workout Buddy", path: "/workoutBuddy" },
-			{ name: "AmiiboBuddy", path: "/amiiboBuddy" },
-			{ name: "PokeBuddy", path: "/pokeBuddy" },
+			{ name: "Workout Buddy", path: "workoutBuddy" },
+			{ name: "AmiiboBuddy", path: "amiiboBuddy" },
+			{ name: "PokeBuddy", path: "pokeBuddy" },
 		],
 	},
 };

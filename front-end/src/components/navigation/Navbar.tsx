@@ -15,10 +15,6 @@ export const Navbar = () => {
 			splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
 		const currentDomain = curDomain;
 		setPages(domains[currentDomain].pages);
-		console.log(
-			"list of pages to render in nav bar",
-			domains[currentDomain].pages
-		);
 		setDomain(domains[currentDomain]);
 	}, [location]);
 
@@ -32,9 +28,20 @@ export const Navbar = () => {
 								now with react v6 active class name is within className =   
 								className={({ isActive, isPending }) => isPending ? "pending" : isActive ? "active" : ""  } */}
 								<NavLink
-									to={`${window.location.origin}${domain.path}${page.path}`}
+									to={
+										domain.name === "Buddy System"
+											? `/${page.path}`
+											: `/${domain.path}/${page.path} `
+									}
 									key={page.name}
-									className="nav-link"
+									className={({ isActive, isPending }) =>
+										isPending
+											? "pending"
+											: isActive
+											? "active"
+											: "nav-link"
+									}
+									state={{ previousDomain: domain.path }}
 								>
 									{page.name}
 								</NavLink>

@@ -20,6 +20,9 @@ import { WorkoutPage } from "./pages/workoutPage/workoutPage";
 import { BrowsePage } from "../amiiboBuddy/components/BrowsePage";
 import { AmiiboInventoryForm } from "../amiiboBuddy/components/AmiiboInventoryForm";
 import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/HomePage";
+import { AmiiboBuddyDashboard } from "./pages/AmiiboBuddyDashboard";
+import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
+import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard/WorkoutBuddyDashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -28,8 +31,19 @@ const router = createBrowserRouter(
 			<Route path="login" element={<LoginPage />} />
 			<Route element={<AuthRoute />}>
 				{/* only authenticated users can use these routes  */}
-				<Route path="workouts" element={<WorkoutsPage />} />
-				<Route path="workouts/:workoutUrl" element={<WorkoutPage />} />
+				<Route path="buddySystem" element={<BuddySystemDashboard />} />
+				<Route
+					path="workoutBuddy"
+					element={<WorkoutBuddyDashboard />}
+				/>
+				<Route
+					path="workoutBuddy/workouts"
+					element={<WorkoutsPage />}
+				/>
+				<Route
+					path="workoutBuddy/workouts/:workoutUrl"
+					element={<WorkoutPage />}
+				/>
 				{/* <Route
 					path=":edit-workout/:workoutUrl"
 					element={<EditWorkoutPage />}
@@ -42,7 +56,7 @@ const router = createBrowserRouter(
 				<Route path="exercises/:exerciseId" element={<Exercise />} />
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
-				<Route path="amiiboBuddy" element={<AmiiboBuddyHomePage />} />
+				<Route path="amiiboBuddy" element={<AmiiboBuddyDashboard />} />
 				<Route path="amiiboBuddy/browse" element={<BrowsePage />} />
 				<Route
 					path="amiiboBuddy/addAmiibo"

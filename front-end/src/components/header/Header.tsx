@@ -9,6 +9,7 @@ import { TDomain, TDomains } from "../../api/types";
 import { domains } from "../../utils/utils";
 import { SpiningLoadingIcon } from "../loading/LoadingIcon";
 import { Navbar } from "../navigation/Navbar";
+import { HomeOutlined } from "@ant-design/icons";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =
@@ -49,9 +50,13 @@ export const Header: React.FC<{}> = () => {
 		}
 		if (prevDom === curDom || !prevDom) {
 			setHeaderTransition(`${curDom}-header`);
+			console.log(`${curDom}-header`);
 		} else {
 			setHeaderTransition(`${prevDom}-to-${curDom}-header`);
+			console.log(`${prevDom}-to-${curDom}-header`);
 		}
+		setCurrentDomain(curDom);
+		setPreviousDomain(prevDom);
 		setDomainObj(domains[curDom]);
 	}, [location, auth]);
 
@@ -81,7 +86,7 @@ export const Header: React.FC<{}> = () => {
 						domainObj && (
 							<>
 								<Link
-									to={`${domains[domain].path}`}
+									to={`/${domains[domain].path}`}
 									key={domain}
 								>
 									{domain && (
@@ -97,6 +102,15 @@ export const Header: React.FC<{}> = () => {
 											: displayUsername}
 									</Link>
 									<LogoutButton />
+									<Link
+										to={`/buddySystem`}
+										className="home-button"
+										state={{
+											previousDomain: currentDomain,
+										}}
+									>
+										<HomeOutlined />
+									</Link>
 								</div>
 							</>
 						)
@@ -113,7 +127,7 @@ export const Header: React.FC<{}> = () => {
 						</>
 					))}
 			</div>
-			{auth && <Navbar />}
+			<Navbar />
 		</div>
 	);
 };
