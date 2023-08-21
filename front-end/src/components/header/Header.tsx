@@ -10,6 +10,7 @@ import { domains } from "../../utils/utils";
 import { SpiningLoadingIcon } from "../loading/LoadingIcon";
 import { Navbar } from "../navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
+import "../../styles/header.css";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =

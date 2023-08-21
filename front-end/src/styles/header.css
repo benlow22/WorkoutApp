@@ -1,0 +1,533 @@
+/* for each domain = replaice DOMAIN with new domain name 
+CREATE VARIABLES 
+body {
+    --DOMAIN-header: ____
+    --DOMAIN-primary-button:____
+    --DOMAIN-primary-button-hover:____
+    --DOMAIN-nav-links: ____
+    --DOMAIN-nav-links-active: ____
+}
+
+
+use: (lowercase = lowercase start of domain
+    var(--domain-header)
+    var(--domain-primary-button)
+    var(--domain-primary-button-hover)
+    var(--domain-nav-links)
+    var(--domain-nav-links-active)
+
+1. background color 
+        .domain-header { background-color: var(--domain-header) }
+
+2. logout button color
+        .domain-header .ant-btn-primary { background-color: var(--domain-primary-button) }
+
+3. logout button hover color 
+        .domain-header button.ant-btn-primary:hover,
+        .buddySystem-to-domain-header button.ant-btn-primary:hover {
+            background-color: var(--domain-primary-button-hover) !important; }
+
+4. add new domain class to domain-to-buddysystem button hover  THEN DELETE THIS SECTION  
+        .buddySystem-header button.ant-btn-primary:hover,
+        .workoutBuddy-to-buddySystem-header button.ant-btn-primary:hover,
+        .domain-to-buddySystem-header button.ant-btn-primary:hover {
+	        background-color: var(--buddySystem-primary-button-hover) !important;
+        }  
+     
+5. create nav-links and nav-links active background
+        .domain-header .nav-links a.active {
+            background-color: var(--domain-nav-links-active)
+        }
+
+        .domain-header .nav-links {
+            background-color: var(--domain-nav-links)
+        }
+
+6. create animation for fade to and from domain for header, nav-links and button       
+    a) header
+        @keyframes fadeDOMAINToBuddySystemHeader {
+            0% {
+                background-color: var(--domain-header)
+            }
+            100% {
+                background-color: var(--buddySystem-header)
+            }
+        }
+
+        @keyframes fadeBuddySystemToDOMAINHeader {
+            0% {
+                background-color: var(--buddySystem-header)
+            }
+            100% {
+                background-color: var(--domain-header)
+            }
+        }
+    b) nav-links
+        @keyframes fadeBuddySystemToDOMAINNavLinks {
+            0% {
+            background-color: var(--buddySystem-nav-links)
+            }
+            100% {
+            background-color: var(--domain-nav-links)
+            }
+        }
+        @keyframes fadeDOMAINToBuddySystemNavLinks {
+            0% {
+            background-color: var(--domain-nav-links)
+            }
+            100% {
+            background-color: var(--buddySystem-nav-links)
+            }
+        }
+    c) logout button 
+        @keyframes fadeBuddySystemToDOMAINLogoutButton {
+            0% {
+                background-color: var(--buddySystem-primary-button);
+            }
+            100% {
+                background-color: var(--domain-primary-button)
+            }
+        }
+
+        @keyframes fadeDOMAINtoBuddySystemLogoutButton {
+            0% {
+                background-color: var(--domain-primary-button)
+            }
+            100% {
+                background-color: var(--buddySystem-primary-button);
+            }
+        }
+
+
+7. add Animations to and from 
+    a) header 
+            .domain-to-buddySystem-header {
+                background-color: var(--buddySystem-header);
+                animation: fadeDOMAINToBuddySystemHeader 1s linear;
+            }
+            .buddySystem-to-domain-header {
+                background-color: var(--domain-header);
+                animation: fadeBuddySystemToDOMAINHeader 1s linear;
+            }
+    
+    b) .nav-links
+        .buddySystem-to-domain-header .nav-links {
+            background-color: var(--domain-nav-links);
+            animation: fadeBuddySystemToDOMAINNavLinks 1s linear;
+        }
+        .domain-to-buddySystem-header .nav-links {
+            background-color: var(--buddySystem-nav-link);
+            animation: fadeDOMAINToBuddySystemNavLinks 1s linear;
+        }
+
+    c) primary buttons
+        .buddySystem-to-domain-header .ant-btn-primary {
+            background-color: var(--domain-primary-button);
+            animation: fadeBuddySystemToDOMAINLogoutButton 1s linear;
+        }
+
+        .domain-to-buddySystem-header .ant-btn-primary {
+            background-color: var(--buddySystem-primary-button);
+            animation: fadeDOMAINtoBuddySystemLogoutButton 1s linear;
+        }
+ 
+ 
+8. copy the lower case version, serach "domain" and past to replave for each lower case then hit the down arrow to find next variable to replace. do the same with uppercase for DOMAIN 
+ 
+        */
+
+body {
+	--buddySystem-header: rgb(69, 150, 86);
+	--buddySystem-primary-button: rgb(81, 166, 99);
+	--buddySystem-primary-button-hover: rgb(107, 185, 124);
+	--buddySystem-nav-links: rgb(86, 164, 103);
+	--buddySystem-nav-links-active: rgb(107, 185, 124);
+
+	--workoutBuddy-header: rgb(0, 110, 255);
+	--workoutBuddy-primary-button: #1677ff;
+	--workoutBuddy-primary-button-hover: #4096ff;
+	--workoutBuddy-nav-links: rgb(44, 129, 239);
+	--workoutBuddy-nav-links-active: rgb(75, 148, 245);
+
+	--amiiboBuddy-header: rgb(148, 22, 22);
+	--amiiboBuddy-primary-button: #bc4b4b;
+	--amiiboBuddy-primary-button-hover: #c76565;
+	--amiiboBuddy-nav-links: rgb(156, 45, 45);
+	--amiiboBuddy-nav-links-active: rgb(182, 78, 78);
+
+	--lorcanaBuddy-header: rgb(34, 40, 155);
+	--lorcanaBuddy-primary-button: rgb(57, 63, 187);
+	--lorcanaBuddy-primary-button-hover: rgb(80, 86, 196);
+	--lorcanaBuddy-nav-links: rgb(49, 54, 141);
+	--lorcanaBuddy-nav-links-active: rgb(82, 86, 152);
+}
+
+/* DOMAINS */
+/* BuddySystem */
+/* 1. background color  */
+.buddySystem-header {
+	background-color: var(--buddySystem-header);
+}
+
+/* 2. logout button color */
+.buddySystem-header .ant-btn-primary {
+	background-color: var(--buddySystem-primary-button);
+}
+
+/* 3. logout button hover color  */
+.buddySystem-header button.ant-btn-primary:hover,
+.buddySystem-to-buddySystem-header button.ant-btn-primary:hover {
+	background-color: var(--buddySystem-primary-button-hover) !important;
+}
+
+/* 4. add new domain class to domain-to-buddysystem button hover  THEN DELETE THIS SECTION   */
+.buddySystem-header button.ant-btn-primary:hover,
+.workoutBuddy-to-buddySystem-header button.ant-btn-primary:hover,
+.amiiboBuddy-to-buddySystem-header button.ant-btn-primary:hover,
+.lorcanaBuddy-to-buddySystem-header button.ant-btn-primary:hover {
+	background-color: var(--buddySystem-primary-button-hover) !important;
+}
+
+/* 5. create nav-links and nav-links active background */
+.buddySystem-header .nav-links a.active {
+	background-color: var(--buddySystem-nav-links-active);
+}
+.buddySystem-header .nav-links {
+	background-color: var(--buddySystem-nav-links);
+}
+
+/* WorkoutBuddy */
+/* 1. background color  */
+.workoutBuddy-header {
+	background-color: var(--workoutBuddy-header);
+}
+
+/* 2. logout button color */
+.workoutBuddy-header .ant-btn-primary {
+	background-color: var(--workoutBuddy-primary-button);
+}
+
+/* 3. logout button hover color  */
+.workoutBuddy-header button.ant-btn-primary:hover,
+.buddySystem-to-workoutBuddy-header button.ant-btn-primary:hover {
+	background-color: var(--workoutBuddy-primary-button-hover) !important;
+}
+
+/* 5. create nav-links and nav-links active background */
+.workoutBuddy-header .nav-links a.active {
+	background-color: var(--workoutBuddy-nav-links-active);
+}
+.workoutBuddy-header .nav-links {
+	background-color: var(--workoutBuddy-nav-links);
+}
+/* 
+6. create animation for fade to and from workoutBuddy for header, nav-links and button       
+    a) header */
+@keyframes fadeWorkoutBuddyToBuddySystemHeader {
+	0% {
+		background-color: var(--workoutBuddy-header);
+	}
+	100% {
+		background-color: var(--buddySystem-header);
+	}
+}
+
+@keyframes fadeBuddySystemToWorkoutBuddyHeader {
+	0% {
+		background-color: var(--buddySystem-header);
+	}
+	100% {
+		background-color: var(--workoutBuddy-header);
+	}
+}
+/* b) nav-links */
+@keyframes fadeBuddySystemToWorkoutBuddyNavLinks {
+	0% {
+		background-color: var(--buddySystem-nav-links);
+	}
+	100% {
+		background-color: var(--workoutBuddy-nav-links);
+	}
+}
+@keyframes fadeWorkoutBuddyToBuddySystemNavLinks {
+	0% {
+		background-color: var(--workoutBuddy-nav-links);
+	}
+	100% {
+		background-color: var(--buddySystem-nav-links);
+	}
+}
+/* c) logout button  */
+@keyframes fadeBuddySystemToWorkoutBuddyLogoutButton {
+	0% {
+		background-color: var(--buddySystem-primary-button);
+	}
+	100% {
+		background-color: var(--workoutBuddy-primary-button);
+	}
+}
+
+@keyframes fadeWorkoutBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: var(--workoutBuddy-primary-button);
+	}
+	100% {
+		background-color: var(--buddySystem-primary-button);
+	}
+}
+
+/* 7. add Animations to and from 
+    a) header  */
+.workoutBuddy-to-buddySystem-header {
+	background-color: var(--buddySystem-header);
+	animation: fadeWorkoutBuddyToBuddySystemHeader 1s linear;
+}
+.buddySystem-to-workoutBuddy-header {
+	background-color: var(--workoutBuddy-header);
+	animation: fadeBuddySystemToWorkoutBuddyHeader 1s linear;
+}
+
+/* b) .nav-links */
+.buddySystem-to-workoutBuddy-header .nav-links {
+	background-color: var(--workoutBuddy-nav-links);
+	animation: fadeBuddySystemToWorkoutBuddyNavLinks 1s linear;
+}
+.workoutBuddy-to-buddySystem-header .nav-links {
+	background-color: var(--buddySystem-nav-links);
+	animation: fadeWorkoutBuddyToBuddySystemNavLinks 1s linear;
+}
+
+/* c) primary buttons */
+.buddySystem-to-workoutBuddy-header .ant-btn-primary {
+	background-color: var(--workoutBuddy-primary-button);
+	animation: fadeBuddySystemToWorkoutBuddyLogoutButton 1s linear;
+}
+.workoutBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: var(--buddySystem-primary-button);
+	animation: fadeWorkoutBuddytoBuddySystemLogoutButton 1s linear;
+}
+
+/* AmiiboBuddy */
+/* 1. background color  */
+.amiiboBuddy-header {
+	background-color: var(--amiiboBuddy-header);
+}
+
+/* 2. logout button color */
+.amiiboBuddy-header .ant-btn-primary {
+	background-color: var(--amiiboBuddy-primary-button);
+}
+
+/* 3. logout button hover color  */
+.amiiboBuddy-header button.ant-btn-primary:hover,
+.buddySystem-to-amiiboBuddy-header button.ant-btn-primary:hover {
+	background-color: var(--amiiboBuddy-primary-button-hover) !important;
+}
+
+/* 5. create nav-links and nav-links active background */
+.amiiboBuddy-header .nav-links a.active {
+	background-color: var(--amiiboBuddy-nav-links-active);
+}
+
+.amiiboBuddy-header .nav-links {
+	background-color: var(--amiiboBuddy-nav-links);
+}
+/* 
+6. create animation for fade to and from domain for header, nav-links and button       
+    a) header */
+@keyframes fadeAmiiboBuddyToBuddySystemHeader {
+	0% {
+		background-color: var(--amiiboBuddy-header);
+	}
+	100% {
+		background-color: var(--buddySystem-header);
+	}
+}
+
+@keyframes fadeBuddySystemToAmiiboBuddyHeader {
+	0% {
+		background-color: var(--buddySystem-header);
+	}
+	100% {
+		background-color: var(--amiiboBuddy-header);
+	}
+}
+/* b) nav-links */
+@keyframes fadeBuddySystemToAmiiboBuddyNavLinks {
+	0% {
+		background-color: var(--buddySystem-nav-links);
+	}
+	100% {
+		background-color: var(--amiiboBuddy-nav-links);
+	}
+}
+@keyframes fadeAmiiboBuddyToBuddySystemNavLinks {
+	0% {
+		background-color: var(--amiiboBuddy-nav-links);
+	}
+	100% {
+		background-color: var(--buddySystem-nav-links);
+	}
+}
+/* c) logout button  */
+@keyframes fadeBuddySystemToAmiiboBuddyLogoutButton {
+	0% {
+		background-color: var(--buddySystem-primary-button);
+	}
+	100% {
+		background-color: var(--amiiboBuddy-primary-button);
+	}
+}
+
+@keyframes fadeAmiiboBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: var(--amiiboBuddy-primary-button);
+	}
+	100% {
+		background-color: var(--buddySystem-primary-button);
+	}
+}
+
+/* 7. add Animations to and from 
+    a) header  */
+.amiiboBuddy-to-buddySystem-header {
+	background-color: var(--buddySystem-header);
+	animation: fadeAmiiboBuddyToBuddySystemHeader 1s linear;
+}
+.buddySystem-to-amiiboBuddy-header {
+	background-color: var(--amiiboBuddy-header);
+	animation: fadeBuddySystemToAmiiboBuddyHeader 1s linear;
+}
+
+/* b) .nav-links */
+.buddySystem-to-amiiboBuddy-header .nav-links {
+	background-color: var(--amiiboBuddy-nav-links);
+	animation: fadeBuddySystemToAmiiboBuddyNavLinks 1s linear;
+}
+.amiiboBuddy-to-buddySystem-header .nav-links {
+	background-color: var(--buddySystem-nav-links);
+	animation: fadeAmiiboBuddyToBuddySystemNavLinks 1s linear;
+}
+
+/* c) primary buttons */
+.buddySystem-to-amiiboBuddy-header .ant-btn-primary {
+	background-color: var(--amiiboBuddy-primary-button);
+	animation: fadeBuddySystemToAmiiboBuddyLogoutButton 1s linear;
+}
+
+.amiiboBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: var(--buddySystem-primary-button);
+	animation: fadeAmiiboBuddytoBuddySystemLogoutButton 1s linear;
+}
+
+/* Lorcana Header */
+.lorcanaBuddy-header {
+	background-color: var(--lorcanaBuddy-header);
+}
+
+/* 2. logout button color */
+.lorcanaBuddy-header .ant-btn-primary {
+	background-color: var(--lorcanaBuddy-primary-button);
+}
+
+/* 3. logout button hover color  */
+.lorcanaBuddy-header button.ant-btn-primary:hover,
+.buddySystem-to-lorcanaBuddy-header button.ant-btn-primary:hover {
+	background-color: var(--lorcanaBuddy-primary-button-hover) !important;
+}
+
+/* 5. create nav-links and nav-links active background */
+.lorcanaBuddy-header .nav-links a.active {
+	background-color: var(--lorcanaBuddy-nav-links-active);
+}
+
+.lorcanaBuddy-header .nav-links {
+	background-color: var(--lorcanaBuddy-nav-links);
+}
+
+/* 6. create animation for fade to and from domain for header, nav-links and button        */
+/* a) header */
+@keyframes fadeLorcanaBuddyToBuddySystemHeader {
+	0% {
+		background-color: var(--lorcanaBuddy-header);
+	}
+	100% {
+		background-color: var(--buddySystem-header);
+	}
+}
+
+@keyframes fadeBuddySystemToLorcanaBuddyHeader {
+	0% {
+		background-color: var(--buddySystem-header);
+	}
+	100% {
+		background-color: var(--lorcanaBuddy-header);
+	}
+}
+/* b) nav-links */
+@keyframes fadeBuddySystemToLorcanaBuddyNavLinks {
+	0% {
+		background-color: var(--buddySystem-nav-links);
+	}
+	100% {
+		background-color: var(--lorcanaBuddy-nav-links);
+	}
+}
+@keyframes fadeLorcanaBuddyToBuddySystemNavLinks {
+	0% {
+		background-color: var(--lorcanaBuddy-nav-links);
+	}
+	100% {
+		background-color: var(--buddySystem-nav-links);
+	}
+}
+/* c) logout button  */
+@keyframes fadeBuddySystemToLorcanaBuddyLogoutButton {
+	0% {
+		background-color: var(--buddySystem-primary-button);
+	}
+	100% {
+		background-color: var(--lorcanaBuddy-primary-button);
+	}
+}
+
+@keyframes fadeLorcanaBuddytoBuddySystemLogoutButton {
+	0% {
+		background-color: var(--lorcanaBuddy-primary-button);
+	}
+	100% {
+		background-color: var(--buddySystem-primary-button);
+	}
+}
+
+/* 7. add Animations to and from 
+    a) header  */
+.lorcanaBuddy-to-buddySystem-header {
+	background-color: var(--buddySystem-header);
+	animation: fadeLorcanaBuddyToBuddySystemHeader 1s linear;
+}
+.buddySystem-to-lorcanaBuddy-header {
+	background-color: var(--lorcanaBuddy-header);
+	animation: fadeBuddySystemToLorcanaBuddyHeader 1s linear;
+}
+
+/* b) .nav-links */
+.buddySystem-to-lorcanaBuddy-header .nav-links {
+	background-color: var(--lorcanaBuddy-nav-links);
+	animation: fadeBuddySystemToLorcanaBuddyNavLinks 1s linear;
+}
+.lorcanaBuddy-to-buddySystem-header .nav-links {
+	background-color: var(--buddySystem-nav-links);
+	animation: fadeLorcanaBuddyToBuddySystemNavLinks 1s linear;
+}
+
+/* c) primary buttons */
+.buddySystem-to-lorcanaBuddy-header .ant-btn-primary {
+	background-color: var(--lorcanaBuddy-primary-button);
+	animation: fadeBuddySystemToLorcanaBuddyLogoutButton 1s linear;
+}
+
+.lorcanaBuddy-to-buddySystem-header .ant-btn-primary {
+	background-color: var(--buddySystem-primary-button);
+	animation: fadeLorcanaBuddytoBuddySystemLogoutButton 1s linear;
+}
