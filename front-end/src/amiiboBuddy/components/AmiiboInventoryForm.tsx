@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "../../src/supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import {

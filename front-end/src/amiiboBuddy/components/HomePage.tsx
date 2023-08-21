@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SpiningLoadingIcon } from "../../src/components/loading/LoadingIcon";
+import { SpiningLoadingIcon } from "../../components/loading/LoadingIcon";
 import { amiiboFetchApi } from "../api/api";
-import { supabase } from "../../src/supabaseClient";
+import { supabase } from "../../supabaseClient";
 import { AmiiboCard } from "../components/AmiiboCard";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";

@@ -1,12 +1,12 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "../../src/supabaseClient";
+import { supabase } from "../../supabaseClient";
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Button, Form, Input, Upload, message } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { UploadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../src/contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 import { decode } from "base64-arraybuffer";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -14,13 +14,26 @@ import { Modal } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
 
-export function UploadImages() {
-	const [signUrl, setSignUrl] = useState("");
+type TProps = {
+	fileList: UploadFile[];
+	setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
+	submit: boolean;
+	packId: string;
+};
+
+export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
+	const [signUrl, setSignUrl] = useState<any>("");
 	const [userId, setUserId] = useState("");
-	const [media, setMedia] = useState<FileObject[]>([]);
+	const [media, setMedia] = useState<any[]>([]);
 	const { session } = useContext(AuthContext);
 	const [mediaList, setMediaList] = useState();
 
+	useEffect(() => {
+		if (submit) {
+			console.log("submit worked and is true", submit);
+			handleUpload();
+		}
+	}, [submit]);
 	const getUser = async () => {
 		try {
 			const {
@@ -44,22 +57,22 @@ export function UploadImages() {
 		}
 	};
 
-	async function uploadImage(file) {
-		console.log('EVENT",', file);
-		const { data, error } = await supabase.storage
-			.from("upload-amiibo-images")
-			.upload(userId + "/" + uuidv4() + ".png", file, {
-				cacheControl: "3600",
-				contentType: "image/png",
-				upsert: true,
-			});
+	// async function uploadImage(file) {
+	// 	console.log('EVENT",', file);
+	// 	const { data, error } = await supabase.storage
+	// 		.from("upload-amiibo-images")
+	// 		.upload(userId + "/" + uuidv4() + ".png", file, {
+	// 			cacheControl: "3600",
+	// 			contentType: "image/png",
+	// 			upsert: true,
+	// 		});
 
-		if (data) {
-			getMedia();
-		} else {
-			console.log(error);
-		}
-	}
+	// 	if (data) {
+	// 		getMedia();
+	// 	} else {
+	// 		console.log(error);
+	// 	}
+	// }
 
 	async function getMedia() {
 		const { data, error } = await supabase.storage
@@ -100,17 +113,6 @@ export function UploadImages() {
 		return e?.fileList;
 	}; // if (!getAllUsersWorkoutsLoading) {
 
-	const UploadHeaders = {
-		"Access-Token": `${session.access_token}`,
-		"Refresh-Token": `${session.refresh_token}`,
-		"User-Id": `${session.user.id}`,
-		"Content-Type": "multipart/form-data",
-	};
-
-	const handleOnChange = (info) => {
-		uploadImage(info.file.originFileObj);
-	};
-
 	const getBase64 = (file: RcFile): Promise<string> =>
 		new Promise((resolve, reject) => {
 			const reader = new FileReader();
@@ -122,7 +124,6 @@ export function UploadImages() {
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const [previewImage, setPreviewImage] = useState("");
 	const [previewTitle, setPreviewTitle] = useState("");
-	const [fileList, setFileList] = useState<UploadFile[]>([]);
 
 	const handleCancel = () => setPreviewOpen(false);
 
@@ -138,8 +139,11 @@ export function UploadImages() {
 		);
 	};
 
-	const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) =>
+	const handleChange: UploadProps["onChange"] = ({
+		fileList: newFileList,
+	}) => {
 		setFileList(newFileList);
+	};
 
 	const uploadButton = (
 		<div>
@@ -149,33 +153,6 @@ export function UploadImages() {
 	);
 	const [uploading, setUploading] = useState(false);
 
-	const handleUpload = async () => {
-		await getBase64(File.originFileObj as RcFile);
-		fileList.forEach((file) => {
-			const jile = file as RcFile;
-			console.log(decode(jile));
-		});
-		setUploading(true);
-
-		console.log("FORMDATAE:", fileList); // Object { }
-
-		fetch("http://localhost:8000/api/authorized/amiiboBuddy/upload", {
-			method: "POST",
-			body: fileList,
-			headers: UploadHeaders,
-		})
-			.then((res) => res.json())
-			.then(() => {
-				setFileList([]);
-				message.success("upload successfully.");
-			})
-			.catch(() => {
-				message.error("upload failed.");
-			})
-			.finally(() => {
-				setUploading(false);
-			});
-	};
 	const props: UploadProps = {
 		onRemove: (file) => {
 			const index = fileList.indexOf(file);
@@ -190,30 +167,26 @@ export function UploadImages() {
 		},
 		fileList,
 	};
-	return (
-		<div className="mt-5">
-			<Form.Item
-				name="images"
-				label="Images"
-				valuePropName="fileList"
-				getValueFromEvent={normFile}
-			>
-				<Upload
-					listType="picture"
-					// headers={UploadHeaders}
-					// withCredentials
-					onChange={(info) => handleOnChange(info)}
-				>
-					<Button icon={<UploadOutlined />}>Click to upload</Button>
-				</Upload>
-			</Form.Item>
-			<Form.Item>
-				<input
-					type="file"
-					onChange={(e) => uploadImage(e.target.files[0])}
-				/>
-			</Form.Item>
 
+	const uploadIt = async (file: any, packid: string) => {
+		const { data, error } = await supabase.storage
+			.from("upload-amiibo-images")
+			.upload(userId + "/" + packid + "/" + uuidv4() + ".png", file, {
+				cacheControl: "3600",
+				contentType: "image/png",
+			});
+		console.log("DATA", data);
+	};
+	const handleUpload = async () => {
+		const packId = uuidv4();
+		console.log("file", fileList);
+		const base64fileList = fileList.map((file) =>
+			uploadIt(file.originFileObj, packId)
+		);
+	};
+
+	return (
+		<div className="mt-5 white-font" style={{ width: "100%" }}>
 			<>
 				<Upload
 					listType="picture-card"
@@ -225,7 +198,8 @@ export function UploadImages() {
 				>
 					{fileList.length >= 8 ? null : uploadButton}
 				</Upload>
-				<Button
+				{/* <Button
+					// instead a dd ONCLICK HANDLEUPLOAD TO FORM SUBMIT
 					type="primary"
 					onClick={handleUpload}
 					disabled={fileList.length === 0}
@@ -233,7 +207,7 @@ export function UploadImages() {
 					style={{ marginTop: 16 }}
 				>
 					{uploading ? "Uploading" : "Start Upload"}
-				</Button>
+				</Button> */}
 				<Modal
 					open={previewOpen}
 					title={previewTitle}
