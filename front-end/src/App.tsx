@@ -23,6 +23,7 @@ import { AmiiboBuddyHomePage } from "../amiiboBuddy/components/HomePage";
 import { AmiiboBuddyDashboard } from "./pages/AmiiboBuddyDashboard";
 import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
 import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard/WorkoutBuddyDashboard";
+import { LorcanaBuddyDashboard } from "./LorcanaBuddy/dashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -62,6 +63,11 @@ const router = createBrowserRouter(
 					path="amiiboBuddy/addAmiibo"
 					element={<AmiiboInventoryForm />}
 				/>
+				<Route path="lorcanaBuddy" element={<LorcanaBuddyDashboard />}>
+					<Route path="browse" element={<BrowsePage />} />
+					<Route path="myCollection" element={<BrowsePage />} />
+					<Route path="browse" element={<BrowsePage />} />
+				</Route>
 			</Route>
 		</Route>
 	)

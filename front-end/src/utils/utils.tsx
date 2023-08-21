@@ -168,8 +168,19 @@ export const domains: TDomains = {
 		class: "buddy-system",
 		pages: [
 			{ name: "Workout Buddy", path: "workoutBuddy" },
-			{ name: "AmiiboBuddy", path: "amiiboBuddy" },
-			{ name: "PokeBuddy", path: "pokeBuddy" },
+			{ name: "Amiibo Buddy", path: "amiiboBuddy" },
+			{ name: "Poke Buddy", path: "pokeBuddy" },
+			{ name: "Lorcana Buddy", path: "lorcanaBuddy" },
+		],
+	},
+	lorcanaBuddy: {
+		name: "Lorcana Buddy",
+		path: "lorcanaBuddy",
+		class: "lorcana-buddy",
+		pages: [
+			{ name: "Browse", path: "browse" },
+			{ name: "My Collection", path: "myCollection" },
+			{ name: "Wishlist", path: "wishlist" },
 		],
 	},
 };
