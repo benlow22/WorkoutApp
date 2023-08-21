@@ -10,7 +10,8 @@ import { domains } from "../../utils/utils";
 import { SpiningLoadingIcon } from "../loading/LoadingIcon";
 import { Navbar } from "../navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
-import "../../styles/header.css";
+import "../../theming/theme.css";
+import { changeTheme } from "../../theming/theme";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =
@@ -25,9 +26,8 @@ export const Header: React.FC<{}> = () => {
 	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<string>();
 	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
 	const [currentDomain, setCurrentDomain] = useState<string>();
-	const [headerTransition, setHeaderTransition] = useState<string>("/");
+	// const [headerTransition, setHeaderTransition] = useState<string>("/");
 	const navigate = useNavigate();
-
 	useEffect(() => {
 		setDomainObj(domains[domain]);
 	}, []);
@@ -35,6 +35,7 @@ export const Header: React.FC<{}> = () => {
 	useEffect(() => {
 		let curDom = "";
 		let prevDom = undefined;
+		let headerTransition = "";
 		if (auth === false) {
 			curDom = "buddySystem";
 			if (location.state?.previousDomain) {
@@ -50,12 +51,14 @@ export const Header: React.FC<{}> = () => {
 			}
 		}
 		if (prevDom === curDom || !prevDom) {
-			setHeaderTransition(`${curDom}-header`);
-			console.log(`${curDom}-header`);
+			headerTransition = `${curDom}`;
+			// console.log(`${curDom}-header`);
 		} else {
-			setHeaderTransition(`${prevDom}-to-${curDom}-header`);
-			console.log(`${prevDom}-to-${curDom}-header`);
+			headerTransition = `${prevDom}-to-${curDom}`;
+			// setHeaderTransition(`${prevDom}-to-${curDom}-header`);
+			// console.log(`${prevDom}-to-${curDom}-header`);
 		}
+		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
 		setPreviousDomain(prevDom);
 		setDomainObj(domains[curDom]);
@@ -80,7 +83,7 @@ export const Header: React.FC<{}> = () => {
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
-		<div className={`header ${headerTransition}`} key={domain}>
+		<div className="header" key={domain}>
 			<div className="site-banner white-font">
 				{!isLoading &&
 					(auth ? (

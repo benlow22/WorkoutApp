@@ -1,0 +1,54 @@
+/* create animation for fade to and from domain for header, nav-links and button 
+for domains that stay the same, the previous-header will be the same as the domain-header*/
+/* a) header */
+@keyframes fadeInHeader {
+	0% {
+		background-color: var(--previous-header);
+	}
+	100% {
+		background-color: var(--domain-header);
+	}
+}
+
+/* b) nav-links */
+@keyframes fadeInNavLinks {
+	0% {
+		background-color: var(--previous-nav-links);
+	}
+	100% {
+		background-color: var(--domain-nav-links);
+	}
+}
+
+/* c) logout button  */
+@keyframes fadeInLogoutButton {
+	0% {
+		background-color: var(--previous-primary-button);
+	}
+	100% {
+		background-color: var(--domain-primary-button);
+	}
+}
+
+.header {
+	background-color: var(--domain-header);
+	animation: fadeInHeader 1s linear;
+}
+
+.header .nav-links {
+	background-color: var(--domain-nav-links);
+	animation: fadeInNavLinks 1s linear;
+}
+
+.header .nav-links a.active {
+	background-color: var(--domain-nav-links-active);
+}
+
+.header .ant-btn-primary {
+	background-color: var(--domain-primary-button);
+	animation: fadeInLogoutButton 1s linear;
+}
+
+.header button.ant-btn-primary:hover {
+	background-color: var(--domain-primary-button-hover) !important;
+}
