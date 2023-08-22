@@ -6,13 +6,13 @@ export const WelcomePage = () => {
 	const { auth } = useContext(AuthContext);
 	const location = useLocation();
 
-	if (!auth) {
+	if (auth) {
+		return <Navigate to={"dashboard"} replace />;
+	} else {
 		return (
 			<div className="buddy-system-homepage">
 				<h1>Welcome to the Buddy System</h1>;
 			</div>
 		);
-	} else {
-		return <Navigate to={"workoutBuddy"} replace />;
 	}
 };
