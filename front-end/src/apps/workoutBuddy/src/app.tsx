@@ -1,5 +1,10 @@
 import { Route, Routes } from "react-router-dom";
 import { WelcomePage } from "./pages/welcomePage/WelcomePage";
+import { WorkoutsPage } from "./pages/workoutsPage/WorkoutsPage";
+import { WorkoutPage } from "./pages/workoutPage/workoutPage";
+import { ExercisesPage } from "./components/exercises/ExercisesPage";
+import Exercise from "./components/exercises/Exercise";
+import { NewWorkoutPage } from "./pages/newWorkoutPage/NewWorkoutPage";
 
 export const WorkoutBuddy = () => {
 	return (
@@ -17,7 +22,6 @@ export const WorkoutBuddy = () => {
 					element={<NewExercisePage />}
 				/> */}
 				<Route path="exercises/:exerciseId" element={<Exercise />} />
-				<Route path="createUsername" element={<CreateUsernamePage />} />
 				<Route path="newWorkout" element={<NewWorkoutPage />} />
 			</Route>
 			{/* <Route exact path="/contact" element={<Contact />} />

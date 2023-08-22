@@ -1,15 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../../contexts/AuthProvider";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { Input } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import {
 	getUsersExerciseDataAPI,
 	usersAndPublicExercisesAPI,
-} from "../../../api/api";
-import { IExercise, TExerciseTemplate } from "../../../api/types";
-import { useRequest } from "../../../hooks/useRequest";
+} from "../../api/api";
+import { IExercise, TExerciseTemplate } from "../../../../../api/types";
+import { useRequest } from "../../../../../hooks/useRequest";
 
 const { Search } = Input;
 

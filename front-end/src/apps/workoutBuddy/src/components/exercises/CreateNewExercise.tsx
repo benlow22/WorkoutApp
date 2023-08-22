@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import "../../../../styles/App.css";
 import { v4 as uuidv4 } from "uuid";
-
 import {
 	EditTwoTone,
 	MinusCircleOutlined,
@@ -21,15 +19,15 @@ import {
 	Upload,
 } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 import {
 	isValidUrl,
 	shortenUrl,
 	transformExercisePost,
-} from "../../../../utils/utils";
-import { postNewExerciseAPI } from "../../../../api/api";
-import { useRequest } from "../../../../hooks/useRequest";
-import { TExerciseTemplate } from "../../../../api/types";
+} from "../../../../../utils/utils";
+import { postNewExerciseAPI } from "../../api/api";
+import { useRequest } from "../../../../../hooks/useRequest";
+import { TExerciseTemplate } from "../../../../../api/types";
 
 const { Option } = Select;
 const formItemLayout = {

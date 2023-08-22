@@ -5,10 +5,10 @@ import {
 	IWorkout,
 	TExerciseTemplate,
 	TUsersExerciseData,
-} from "../../../../api/types";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+} from "../../../../../api/types";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { v4 as uuidv4 } from "uuid";
-import { Set } from "./Set";
+import { Set } from "../sets/Set";
 
 const testData = {
 	name: "Preacher Curls",

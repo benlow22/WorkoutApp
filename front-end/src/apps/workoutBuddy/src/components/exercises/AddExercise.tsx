@@ -1,23 +1,22 @@
 import { Button, message } from "antd";
 import { useContext, useEffect, useState } from "react";
-import { SearchExercises } from "../SearchExercises";
+import { SearchExercises } from "./SearchExercises";
 import { CreateNewExerciseForm } from "./CreateNewExercise";
 import { AddExerciseData } from "./AddExerciseData";
-import { TestFetchExercise } from "../TestFetchExercises";
 import {
 	IExercise,
 	INewExerciseInput,
 	IWorkout,
 	TExerciseTemplate,
 	TUsersExerciseData,
-} from "../../../../api/types";
-import { useRequest } from "../../../../hooks/useRequest";
+} from "../../../../../api/types";
+import { useRequest } from "../../../../../hooks/useRequest";
 import {
 	addExerciseToWorkoutAPI,
 	getUsersExerciseDataAPI,
 	upsertUsersExerciseDateAPI,
-} from "../../../../api/api";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+} from "../../api/api";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 
 const testData = {
 	name: "Preacher Curls",

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
-import { TUsersExerciseData } from "../../../../api/types";
-import { Set } from "./Set";
+import { TUsersExerciseData } from "../../../../../api/types";
+import { Set } from "../sets/Set";
 import { CheckCircleOutlined } from "@ant-design/icons";
-import { arrToNum } from "../../../../utils/utils";
+import { arrToNum } from "../../../../../utils/utils";
 
 type TProps = {
 	exercise: TUsersExerciseData;

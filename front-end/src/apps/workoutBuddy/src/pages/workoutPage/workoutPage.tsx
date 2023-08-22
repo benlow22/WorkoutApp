@@ -3,18 +3,17 @@ import {
 	deleteWorkoutAPI,
 	getWorkoutAndExercisesAPI,
 	usersAndPublicExercisesAPI,
-} from "../../../../api/api";
+} from "../../api/api";
 import { useContext, useEffect, useState } from "react";
 import { Button, message } from "antd";
 import { ClockCircleOutlined } from "@ant-design/icons";
-import { EditWorkoutNameButton } from "../EditWorkoutNameButton";
-import { AuthContext } from "../../../../contexts/AuthProvider";
-import { useRequest } from "../../../../hooks/useRequest";
-import { IWorkout, TUsersExerciseData } from "../../../../api/types";
-import { SpiningLoadingIcon } from "../../../../components/loading/LoadingIcon";
-import { AddExercise } from "../../../../components/domains/workoutBuddy/exercises/AddExercise";
-import ExerciseCollapse from "../../../../components/domains/workoutBuddy/exercises/ExerciseCollapse";
-import ExercisesCollapse from "../../../../components/domains/workoutBuddy/exercises/ExerciseCollapse";
+import { EditWorkoutNameButton } from "../../components/workouts/EditWorkoutNameButton";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
+import { useRequest } from "../../../../../hooks/useRequest";
+import { IWorkout, TUsersExerciseData } from "../../../../../api/types";
+import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIcon";
+import { AddExercise } from "../../components/exercises/AddExercise";
+import ExercisesCollapse from "../../components/exercises/ExerciseCollapse";
 
 export const WorkoutPage = () => {
 	const location = useLocation();
