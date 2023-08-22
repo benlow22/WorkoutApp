@@ -1,12 +1,12 @@
 import { Auth } from "@supabase/auth-ui-react";
-import { supabase } from "../../../../supabaseClient";
+// import { supabase } from "../../../../supabaseClient";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
 import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { SpiningLoadingIcon } from "../../../loading/LoadingIcon";
-import "../../../../styles/App.css";
-import { domains } from "../../../../utils/utils";
+import { SpiningLoadingIcon } from "../../loading/LoadingIcon";
+import "../../../styles/index.css";
+import domains from "../../../data/domains.json";
 
 type TProps = {
 	from: string;
@@ -14,7 +14,7 @@ type TProps = {
 
 export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
-	const { auth, contextIsLoading } = useContext(AuthContext);
+	const { auth, contextIsLoading, supabase } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [previousDomain, setPreviousDomain] = useState<string>();
 	const navigate = useNavigate();

@@ -1,13 +1,11 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { supabase } from "../../../../supabaseClient";
+import { useContext, useEffect, useState } from "react";
+// import { supabase } from "../../../../supabaseClient";
 import { Button } from "antd";
-import { EditWorkoutNameButton } from "../EditWorkoutNameButton";
-import { SearchExercises } from "../SearchExercises";
-import { Exercises } from "../Exercises";
-import { TestFetchExercise } from "../TestFetchExercises";
-import { IExercise, IWorkout } from "../../../../api/types";
-import { AddExercise } from "../exercises/AddExercise";
+import { EditWorkoutNameButton } from "../../components/workouts/EditWorkoutNameButton";
+import { TestFetchExercise } from "../../components/exercises/TestFetchExercises";
+import { IExercise, IWorkout } from "../../../../../api/types";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 
 // type IExercise = {
 // 	name: any;
@@ -17,6 +15,7 @@ import { AddExercise } from "../exercises/AddExercise";
 export const EditWorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
+	const { supabase } = useContext(AuthContext);
 
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [addExercise, setAddExercise] = useState<boolean>(false);

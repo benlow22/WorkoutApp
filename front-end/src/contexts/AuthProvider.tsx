@@ -2,22 +2,25 @@ import React, { FC, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import App from "../App";
 import { IWorkout } from "../api/types";
+import { SupabaseClient } from "@supabase/supabase-js";
+import { Database } from "../database.types";
 
 type IAuthContext = {
+	supabase: SupabaseClient<Database>;
+	session: ISession | null;
+	auth: boolean | undefined;
+	user: any;
 	userId: string;
 	username: string;
+	initialUrl: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
-	session: ISession | null;
-	initialUrl: string;
-	setIsLoggedIn: (loggedIn: boolean) => void;
-	setUsername: (newName: string) => void;
-	setWorkouts: (usersWorkouts: IWorkout[]) => void;
-	setUserId: (userId: string) => void;
-	user: any;
-	auth: boolean | undefined;
 	contextIsLoading: boolean;
+	setUserId: (userId: string) => void;
+	setUsername: (newName: string) => void;
 	setInitialUrl: (url: string) => void;
+	setIsLoggedIn: (loggedIn: boolean) => void;
+	setWorkouts: (usersWorkouts: IWorkout[]) => void;
 };
 
 export interface ISession {
@@ -42,6 +45,7 @@ export const AuthContext = React.createContext<IAuthContext>({
 	auth: undefined,
 	contextIsLoading: true,
 	setInitialUrl: () => {},
+	supabase: supabase,
 });
 
 type IChildren = {
@@ -173,6 +177,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				auth,
 				contextIsLoading: isLoading,
 				setInitialUrl,
+				supabase,
 			}}
 		>
 			{!isLoading && children}

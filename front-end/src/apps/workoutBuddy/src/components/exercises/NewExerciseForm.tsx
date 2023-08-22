@@ -9,9 +9,8 @@ import {
 import { Button, Form, Input, Select, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Link } from "react-router-dom";
-import { supabase } from "../supabaseClient";
-import { AuthContext } from "../../contexts/AuthProvider";
-
+// import { supabase } from "../supabaseClient";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 const { Option } = Select;
 
 const formItemLayout = {
@@ -33,7 +32,7 @@ const NewExerciseForm: React.FC<{}> = () => {
 	const [linkList, setLinkList] = useState<string[]>(["asd"]);
 	const [newLink, setNewLink] = useState<string>("");
 	const { exerciseName: exerciseNameURL } = useParams();
-	const { userId } = useContext(AuthContext);
+	const { userId, supabase } = useContext(AuthContext);
 	const addToLinkList = () => {
 		setLinkList([...linkList, newLink]);
 	};

@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { supabase } from "../../../../supabase/supabaseClient";
+import React, { useContext, useEffect, useMemo, useState } from "react";
+// import { supabase } from "../../../../supabase/supabaseClient";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import {
@@ -23,10 +23,11 @@ type TAmiiboCache = {
 };
 const { Option } = Select;
 import { v4 as uuidv4 } from "uuid";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 export const AmiiboInventoryForm: React.FC<{}> = () => {
-	// const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
-	const [userId, setUserId] = useState("");
+	const { workouts, setWorkouts, userId, session, supabase } =
+		useContext(AuthContext);
 	const [amiibos, setAmiibos] = useState<TAmiiboCard[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [options, setOptions] = useState<{ value: string }[]>([]);

@@ -1,5 +1,5 @@
 const API_ENDPOINT = `${import.meta.env.VITE_API_ENDPOINT}/api`;
-import { supabase } from "../supabaseClient";
+import { supabase } from "../../../../supabase/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import {
 	IExercise,
@@ -10,9 +10,9 @@ import {
 	TExerciseDataWithUsers,
 	TExerciseTemplate,
 	TUsersExerciseData,
-} from "./types";
-import { ISession } from "../contexts/AuthProvider";
-import { arrToNum } from "../utils/utils";
+} from "../../../../api/types";
+import { ISession } from "../../../../contexts/AuthProvider";
+import { arrToNum } from "../../../../utils/utils";
 
 // Get Cookies from Browser = redundant
 // const cookieValue_AccessToken = document.cookie

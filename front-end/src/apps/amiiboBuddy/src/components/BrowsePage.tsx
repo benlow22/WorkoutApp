@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { supabase } from "../../../../supabaseClient";
+import React, { useContext, useEffect, useState } from "react";
+// import { supabase } from "../../../../supabaseClient";
 import { AmiiboCard } from "./AmiiboCard";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 export const BrowsePage: React.FC<{}> = () => {
-	// const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
-	const [userId, setUserId] = useState("");
+	const { supabase } = useContext(AuthContext);
 	const [amiibos, setAmiibos] = useState<TAmiiboCard[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 

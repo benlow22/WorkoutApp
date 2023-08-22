@@ -1,12 +1,12 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { supabase } from "../../../../supabaseClient";
+// import { supabase } from "../../../../supabaseClient";
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Button, Form, Input, Upload, message } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { UploadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../../contexts/AuthProvider";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 import { decode } from "base64-arraybuffer";
 
 import { PlusOutlined } from "@ant-design/icons";
@@ -25,7 +25,7 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 	const [signUrl, setSignUrl] = useState<any>("");
 	const [userId, setUserId] = useState("");
 	const [media, setMedia] = useState<any[]>([]);
-	const { session } = useContext(AuthContext);
+	const { session, supabase } = useContext(AuthContext);
 	const [mediaList, setMediaList] = useState();
 
 	useEffect(() => {

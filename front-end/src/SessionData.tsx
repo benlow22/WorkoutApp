@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { supabase } from "./supabase/supabaseClient";
 
 // export const userInfo = async () => {
 // 	const { data, error } = await supabase.auth.refreshSession();

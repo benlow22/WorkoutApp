@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
-import WorkoutButton from "../WorkoutButton";
+import WorkoutButton from "../../components/workouts/WorkoutButton";
 import { Button, message } from "antd";
 import { Link, NavLink, Route, useLocation } from "react-router-dom";
-import { AuthContext, ISession } from "../../../../contexts/AuthProvider";
-import { supabase } from "../../../../supabaseClient";
-import { getAllUsersWorkoutsAPI } from "../../../../api/api";
-import { useRequest } from "../../../../hooks/useRequest";
-import { SpiningLoadingIcon } from "../../../../components/loading/LoadingIcon";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
+// import { supabase } from "../../../../supabaseClient";
+import { getAllUsersWorkoutsAPI } from "../../api/api";
+import { useRequest } from "../../../../../hooks/useRequest";
+import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIcon";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
+	const { workouts, setWorkouts, userId, session, supabase } =
+		useContext(AuthContext);
 	const [
 		getAllUsersWorkoutsResponse,
 		getAllUsersWorkoutsLoading,

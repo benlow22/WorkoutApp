@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { TSets } from "../../../data";
-import { supabase } from "../../../supabaseClient";
-import { TestSets } from "./TestSets";
+import { useContext, useEffect, useState } from "react";
+import { TSets } from "../../../../../data";
+// import { supabase } from "../../../supabaseClient";
+import { TestSets } from "../sets/TestSets";
 import { Button } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 
 type TProps = {
 	exercise: TSets;
@@ -21,6 +22,8 @@ type TExerciseId = {
 //CHANGE exerciseID to Exercise + id + name
 // takes exercise ID and returns sets
 export const TestFetchExercise = ({ exerciseId }: TExerciseId) => {
+	const { supabase } = useContext(AuthContext);
+
 	const [sets, setSets] = useState<any[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [exerciseData, setExerciseData] = useState<any>([]);

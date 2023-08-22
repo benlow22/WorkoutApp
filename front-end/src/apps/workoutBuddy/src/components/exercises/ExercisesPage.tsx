@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
-import WorkoutButton from "../components/WorkoutButton";
+// import WorkoutButton from "../components/WorkoutButton";
 import { Button, theme, ConfigProvider } from "antd";
 import { Link, NavLink, Outlet, Route, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
-import { supabase } from "../supabaseClient";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
+// import { supabase } from "../supabaseClient";
 import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";

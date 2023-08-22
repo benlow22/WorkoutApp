@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import { Button } from "antd";
-import { supabase } from "../../supabaseClient";
+// import { supabase } from "../../supabaseClient";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
-import { domains } from "../../utils/utils";
+// import { domains } from "../../utils/utils";
+import domains from "../../data/domains.json";
+
 // import { getSignOut } from "../../api/api";
 const LogoutButton: React.FC<{}> = () => {
-	const { setUsername, setIsLoggedIn, setUserId, user } =
+	const { setUsername, setIsLoggedIn, setUserId, user, supabase } =
 		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [previousDomain, setPreviousDomain] = useState<string>();
