@@ -8,7 +8,7 @@ import { TDomain } from "../../api/types";
 import { domains } from "../../utils/utils";
 import { Navbar } from "../../components/navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
-import "../../theming/theme.css";
+import "./styles/theme.css";
 import { changeTheme } from "../../styles/theming/theme";
 
 export const Header: React.FC<{}> = () => {

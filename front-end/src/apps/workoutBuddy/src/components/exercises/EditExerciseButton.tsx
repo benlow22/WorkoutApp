@@ -50,7 +50,7 @@ export const EditExerciseButton: React.FC<{
 				<h1>
 					{oldText}
 					<EditTwoTone
-						className="new-workout-edit-icon"
+						className="exercise-name-edit-icon"
 						onClick={() => setEditName(true)}
 					/>
 				</h1>
@@ -65,7 +65,7 @@ export const EditExerciseButton: React.FC<{
 						// }}
 						// value={newText}
 						// placeholder={oldText.name}
-						className="new-workout-input"
+						className="exercise-name-workout-input"
 						onPressEnter={handleSubmit}
 					/>
 					<Button type="primary" onClick={handleSubmit}>
