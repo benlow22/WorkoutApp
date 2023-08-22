@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Button, Form, Input, Upload, message } from "antd";
 import { v4 as uuidv4 } from "uuid";
 import { UploadOutlined } from "@ant-design/icons";
-import { AuthContext } from "../../../../contexts/AuthProvider";
+import { AuthContext } from "../../../contexts/AuthProvider";
 import { decode } from "base64-arraybuffer";
 
 import { PlusOutlined } from "@ant-design/icons";

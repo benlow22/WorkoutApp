@@ -9,7 +9,7 @@ import { domains } from "../../utils/utils";
 import { Navbar } from "../../components/navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
 import "../../theming/theme.css";
-import { changeTheme } from "../../theming/theme";
+import { changeTheme } from "../../styles/theming/theme";
 
 export const Header: React.FC<{}> = () => {
 	const { username, isLoggedIn, auth, contextIsLoading } =

@@ -1,5 +1,5 @@
 import React, { FC, useContext, useEffect, useState } from "react";
-import { supabase } from "../supabaseClient";
+import { supabase } from "../supabase/supabaseClient";
 import App from "../App";
 import { IWorkout } from "../api/types";
 

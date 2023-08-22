@@ -10,7 +10,7 @@ import { Button, Form, Input, Select, Space } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { Link } from "react-router-dom";
 import { supabase } from "../supabaseClient";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 const { Option } = Select;
 

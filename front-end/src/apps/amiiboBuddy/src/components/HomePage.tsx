@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SpiningLoadingIcon } from "../../../loading/LoadingIcon";
+import { SpiningLoadingIcon } from "../../../components/loading/LoadingIcon";
 import { amiiboFetchApi } from "../api/api";
 import { supabase } from "../../../../supabaseClient";
 import { AmiiboCard } from "./AmiiboCard";

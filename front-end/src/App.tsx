@@ -15,15 +15,15 @@ import { CreateUsernamePage } from "./components/domains/workoutBuddy/createUser
 import { LoginPage } from "./components/domains/workoutBuddy/login/LoginPage";
 import { WelcomePage } from "./components/domains/workoutBuddy/welcomePage/WelcomePage";
 import AuthRoute from "./AuthRoute";
-import { ExercisesPage } from "./pages/ExercisesPage";
+import { ExercisesPage } from "./apps/workoutBuddy/ExercisesPage";
 import Exercise from "./components/domains/workoutBuddy/Exercise";
 import { WorkoutPage } from "./components/domains/workoutBuddy/workoutPage/workoutPage";
-import { BrowsePage } from "./components/domains/amiiboBuddy/components/BrowsePage";
-import { AmiiboInventoryForm } from "./components/domains/amiiboBuddy/components/AmiiboInventoryForm";
-import { AmiiboBuddyDashboard } from "./components/domains/amiiboBuddy/AmiiboBuddyDashboard";
-import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
-import { WorkoutBuddyDashboard } from "./components/domains/workoutBuddy/workoutBuddyDashboard/WorkoutBuddyDashboard";
-import { LorcanaBuddyDashboard } from "./components/domains/lorcanaBuddy/dashboard";
+import { BrowsePage } from "./apps/amiiboBuddy/components/BrowsePage";
+import { AmiiboInventoryForm } from "./apps/amiiboBuddy/components/AmiiboInventoryForm";
+import { AmiiboBuddyDashboard } from "./apps/amiiboBuddy/src/pages/AmiiboBuddyDashboard";
+import { BuddySystemDashboard } from "./apps/buddySystem/BuddySystemDashboard";
+import { WorkoutBuddyDashboard } from "./apps/workoutBuddy/workoutBuddyDashboard/WorkoutBuddyDashboard";
+import { LorcanaBuddyDashboard } from "./apps/lorcanaBuddy/dashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
