@@ -16,6 +16,7 @@ export const Navbar = () => {
 		const currentDomain = curDomain;
 		setPages(domains[currentDomain].pages);
 		setDomain(domains[currentDomain]);
+		console.log("domain info", domains[currentDomain]);
 	}, [location]);
 
 	return (
