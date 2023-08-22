@@ -1,4 +1,5 @@
 import "./styles/App.css";
+import "./styles/index.css";
 
 import {
 	Route,
@@ -7,23 +8,22 @@ import {
 	createRoutesFromElements,
 } from "react-router-dom";
 
-import Root from "./components/Root";
-import { NewWorkoutPage } from "./pages/newWorkoutPage/NewWorkoutPage";
-import { WorkoutsPage } from "./pages/workoutsPage/WorkoutsPage";
-import { CreateUsernamePage } from "./pages/createUsernamePage/CreateUsernamePage";
-import { LoginPage } from "./pages/login/LoginPage";
-import { WelcomePage } from "./pages/welcomePage/WelcomePage";
+import Root from "./containers/Root";
+import { NewWorkoutPage } from "./components/domains/workoutBuddy/newWorkoutPage/NewWorkoutPage";
+import { WorkoutsPage } from "./components/domains/workoutBuddy/workoutsPage/WorkoutsPage";
+import { CreateUsernamePage } from "./components/domains/workoutBuddy/createUsernamePage/CreateUsernamePage";
+import { LoginPage } from "./components/domains/workoutBuddy/login/LoginPage";
+import { WelcomePage } from "./components/domains/workoutBuddy/welcomePage/WelcomePage";
 import AuthRoute from "./AuthRoute";
 import { ExercisesPage } from "./pages/ExercisesPage";
-import Exercise from "./components/Exercise";
-import { WorkoutPage } from "./pages/workoutPage/workoutPage";
-import { BrowsePage } from "./amiiboBuddy/components/BrowsePage";
-import { AmiiboInventoryForm } from "./amiiboBuddy/components/AmiiboInventoryForm";
-import { AmiiboBuddyHomePage } from "./amiiboBuddy/components/HomePage";
-import { AmiiboBuddyDashboard } from "./pages/AmiiboBuddyDashboard";
+import Exercise from "./components/domains/workoutBuddy/Exercise";
+import { WorkoutPage } from "./components/domains/workoutBuddy/workoutPage/workoutPage";
+import { BrowsePage } from "./components/domains/amiiboBuddy/components/BrowsePage";
+import { AmiiboInventoryForm } from "./components/domains/amiiboBuddy/components/AmiiboInventoryForm";
+import { AmiiboBuddyDashboard } from "./components/domains/amiiboBuddy/AmiiboBuddyDashboard";
 import { BuddySystemDashboard } from "./pages/BuddySystemDashboard";
-import { WorkoutBuddyDashboard } from "./pages/workoutBuddyDashboard/WorkoutBuddyDashboard";
-import { LorcanaBuddyDashboard } from "./LorcanaBuddy/dashboard";
+import { WorkoutBuddyDashboard } from "./components/domains/workoutBuddy/workoutBuddyDashboard/WorkoutBuddyDashboard";
+import { LorcanaBuddyDashboard } from "./components/domains/lorcanaBuddy/dashboard";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
