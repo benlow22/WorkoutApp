@@ -1,5 +1,16 @@
 {
 	"domains": {
+		"buddySystem": {
+			"name": "Buddy System",
+			"path": "buddySystem",
+			"class": "buddy-system",
+			"pages": [
+				{ "name": "Workout Buddy", "path": "workoutBuddy" },
+				{ "name": "Amiibo Buddy", "path": "amiiboBuddy" },
+				{ "name": "Poke Buddy", "path": "pokeBuddy" },
+				{ "name": "Lorcana Buddy", "path": "lorcanaBuddy" }
+			]
+		},
 		"workoutBuddy": {
 			"name": "Workout Buddy",
 			"path": "workoutBuddy",
@@ -23,15 +34,14 @@
 				{ "name": "Add Amiibo", "path": "addAmiibo" }
 			]
 		},
-		"buddySystem": {
-			"name": "Buddy System",
-			"path": "buddySystem",
-			"class": "buddy-system",
+		"pokeBuddy": {
+			"name": "PokeBuddy",
+			"path": "pokeBuddy",
+			"class": "poke-buddy",
 			"pages": [
-				{ "name": "Workout Buddy", "path": "workoutBuddy" },
-				{ "name": "Amiibo Buddy", "path": "amiiboBuddy" },
-				{ "name": "Poke Buddy", "path": "pokeBuddy" },
-				{ "name": "Lorcana Buddy", "path": "lorcanaBuddy" }
+				{ "name": "Browse", "path": "browse" },
+				{ "name": "My Collection", "path": "myCollection" },
+				{ "name": "Wishlist", "path": "wishlist" }
 			]
 		},
 		"lorcanaBuddy": {
