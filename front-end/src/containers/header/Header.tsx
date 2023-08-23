@@ -5,7 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 import { TDomain } from "../../api/types";
-import { domains } from "../../utils/utils";
+import domainsJSON from "../../data/domains.json";
+import { domainsFromDomainsJSON } from "../../utils/utils";
 import { Navbar } from "../../components/navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
 import "./styles/theme.css";
@@ -18,7 +19,9 @@ export const Header: React.FC<{}> = () => {
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
 	const splitUrl = location.pathname.split("/");
+	const domains = domainsFromDomainsJSON(domainsJSON);
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
+
 	// const [subdomain, setSubdomain] = useState<string>(domain);
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
 	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<string>();

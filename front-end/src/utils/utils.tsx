@@ -138,52 +138,57 @@ export const domainFromUrl = () => {
 	}
 };
 
-export const domains: TDomains = {
-	workoutBuddy: {
-		name: "Workout Buddy",
-		path: "workoutBuddy",
-		class: "workout-buddy",
-		pages: [
-			{ name: "Workouts", path: "workouts" },
-			{ name: "Exercises", path: "exercises" },
-			{ name: "Explore", path: "explore" },
-			{ name: "Tips", path: "tips" },
-		],
-	},
-	amiiboBuddy: {
-		name: "Amiibo Buddy",
-		path: "amiiboBuddy",
-		class: "amiibo-buddy",
-		pages: [
-			{ name: "Browse", path: "browse" },
-			{ name: "My Collection", path: "myCollection" },
-			{ name: "Wishlist", path: "wishlist" },
-			{ name: "Returns", path: "returns" },
-			{ name: "Add Amiibo", path: "addAmiibo" },
-		],
-	},
-	buddySystem: {
-		name: "Buddy System",
-		path: "buddySystem",
-		class: "buddy-system",
-		pages: [
-			{ name: "Workout Buddy", path: "workoutBuddy" },
-			{ name: "Amiibo Buddy", path: "amiiboBuddy" },
-			{ name: "Poke Buddy", path: "pokeBuddy" },
-			{ name: "Lorcana Buddy", path: "lorcanaBuddy" },
-		],
-	},
-	lorcanaBuddy: {
-		name: "Lorcana Buddy",
-		path: "lorcanaBuddy",
-		class: "lorcana-buddy",
-		pages: [
-			{ name: "Browse", path: "browse" },
-			{ name: "My Collection", path: "myCollection" },
-			{ name: "Wishlist", path: "wishlist" },
-		],
-	},
+export const domainsFromDomainsJSON = (json: { domains: TDomains }) => {
+	const { domains } = JSON.parse(JSON.stringify(json));
+	return domains;
 };
+
+// export const domains: TDomains = {
+// 	workoutBuddy: {
+// 		name: "Workout Buddy",
+// 		path: "workoutBuddy",
+// 		class: "workout-buddy",
+// 		pages: [
+// 			{ name: "Workouts", path: "workouts" },
+// 			{ name: "Exercises", path: "exercises" },
+// 			{ name: "Explore", path: "explore" },
+// 			{ name: "Tips", path: "tips" },
+// 		],
+// 	},
+// 	amiiboBuddy: {
+// 		name: "Amiibo Buddy",
+// 		path: "amiiboBuddy",
+// 		class: "amiibo-buddy",
+// 		pages: [
+// 			{ name: "Browse", path: "browse" },
+// 			{ name: "My Collection", path: "myCollection" },
+// 			{ name: "Wishlist", path: "wishlist" },
+// 			{ name: "Returns", path: "returns" },
+// 			{ name: "Add Amiibo", path: "addAmiibo" },
+// 		],
+// 	},
+// 	buddySystem: {
+// 		name: "Buddy System",
+// 		path: "buddySystem",
+// 		class: "buddy-system",
+// 		pages: [
+// 			{ name: "Workout Buddy", path: "workoutBuddy" },
+// 			{ name: "Amiibo Buddy", path: "amiiboBuddy" },
+// 			{ name: "Poke Buddy", path: "pokeBuddy" },
+// 			{ name: "Lorcana Buddy", path: "lorcanaBuddy" },
+// 		],
+// 	},
+// 	lorcanaBuddy: {
+// 		name: "Lorcana Buddy",
+// 		path: "lorcanaBuddy",
+// 		class: "lorcana-buddy",
+// 		pages: [
+// 			{ name: "Browse", path: "browse" },
+// 			{ name: "My Collection", path: "myCollection" },
+// 			{ name: "Wishlist", path: "wishlist" },
+// 		],
+// 	},
+// };
 // create new array from old Array
 export const newArrForState = () => {};
 

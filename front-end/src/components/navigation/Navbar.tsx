@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { domains } from "../../utils/utils";
+import domainsJSON from "../../data/domains.json";
+import { domainsFromDomainsJSON } from "../../utils/utils";
 import { TDomain, TPage } from "../../api/types";
 import "../../styles/navbar.css";
 
@@ -8,6 +9,7 @@ export const Navbar = () => {
 	const [pages, setPages] = useState<TPage[]>([]);
 	const location = useLocation();
 	const [domain, setDomain] = useState<TDomain>();
+	const domains = domainsFromDomainsJSON(domainsJSON);
 
 	useEffect(() => {
 		const splitPathName = location.pathname.split("/");
