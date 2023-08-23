@@ -98,7 +98,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 
 	return (
 		<div className="exercise-page">
-			<h2>Exercises </h2>
+			<h2 className="page-heading">Exercises </h2>
 			<div className="search-container">
 				<AutoComplete
 					style={{

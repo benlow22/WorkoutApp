@@ -144,10 +144,10 @@ export const domains: TDomains = {
 		path: "workoutBuddy",
 		class: "workout-buddy",
 		pages: [
-			{ name: "workouts", path: "workouts" },
-			{ name: "exercises", path: "exercises" },
-			{ name: "explore", path: "explore" },
-			{ name: "tips", path: "tips" },
+			{ name: "Workouts", path: "workouts" },
+			{ name: "Exercises", path: "exercises" },
+			{ name: "Explore", path: "explore" },
+			{ name: "Tips", path: "tips" },
 		],
 	},
 	amiiboBuddy: {

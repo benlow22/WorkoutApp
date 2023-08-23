@@ -18,6 +18,8 @@ import { BuddySystemDashboard } from "./apps/buddySystem/BuddySystemDashboard";
 import { LorcanaBuddyDashboard } from "./apps/lorcanaBuddy/dashboard";
 import { BuddySystemHomepage } from "./pages/buddySystemHomepage/BuddySystemHomepage";
 import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
+import { WorkoutBuddyDashboard } from "./apps/workoutBuddy/src/pages/dashboard/WorkoutBuddyDashboard";
+import { WorkoutBuddyHomepage } from "./apps/workoutBuddy/src/pages/homepage/WorkoutBuddyHomepage";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
@@ -26,7 +28,7 @@ const router = createBrowserRouter(
 			<Route element={<AuthRoute />}>
 				{/* only authenticated users can use these routes  */}
 				<Route path="buddySystem" element={<BuddySystemDashboard />} />
-				<Route path="workoutBuddy" element={<WorkoutBuddy />} />
+				<Route path="workoutBuddy">{WorkoutBuddy}</Route>
 				<Route path="amiiboBuddy" element={<AmiiboBuddyDashboard />} />
 				<Route path="amiiboBuddy/browse" element={<BrowsePage />} />
 				<Route
