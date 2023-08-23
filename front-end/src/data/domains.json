@@ -39,9 +39,8 @@
 			"path": "pokeBuddy",
 			"class": "poke-buddy",
 			"pages": [
-				{ "name": "Browse", "path": "browse" },
-				{ "name": "My Collection", "path": "myCollection" },
-				{ "name": "Wishlist", "path": "wishlist" }
+				{ "name": "Type Effectiveness", "path": "typeEffectiveness" },
+				{ "name": "Quiz", "path": "quiz" }
 			]
 		},
 		"lorcanaBuddy": {

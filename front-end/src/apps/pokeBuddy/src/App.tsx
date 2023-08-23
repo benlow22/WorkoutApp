@@ -1,16 +1,11 @@
-import { Route } from "react-router";
+import { Navigate, Route } from "react-router";
 import { Homepage } from "./pages/homepage/Homepage";
+import { TypeEffectiveness } from "./pages/typeEffectivenessPage/TypeEffectivenessPage";
+import { Quiz } from "./pages/quiz/Quiz";
 
 export const PokeBuddy = [
 	<Route index element={<Homepage />} />,
-	// <Route path="workouts" element={<WorkoutsPage />} />,
-	// <Route path="workouts/:workoutUrl" element={<WorkoutPage />} />,
-	// <Route path="exercises" element={<ExercisesPage />} />,
-	// <Route path="exercises/:exerciseId" element={<Exercise />} />,
-	// <Route path="newWorkout" element={<NewWorkoutPage />} />,
-	// <Route path="explore" element={<ExplorePage />} />,
-
-	// <Route path="tips" element={<TipsPage />} />,
-
-	// <Route path="*" element={<Navigate to="" />} />,
+	<Route path="typeEffectiveness" element={<TypeEffectiveness />} />,
+	<Route path="quiz" element={<Quiz />} />,
+	<Route path="*" element={<Navigate to="" />} />,
 ];

@@ -43,6 +43,16 @@ const theme: {
 		"--previous-nav-links": "rgb(49, 54, 141)",
 		"--previous-primary-button": "rgb(57, 63, 187)",
 	},
+	pokeBuddy: {
+		"--domain-header": "rgb(230, 199, 0)",
+		"--domain-primary-button": "rgb(204, 177, 0)",
+		"--domain-primary-button-hover": "rgb(179, 155, 0)",
+		"--domain-nav-links": "rgb(204, 177, 0)",
+		"--domain-nav-links-active": "rgb(179, 155, 0)",
+		"--previous-header": "rgb(230, 199, 0)",
+		"--previous-nav-links": "rgb(204, 177, 0)",
+		"--previous-primary-button": "rgb(204, 177, 0)",
+	},
 	"buddySystem-to-lorcanaBuddy": {
 		"--domain-header": " rgb(34, 40, 155)",
 		"--domain-primary-button": "rgb(57, 63, 187)",
@@ -103,6 +113,26 @@ const theme: {
 		"--previous-nav-links": "rgb(86, 164, 103)",
 		"--previous-primary-button": "rgb(81, 166, 99)",
 	},
+	"pokeBuddy-to-buddySystem": {
+		"--domain-header": "rgb(69, 150, 86)",
+		"--domain-primary-button": "rgb(81, 166, 99)",
+		"--domain-primary-button-hover": "rgb(107, 185, 124)",
+		"--domain-nav-links": "rgb(86, 164, 103)",
+		"--domain-nav-links-active": "rgb(107, 185, 124)",
+		"--previous-header": "rgb(230, 199, 0)",
+		"--previous-nav-links": "rgb(204, 177, 0)",
+		"--previous-primary-button": "rgb(204, 177, 0)",
+	},
+	"buddySystem-to-pokeBuddy": {
+		"--domain-header": "rgb(230, 199, 0)",
+		"--domain-primary-button": "rgb(204, 177, 0)",
+		"--domain-primary-button-hover": "rgb(179, 155, 0)",
+		"--domain-nav-links": "rgb(204, 177, 0)",
+		"--domain-nav-links-active": "rgb(179, 155, 0)",
+		"--previous-header": "rgb(69, 150, 86)",
+		"--previous-nav-links": "rgb(86, 164, 103)",
+		"--previous-primary-button": "rgb(81, 166, 99)",
+	},
 };
 
 export function changeTheme(domainName: string) {
@@ -143,6 +173,18 @@ export function changeTheme(domainName: string) {
 		case "buddySystem-to-workoutBuddy":
 			useTheme("buddySystem-to-workoutBuddy");
 			localStorage.setItem("theme", "buddySystem-to-workoutBuddy");
+			break;
+		case "pokeBuddy":
+			useTheme("pokeBuddy");
+			localStorage.setItem("theme", "pokeBuddy");
+			break;
+		case "pokeBuddy-to-buddySystem":
+			useTheme("pokeBuddy-to-buddySystem");
+			localStorage.setItem("theme", "pokeBuddy-to-buddySystem");
+			break;
+		case "buddySystem-to-pokeBuddy":
+			useTheme("buddySystem-to-pokeBuddy");
+			localStorage.setItem("theme", "buddySystem-to-pokeBuddy");
 			break;
 		// case "domain":
 		// 	useTheme("domain");
@@ -221,6 +263,15 @@ switch (preferredTheme) {
 		break;
 	case "buddySystem-to-workoutBuddy":
 		useTheme("buddySystem-to-workoutBuddy");
+		break;
+	case "pokeBuddy":
+		useTheme("pokeBuddy");
+		break;
+	case "pokeBuddy-to-buddySystem":
+		useTheme("pokeBuddy-to-buddySystem");
+		break;
+	case "buddySystem-to-pokeBuddy":
+		useTheme("buddySystem-to-pokeBuddy");
 		break;
 	// case "newCase":
 	// 	useTheme("newCase");

@@ -50,7 +50,7 @@ export const Navbar = () => {
 								</NavLink>
 							</li>
 					  ))
-					: "Loading..."}
+					: " "}
 			</ul>
 		</nav>
 	);
