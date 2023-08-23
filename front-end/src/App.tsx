@@ -21,6 +21,7 @@ import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
 import { WorkoutBuddyDashboard } from "./apps/workoutBuddy/src/pages/dashboard/WorkoutBuddyDashboard";
 import { WorkoutBuddyHomepage } from "./apps/workoutBuddy/src/pages/homepage/WorkoutBuddyHomepage";
 import { AmiiboBuddy } from "./apps/amiiboBuddy/src/App";
+import { LorcanaBuddy } from "./apps/lorcanaBuddy/src/App";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
@@ -31,11 +32,7 @@ const router = createBrowserRouter(
 				<Route path="buddySystem" element={<BuddySystemDashboard />} />
 				<Route path="workoutBuddy">{WorkoutBuddy}</Route>
 				<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
-				<Route path="lorcanaBuddy" element={<LorcanaBuddyDashboard />}>
-					<Route path="browse" element={<BrowsePage />} />
-					<Route path="myCollection" element={<BrowsePage />} />
-					<Route path="browse" element={<BrowsePage />} />
-				</Route>
+				<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
 				{/* <Route path="account"> 
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				</Route> */}
