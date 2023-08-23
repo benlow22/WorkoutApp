@@ -4,14 +4,14 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { AuthContext } from "./contexts/AuthProvider";
 import { SpiningLoadingIcon } from "./components/loading/LoadingIcon";
 import domainsJSON from "./data/domains.json";
-import { domainsFromDomainsJSON } from "./utils/utils";
+import { varFromDomainsJSON } from "./utils/utils";
 
 const AuthRoute = () => {
 	const { auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const location = useLocation();
 	const [previousDomain, setPreviousDomain] = useState<string>();
-	const domains = domainsFromDomainsJSON(domainsJSON);
+	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	useEffect(() => {
 		if (!contextIsLoading && location) {
 			const splitPathName = location.pathname.split("/");

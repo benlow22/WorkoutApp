@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { INewExerciseInput, TDomains } from "../api/types";
 import { useLocation } from "react-router-dom";
+import { TDomainsJson } from "../data/domains.types";
 
 // 	const capitalizeChAfterSpace = (ch: string) => {
 // 		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
@@ -126,21 +127,21 @@ export const transformExercisePost = (
 
 //[['15','5'],['25','10']]
 
-// get Domain from URL
-export const domainFromUrl = () => {
-	const location = useLocation();
-	const splitUrl = location.pathname.split("/");
-	if (splitUrl[1] in domains) {
-		console.log("its in ", splitUrl[1] in domains);
-		return splitUrl[1];
-	} else {
-		return "buddySystem";
-	}
-};
+// // get Domain from URL
+// export const domainFromUrl = () => {
+// 	const location = useLocation();
+// 	const splitUrl = location.pathname.split("/");
+// 	if (splitUrl[1] in domains) {
+// 		console.log("its in ", splitUrl[1] in domains);
+// 		return splitUrl[1];
+// 	} else {
+// 		return "buddySystem";
+// 	}
+// };
 
-export const domainsFromDomainsJSON = (json: { domains: TDomains }) => {
-	const { domains } = JSON.parse(JSON.stringify(json));
-	return domains;
+export const varFromDomainsJSON = (json: TDomainsJson, key: string) => {
+	const { [key]: keyName } = JSON.parse(JSON.stringify(json));
+	return keyName;
 };
 
 // export const domains: TDomains = {

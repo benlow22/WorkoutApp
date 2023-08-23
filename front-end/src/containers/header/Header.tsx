@@ -6,7 +6,7 @@ import LogInButton from "./LogInButton";
 import { useLocation } from "react-router-dom";
 import { TDomain } from "../../api/types";
 import domainsJSON from "../../data/domains.json";
-import { domainsFromDomainsJSON } from "../../utils/utils";
+import { varFromDomainsJSON } from "../../utils/utils";
 import { Navbar } from "../../components/navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
 import "./styles/theme.css";
@@ -19,7 +19,7 @@ export const Header: React.FC<{}> = () => {
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
 	const splitUrl = location.pathname.split("/");
-	const domains = domainsFromDomainsJSON(domainsJSON);
+	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 
 	// const [subdomain, setSubdomain] = useState<string>(domain);

@@ -4,14 +4,14 @@ import { Button } from "antd";
 import { AuthContext } from "../../contexts/AuthProvider";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import domainsJSON from "./../../data/domains.json";
-import { domainsFromDomainsJSON } from "../../utils/utils";
+import { varFromDomainsJSON } from "../../utils/utils";
 // import { getSignOut } from "../../api/api";
 const LogoutButton: React.FC<{}> = () => {
 	const { setUsername, setIsLoggedIn, setUserId, user, supabase } =
 		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [previousDomain, setPreviousDomain] = useState<string>();
-	const domains = domainsFromDomainsJSON(domainsJSON);
+	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const location = useLocation();
 	const navigate = useNavigate();
 
