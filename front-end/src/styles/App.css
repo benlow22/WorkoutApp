@@ -59,7 +59,12 @@ h2 {
 .card {
 	padding: 2em;
 }
-
+.currency-price {
+	width: 250px;
+}
+.ant-space .currency {
+	width: 100px;
+}
 .read-the-docs {
 	color: #888;
 }
@@ -463,6 +468,15 @@ div.ant-space-item{
 		font-size: 20px;
 	}
 
+	.currency-price {
+		width: 130px;
+	}
+	.ant-space .currency {
+		width: 75px;
+	}
+	.amiibo-pack-selector {
+		width: 100px;
+	}
 	.logout-button {
 		margin-left: 10px;
 		font-size: 10px;

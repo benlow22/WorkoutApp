@@ -49,10 +49,21 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [rating, setRating] = useState<number>();
 	const [submit, setSubmit] = useState<boolean>(false);
 	const [packId, setPackId] = useState<string>("");
-
+	const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+	const [form] = Form.useForm();
+	const onReset = () => {
+		form.resetFields();
+	};
 	useEffect(() => {
 		getAmiibos();
 	}, []);
+
+	useEffect(() => {
+		if (uploadSuccess) {
+			console.log("time to clear the form or redirect");
+			onReset();
+		}
+	}, [uploadSuccess]);
 
 	useEffect(() => {
 		handleNumberOfAmiiboChange(numberOfAmiibos);
@@ -208,13 +219,17 @@ export const AddAmiibo: React.FC<{}> = () => {
 		setSubmit(true);
 		console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
 	};
-	const uploadAmiiboToSupabase = async (amiibodata) => {
+
+	//can update amiibodata type later
+	const uploadAmiiboToSupabase = async (amiibodata: any) => {
 		const { data, error } = await supabase
 			.from("users_amiibos")
 			.insert(amiibodata)
 			.select();
-		console.log("uploaded data", data);
-		if (error) {
+		if (data) {
+			console.log("upload is a success", data);
+			setUploadSuccess(true);
+		} else {
 			console.error(error);
 		}
 	};
@@ -228,12 +243,19 @@ export const AddAmiibo: React.FC<{}> = () => {
 			<>
 				<h2 className="page-heading"> Add Amiibo To Collection </h2>;
 				<Form
+					form={form}
 					style={{
 						maxWidth: "500px",
 						margin: "auto",
 						padding: "20px",
 						border: "4px grey solid",
 						borderRadius: "10px",
+					}}
+					initialValues={{
+						"input-number": 3,
+						"checkbox-group": ["A", "B"],
+						rate: 3.5,
+						"color-picker": null,
 					}}
 					labelCol={{ span: 4 }}
 					onFinish={onFinish}
@@ -300,53 +322,61 @@ export const AddAmiibo: React.FC<{}> = () => {
 								<Option value="4">4</Option>
 							</Select>
 						</Form.Item>
-						<Form.Item
-							label="Price"
-							name="price"
-							labelCol={{ span: 8 }}
-							wrapperCol={{ span: 16 }}
-							className="price-input-number"
-						>
-							<InputNumber<string>
-								step="0.01"
-								stringMode
-								parser={(value) =>
-									parseFloat(value).toFixed(2).toString()
-								}
-							/>
-						</Form.Item>
-
-						<Form.Item
-							name="currency"
-							label={currency}
-							colon={false}
-							initialValue={"CAD"}
-							style={{
-								display: "inline-flex",
-								color: "white",
-								fontWeight: "lighter",
-								flexWrap: "wrap",
-							}}
-							labelCol={{ span: 5 }}
-							wrapperCol={{ span: 19 }}
-						>
-							<Select
-								style={{ color: "white" }}
-								onChange={(value) =>
-									handleCurrencyChange(value)
-								}
+						<Space className="currency-price">
+							<Form.Item
+								label="Price"
+								name="price"
+								labelCol={{ span: 8 }}
+								wrapperCol={{ span: 16 }}
+								className="price-input-number"
+								style={{
+									display: "inline-block",
+								}}
 							>
-								<Option value="CAD">CAD</Option>
-								<Option value="USD">USD</Option>
-								<Option value="EUR">EUR</Option>
-								<Option value="JPY">JPY</Option>
-								<Option value="AUD">AUD</Option>
-								<Option value="HKD">HKD</Option>
-								<Option value="CNY">CNY</Option>
-								<Option value="IDR">IDR</Option>
-								<Option value="INR">INR</Option>
-							</Select>
-						</Form.Item>
+								<InputNumber<string>
+									step="0.01"
+									stringMode
+									defaultValue="0.00"
+									parser={(value) =>
+										parseFloat(value!).toFixed(2).toString()
+									}
+									prefix={<>{currency}</>}
+								/>
+							</Form.Item>
+
+							<Form.Item
+								name="currency"
+								colon={false}
+								label=" "
+								initialValue={"CAD"}
+								labelCol={{ span: 0 }}
+								wrapperCol={{ span: 24 }}
+								style={{
+									display: "inline-block",
+
+									color: "white",
+									fontWeight: "lighter",
+								}}
+							>
+								<Select
+									style={{ color: "white" }}
+									onChange={(value) =>
+										handleCurrencyChange(value)
+									}
+									className="currency"
+								>
+									<Option value="CAD">CAD</Option>
+									<Option value="USD">USD</Option>
+									<Option value="EUR">EUR</Option>
+									<Option value="JPY">JPY</Option>
+									<Option value="AUD">AUD</Option>
+									<Option value="HKD">HKD</Option>
+									<Option value="CNY">CNY</Option>
+									<Option value="IDR">IDR</Option>
+									<Option value="INR">INR</Option>
+								</Select>
+							</Form.Item>
+						</Space>
 					</Space>
 
 					{Array.from(amiibosArr, (amiibo, index) => (
