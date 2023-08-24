@@ -10,7 +10,7 @@
 				{ "name": "Poke Buddy", "path": "pokeBuddy" },
 				{ "name": "Lorcana Buddy", "path": "lorcanaBuddy" }
 			],
-			"logo": "buddy-system-logo.ico"
+			"logo": "bs-logo.png"
 		},
 		"workoutBuddy": {
 			"name": "Workout Buddy",
@@ -22,7 +22,7 @@
 				{ "name": "Explore", "path": "explore" },
 				{ "name": "Tips", "path": "tips" }
 			],
-			"logo": "workout-buddy-logo.ico"
+			"logo": "wb-logo.png"
 		},
 		"amiiboBuddy": {
 			"name": "Amiibo Buddy",
@@ -35,7 +35,7 @@
 				{ "name": "Returns", "path": "returns" },
 				{ "name": "Add Amiibo", "path": "addAmiibo" }
 			],
-			"logo": "amiibo-buddy-logo.ico"
+			"logo": "ab-logo.png"
 		},
 		"pokeBuddy": {
 			"name": "PokeBuddy",
@@ -45,7 +45,7 @@
 				{ "name": "Type Effectiveness", "path": "typeEffectiveness" },
 				{ "name": "Quiz", "path": "quiz" }
 			],
-			"logo": "poke-buddy-logo.ico"
+			"logo": "pb-logo.png"
 		},
 		"lorcanaBuddy": {
 			"name": "Lorcana Buddy",
@@ -56,7 +56,7 @@
 				{ "name": "My Collection", "path": "myCollection" },
 				{ "name": "Wishlist", "path": "wishlist" }
 			],
-			"logo": "lorcana.ico"
+			"logo": "lb-logo.png"
 		}
 	},
 	"themes": {
