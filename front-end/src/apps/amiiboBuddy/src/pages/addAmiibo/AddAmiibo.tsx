@@ -190,6 +190,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 		console.log("Success:", values);
 		const amiiboPackageId = uuidv4();
 		setPackId(amiiboPackageId);
+
 		const finishedFormValues = {
 			...values,
 			rating: rating,
@@ -217,10 +218,19 @@ export const AddAmiibo: React.FC<{}> = () => {
 				thumbnail_url: fileList[0].uid,
 			})
 		);
-		uploadAmiiboToSupabase(packData);
-		console.log(packData);
+
+		const photoPaths = fileList.map((file) => file.uid);
+		// console.log(photoPaths);
+		// console.log(packData);
 		setSubmit(true);
-		console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+
+		try {
+			uploadAmiiboToSupabase(packData);
+			uploadPhotoPathsToSupabase(amiiboPackageId, photoPaths);
+			console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+		} catch (e) {
+			console.error(e);
+		}
 	};
 
 	//can update amiibodata type later
@@ -237,6 +247,22 @@ export const AddAmiibo: React.FC<{}> = () => {
 		}
 	};
 
+	const uploadPhotoPathsToSupabase = async (
+		packId: string,
+		pathsArr: string[]
+	) => {
+		const { data, error } = await supabase
+			.from("ab_pack_id_image_paths")
+			.insert([
+				{ pack_id: packId, photo_paths: pathsArr, user_id: userId },
+			])
+			.select();
+		if (data) {
+			console.log("upload photo paths is a success", data);
+		} else {
+			console.error(error);
+		}
+	};
 	const onFinishFailed = (errorInfo: any) => {
 		console.log("Failed:", errorInfo);
 	};
