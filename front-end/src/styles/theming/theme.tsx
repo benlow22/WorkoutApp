@@ -97,6 +97,7 @@ function useTheme(themeChoice: string) {
 		"--previous-primary-button",
 		theme[themeChoice]["--previous-primary-button"]
 	);
+
 	// document.documentElement.style.setProperty(
 	// 	"property",
 	// 	theme[themeChoice]["property"]
