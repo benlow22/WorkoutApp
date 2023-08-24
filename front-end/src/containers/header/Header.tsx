@@ -70,7 +70,7 @@ export const Header: React.FC<{}> = () => {
 		if (domainObj && auth === false) {
 			setIsLoading(false);
 		}
-		console.log("header", location);
+		// console.log("header", location);
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
