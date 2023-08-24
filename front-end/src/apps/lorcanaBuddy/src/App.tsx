@@ -5,11 +5,11 @@ import { Wishlist } from "./pages/wishlist/Wishlist";
 import { BrowsePage } from "./pages/browse/BrowsePage";
 
 export const LorcanaBuddy = [
-	<Route index element={<LorcanaBuddyDashboard />} />,
-	<Route path="myCollection" element={<MyCollection />} />,
-	<Route path="browse" element={<BrowsePage />} />,
-	<Route path="wishlist" element={<Wishlist />} />,
-	<Route path="*" element={<Navigate to="" />} />,
+	<Route index element={<LorcanaBuddyDashboard />} key={"LB1"} />,
+	<Route path="myCollection" element={<MyCollection />} key={"LB2"} />,
+	<Route path="browse" element={<BrowsePage />} key={"LB3"} />,
+	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,
+	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
 ];
 
 // export const WorkoutBuddy = [

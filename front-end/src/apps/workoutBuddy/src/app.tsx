@@ -9,17 +9,17 @@ import { ExplorePage } from "./pages/explorePage/ExplorePage";
 import { TipsPage } from "./pages/tipsPage/TipsPage";
 
 export const WorkoutBuddy = [
-	<Route index element={<WorkoutBuddyHomepage />} />,
-	<Route path="workouts" element={<WorkoutsPage />} />,
-	<Route path="workouts/:workoutUrl" element={<WorkoutPage />} />,
-	<Route path="exercises" element={<ExercisesPage />} />,
-	<Route path="exercises/:exerciseId" element={<Exercise />} />,
-	<Route path="newWorkout" element={<NewWorkoutPage />} />,
-	<Route path="explore" element={<ExplorePage />} />,
+	<Route index element={<WorkoutBuddyHomepage />} key={"WB1"} />,
+	<Route path="workouts" element={<WorkoutsPage />} key={"WB2"} />,
+	<Route path="workouts/:workoutUrl" element={<WorkoutPage />} key={"WB3"} />,
+	<Route path="exercises" element={<ExercisesPage />} key={"WB4"} />,
+	<Route path="exercises/:exerciseId" element={<Exercise />} key={"WB5"} />,
+	<Route path="newWorkout" element={<NewWorkoutPage />} key={"WB6"} />,
+	<Route path="explore" element={<ExplorePage />} key={"WB7"} />,
 
-	<Route path="tips" element={<TipsPage />} />,
+	<Route path="tips" element={<TipsPage />} key={"WB8"} />,
 
-	<Route path="*" element={<Navigate to="" />} />,
+	<Route path="*" element={<Navigate to="" />} key={"WB9"} />,
 ];
 
 // export const WorkoutBuddy = [

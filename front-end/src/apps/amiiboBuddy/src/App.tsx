@@ -6,12 +6,12 @@ import { Wishlist } from "./pages/wishlist/Wishlist";
 import { AddAmiibo } from "./pages/addAmiibo/AddAmiibo";
 
 export const AmiiboBuddy = [
-	<Route index element={<AmiiboBuddyHomePage />} />,
-	<Route path="myCollection" element={<MyCollection />} />,
-	<Route path="returns" element={<Returns />} />,
-	<Route path="wishlist" element={<Wishlist />} />,
-	<Route path="addAmiibo" element={<AddAmiibo />} />,
-	<Route path="*" element={<Navigate to="" />} />,
+	<Route index element={<AmiiboBuddyHomePage />} key={"AB1"} />,
+	<Route path="myCollection" element={<MyCollection />} key={"AB2"} />,
+	<Route path="returns" element={<Returns />} key={"AB3"} />,
+	<Route path="wishlist" element={<Wishlist />} key={"AB4"} />,
+	<Route path="addAmiibo" element={<AddAmiibo />} key={"AB5"} />,
+	<Route path="*" element={<Navigate to="" />} key={"AB5"} />,
 ];
 
 // export const WorkoutBuddy = [

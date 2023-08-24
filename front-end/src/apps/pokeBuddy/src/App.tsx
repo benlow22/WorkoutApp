@@ -4,8 +4,12 @@ import { TypeEffectiveness } from "./pages/typeEffectivenessPage/TypeEffectivene
 import { Quiz } from "./pages/quiz/Quiz";
 
 export const PokeBuddy = [
-	<Route index element={<Homepage />} />,
-	<Route path="typeEffectiveness" element={<TypeEffectiveness />} />,
-	<Route path="quiz" element={<Quiz />} />,
-	<Route path="*" element={<Navigate to="" />} />,
+	<Route index element={<Homepage />} key={"PB1"} />,
+	<Route
+		path="typeEffectiveness"
+		element={<TypeEffectiveness />}
+		key={"PB2"}
+	/>,
+	<Route path="quiz" element={<Quiz />} key={"PB3"} />,
+	<Route path="*" element={<Navigate to="" />} key={"PB4"} />,
 ];
