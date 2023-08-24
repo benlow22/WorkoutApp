@@ -8,7 +8,7 @@ export const SpiningLoadingIcon: React.FC = () => (
 		className="spinning-loading-icon white-font"
 	>
 		<Space>
-			<Spin tip="Loading" size="large"></Spin>
+			<Spin size="large"></Spin>
 		</Space>
 	</Space>
 );
