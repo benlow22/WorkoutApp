@@ -21,53 +21,30 @@ export const LoginPage = () => {
 	const location = useLocation();
 	// if entered Auth Url => send back to that URL once Auth
 	// if not from Auth URL (homepage) => then no state will be given
-	const redirectLocation = location.state ? location.state.initialUrl : "/";
-	// if there is no state = straight to login page = redirect to "/"']
+	const redirectLocation = location.state ? location.state.previousPath : "/";
 
-	useEffect(() => {
-		if (!contextIsLoading && auth !== undefined) {
-			if (location.pathname) {
-				const splitPathName = location.pathname.split("/");
-				const subDomain =
-					splitPathName[1] in domains
-						? splitPathName[1]
-						: "buddySystem";
-				setPreviousDomain(subDomain);
-			} else {
-				setPreviousDomain(undefined);
-			}
-
-			setIsLoading(false);
-		}
-	}, [auth]);
-	// if location = null = no location.state = went STRAIGHT to login page
-
-	return !isLoading ? (
-		auth ? (
-			<Navigate
-				to={redirectLocation}
-				state={{ previousDomain: previousDomain }}
-			/>
-		) : (
-			<div className="auth-page">
-				<p>Please Login Below</p>
-				<Auth
-					supabaseClient={supabase}
-					appearance={{
-						theme: ThemeSupa,
-						variables: {
-							default: {
-								colors: {
-									brand: "red",
-									brandAccent: "darkred",
-								},
+	return auth ? (
+		<Navigate
+			to={redirectLocation}
+			state={{ previousDomain: previousDomain }}
+		/>
+	) : (
+		<div className="auth-page">
+			<p>Please Login Below</p>
+			<Auth
+				supabaseClient={supabase}
+				appearance={{
+					theme: ThemeSupa,
+					variables: {
+						default: {
+							colors: {
+								brand: "red",
+								brandAccent: "darkred",
 							},
 						},
-					}}
-				/>
-			</div>
-		)
-	) : (
-		<SpiningLoadingIcon />
+					},
+				}}
+			/>
+		</div>
 	);
 };

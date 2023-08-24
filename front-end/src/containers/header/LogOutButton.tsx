@@ -10,7 +10,6 @@ const LogoutButton: React.FC<{}> = () => {
 	const { setUsername, setIsLoggedIn, setUserId, user, supabase } =
 		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [previousDomain, setPreviousDomain] = useState<string>();
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -18,15 +17,13 @@ const LogoutButton: React.FC<{}> = () => {
 	const handleSignout = async () => {
 		try {
 			setIsLoading(true);
-			const previousDomain = location.pathname;
 			const splitPathName = location.pathname.split("/");
-			const subDomain =
+			const previousDomain =
 				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
-			setPreviousDomain(subDomain);
 			navigate(location.pathname, {
 				state: {
 					isLoggedOutCompletely: true,
-					previousDomain: subDomain,
+					previousDomain: previousDomain,
 				},
 			});
 			const { error } = await supabase.auth.signOut();

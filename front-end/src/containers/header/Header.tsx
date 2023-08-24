@@ -41,7 +41,7 @@ export const Header: React.FC<{}> = () => {
 		}
 		if (prevDom === curDom || !prevDom) {
 			headerTransition = `${curDom}`;
-			console.log(headerTransition);
+			// console.log(headerTransition);
 		} else {
 			headerTransition = `${prevDom}-to-${curDom}`;
 			// console.log(headerTransition);
@@ -70,6 +70,7 @@ export const Header: React.FC<{}> = () => {
 		if (domainObj && auth === false) {
 			setIsLoading(false);
 		}
+		console.log("header", location);
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
@@ -112,7 +113,12 @@ export const Header: React.FC<{}> = () => {
 							) : (
 								<>
 									{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
-										<Link to={`/${domain}/login`}>
+										<Link
+											to={`/${domain}/login`}
+											state={{
+												previousPath: location.pathname,
+											}}
+										>
 											<LogInButton />
 										</Link>
 									)}{" "}
