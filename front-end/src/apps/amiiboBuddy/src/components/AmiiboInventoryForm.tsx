@@ -345,9 +345,12 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 					))}
 					<div className="amiibo-image-banner">
 						{amiibosArr.map(
-							(amiibo) =>
+							(amiibo, index) =>
 								amiibo && (
-									<div className="amiibo-image-card">
+									<div
+										className="amiibo-image-card"
+										key={`${amiibo}-${index} `}
+									>
 										<h4
 											style={{ fontWeight: "lighter" }}
 											className={

@@ -6,12 +6,14 @@ import { AmiiboCard } from "./AmiiboCard";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import { AuthContext } from "../../../../contexts/AuthProvider";
+import { BrowsePage } from "./BrowsePage";
 
 export const AmiiboBuddyHomePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
 	return (
 		<div className="amiibo-homepage">
 			<h2 className="page-heading">Welcome to Amiibo Buddy</h2>
+			<BrowsePage />
 		</div>
 	);
 };

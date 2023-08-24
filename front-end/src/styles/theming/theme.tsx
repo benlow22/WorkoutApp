@@ -1,109 +1,7 @@
-const theme: {
-	[domain: string]: {
-		[cssVar: string]: string;
-	};
-} = {
-	buddySystem: {
-		"--domain-header": "rgb(69, 150, 86)",
-		"--domain-primary-button": "rgb(81, 166, 99)",
-		"--domain-primary-button-hover": "rgb(107, 185, 124)",
-		"--domain-nav-links": "rgb(86, 164, 103)",
-		"--domain-nav-links-active": "rgb(107, 185, 124)",
-		"--previous-header": "rgb(69, 150, 86)", // use the same domain-header if not changing
-		"--previous-nav-links": "rgb(86, 164, 103)",
-		"--previous-primary-button": "rgb(81, 166, 99)",
-	},
-	workoutBuddy: {
-		"--domain-header": "rgb(0, 110, 255)",
-		"--domain-primary-button": "#1677ff",
-		"--domain-primary-button-hover": "#4096ff",
-		"--domain-nav-links": "rgb(44, 129, 239)",
-		"--domain-nav-links-active": "rgb(75, 148, 245)",
-		"--previous-header": "rgb(0, 110, 255)",
-		"--previous-nav-links": "rgb(44, 129, 239)",
-		"--previous-primary-button": "#1677ff",
-	},
-	amiiboBuddy: {
-		"--domain-header": "rgb(148, 22, 22)",
-		"--domain-primary-button": "#bc4b4b",
-		"--domain-primary-button-hover": "#c76565",
-		"--domain-nav-links": "rgb(156, 45, 45)",
-		"--domain-nav-links-active": "rgb(182, 78, 78)",
-		"--previous-header": "rgb(148, 22, 22)",
-		"--previous-nav-links": "rgb(156, 45, 45)",
-		"--previous-primary-button": "#bc4b4b",
-	},
-	lorcanaBuddy: {
-		"--domain-header": " rgb(34, 40, 155)",
-		"--domain-primary-button": "rgb(57, 63, 187)",
-		"--domain-primary-button-hover": "rgb(80, 86, 196)",
-		"--domain-nav-links": "rgb(49, 54, 141)",
-		"--domain-nav-links-active": "rgb(82, 86, 152)",
-		"--previous-header": " rgb(34, 40, 155)",
-		"--previous-nav-links": "rgb(49, 54, 141)",
-		"--previous-primary-button": "rgb(57, 63, 187)",
-	},
-	"buddySystem-to-lorcanaBuddy": {
-		"--domain-header": " rgb(34, 40, 155)",
-		"--domain-primary-button": "rgb(57, 63, 187)",
-		"--domain-primary-button-hover": "rgb(80, 86, 196)",
-		"--domain-nav-links": "rgb(49, 54, 141)",
-		"--domain-nav-links-active": "rgb(82, 86, 152)",
-		"--previous-header": "rgb(69, 150, 86)",
-		"--previous-nav-links": "rgb(86, 164, 103)",
-		"--previous-primary-button": "rgb(81, 166, 99)",
-	},
-	"lorcanaBuddy-to-buddySystem": {
-		"--domain-header": "rgb(69, 150, 86)",
-		"--domain-primary-button": "rgb(81, 166, 99)",
-		"--domain-primary-button-hover": "rgb(107, 185, 124)",
-		"--domain-nav-links": "rgb(86, 164, 103)",
-		"--domain-nav-links-active": "rgb(107, 185, 124)",
-		"--previous-header": " rgb(34, 40, 155)",
-		"--previous-nav-links": "rgb(49, 54, 141)",
-		"--previous-primary-button": "rgb(57, 63, 187)",
-	},
-	"buddySystem-to-amiiboBuddy": {
-		"--domain-header": "rgb(148, 22, 22)",
-		"--domain-primary-button": "#bc4b4b",
-		"--domain-primary-button-hover": "#c76565",
-		"--domain-nav-links": "rgb(156, 45, 45)",
-		"--domain-nav-links-active": "rgb(182, 78, 78)",
-		"--previous-header": "rgb(69, 150, 86)",
-		"--previous-nav-links": "rgb(86, 164, 103)",
-		"--previous-primary-button": "rgb(81, 166, 99)",
-	},
-	"amiiboBuddy-to-buddySystem": {
-		"--domain-header": "rgb(69, 150, 86)",
-		"--domain-primary-button": "rgb(81, 166, 99)",
-		"--domain-primary-button-hover": "rgb(107, 185, 124)",
-		"--domain-nav-links": "rgb(86, 164, 103)",
-		"--domain-nav-links-active": "rgb(182, 78, 78)",
-		"--previous-header": "rgb(148, 22, 22)",
-		"--previous-nav-links": "rgb(156, 45, 45)",
-		"--previous-primary-button": "#bc4b4b",
-	},
-	"workoutBuddy-to-buddySystem": {
-		"--domain-header": "rgb(69, 150, 86)",
-		"--domain-primary-button": "rgb(81, 166, 99)",
-		"--domain-primary-button-hover": "rgb(107, 185, 124)",
-		"--domain-nav-links": "rgb(86, 164, 103)",
-		"--domain-nav-links-active": "rgb(107, 185, 124)",
-		"--previous-header": "rgb(0, 110, 255)",
-		"--previous-nav-links": "rgb(44, 129, 239)",
-		"--previous-primary-button": "#1677ff",
-	},
-	"buddySystem-to-workoutBuddy": {
-		"--domain-header": "rgb(0, 110, 255)",
-		"--domain-primary-button": "#1677ff",
-		"--domain-primary-button-hover": "#4096ff",
-		"--domain-nav-links": "rgb(44, 129, 239)",
-		"--domain-nav-links-active": "rgb(75, 148, 245)",
-		"--previous-header": "rgb(69, 150, 86)",
-		"--previous-nav-links": "rgb(86, 164, 103)",
-		"--previous-primary-button": "rgb(81, 166, 99)",
-	},
-};
+import { varFromDomainsJSON } from "../../utils/utils";
+import domains from "../../data/domains.json";
+
+const theme = varFromDomainsJSON(domains, "themes");
 
 export function changeTheme(domainName: string) {
 	switch (domainName) {
@@ -143,6 +41,18 @@ export function changeTheme(domainName: string) {
 		case "buddySystem-to-workoutBuddy":
 			useTheme("buddySystem-to-workoutBuddy");
 			localStorage.setItem("theme", "buddySystem-to-workoutBuddy");
+			break;
+		case "pokeBuddy":
+			useTheme("pokeBuddy");
+			localStorage.setItem("theme", "pokeBuddy");
+			break;
+		case "pokeBuddy-to-buddySystem":
+			useTheme("pokeBuddy-to-buddySystem");
+			localStorage.setItem("theme", "pokeBuddy-to-buddySystem");
+			break;
+		case "buddySystem-to-pokeBuddy":
+			useTheme("buddySystem-to-pokeBuddy");
+			localStorage.setItem("theme", "buddySystem-to-pokeBuddy");
 			break;
 		// case "domain":
 		// 	useTheme("domain");
@@ -221,6 +131,15 @@ switch (preferredTheme) {
 		break;
 	case "buddySystem-to-workoutBuddy":
 		useTheme("buddySystem-to-workoutBuddy");
+		break;
+	case "pokeBuddy":
+		useTheme("pokeBuddy");
+		break;
+	case "pokeBuddy-to-buddySystem":
+		useTheme("pokeBuddy-to-buddySystem");
+		break;
+	case "buddySystem-to-pokeBuddy":
+		useTheme("buddySystem-to-pokeBuddy");
 		break;
 	// case "newCase":
 	// 	useTheme("newCase");

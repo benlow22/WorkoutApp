@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import { INewExerciseInput, TDomains } from "../api/types";
 import { useLocation } from "react-router-dom";
+import { TDomainsJson } from "../data/domains.types";
 
 // 	const capitalizeChAfterSpace = (ch: string) => {
 // 		if ((ch >= "a" && ch <= "z") || (ch >= "A" && ch <= "Z")) {
@@ -126,64 +127,69 @@ export const transformExercisePost = (
 
 //[['15','5'],['25','10']]
 
-// get Domain from URL
-export const domainFromUrl = () => {
-	const location = useLocation();
-	const splitUrl = location.pathname.split("/");
-	if (splitUrl[1] in domains) {
-		console.log("its in ", splitUrl[1] in domains);
-		return splitUrl[1];
-	} else {
-		return "buddySystem";
-	}
+// // get Domain from URL
+// export const domainFromUrl = () => {
+// 	const location = useLocation();
+// 	const splitUrl = location.pathname.split("/");
+// 	if (splitUrl[1] in domains) {
+// 		console.log("its in ", splitUrl[1] in domains);
+// 		return splitUrl[1];
+// 	} else {
+// 		return "buddySystem";
+// 	}
+// };
+
+export const varFromDomainsJSON = (json: TDomainsJson, key: string) => {
+	const { [key]: keyName } = JSON.parse(JSON.stringify(json));
+	return keyName;
 };
 
-export const domains: TDomains = {
-	workoutBuddy: {
-		name: "Workout Buddy",
-		path: "workoutBuddy",
-		class: "workout-buddy",
-		pages: [
-			{ name: "workouts", path: "workouts" },
-			{ name: "exercises", path: "exercises" },
-			{ name: "explore", path: "explore" },
-			{ name: "tips", path: "tips" },
-		],
-	},
-	amiiboBuddy: {
-		name: "Amiibo Buddy",
-		path: "amiiboBuddy",
-		class: "amiibo-buddy",
-		pages: [
-			{ name: "Browse", path: "browse" },
-			{ name: "My Collection", path: "myCollection" },
-			{ name: "Wishlist", path: "wishlist" },
-			{ name: "Returns", path: "returns" },
-			{ name: "Add Amiibo", path: "addAmiibo" },
-		],
-	},
-	buddySystem: {
-		name: "Buddy System",
-		path: "buddySystem",
-		class: "buddy-system",
-		pages: [
-			{ name: "Workout Buddy", path: "workoutBuddy" },
-			{ name: "Amiibo Buddy", path: "amiiboBuddy" },
-			{ name: "Poke Buddy", path: "pokeBuddy" },
-			{ name: "Lorcana Buddy", path: "lorcanaBuddy" },
-		],
-	},
-	lorcanaBuddy: {
-		name: "Lorcana Buddy",
-		path: "lorcanaBuddy",
-		class: "lorcana-buddy",
-		pages: [
-			{ name: "Browse", path: "browse" },
-			{ name: "My Collection", path: "myCollection" },
-			{ name: "Wishlist", path: "wishlist" },
-		],
-	},
-};
+// export const domains: TDomains = {
+// 	workoutBuddy: {
+// 		name: "Workout Buddy",
+// 		path: "workoutBuddy",
+// 		class: "workout-buddy",
+// 		pages: [
+// 			{ name: "Workouts", path: "workouts" },
+// 			{ name: "Exercises", path: "exercises" },
+// 			{ name: "Explore", path: "explore" },
+// 			{ name: "Tips", path: "tips" },
+// 		],
+// 	},
+// 	amiiboBuddy: {
+// 		name: "Amiibo Buddy",
+// 		path: "amiiboBuddy",
+// 		class: "amiibo-buddy",
+// 		pages: [
+// 			{ name: "Browse", path: "browse" },
+// 			{ name: "My Collection", path: "myCollection" },
+// 			{ name: "Wishlist", path: "wishlist" },
+// 			{ name: "Returns", path: "returns" },
+// 			{ name: "Add Amiibo", path: "addAmiibo" },
+// 		],
+// 	},
+// 	buddySystem: {
+// 		name: "Buddy System",
+// 		path: "buddySystem",
+// 		class: "buddy-system",
+// 		pages: [
+// 			{ name: "Workout Buddy", path: "workoutBuddy" },
+// 			{ name: "Amiibo Buddy", path: "amiiboBuddy" },
+// 			{ name: "Poke Buddy", path: "pokeBuddy" },
+// 			{ name: "Lorcana Buddy", path: "lorcanaBuddy" },
+// 		],
+// 	},
+// 	lorcanaBuddy: {
+// 		name: "Lorcana Buddy",
+// 		path: "lorcanaBuddy",
+// 		class: "lorcana-buddy",
+// 		pages: [
+// 			{ name: "Browse", path: "browse" },
+// 			{ name: "My Collection", path: "myCollection" },
+// 			{ name: "Wishlist", path: "wishlist" },
+// 		],
+// 	},
+// };
 // create new array from old Array
 export const newArrForState = () => {};
 

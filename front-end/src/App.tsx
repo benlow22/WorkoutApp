@@ -2,6 +2,7 @@ import "./styles/App.css";
 import "./styles/index.css";
 
 import {
+	Navigate,
 	Route,
 	RouterProvider,
 	createBrowserRouter,
@@ -11,37 +12,30 @@ import {
 import Root from "./containers/Root";
 import { LoginPage } from "./components/auth/login/LoginPage";
 import AuthRoute from "./AuthRoute";
-import { BrowsePage } from "./apps/amiiboBuddy/src/components/BrowsePage";
-import { AmiiboInventoryForm } from "./apps/amiiboBuddy/src/components/AmiiboInventoryForm";
-import { AmiiboBuddyDashboard } from "./apps/amiiboBuddy/src/pages/AmiiboBuddyDashboard";
 import { BuddySystemDashboard } from "./apps/buddySystem/BuddySystemDashboard";
-import { LorcanaBuddyDashboard } from "./apps/lorcanaBuddy/dashboard";
 import { BuddySystemHomepage } from "./pages/buddySystemHomepage/BuddySystemHomepage";
+import { AmiiboBuddy } from "./apps/amiiboBuddy/src/App";
+import { LorcanaBuddy } from "./apps/lorcanaBuddy/src/App";
+import { PokeBuddy } from "./apps/pokeBuddy/src/App";
 import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
+
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
 			<Route index element={<BuddySystemHomepage />} />
 			<Route path="login" element={<LoginPage />} />
-			<Route element={<AuthRoute />}>
-				{/* only authenticated users can use these routes  */}
-				<Route path="buddySystem" element={<BuddySystemDashboard />} />
-				<Route path="workoutBuddy" element={<WorkoutBuddy />} />
-				<Route path="amiiboBuddy" element={<AmiiboBuddyDashboard />} />
-				<Route path="amiiboBuddy/browse" element={<BrowsePage />} />
-				<Route
-					path="amiiboBuddy/addAmiibo"
-					element={<AmiiboInventoryForm />}
-				/>
-				<Route path="lorcanaBuddy" element={<LorcanaBuddyDashboard />}>
-					<Route path="browse" element={<BrowsePage />} />
-					<Route path="myCollection" element={<BrowsePage />} />
-					<Route path="browse" element={<BrowsePage />} />
-				</Route>
-				{/* <Route path="account"> 
+			{/* only authenticated users can use these routes  */}
+			<Route path="buddySystem" element={<BuddySystemDashboard />} />
+			<Route path="workoutBuddy">{WorkoutBuddy}</Route>
+			<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
+			{/* <Route element={<AuthRoute />}> */}
+			<Route path="pokeBuddy">{PokeBuddy}</Route>
+			<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
+			{/* <Route path="account"> 
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				</Route> */}
-			</Route>
+			{/* </Route> */}
+			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)
 );
