@@ -22,7 +22,7 @@ export const Header: React.FC<{}> = () => {
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 
-	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
+	const [domainObj, setDomainObj] = useState<TDomain>(domains[domain]); // wait for username to be fetched before rendering.
 	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
 	const [currentDomain, setCurrentDomain] = useState<string>(domain);
 	const [headerTransition, setHeaderTransition] = useState<string>();
@@ -70,34 +70,29 @@ export const Header: React.FC<{}> = () => {
 		if (domainObj && auth === false) {
 			setIsLoading(false);
 		}
-	}, [auth, contextIsLoading, domain, username]);
+	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
 		<div className="header" key={domain}>
 			<div className="site-banner white-font">
-				{!isLoading &&
-					(auth ? (
-						domainObj && (
-							<>
-								<Helmet>
-									<link
-										rel="icon"
-										type="image/x-icon"
-										href={`/${domainObj.logo}`}
-									/>
-									<title>{domains[domain].name}</title>
-								</Helmet>
-								<Link
-									to={`/${domains[domain].path}`}
-									key={domain}
-								>
-									{domain && (
-										<h1 key={domain}>
-											{domains[domain].name}
-										</h1>
-									)}
-								</Link>
-								<div className="account">
+				{domainObj && (
+					<>
+						<Helmet>
+							<link
+								rel="icon"
+								type="image/x-icon"
+								href={`/${domainObj.logo}`}
+							/>
+							<title>{domains[domain].name}</title>
+						</Helmet>
+						<Link to={`/${domains[domain].path}`} key={domain}>
+							{domain && (
+								<h1 key={domain}>{domains[domain].name}</h1>
+							)}
+						</Link>
+						<div className="account">
+							{auth ? (
+								<>
 									<Link to="/createUsername">
 										{!username
 											? "Create Username"
@@ -113,32 +108,28 @@ export const Header: React.FC<{}> = () => {
 									>
 										<HomeOutlined />
 									</Link>
-								</div>
-							</>
-						)
-					) : (
-						<>
-							<Link to="/">
-								<h1>{domainObj?.name}</h1>
-							</Link>
-							<div className="account">
-								{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
-									<Link to="/login">
-										<LogInButton />
+								</>
+							) : (
+								<>
+									{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
+										<Link to={`/${domain}/login`}>
+											<LogInButton />
+										</Link>
+									)}{" "}
+									<Link
+										to={`/buddySystem`}
+										className="home-button"
+										state={{
+											previousDomain: currentDomain,
+										}}
+									>
+										<HomeOutlined />
 									</Link>
-								)}{" "}
-								<Link
-									to={`/buddySystem`}
-									className="home-button"
-									state={{
-										previousDomain: currentDomain,
-									}}
-								>
-									<HomeOutlined />
-								</Link>
-							</div>
-						</>
-					))}
+								</>
+							)}
+						</div>
+					</>
+				)}
 			</div>
 			<Navbar />
 		</div>

@@ -16,9 +16,7 @@ export const WorkoutBuddy = [
 	<Route path="exercises/:exerciseId" element={<Exercise />} key={"WB5"} />,
 	<Route path="newWorkout" element={<NewWorkoutPage />} key={"WB6"} />,
 	<Route path="explore" element={<ExplorePage />} key={"WB7"} />,
-
 	<Route path="tips" element={<TipsPage />} key={"WB8"} />,
-
 	<Route path="*" element={<Navigate to="" />} key={"WB9"} />,
 ];
 

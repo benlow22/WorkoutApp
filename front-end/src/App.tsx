@@ -23,7 +23,7 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
 			<Route index element={<BuddySystemHomepage />} />
-			<Route path="login" element={<LoginPage />} />
+			<Route path=":domain/login" element={<LoginPage />} />
 			{/* only authenticated users can use these routes  */}
 			<Route path="buddySystem" element={<BuddySystemDashboard />} />
 			<Route path="workoutBuddy">{WorkoutBuddy}</Route>
