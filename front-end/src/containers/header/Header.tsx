@@ -11,10 +11,12 @@ import { Navbar } from "../../components/navigation/Navbar";
 import { HomeOutlined } from "@ant-design/icons";
 import "./styles/theme.css";
 import { changeTheme } from "../../styles/theming/theme";
+import { Helmet } from "react-helmet";
+
+import test from "../../images/lorcana-logo.png";
 
 export const Header: React.FC<{}> = () => {
-	const { username, isLoggedIn, auth, contextIsLoading } =
-		useContext(AuthContext);
+	const { username, auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
@@ -22,13 +24,10 @@ export const Header: React.FC<{}> = () => {
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 
-	// const [subdomain, setSubdomain] = useState<string>(domain);
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
-	const [fromLoginHeaderClass, setFromLoginHeaderClass] = useState<string>();
 	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
 	const [currentDomain, setCurrentDomain] = useState<string>();
-	// const [headerTransition, setHeaderTransition] = useState<string>("/");
-	const navigate = useNavigate();
+
 	useEffect(() => {
 		setDomainObj(domains[domain]);
 	}, []);
@@ -53,16 +52,14 @@ export const Header: React.FC<{}> = () => {
 		}
 		if (prevDom === curDom || !prevDom) {
 			headerTransition = `${curDom}`;
-			// console.log(`${curDom}-header`);
 		} else {
 			headerTransition = `${prevDom}-to-${curDom}`;
-			// setHeaderTransition(`${prevDom}-to-${curDom}-header`);
-			// console.log(`${prevDom}-to-${curDom}-header`);
 		}
 		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
 		setPreviousDomain(prevDom);
 		setDomainObj(domains[curDom]);
+		console.log("LOGO", domainObj?.logo);
 	}, [location, auth]);
 
 	// update everytime username changes; if username exists, put it on display, if not, default
@@ -90,6 +87,14 @@ export const Header: React.FC<{}> = () => {
 					(auth ? (
 						domainObj && (
 							<>
+								<Helmet>
+									<link
+										rel="icon"
+										type="image/x-icon"
+										href={`/${domainObj.logo}`}
+									/>
+									<title>{domains[domain].name}</title>
+								</Helmet>
 								<Link
 									to={`/${domains[domain].path}`}
 									key={domain}

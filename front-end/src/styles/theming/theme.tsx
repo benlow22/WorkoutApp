@@ -4,7 +4,6 @@ import domains from "../../data/domains.json";
 const theme = varFromDomainsJSON(domains, "themes");
 
 export function changeTheme(domainName: string) {
-	console.log("theme", theme);
 	switch (domainName) {
 		case "workoutBuddy":
 			useTheme("workoutBuddy");
