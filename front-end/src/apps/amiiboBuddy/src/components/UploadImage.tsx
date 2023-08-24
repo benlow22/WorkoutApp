@@ -175,7 +175,7 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 				cacheControl: "3600",
 				contentType: "image/png",
 			});
-		console.log("DATA", data);
+		console.log("successful photo upload??", data);
 	};
 	const handleUpload = async () => {
 		const packId = uuidv4();

@@ -5,7 +5,7 @@ import fuecoco from "../../../../../images/fuecoco.jpeg";
 
 export const MyCollection = () => {
 	const { auth, username } = useContext(AuthContext);
-
+	const myAmiibos = [];
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>

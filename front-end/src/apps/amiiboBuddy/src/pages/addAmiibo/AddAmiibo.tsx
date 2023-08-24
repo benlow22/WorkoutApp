@@ -186,8 +186,37 @@ export const AddAmiibo: React.FC<{}> = () => {
 			photos: fileList,
 			userId,
 		};
+		const packData = finishedFormValues.amiibos.map(
+			(amiibo: TAmiiboCard) => ({
+				user_id: userId,
+				amiibo_id: amiibo.id,
+				location: locationName,
+				price: values.price,
+				purchase_date: values.purchaseDate,
+				price_currency: values.currency,
+				version: values.version,
+				replace: values.replace,
+				return: values.return,
+				return_by_date: values.returnBy,
+				rating: rating,
+				condition: values.condition,
+				pack_id: amiiboPackageId,
+			})
+		);
+		uploadAmiiboToSupabase(packData);
+		console.log(packData);
 		setSubmit(true);
 		console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+	};
+	const uploadAmiiboToSupabase = async (amiibodata) => {
+		const { data, error } = await supabase
+			.from("users_amiibos")
+			.insert(amiibodata)
+			.select();
+		console.log("uploaded data", data);
+		if (error) {
+			console.error(error);
+		}
 	};
 
 	const onFinishFailed = (errorInfo: any) => {
@@ -278,7 +307,13 @@ export const AddAmiibo: React.FC<{}> = () => {
 							wrapperCol={{ span: 16 }}
 							className="price-input-number"
 						>
-							<InputNumber<string> step="0.01" stringMode />
+							<InputNumber<string>
+								step="0.01"
+								stringMode
+								parser={(value) =>
+									parseFloat(value).toFixed(2).toString()
+								}
+							/>
 						</Form.Item>
 
 						<Form.Item
@@ -403,8 +438,6 @@ export const AddAmiibo: React.FC<{}> = () => {
 					<FormItem name="condition" label="Condition">
 						<Input.TextArea showCount />
 					</FormItem>
-					{/* </> */}
-					{/* )}{" "} */}
 
 					<Space
 						style={{
@@ -481,12 +514,14 @@ export const AddAmiibo: React.FC<{}> = () => {
 						<DatePicker showTime={false} />
 					</Form.Item>
 					<FormItem name="location" label="Bought at">
-						<Places
-							selected={selected}
-							setSelected={setSelected}
-							setLocationName={setLocationName}
-						/>
-						<Input value={locationName} className="hidden" />
+						<>
+							<Places
+								selected={selected}
+								setSelected={setSelected}
+								setLocationName={setLocationName}
+							/>
+							<Input value={locationName} className="hidden" />
+						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
 						<Button type="primary" htmlType="submit">

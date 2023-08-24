@@ -484,12 +484,14 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						<DatePicker showTime={false} />
 					</Form.Item>
 					<FormItem name="location" label="Bought at">
-						<Places
-							selected={selected}
-							setSelected={setSelected}
-							setLocationName={setLocationName}
-						/>
-						<Input value={locationName} className="hidden" />
+						<>
+							<Places
+								selected={selected}
+								setSelected={setSelected}
+								setLocationName={setLocationName}
+							/>
+							<Input value={locationName} className="hidden" />
+						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
 						<Button type="primary" htmlType="submit">
