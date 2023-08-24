@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import { TUsersExerciseData } from "../../../../api/types";
+import { TUsersExerciseData } from "../../../../../api/types";
 
 type TProps = {
 	exercise: TUsersExerciseData;

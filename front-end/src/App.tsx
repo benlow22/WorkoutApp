@@ -14,10 +14,10 @@ import { LoginPage } from "./components/auth/login/LoginPage";
 import AuthRoute from "./AuthRoute";
 import { BuddySystemDashboard } from "./apps/buddySystem/BuddySystemDashboard";
 import { BuddySystemHomepage } from "./pages/buddySystemHomepage/BuddySystemHomepage";
-import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
 import { AmiiboBuddy } from "./apps/amiiboBuddy/src/App";
 import { LorcanaBuddy } from "./apps/lorcanaBuddy/src/App";
 import { PokeBuddy } from "./apps/pokeBuddy/src/App";
+import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

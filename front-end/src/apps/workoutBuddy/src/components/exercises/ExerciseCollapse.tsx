@@ -3,7 +3,7 @@ import type { CollapseProps } from "antd";
 
 import { Button, Collapse } from "antd";
 import { useParams } from "react-router";
-import { TUsersExerciseData } from "../../../../api/types";
+import { TUsersExerciseData } from "../../../../../api/types";
 import ExercisesCollapseChild from "./ExerciseCollapseChild";
 import ExercisesCollapseHeader from "./ExerciseCollapseHeader";
 import { FormOutlined, SettingOutlined } from "@ant-design/icons";
