@@ -24,7 +24,8 @@ export const Header: React.FC<{}> = () => {
 
 	const [domainObj, setDomainObj] = useState<TDomain>(); // wait for username to be fetched before rendering.
 	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
-	const [currentDomain, setCurrentDomain] = useState<string>();
+	const [currentDomain, setCurrentDomain] = useState<string>(domain);
+	const [headerTransition, setHeaderTransition] = useState<string>();
 
 	useEffect(() => {
 		console.log("DOMAIN", domains[domain]);
@@ -32,37 +33,31 @@ export const Header: React.FC<{}> = () => {
 	}, []);
 
 	useEffect(() => {
-		let curDom = "";
+		let curDom = domain;
 		let prevDom = undefined;
 		let headerTransition = "";
-		if (auth === false) {
-			curDom = domain;
-			if (location.state?.previousDomain) {
-				prevDom = location.state.previousDomain;
-			}
-		} else {
-			const splitPathName = location.pathname.split("/");
-			const subDomain =
-				splitPathName[1] in domains ? splitPathName[1] : "buddySystem";
-			curDom = subDomain;
-			if (location.state?.previousDomain) {
-				prevDom = location.state.previousDomain;
-			}
+		if (location.state?.previousDomain) {
+			prevDom = location.state.previousDomain;
 		}
 		if (prevDom === curDom || !prevDom) {
 			headerTransition = `${curDom}`;
+			console.log(headerTransition);
 		} else {
 			headerTransition = `${prevDom}-to-${curDom}`;
+			console.log(headerTransition);
 		}
 		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
-		setPreviousDomain(prevDom);
-		setDomainObj(domains[curDom]);
 	}, [location, auth]);
 
+	useEffect(() => {
+		if (headerTransition) {
+			changeTheme(headerTransition);
+		}
+	}, [domainObj]);
 	// update everytime username changes; if username exists, put it on display, if not, default
 	useEffect(() => {
-		if (!contextIsLoading) {
+		if (!contextIsLoading && auth) {
 			if (username) {
 				setDisplayUsername(username);
 				setIsLoading(false);
@@ -74,75 +69,75 @@ export const Header: React.FC<{}> = () => {
 		if (domainObj && auth === false) {
 			setIsLoading(false);
 		}
-	}, [auth, contextIsLoading, domainObj, username]);
+	}, [auth, contextIsLoading, domain, username]);
 
 	return (
 		<div className="header" key={domain}>
 			<div className="site-banner white-font">
 				{!isLoading &&
-					(auth
-						? domainObj && (
-								<>
-									<Helmet>
-										<link
-											rel="icon"
-											type="image/x-icon"
-											href={`/${domainObj.logo}`}
-										/>
-										<title>{domains[domain].name}</title>
-									</Helmet>
+					(auth ? (
+						domainObj && (
+							<>
+								<Helmet>
+									<link
+										rel="icon"
+										type="image/x-icon"
+										href={`/${domainObj.logo}`}
+									/>
+									<title>{domains[domain].name}</title>
+								</Helmet>
+								<Link
+									to={`/${domains[domain].path}`}
+									key={domain}
+								>
+									{domain && (
+										<h1 key={domain}>
+											{domains[domain].name}
+										</h1>
+									)}
+								</Link>
+								<div className="account">
+									<Link to="/createUsername">
+										{!username
+											? "Create Username"
+											: displayUsername}
+									</Link>
+									<LogoutButton />
 									<Link
-										to={`/${domains[domain].path}`}
-										key={domain}
+										to={`/buddySystem`}
+										className="home-button"
+										state={{
+											previousDomain: currentDomain,
+										}}
 									>
-										{domain && (
-											<h1 key={domain}>
-												{domains[domain].name}
-											</h1>
-										)}
+										<HomeOutlined />
 									</Link>
-									<div className="account">
-										<Link to="/createUsername">
-											{!username
-												? "Create Username"
-												: displayUsername}
-										</Link>
-										<LogoutButton />
-										<Link
-											to={`/buddySystem`}
-											className="home-button"
-											state={{
-												previousDomain: currentDomain,
-											}}
-										>
-											<HomeOutlined />
-										</Link>
-									</div>
-								</>
-						  )
-						: domainObj && (
-								<>
-									<Link to="/">
-										<h1>{domainObj.name}</h1>
+								</div>
+							</>
+						)
+					) : (
+						<>
+							<Link to="/">
+								<h1>{domainObj.name}</h1>
+							</Link>
+							<div className="account">
+								{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
+									<Link to="/login">
+										<LogInButton />
 									</Link>
-									<div className="account">
-										{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
-											<Link to="/login">
-												<LogInButton />
-											</Link>
-										)}{" "}
-										<Link
-											to={`/buddySystem`}
-											className="home-button"
-											state={{
-												previousDomain: currentDomain,
-											}}
-										>
-											<HomeOutlined />
-										</Link>
-									</div>
-								</>
-						  ))}
+								)}{" "}
+								<Link
+									to={`/buddySystem`}
+									className="home-button"
+									state={{
+										previousDomain: currentDomain,
+									}}
+								>
+									<HomeOutlined />
+								</Link>
+							</div>
+						</>
+					))}
 			</div>
 			<Navbar />
 		</div>
