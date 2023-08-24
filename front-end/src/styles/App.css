@@ -67,7 +67,8 @@ h2 {
 	margin: 3px;
 }
 
-.logout-button {
+.logout-button,
+.login-button {
 	margin-left: 20px;
 	margin-right: 20px;
 }

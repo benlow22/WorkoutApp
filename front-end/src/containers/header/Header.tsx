@@ -13,8 +13,6 @@ import "./styles/theme.css";
 import { changeTheme } from "../../styles/theming/theme";
 import { Helmet } from "react-helmet";
 
-import test from "../../images/lorcana-logo.png";
-
 export const Header: React.FC<{}> = () => {
 	const { username, auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
@@ -29,6 +27,7 @@ export const Header: React.FC<{}> = () => {
 	const [currentDomain, setCurrentDomain] = useState<string>();
 
 	useEffect(() => {
+		console.log("DOMAIN", domains[domain]);
 		setDomainObj(domains[domain]);
 	}, []);
 
@@ -37,7 +36,7 @@ export const Header: React.FC<{}> = () => {
 		let prevDom = undefined;
 		let headerTransition = "";
 		if (auth === false) {
-			curDom = "buddySystem";
+			curDom = domain;
 			if (location.state?.previousDomain) {
 				prevDom = location.state.previousDomain;
 			}
@@ -59,7 +58,6 @@ export const Header: React.FC<{}> = () => {
 		setCurrentDomain(curDom);
 		setPreviousDomain(prevDom);
 		setDomainObj(domains[curDom]);
-		console.log("LOGO", domainObj?.logo);
 	}, [location, auth]);
 
 	// update everytime username changes; if username exists, put it on display, if not, default
@@ -74,9 +72,7 @@ export const Header: React.FC<{}> = () => {
 			}
 		}
 		if (domainObj && auth === false) {
-			if (domain === "buddySystem") {
-				setIsLoading(false);
-			}
+			setIsLoading(false);
 		}
 	}, [auth, contextIsLoading, domainObj, username]);
 
@@ -84,58 +80,69 @@ export const Header: React.FC<{}> = () => {
 		<div className="header" key={domain}>
 			<div className="site-banner white-font">
 				{!isLoading &&
-					(auth ? (
-						domainObj && (
-							<>
-								<Helmet>
-									<link
-										rel="icon"
-										type="image/x-icon"
-										href={`/${domainObj.logo}`}
-									/>
-									<title>{domains[domain].name}</title>
-								</Helmet>
-								<Link
-									to={`/${domains[domain].path}`}
-									key={domain}
-								>
-									{domain && (
-										<h1 key={domain}>
-											{domains[domain].name}
-										</h1>
-									)}
-								</Link>
-								<div className="account">
-									<Link to="/createUsername">
-										{!username
-											? "Create Username"
-											: displayUsername}
-									</Link>
-									<LogoutButton />
+					(auth
+						? domainObj && (
+								<>
+									<Helmet>
+										<link
+											rel="icon"
+											type="image/x-icon"
+											href={`/${domainObj.logo}`}
+										/>
+										<title>{domains[domain].name}</title>
+									</Helmet>
 									<Link
-										to={`/buddySystem`}
-										className="home-button"
-										state={{
-											previousDomain: currentDomain,
-										}}
+										to={`/${domains[domain].path}`}
+										key={domain}
 									>
-										<HomeOutlined />
+										{domain && (
+											<h1 key={domain}>
+												{domains[domain].name}
+											</h1>
+										)}
 									</Link>
-								</div>
-							</>
-						)
-					) : (
-						<>
-							<Link to="/">
-								<h1>{domainObj?.name}</h1>
-							</Link>
-							{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
-								<Link to="/login">
-									<LogInButton />
-								</Link>
-							)}
-						</>
-					))}
+									<div className="account">
+										<Link to="/createUsername">
+											{!username
+												? "Create Username"
+												: displayUsername}
+										</Link>
+										<LogoutButton />
+										<Link
+											to={`/buddySystem`}
+											className="home-button"
+											state={{
+												previousDomain: currentDomain,
+											}}
+										>
+											<HomeOutlined />
+										</Link>
+									</div>
+								</>
+						  )
+						: domainObj && (
+								<>
+									<Link to="/">
+										<h1>{domainObj.name}</h1>
+									</Link>
+									<div className="account">
+										{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.
+											<Link to="/login">
+												<LogInButton />
+											</Link>
+										)}{" "}
+										<Link
+											to={`/buddySystem`}
+											className="home-button"
+											state={{
+												previousDomain: currentDomain,
+											}}
+										>
+											<HomeOutlined />
+										</Link>
+									</div>
+								</>
+						  ))}
 			</div>
 			<Navbar />
 		</div>
