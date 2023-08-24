@@ -28,7 +28,7 @@ export const Header: React.FC<{}> = () => {
 	const [headerTransition, setHeaderTransition] = useState<string>();
 
 	useEffect(() => {
-		console.log("DOMAIN", domains[domain]);
+		// console.log("DOMAIN", domains[domain]);
 		setDomainObj(domains[domain]);
 	}, []);
 
@@ -44,10 +44,11 @@ export const Header: React.FC<{}> = () => {
 			console.log(headerTransition);
 		} else {
 			headerTransition = `${prevDom}-to-${curDom}`;
-			console.log(headerTransition);
+			// console.log(headerTransition);
 		}
 		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
+		setDomainObj(domains[domain]);
 	}, [location, auth]);
 
 	useEffect(() => {
@@ -118,7 +119,7 @@ export const Header: React.FC<{}> = () => {
 					) : (
 						<>
 							<Link to="/">
-								<h1>{domainObj.name}</h1>
+								<h1>{domainObj?.name}</h1>
 							</Link>
 							<div className="account">
 								{!(location.pathname === "/login") && ( // login button appears if not authorized, and not on /login page.

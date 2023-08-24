@@ -24,7 +24,19 @@ const AuthRoute = () => {
 	}, [auth]);
 
 	if (!isLoading && auth !== undefined) {
-		return <Outlet />;
+		return auth ? (
+			<Outlet />
+		) : (
+			<Navigate
+				to="/login"
+				state={{
+					initialUrl: location.pathname,
+					previousDomain: previousDomain,
+				}}
+			/>
+		);
+	} else {
+		return <SpiningLoadingIcon />;
 	}
 };
 export default AuthRoute;

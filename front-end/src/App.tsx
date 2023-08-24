@@ -28,13 +28,13 @@ const router = createBrowserRouter(
 			<Route path="buddySystem" element={<BuddySystemDashboard />} />
 			<Route path="workoutBuddy">{WorkoutBuddy}</Route>
 			<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
-			<Route element={<AuthRoute />}>
-				<Route path="pokeBuddy">{PokeBuddy}</Route>
-				<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
-				{/* <Route path="account"> 
+			{/* <Route element={<AuthRoute />}> */}
+			<Route path="pokeBuddy">{PokeBuddy}</Route>
+			<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
+			{/* <Route path="account"> 
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				</Route> */}
-			</Route>
+			{/* </Route> */}
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)
