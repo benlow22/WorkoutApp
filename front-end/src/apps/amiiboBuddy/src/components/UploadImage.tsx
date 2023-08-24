@@ -31,7 +31,7 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 	useEffect(() => {
 		if (submit) {
 			console.log("submit worked and is true", submit);
-			handleUpload();
+			handleUpload(packId);
 		}
 	}, [submit]);
 	const getUser = async () => {
@@ -171,14 +171,13 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 	const uploadIt = async (file: any, packid: string) => {
 		const { data, error } = await supabase.storage
 			.from("upload-amiibo-images")
-			.upload(userId + "/" + packid + "/" + uuidv4() + ".png", file, {
+			.upload(userId + "/" + packid + "/" + file.uid + ".png", file, {
 				cacheControl: "3600",
 				contentType: "image/png",
 			});
 		console.log("successful photo upload??", data);
 	};
-	const handleUpload = async () => {
-		const packId = uuidv4();
+	const handleUpload = async (packId: string) => {
 		console.log("file", fileList);
 		const base64fileList = fileList.map((file) =>
 			uploadIt(file.originFileObj, packId)
@@ -193,7 +192,7 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 					fileList={fileList}
 					onPreview={handlePreview}
 					onChange={handleChange}
-					withCredentials
+					withCredentials={true}
 					{...props}
 				>
 					{fileList.length >= 8 ? null : uploadButton}

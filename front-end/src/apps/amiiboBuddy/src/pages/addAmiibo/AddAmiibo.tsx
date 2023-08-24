@@ -185,6 +185,8 @@ export const AddAmiibo: React.FC<{}> = () => {
 	};
 
 	const onFinish = (values: any) => {
+		console.log("FL:", fileList);
+
 		console.log("Success:", values);
 		const amiiboPackageId = uuidv4();
 		setPackId(amiiboPackageId);
@@ -212,6 +214,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 				rating: rating,
 				condition: values.condition,
 				pack_id: amiiboPackageId,
+				thumbnail_url: fileList[0].uid,
 			})
 		);
 		uploadAmiiboToSupabase(packData);

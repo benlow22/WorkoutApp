@@ -381,6 +381,12 @@ div.ant-space-item{
 	/* right: 50px; */
 }
 
+.my-collection-grid {
+	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
 .start-button-container::after,
 .start-button-container::before {
 	content: "";
