@@ -6,6 +6,8 @@ import { AmiiboCard } from "../../components/AmiiboCard";
 import { CollectionCard } from "../../components/CollectionCard";
 import { ImageCarousel } from "../../components/ImageCarousel";
 
+import { Switch } from "antd";
+
 export const MyCollection = () => {
 	const { auth, username, supabase } = useContext(AuthContext);
 	const [myAmiibos, setMyAmiibos] = useState<any>([]);
@@ -44,28 +46,36 @@ export const MyCollection = () => {
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>
-			<div className="page-heading"></div>
-			<h2>Amiibo Buddy My Collection</h2>
-
-			{ready && (
-				<div className="my-collection-grid">
-					{myAmiibos.map((amiibo: any, index: number) => (
-						<CollectionCard
-							amiibo={amiibo}
-							key={index}
-							slideNumber={slideNumber}
-						/>
-						// <ImageCarousel
-						// amiiboImage={amiibo.image}
-						// photoPaths={amiibo.photoPaths}
-						// goToSlideNumber={slideNumber}
-						// />
-						// <></>
-					))}
-				</div>
-			)}
-			<img src={fuecoco} style={{ maxWidth: "400px" }} alt="fuecoco" />
-			<h5>Coming soon...</h5>
+			<h2 className="page-heading"> Amiibo Buddy My Collection</h2>
+			<div className="ab-my-collection-page">
+				<p style={{ float: "left" }}>
+					Amiibo
+					<Switch defaultChecked style={{ margin: "10px" }} /> Photos
+				</p>
+				{ready && (
+					<div className="my-collection-grid">
+						{myAmiibos.map((amiibo: any, index: number) => (
+							<CollectionCard
+								amiibo={amiibo}
+								key={index}
+								slideNumber={slideNumber}
+							/>
+							// <ImageCarousel
+							// amiiboImage={amiibo.image}
+							// photoPaths={amiibo.photoPaths}
+							// goToSlideNumber={slideNumber}
+							// />
+							// <></>
+						))}
+					</div>
+				)}
+				<img
+					src={fuecoco}
+					style={{ maxWidth: "400px" }}
+					alt="fuecoco"
+				/>
+				<h5>Coming soon...</h5>
+			</div>
 		</>
 	);
 };

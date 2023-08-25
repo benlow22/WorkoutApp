@@ -177,3 +177,12 @@ a {
 /* .gmnoprint {
 	visibility: hidden;
 } */
+
+.carousel-slide {
+	display: flex;
+	justify-content: center;
+}
+
+.slick-dots {
+	margin: 0;
+}
