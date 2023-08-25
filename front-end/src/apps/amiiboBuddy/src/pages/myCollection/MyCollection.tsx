@@ -6,13 +6,30 @@ import { AmiiboCard } from "../../components/AmiiboCard";
 import { CollectionCard } from "../../components/CollectionCard";
 import { ImageCarousel } from "../../components/ImageCarousel";
 
-import { Switch } from "antd";
+import { Button, Radio, Space, Switch, message } from "antd";
+import { AmiiboInventory } from "./AmiiboInventory";
+import { AmiiboChecklist } from "./AmiiboChecklist";
+import { TAmiiboCard } from "../../types/types";
 
 export const MyCollection = () => {
-	const { auth, username, supabase } = useContext(AuthContext);
+	const { auth, username, supabase, isLoggedIn } = useContext(AuthContext);
 	const [myAmiibos, setMyAmiibos] = useState<any>([]);
+	const [allAmiibos, setAllAmiibos] = useState<TAmiiboCard[]>([]);
+
 	const [ready, setReady] = useState<any>(false);
 	const [slideNumber, setSlideNumber] = useState<number>(1);
+	const [isInventory, setIsInventory] = useState<any>(true);
+	const [switchIsDisabled, setSwitchIsDisabled] = useState<any>(false);
+
+	const [messageApi, contextHolder] = message.useMessage();
+	const warningMessage = () => {
+		messageApi.open({
+			type: "warning",
+			content:
+				"you must log in first before you can access your inventory",
+			duration: 6,
+		});
+	};
 	// create type for amiibo with image.
 	const getAmiibos = async () => {
 		let { data, error } = await supabase
@@ -20,14 +37,6 @@ export const MyCollection = () => {
 			.select(
 				"*, ...amiibo(image, name, series: amiibo_series), ...ab_pack_id_image_paths(photoPaths: photo_paths)"
 			);
-
-		// const { data: photos, error: photoE } = await supabase.storage
-		// 	.from("upload-amiibo-images")
-		// 	.list("folder", {
-		// 		limit: 100,
-		// 		offset: 0,
-		// 		sortBy: { column: "name", order: "asc" },
-		// 	});
 		if (data) {
 			setMyAmiibos(data);
 			console.log("my amiibo raw data", data);
@@ -35,47 +44,76 @@ export const MyCollection = () => {
 			console.error(error);
 		}
 	};
+	// preload for faster checklist render
+	const getAllAmiibos = async () => {
+		let { data: allAmiibos, error } = await supabase
+			.from("amiibo")
+			.select("*");
+		if (error) {
+			console.error(error);
+		} else {
+			setAllAmiibos(allAmiibos);
+		}
+	};
 
 	useEffect(() => {
 		getAmiibos();
-	}, []);
+		setIsInventory(isLoggedIn);
+	}, [isLoggedIn]);
+
+	useEffect(() => {
+		console.log("isInventory:", isInventory);
+		console.log("isLoggedIn:", isLoggedIn);
+	}, [isInventory]);
+
 	useEffect(() => {
 		console.log("MY", myAmiibos);
 		setReady(true);
 	}, [myAmiibos]);
+
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>
+			{contextHolder}
 			<h2 className="page-heading"> Amiibo Buddy My Collection</h2>
-			<div className="ab-my-collection-page">
-				<p style={{ float: "left" }}>
-					Amiibo
-					<Switch defaultChecked style={{ margin: "10px" }} /> Photos
-				</p>
-				{ready && (
-					<div className="my-collection-grid">
-						{myAmiibos.map((amiibo: any, index: number) => (
-							<CollectionCard
-								amiibo={amiibo}
-								key={index}
-								slideNumber={slideNumber}
-							/>
-							// <ImageCarousel
-							// amiiboImage={amiibo.image}
-							// photoPaths={amiibo.photoPaths}
-							// goToSlideNumber={slideNumber}
-							// />
-							// <></>
-						))}
-					</div>
-				)}
+			<>
+				<Switch
+					checkedChildren="Inventory"
+					unCheckedChildren="Checklist"
+					defaultChecked={isInventory}
+					checked={isInventory}
+					disabled={switchIsDisabled}
+					onClick={(checked, event) => {
+						if (isLoggedIn) {
+							setIsInventory(checked);
+						} else {
+							setSwitchIsDisabled(true);
+							setTimeout(() => setSwitchIsDisabled(false), 5000);
+							warningMessage();
+						}
+					}}
+				/>
+			</>
+			{isLoggedIn ? (
+				<>
+					{isInventory ? (
+						<AmiiboInventory myAmiibos={myAmiibos} />
+					) : (
+						<AmiiboChecklist amiibos={allAmiibos} />
+					)}
+				</>
+			) : (
+				<AmiiboChecklist amiibos={allAmiibos} />
+			)}
+
+			{/* <div className="ab-my-collection-page">
 				<img
 					src={fuecoco}
 					style={{ maxWidth: "400px" }}
 					alt="fuecoco"
 				/>
 				<h5>Coming soon...</h5>
-			</div>
+			</div> */}
 		</>
 	);
 };
