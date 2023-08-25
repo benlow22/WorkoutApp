@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import { Switch } from "antd";
+import { Image, Switch } from "antd";
 import { CollectionCard } from "../../components/CollectionCard";
+import fuecoco from "../../../../../images/fuecoco.jpeg";
 
 type TProps = {
 	myAmiibos: any;
@@ -19,6 +20,7 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 					onClick={(checked) => {
 						checked ? setSlideNumber(0) : setSlideNumber(1);
 					}}
+					defaultChecked={false}
 				/>{" "}
 				Photos
 			</p>

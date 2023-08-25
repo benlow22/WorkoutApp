@@ -6,7 +6,7 @@ import { AmiiboCard } from "../../components/AmiiboCard";
 import { CollectionCard } from "../../components/CollectionCard";
 import { ImageCarousel } from "../../components/ImageCarousel";
 
-import { Button, Radio, Space, Switch, message } from "antd";
+import { Button, Image, Radio, Space, Switch, message } from "antd";
 import { AmiiboInventory } from "./AmiiboInventory";
 import { AmiiboChecklist } from "./AmiiboChecklist";
 import { TAmiiboCard } from "../../types/types";

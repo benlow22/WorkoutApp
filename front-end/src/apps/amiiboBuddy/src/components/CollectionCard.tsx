@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { TAmiiboCard } from "../types/types";
 import { ImageCarousel } from "./ImageCarousel";
+import fuecoco from "../../../../images/fuecoco.jpeg";
+import { Image } from "antd";
 
 type TProps = {
 	amiibo: any;

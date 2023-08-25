@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Carousel } from "antd";
+import { Carousel, Image } from "antd";
 import { CarouselImage } from "./CarouselImage";
 
 const contentStyle: React.CSSProperties = {
@@ -14,7 +14,9 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 	const onChange = (currentSlide: number) => {
 		console.log(currentSlide);
 	};
-	console.log("slideNumber", slideNumber);
+	useEffect(() => {
+		console.log("slideNumber", slideNumber);
+	}, [slideNumber]);
 	const carouselRef = React.createRef();
 	const carouselStyle: React.CSSProperties = {
 		margin: "10px 0px 0px",
@@ -24,6 +26,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 
 	const divStyle = {
 		display: "flex",
+		padding: "10px",
 	};
 	const [zoomed, setZoomed] = useState(false);
 
@@ -39,7 +42,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 			ref={carouselRef}
 		>
 			<div className="carousel-slide">
-				<img src={amiibo.image} style={contentStyle} />
+				<Image src={amiibo.image} style={contentStyle} />
 			</div>
 			{amiibo.photoPaths.map((photoPath: string, index: number) => {
 				let src = `https://hcygiexkeqziputnyyji.supabase.co/storage/v1/object/public/upload-amiibo-images/${amiibo.user_id}/${amiibo.pack_id}/${photoPath}.png`;
@@ -50,11 +53,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 						key={index}
 						style={divStyle}
 					>
-						<CarouselImage
-							src={src}
-							alt={alt}
-							style={contentStyle}
-						/>
+						<Image src={src} alt={alt} />
 					</div>
 				);
 			})}
