@@ -10,15 +10,14 @@ import { Button, Image, Radio, Space, Switch, message } from "antd";
 import { AmiiboInventory } from "./AmiiboInventory";
 import { AmiiboChecklist } from "./AmiiboChecklist";
 import { TAmiiboCard } from "../../types/types";
+import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIcon";
 
 export const MyCollection = () => {
 	const { auth, username, supabase, isLoggedIn } = useContext(AuthContext);
 	const [myAmiibos, setMyAmiibos] = useState<any>([]);
 	const [allAmiibos, setAllAmiibos] = useState<TAmiiboCard[]>([]);
 	const [ready, setReady] = useState<any>(false);
-	const [showPhotosAsThumnail, setShowPhotosAsThumbnail] =
-		useState<boolean>(false);
-	const [isInventory, setIsInventory] = useState<any>(true);
+	const [isInventory, setIsInventory] = useState<any>(false);
 	const [switchIsDisabled, setSwitchIsDisabled] = useState<any>(false);
 
 	const [messageApi, contextHolder] = message.useMessage();
@@ -39,7 +38,6 @@ export const MyCollection = () => {
 			);
 		if (data) {
 			setMyAmiibos(data);
-			console.log("my amiibo raw data", data);
 		} else {
 			console.error(error);
 		}
@@ -62,13 +60,10 @@ export const MyCollection = () => {
 	}, [isLoggedIn]);
 
 	useEffect(() => {
-		console.log("isInventory:", isInventory);
-		console.log("isLoggedIn:", isLoggedIn);
-	}, [isInventory]);
-
-	useEffect(() => {
-		console.log("MY", myAmiibos);
-		setReady(true);
+		if (myAmiibos) {
+			setReady(true);
+		}
+		console.log("isInvent", isInventory);
 	}, [myAmiibos]);
 
 	// if logged in, will show dashboard with home page underneat, if not, just home page
@@ -76,34 +71,38 @@ export const MyCollection = () => {
 		<>
 			{contextHolder}
 			<h2 className="page-heading"> Amiibo Buddy My Collection</h2>
-			<>
-				<Switch
-					checkedChildren="Inventory"
-					unCheckedChildren="Checklist"
-					defaultChecked={isInventory}
-					checked={isInventory}
-					disabled={switchIsDisabled}
-					onClick={(checked, event) => {
-						if (isLoggedIn) {
-							setIsInventory(checked);
-						} else {
-							setSwitchIsDisabled(true);
-							setTimeout(() => setSwitchIsDisabled(false), 5000);
-							warningMessage();
-						}
-					}}
-				/>
-			</>
-			{isLoggedIn ? (
+			<Switch
+				checkedChildren="Inventory"
+				unCheckedChildren="Checklist"
+				defaultChecked={isInventory}
+				checked={isInventory}
+				disabled={switchIsDisabled}
+				onClick={(checked, event) => {
+					if (isLoggedIn) {
+						setIsInventory(checked);
+					} else {
+						setSwitchIsDisabled(true);
+						setTimeout(() => setSwitchIsDisabled(false), 5000);
+						warningMessage();
+					}
+				}}
+			/>
+			{ready ? (
 				<>
-					{isInventory ? (
-						<AmiiboInventory myAmiibos={myAmiibos} />
+					{isLoggedIn ? (
+						<>
+							{isInventory ? (
+								<AmiiboInventory myAmiibos={myAmiibos} />
+							) : (
+								<AmiiboChecklist amiibos={allAmiibos} />
+							)}
+						</>
 					) : (
 						<AmiiboChecklist amiibos={allAmiibos} />
 					)}
 				</>
 			) : (
-				<AmiiboChecklist amiibos={allAmiibos} />
+				<SpiningLoadingIcon />
 			)}
 		</>
 	);

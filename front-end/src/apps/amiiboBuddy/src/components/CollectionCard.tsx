@@ -11,6 +11,9 @@ type TProps = {
 export const CollectionCard = ({ amiibo, slideNumber }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
 	useEffect(() => {
+		console.log("slideNumbercard", slideNumber);
+	}, [slideNumber]);
+	useEffect(() => {
 		if (amiibo.name.length < 15) {
 			setAmiiboNameSize("");
 		} else if (amiibo.name.length < 30) {

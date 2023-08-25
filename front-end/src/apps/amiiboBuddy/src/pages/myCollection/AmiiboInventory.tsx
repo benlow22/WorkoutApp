@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-
-import { Image, Switch } from "antd";
+import { useState } from "react";
+import { Switch } from "antd";
 import { CollectionCard } from "../../components/CollectionCard";
-import fuecoco from "../../../../../images/fuecoco.jpeg";
-
 type TProps = {
 	myAmiibos: any;
 };
+
 export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 	const [slideNumber, setSlideNumber] = useState(0);
+
+	console.log(myAmiibos);
 	return (
 		<div className="amiibo-inventory-page">
 			<p>A collection of all your amiibos</p>
@@ -18,10 +18,11 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 				<Switch
 					style={{ margin: "10px" }}
 					onClick={(checked) => {
-						checked ? setSlideNumber(0) : setSlideNumber(1);
+						console.log("checked", checked);
+						checked ? setSlideNumber(1) : setSlideNumber(0);
 					}}
 					defaultChecked={false}
-				/>{" "}
+				/>
 				Photos
 			</p>
 

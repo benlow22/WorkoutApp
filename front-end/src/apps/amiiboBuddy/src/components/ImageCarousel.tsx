@@ -15,7 +15,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 		console.log(currentSlide);
 	};
 	useEffect(() => {
-		console.log("slideNumber", slideNumber);
+		console.log("slideNumberimage", slideNumber);
 	}, [slideNumber]);
 	const carouselRef = React.createRef();
 	const carouselStyle: React.CSSProperties = {
