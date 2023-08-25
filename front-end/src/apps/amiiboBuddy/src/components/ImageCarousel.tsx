@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Image } from "antd";
-import { CarouselImage } from "./CarouselImage";
 
 const contentStyle: React.CSSProperties = {
 	margin: "auto",
@@ -14,9 +13,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 	const onChange = (currentSlide: number) => {
 		console.log(currentSlide);
 	};
-	useEffect(() => {
-		console.log("slideNumberimage", slideNumber);
-	}, [slideNumber]);
+
 	const carouselRef = React.createRef();
 	const carouselStyle: React.CSSProperties = {
 		margin: "10px 0px 0px",
@@ -28,7 +25,6 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 		display: "flex",
 		padding: "10px",
 	};
-	const [zoomed, setZoomed] = useState(false);
 
 	useEffect(() => {
 		carouselRef.current.goTo(slideNumber);

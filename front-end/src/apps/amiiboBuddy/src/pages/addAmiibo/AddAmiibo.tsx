@@ -50,6 +50,11 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [submit, setSubmit] = useState<boolean>(false);
 	const [packId, setPackId] = useState<string>("");
 	const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+	const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+
+	const handleSubmitLoading = () => {
+		setSubmitLoading(true);
+	};
 	const [form] = Form.useForm();
 	const onReset = () => {
 		form.resetFields();
@@ -83,7 +88,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 		if (data) {
 			setAmiibos(data);
 			const amiiboCache: TAmiiboCache = {};
-			const concatData = data.map((amiibo) => {
+			const concatData = data.map((amiibo, index) => {
 				const concatName = `${amiibo.name} - ${amiibo.amiiboSeries} (${amiibo.type})`;
 				amiiboCache[concatName] = amiibo;
 
@@ -103,6 +108,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 							{amiibo.name} - {amiibo.amiiboSeries}
 						</div>
 					),
+					key: index,
 					children: amiibo,
 				};
 			});
@@ -186,8 +192,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 
 	const onFinish = (values: any) => {
 		console.log("FL:", fileList);
-
-		console.log("Success:", values);
+		console.log("values from form:", values);
 		const amiiboPackageId = uuidv4();
 		setPackId(amiiboPackageId);
 
@@ -218,18 +223,20 @@ export const AddAmiibo: React.FC<{}> = () => {
 				thumbnail_url: fileList[0].uid,
 			})
 		);
+		if (fileList.length > 0) {
+			const photoPaths = fileList.map((file) => file.uid);
+			// console.log(photoPaths);
+			// console.log(packData);
+			setSubmit(true);
 
-		const photoPaths = fileList.map((file) => file.uid);
-		// console.log(photoPaths);
-		// console.log(packData);
-		setSubmit(true);
-
-		try {
-			uploadAmiiboToSupabase(packData);
-			uploadPhotoPathsToSupabase(amiiboPackageId, photoPaths);
-			console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
-		} catch (e) {
-			console.error(e);
+			try {
+				uploadAmiiboToSupabase(packData);
+				uploadPhotoPathsToSupabase(amiiboPackageId, photoPaths);
+				console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+				throw new Error();
+			} catch (e) {
+				console.error(e);
+			}
 		}
 	};
 
@@ -477,7 +484,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 						label="Rate"
 						style={{ color: "white", textAlign: "center" }}
 					>
-						<>
+						<div>
 							Awful
 							<Rate
 								count={5}
@@ -491,7 +498,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 								onChange={(value) => handleRateChange(value)}
 							/>
 							Perfect
-						</>
+						</div>
 					</Form.Item>
 
 					<FormItem name="condition" label="Condition">
@@ -583,7 +590,12 @@ export const AddAmiibo: React.FC<{}> = () => {
 						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<Button type="primary" htmlType="submit">
+						<Button
+							type="primary"
+							loading={submitLoading}
+							onClick={() => handleSubmitLoading()}
+							htmlType="submit"
+						>
 							Add to Inventory
 						</Button>
 					</Form.Item>

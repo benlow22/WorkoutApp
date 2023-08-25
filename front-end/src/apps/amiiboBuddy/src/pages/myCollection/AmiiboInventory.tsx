@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Switch } from "antd";
 import { CollectionCard } from "../../components/CollectionCard";
+
 type TProps = {
 	myAmiibos: any;
 };
@@ -12,7 +13,6 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 	return (
 		<div className="amiibo-inventory-page">
 			<p>A collection of all your amiibos</p>
-
 			<p style={{ float: "left" }}>
 				Amiibo
 				<Switch
