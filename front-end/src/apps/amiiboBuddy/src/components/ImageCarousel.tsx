@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Carousel } from "antd";
+import { CarouselImage } from "./CarouselImage";
 
 const contentStyle: React.CSSProperties = {
 	margin: "auto",
 	maxHeight: "115px",
 	maxWidth: "100%",
 	alignSelf: "center",
+	padding: "5px",
 };
 
 export const ImageCarousel = ({ amiibo }: any) => {
@@ -22,20 +24,30 @@ export const ImageCarousel = ({ amiibo }: any) => {
 	const divStyle = {
 		display: "flex",
 	};
+	const [zoomed, setZoomed] = useState(false);
 
 	return (
-		<Carousel afterChange={onChange} style={carouselStyle}>
+		<Carousel afterChange={onChange} style={carouselStyle} arrows={true}>
 			<div className="carousel-slide">
 				<img src={amiibo.image} style={contentStyle} />
 			</div>
-			{amiibo.photoPaths.map((photoPath: string, index: number) => (
-				<div className="carousel-slide" key={index} style={divStyle}>
-					<img
-						src={`https://hcygiexkeqziputnyyji.supabase.co/storage/v1/object/public/upload-amiibo-images/${amiibo.user_id}/${amiibo.pack_id}/${photoPath}.png`}
-						style={contentStyle}
-					/>
-				</div>
-			))}
+			{amiibo.photoPaths.map((photoPath: string, index: number) => {
+				let src = `https://hcygiexkeqziputnyyji.supabase.co/storage/v1/object/public/upload-amiibo-images/${amiibo.user_id}/${amiibo.pack_id}/${photoPath}.png`;
+				let alt = `${amiibo.name} from ${amiibo.series} amiibo`;
+				return (
+					<div
+						className="carousel-slide"
+						key={index}
+						style={divStyle}
+					>
+						<CarouselImage
+							src={src}
+							alt={alt}
+							style={contentStyle}
+						/>
+					</div>
+				);
+			})}
 		</Carousel>
 	);
 };
