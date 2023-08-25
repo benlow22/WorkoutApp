@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TAmiiboCard } from "../types/types";
+import { ImageCarousel } from "./ImageCarousel";
 
 type TProps = {
-	amiibo: TAmiiboCard;
+	amiibo: any;
+	slideNumber: number;
 };
-export const CollectionCard = ({ amiibo }: any) => {
+export const CollectionCard = ({ amiibo, slideNumber }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
 
 	useEffect(() => {
@@ -26,19 +28,25 @@ export const CollectionCard = ({ amiibo }: any) => {
 	return (
 		<div className="amiibo-card">
 			<h3 className={`amiibo-name ${amiiboNameSize}`}>{amiibo.name}</h3>
-			<div className="amiibo-image-container">
+			<div className="amiibo-carousel-container">
+				<ImageCarousel amiibo={amiibo} />
 				{/* <img
 					src={amiibo.image}
 					alt={`${amiibo.character} from ${amiibo.amiiboSeries} amiibo`}
 					className="amiibo-image"
 				/> */}
-				<img
+				{/* <img
 					src={`https://hcygiexkeqziputnyyji.supabase.co/storage/v1/object/public/upload-amiibo-images/${amiibo.user_id}/${amiibo.pack_id}/${amiibo.thumbnail_url}.png`}
 					alt={`${amiibo.name} from ${amiibo.series} amiibo`}
 					className="amiibo-image"
 				/>
+				<img
+					src={amiibo.image}
+					alt={`${amiibo.name} from ${amiibo.series} amiibo`}
+					className="amiibo-image"
+				/> */}
 			</div>
-			<h5>{amiibo.amiiboSeries}</h5>
+			<h5>{amiibo.series}</h5>
 		</div>
 	);
 };
