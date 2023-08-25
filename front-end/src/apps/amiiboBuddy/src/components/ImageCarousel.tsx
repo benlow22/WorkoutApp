@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Carousel } from "antd";
 import { CarouselImage } from "./CarouselImage";
 
@@ -10,11 +10,12 @@ const contentStyle: React.CSSProperties = {
 	padding: "5px",
 };
 
-export const ImageCarousel = ({ amiibo }: any) => {
+export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 	const onChange = (currentSlide: number) => {
 		console.log(currentSlide);
 	};
-
+	console.log("slideNumber", slideNumber);
+	const carouselRef = React.createRef();
 	const carouselStyle: React.CSSProperties = {
 		margin: "10px 0px 0px",
 		height: "150px",
@@ -26,8 +27,17 @@ export const ImageCarousel = ({ amiibo }: any) => {
 	};
 	const [zoomed, setZoomed] = useState(false);
 
+	useEffect(() => {
+		carouselRef.current.goTo(slideNumber);
+	}, [slideNumber]);
 	return (
-		<Carousel afterChange={onChange} style={carouselStyle} arrows={true}>
+		<Carousel
+			afterChange={onChange}
+			style={carouselStyle}
+			arrows={true}
+			slickGoTo={slideNumber}
+			ref={carouselRef}
+		>
 			<div className="carousel-slide">
 				<img src={amiibo.image} style={contentStyle} />
 			</div>

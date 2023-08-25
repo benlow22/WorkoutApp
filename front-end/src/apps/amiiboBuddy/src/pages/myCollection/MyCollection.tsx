@@ -15,9 +15,9 @@ export const MyCollection = () => {
 	const { auth, username, supabase, isLoggedIn } = useContext(AuthContext);
 	const [myAmiibos, setMyAmiibos] = useState<any>([]);
 	const [allAmiibos, setAllAmiibos] = useState<TAmiiboCard[]>([]);
-
 	const [ready, setReady] = useState<any>(false);
-	const [slideNumber, setSlideNumber] = useState<number>(1);
+	const [showPhotosAsThumnail, setShowPhotosAsThumbnail] =
+		useState<boolean>(false);
 	const [isInventory, setIsInventory] = useState<any>(true);
 	const [switchIsDisabled, setSwitchIsDisabled] = useState<any>(false);
 
@@ -105,16 +105,6 @@ export const MyCollection = () => {
 			) : (
 				<AmiiboChecklist amiibos={allAmiibos} />
 			)}
-
-			{/* <div className="ab-my-collection-page">
-				<img
-					src={fuecoco}
-					style={{ maxWidth: "400px" }}
-					alt="fuecoco"
-				/>
-				<h5>Coming soon...</h5>
-			</div> */}
 		</>
 	);
 };
-// https://hcygiexkeqziputnyyji.supabase.co/storage/v1/object/public/upload-amiibo-images/d79ccff2-0177-46e8-93a2-ea3353691d28/09980c46-6f44-4c1d-91ee-dcf1c35e0418/bfe51824-1aa0-489c-8a0e-0dd45da875df.png

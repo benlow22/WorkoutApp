@@ -8,7 +8,6 @@ type TProps = {
 };
 export const CollectionCard = ({ amiibo, slideNumber }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
-
 	useEffect(() => {
 		if (amiibo.name.length < 15) {
 			setAmiiboNameSize("");
@@ -29,7 +28,7 @@ export const CollectionCard = ({ amiibo, slideNumber }: TProps) => {
 		<div className="amiibo-card">
 			<h3 className={`amiibo-name ${amiiboNameSize}`}>{amiibo.name}</h3>
 			<div className="amiibo-carousel-container">
-				<ImageCarousel amiibo={amiibo} />
+				<ImageCarousel amiibo={amiibo} slideNumber={slideNumber} />
 				{/* <img
 					src={amiibo.image}
 					alt={`${amiibo.character} from ${amiibo.amiiboSeries} amiibo`}

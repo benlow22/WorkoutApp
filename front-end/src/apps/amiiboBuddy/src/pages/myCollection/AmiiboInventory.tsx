@@ -31,12 +31,6 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 							key={index}
 							slideNumber={slideNumber}
 						/>
-						// <ImageCarousel
-						// amiiboImage={amiibo.image}
-						// photoPaths={amiibo.photoPaths}
-						// goToSlideNumber={slideNumber}
-						// />
-						// <></>
 					))}
 				</div>
 			)}
