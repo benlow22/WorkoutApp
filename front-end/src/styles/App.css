@@ -475,14 +475,17 @@ div.ant-space-item{
 		font-size: 20px;
 	}
 
-	.currency-price {
-		width: 130px;
+	.ant-space-item .currency-price {
+		width: auto;
 	}
 	.ant-space .currency {
 		width: 75px;
 	}
 	.amiibo-pack-selector {
-		width: 100px;
+		width: 200px;
+	}
+	.ant-col-17ant-form-item-label .ant-space-item.amiibo-pack-selector {
+		min-width: 145px;
 	}
 	.logout-button {
 		margin-left: 10px;

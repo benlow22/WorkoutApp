@@ -500,7 +500,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 							label="# of amiibos in pack"
 							labelCol={{ span: 17 }}
 							wrapperCol={{ span: 7 }}
-							style={{ width: "100%" }}
+							style={{ minWidth: "145px" }}
 							initialValue={"1"}
 							className="amiibo-pack-selector"
 						>
