@@ -24,6 +24,7 @@ type TAmiiboCache = {
 const { Option } = Select;
 import { v4 as uuidv4 } from "uuid";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
+import { SubmitFormButton } from "./submitButtonPopUp";
 
 export const AddAmiibo: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session, supabase } =
@@ -193,6 +194,8 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const onFinish = (values: any) => {
 		console.log("FL:", fileList);
 		console.log("values from form:", values);
+		console.log("FL no photo:", fileList[0]?.uid);
+
 		const amiiboPackageId = uuidv4();
 		setPackId(amiiboPackageId);
 
@@ -205,6 +208,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 			photos: fileList,
 			userId,
 		};
+
 		const packData = finishedFormValues.amiibos.map(
 			(amiibo: TAmiiboCard) => ({
 				user_id: userId,
@@ -220,23 +224,25 @@ export const AddAmiibo: React.FC<{}> = () => {
 				rating: rating,
 				condition: values.condition,
 				pack_id: amiiboPackageId,
-				thumbnail_url: fileList[0].uid,
+				thumbnail_url: fileList[0].uid ? fileList[0].uid : null, // null for no photo provided
 			})
 		);
+
 		if (fileList.length > 0) {
 			const photoPaths = fileList.map((file) => file.uid);
-			// console.log(photoPaths);
-			// console.log(packData);
 			setSubmit(true);
-
 			try {
-				uploadAmiiboToSupabase(packData);
 				uploadPhotoPathsToSupabase(amiiboPackageId, photoPaths);
 				console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
 				throw new Error();
 			} catch (e) {
 				console.error(e);
 			}
+		}
+		try {
+			uploadAmiiboToSupabase(packData);
+		} catch (e) {
+			console.error(e);
 		}
 	};
 
@@ -273,6 +279,8 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const onFinishFailed = (errorInfo: any) => {
 		console.log("Failed:", errorInfo);
 	};
+
+	const handleSubmit = () => {};
 
 	if (!isLoading) {
 		return (
@@ -590,14 +598,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<Button
-							type="primary"
-							loading={submitLoading}
-							onClick={() => handleSubmitLoading()}
-							htmlType="submit"
-						>
-							Add to Inventory
-						</Button>
+						<SubmitFormButton />
 					</Form.Item>
 				</Form>
 			</>

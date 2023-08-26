@@ -15,7 +15,7 @@ import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIco
 export const MyCollection = () => {
 	const { auth, username, supabase, isLoggedIn } = useContext(AuthContext);
 	const [myAmiibos, setMyAmiibos] = useState<any>([]);
-	const [allAmiibos, setAllAmiibos] = useState<TAmiiboCard[]>([]);
+	const [allAmiibos, setAllAmiibos] = useState<any[] | null>([]);
 	const [ready, setReady] = useState<any>(false);
 	const [isInventory, setIsInventory] = useState<any>(false);
 	const [switchIsDisabled, setSwitchIsDisabled] = useState<any>(false);
@@ -37,6 +37,7 @@ export const MyCollection = () => {
 				"*, ...amiibo(image, name, series: amiibo_series), ...ab_pack_id_image_paths(photoPaths: photo_paths)"
 			);
 		if (data) {
+			console.log(myAmiibos);
 			setMyAmiibos(data);
 		} else {
 			console.error(error);
@@ -63,7 +64,6 @@ export const MyCollection = () => {
 		if (myAmiibos) {
 			setReady(true);
 		}
-		console.log("isInvent", isInventory);
 	}, [myAmiibos]);
 
 	// if logged in, will show dashboard with home page underneat, if not, just home page
@@ -88,19 +88,21 @@ export const MyCollection = () => {
 				}}
 			/>
 			{ready ? (
-				<>
-					{isLoggedIn ? (
-						<>
-							{isInventory ? (
-								<AmiiboInventory myAmiibos={myAmiibos} />
-							) : (
-								<AmiiboChecklist amiibos={allAmiibos} />
-							)}
-						</>
-					) : (
-						<AmiiboChecklist amiibos={allAmiibos} />
-					)}
-				</>
+				allAmiibos && (
+					<>
+						{isLoggedIn ? (
+							<>
+								{isInventory ? (
+									<AmiiboInventory myAmiibos={myAmiibos} />
+								) : (
+									<AmiiboChecklist amiibos={allAmiibos} />
+								)}
+							</>
+						) : (
+							<AmiiboChecklist amiibos={allAmiibos} />
+						)}
+					</>
+				)
 			) : (
 				<SpiningLoadingIcon />
 			)}
