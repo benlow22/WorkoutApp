@@ -44,7 +44,7 @@ export const ImageCarousel = ({ amiibo, slideNumber }: any) => {
 						key={index}
 						style={divStyle}
 					>
-						<Image src={src} alt={alt} />
+						<Image src={src} alt={alt} style={contentStyle} />
 					</div>
 				);
 			})}

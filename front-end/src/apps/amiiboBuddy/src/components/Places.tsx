@@ -35,12 +35,12 @@ export default function Places({
 	setLocationName,
 }: TProps) {
 	const [libraries] = useState<Library[]>(["places"]);
-	const { isLoaded } = useLoadScript({
-		googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
-		libraries,
-	});
+	// const { isLoaded } = useLoadScript({
+	// 	googleMapsApiKey: import.meta.env.VITE_PUBLIC_GOOGLE_MAPS_API_KEY,
+	// 	libraries,
+	// });
 
-	if (!isLoaded) return <div>Loading...</div>;
+	// if (!isLoaded) return <div>Loading...</div>;
 	return (
 		<Map
 			selected={selected}

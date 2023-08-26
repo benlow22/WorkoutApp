@@ -3,7 +3,7 @@ import { Button, Modal } from "antd";
 import { useNavigate } from "react-router";
 
 type TProps = {
-	setClearForm: () => void;
+	setClearForm: React.Dispatch<React.SetStateAction<boolean>>;
 	setFormSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 	submitResult: string;
 };
