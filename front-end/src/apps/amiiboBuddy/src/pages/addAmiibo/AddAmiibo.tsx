@@ -97,7 +97,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 			if (uploadStatus) {
 				console.log("uploadStatus", uploadStatus);
 				uploadStatus
-					.then((data) => {
+					.then((data: any) => {
 						console.log("3", data);
 						uploadPhotoPathsToSupabase(packId, photoPaths).then(
 							(data) => {
