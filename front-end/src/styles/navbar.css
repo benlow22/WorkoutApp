@@ -33,7 +33,7 @@
 	margin: 5px;
 }
 
-.amiiboBuddy-header .nav-links a.active {
+/* .amiiboBuddy-header .nav-links a.active {
 	background-color: rgb(182, 78, 78);
 }
 
@@ -113,4 +113,32 @@
 .workoutBuddy-to-buddySystem-header .nav-links {
 	background-color: rgb(86, 164, 103);
 	animation: fadeWorkoutBuddytoBuddySystemNavLinks 1s linear;
+} */
+@media only screen and (max-width: 500px) {
+	.nav-links,
+	.nav-link {
+		height: auto;
+		display: "flex";
+	}
+	.nav-link,
+	.nav-links a.active {
+		font-size: 14px;
+	}
+	.navbar {
+		height: 55px;
+	}
+
+	.nav-links {
+		display: flex;
+		flex-wrap: wrap;
+		row-gap: 7px;
+		width: 80%;
+		margin: auto;
+		justify-content: space-around;
+		height: 100%;
+	}
+	.nav-link {
+		padding: 12px;
+		margin: 5px;
+	}
 }

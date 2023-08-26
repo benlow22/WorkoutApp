@@ -19,21 +19,35 @@ type TProps = {
 	setFileList: React.Dispatch<React.SetStateAction<UploadFile[]>>;
 	submit: boolean;
 	packId: string;
+	setUploadStatus: React.Dispatch<React.SetStateAction<any>>;
 };
 
-export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
+export function UploadImage({
+	fileList,
+	setFileList,
+	submit,
+	packId,
+	setUploadStatus,
+}: TProps) {
 	const [signUrl, setSignUrl] = useState<any>("");
 	const [userId, setUserId] = useState("");
 	const [media, setMedia] = useState<any[]>([]);
 	const { session, supabase } = useContext(AuthContext);
 	const [mediaList, setMediaList] = useState();
+	const [successUpload, setSuccessUpload] = useState();
 
 	useEffect(() => {
 		if (submit) {
 			console.log("submit worked and is true", submit);
-			handleUpload(packId);
+			// turn handle upload into a promise
+			setUploadStatus(() => uploadImagesToSupabaseBuckets(packId));
+			// uploadImagesToSupabaseBuckets(packId).then((data) => {
+			// 	console.log("image upload success", data);
+			// });
+			// handleUpload(packId);
 		}
 	}, [submit]);
+
 	const getUser = async () => {
 		try {
 			const {
@@ -168,20 +182,69 @@ export function UploadImage({ fileList, setFileList, submit, packId }: TProps) {
 		fileList,
 	};
 
-	const uploadIt = async (file: any, packid: string) => {
-		const { data, error } = await supabase.storage
-			.from("upload-amiibo-images")
-			.upload(userId + "/" + packid + "/" + file.uid + ".png", file, {
-				cacheControl: "3600",
-				contentType: "image/png",
-			});
-		console.log("successful photo upload??", data);
+	const uploadImageToSupabase = (file: any, packid: string) => {
+		return new Promise<any>(async (resolve, reject) => {
+			const { data, error } = await supabase.storage
+				.from("upload-amiibo-images")
+				.upload(userId + "/" + packid + "/" + file.uid + ".png", file, {
+					cacheControl: "3600",
+					contentType: "image/png",
+				});
+			if (error) {
+				console.log("ERROR uploading images to buckets", error);
+				reject(error);
+			} else {
+				console.log("Success uploading images to buckets");
+				resolve(data);
+			}
+			// console.log("successful photo upload??", data);
+		});
 	};
-	const handleUpload = async (packId: string) => {
-		console.log("file", fileList);
-		const base64fileList = fileList.map((file) =>
-			uploadIt(file.originFileObj, packId)
-		);
+
+	// const handleUpload = async (packId: string) => {
+	// 	console.log("file", fileList);
+	// 	const base64fileList = fileList.map((file) =>
+	// 		uploadIt(file.originFileObj, packId)
+	// 	);
+	// };
+
+	// const capitalizeProductsIds = async () => {
+	// 	const products = await getProducts()
+
+	// 	Promise.all(
+	// 	  products.map(async (product) => {
+	// 		const productId = await getProductId(product);
+	// 		console.log(productId);
+
+	// 		const capitalizedId = await capitalizeId(productId)
+	// 		console.log(capitalizedId);
+	// 	  })
+	// 	)
+
+	// 	console.log(products);
+	//   }
+	//   capitalizeProductsIds();
+	const uploadImagesToSupabaseBuckets = async (packId: string) => {
+		const data = await Promise.all<{
+			path: string;
+		}>(
+			fileList.map((file) =>
+				uploadImageToSupabase(file.originFileObj, packId)
+			)
+		)
+			.then((data) => {
+				console.log("all photos successfully uploaded!!: ", data);
+				// setSuccessUpload(data);
+				return data;
+				// "image upload success";
+			})
+			.catch((error) => {
+				console.log("error uploading images", error);
+				return false;
+				// "error uploading images";
+			});
+
+		return data;
 	};
 
 	return (

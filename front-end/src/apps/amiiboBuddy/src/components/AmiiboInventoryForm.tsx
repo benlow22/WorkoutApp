@@ -374,12 +374,13 @@ export const AmiiboInventoryForm: React.FC<{}> = () => {
 						)}
 					</div>
 
-					<UploadImage
+					{/* <UploadImage
 						fileList={fileList}
 						setFileList={setFileList}
 						submit={submit}
 						packId={packId}
-					/>
+						setUploadStatus={setUploadStatus}
+					/> */}
 
 					<Form.Item
 						name="rating"

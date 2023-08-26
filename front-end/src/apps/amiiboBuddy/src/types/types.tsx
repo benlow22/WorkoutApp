@@ -13,3 +13,5 @@ export type TAmiiboCard = {
 	type: string;
 	id: string;
 };
+
+export type TMyAmiibo = {};

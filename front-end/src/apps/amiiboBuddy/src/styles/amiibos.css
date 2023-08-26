@@ -177,3 +177,29 @@ a {
 /* .gmnoprint {
 	visibility: hidden;
 } */
+
+.carousel-slide {
+	display: flex;
+	justify-content: center;
+}
+
+.slick-dots {
+	margin: 0;
+}
+
+/* .ant-radio-button.ant-radio-button-checked {
+	font-weight: bolder;
+} */
+
+.amiibo-inventory-page {
+	width: 90%;
+	margin: auto;
+	padding: 10px;
+	background-color: rgb(15, 8, 8);
+	border-radius: 20px;
+	border: black solid 2px;
+}
+
+.ant-modal .black-font {
+	color: black;
+}

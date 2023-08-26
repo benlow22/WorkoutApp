@@ -24,6 +24,7 @@ type TAmiiboCache = {
 const { Option } = Select;
 import { v4 as uuidv4 } from "uuid";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
+import { SubmitFormButton } from "./submitButtonPopUp";
 
 export const AddAmiibo: React.FC<{}> = () => {
 	const { workouts, setWorkouts, userId, session, supabase } =
@@ -47,13 +48,117 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [currency, setCurrency] = useState("$");
 	const [fileList, setFileList] = useState<UploadFile[]>([]);
 	const [rating, setRating] = useState<number>();
-	const [submit, setSubmit] = useState<boolean>(false);
-	const [packId, setPackId] = useState<string>("");
+	const [submitImage, setSubmitImage] = useState<boolean>(false);
+	const [packId, setPackId] = useState<string>(uuidv4());
 	const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
+	const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+	const [submitForm, setSubmitForm] = useState<boolean>(false);
+	const [submitResult, setSubmitResult] = useState<string>("");
+	const [formSubmit, setFormSubmit] = useState<boolean>(false);
+	const [clearForm, setClearForm] = useState<boolean>(false);
+	const [formValues, setFormValues] = useState();
+	const [photoPaths, setPhotoPaths] = useState<string[]>([]);
+	const [packData, setPackData] = useState<string[]>([]);
+	const [uploadStatus, setUploadStatus] = useState<any>(null);
+	const [imageprom, setImageprom] = useState<Promise<string>>();
+
 	const [form] = Form.useForm();
+
+	// useEffect(() => {
+	// 	if (uploadStatus) {
+	// 		const imagep = new Promise((resolve, reject) => {
+	// 			if (uploadStatus) {
+	// 				resolve(uploadStatus);
+	// 			}
+	// 		});
+	// 		// var foo = new Promise<string>((resolve, reject) => {
+	// 		// 	if (uploadStatus) {
+	// 		// 		resolve("Fine");
+	// 		// 	} else {
+	// 		// 		reject("Error message");
+	// 		// 	}
+	// 		// });
+
+	// 		// const cats = async () => {
+	// 		// 	foo.then(() => "image success").catch(() => "image fail");
+	// 		// };
+	// 		setImageprom(imagep);
+	// 	}
+	// }, [uploadStatus]);
+
+	// const waitForImageUpload = async () => {
+	// 	const data = await getDatafromUpload();
+	// };
+
+	useEffect(() => {
+		if (formSubmit) {
+			setSubmitImage(true);
+
+			if (uploadStatus) {
+				console.log("uploadStatus", uploadStatus);
+				uploadStatus
+					.then((data: any) => {
+						console.log("3", data);
+						uploadPhotoPathsToSupabase(packId, photoPaths).then(
+							(data) => {
+								console.log("1", data);
+								uploadAmiiboToSupabase(packData).then((data) =>
+									console.log("2", data)
+								);
+							}
+						);
+					})
+					.then(() => {
+						console.log("made it out");
+						setSubmitResult("success");
+					})
+					.catch(() => setSubmitResult("fail"));
+
+				// // submit form here
+				// uploadPhotoPathsToSupabase(packId, photoPaths).then((data) => {
+				// 	console.log("SUCCESS !! uploadPhotoPathsToSupabase :", data);
+				// 	uploadAmiiboToSupabase(packData).then((data) => {
+				// 		console.log("SUCCESS !! uploadAmiiboToSupabase :", data);
+				// 		console.log("AHHH", imageprom);
+				// 		// .then((data) => {
+				// 		// 	console.log("SUCCESS !! imageprom :", data);
+				// 	if (data) {
+				// 		console.log("huhhh");
+				// 		setSubmitResult("success");
+				// 		setUploadSuccess(true);
+				// 	}
+				// })
+				// .catch((error) => {
+				// 		// 	console.log(error);
+				// 		// 	setSubmitResult("FAIL ERROR ERROR");
+				// 		// });
+				// 		// }
+				// 	});
+				// });
+				// handleSubmit().then((success: string) => setSubmitResult(success));
+				// setTimeout(() => {
+				// 	setSubmitResult("fail");
+				// }, 2000);
+			}
+		}
+	}, [formSubmit, uploadStatus]);
+
+	//Reset Form
 	const onReset = () => {
 		form.resetFields();
+		setPackId(uuidv4());
 	};
+
+	// via modal in submit pop up
+	useEffect(() => {
+		if (clearForm) {
+			//CLEAR FORM
+			onReset();
+		}
+	}, [clearForm]);
+	// via reset button
+	const resetButton = <Button type="default">Reset Form</Button>;
+
 	useEffect(() => {
 		getAmiibos();
 	}, []);
@@ -83,7 +188,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 		if (data) {
 			setAmiibos(data);
 			const amiiboCache: TAmiiboCache = {};
-			const concatData = data.map((amiibo) => {
+			const concatData = data.map((amiibo, index) => {
 				const concatName = `${amiibo.name} - ${amiibo.amiiboSeries} (${amiibo.type})`;
 				amiiboCache[concatName] = amiibo;
 
@@ -103,6 +208,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 							{amiibo.name} - {amiibo.amiiboSeries}
 						</div>
 					),
+					key: index,
 					children: amiibo,
 				};
 			});
@@ -149,7 +255,6 @@ export const AddAmiibo: React.FC<{}> = () => {
 			case "JPY":
 				setCurrency("¥");
 				break;
-
 			case "CNY":
 				setCurrency("¥");
 				break;
@@ -186,19 +291,19 @@ export const AddAmiibo: React.FC<{}> = () => {
 
 	const onFinish = (values: any) => {
 		console.log("FL:", fileList);
+		console.log("values from form:", values);
+		console.log("FL no photo:", fileList[0]?.uid);
 
-		console.log("Success:", values);
-		const amiiboPackageId = uuidv4();
-		setPackId(amiiboPackageId);
 		const finishedFormValues = {
 			...values,
 			rating: rating,
 			location: locationName,
-			amiiboPackageId,
+			packId,
 			amiibos: amiibosArr,
 			photos: fileList,
 			userId,
 		};
+
 		const packData = finishedFormValues.amiibos.map(
 			(amiibo: TAmiiboCard) => ({
 				user_id: userId,
@@ -213,14 +318,28 @@ export const AddAmiibo: React.FC<{}> = () => {
 				return_by_date: values.returnBy,
 				rating: rating,
 				condition: values.condition,
-				pack_id: amiiboPackageId,
-				thumbnail_url: fileList[0].uid,
+				pack_id: packId,
+				thumbnail_url: fileList[0].uid ? fileList[0].uid : null, // null for no photo provided
 			})
 		);
-		uploadAmiiboToSupabase(packData);
-		console.log(packData);
-		setSubmit(true);
-		console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+		setPackData(packData);
+
+		if (fileList.length > 0) {
+			const photoPaths = fileList.map((file) => file.uid);
+			setPhotoPaths(photoPaths);
+			// try {
+			// 	uploadPhotoPathsToSupabase(packId, photoPaths);
+			// 	console.log("FINISHED AMIIBO INPUT FORM", finishedFormValues);
+			// 	throw new Error();
+			// } catch (e) {
+			// 	console.error(e);
+			// }
+		}
+		// try {
+		// 	uploadAmiiboToSupabase(packData);
+		// } catch (e) {
+		// 	console.error(e);
+		// }
 	};
 
 	//can update amiibodata type later
@@ -236,10 +355,81 @@ export const AddAmiibo: React.FC<{}> = () => {
 			console.error(error);
 		}
 	};
+	// lets turn into promise
+	// const uploadAmiiboToSupabase = (amiibodata: any) => {
+	// 	return new Promise(async (resolve, reject) => {
+	// 		const { data, error } = await supabase
+	// 			.from("users_amiibos")
+	// 			.insert(amiibodata)
+	// 			.select();
+	// 		if (data) {
+	// 			console.log("upload is a success", data);
+	// 			// setUploadSuccess(true);
+	// 			resolve(data);
+	// 		} else {
+	// 			console.error(error);
+	// 			reject(error);
+	// 		}
+	// 	});
+	// };
+
+	// const uploadImageStatus = () => {};
+
+	// const uploadImagesToSupabaseBuckets = () => {
+	// 	return new Promise(async (resolve, reject) => {
+
+	// 	});
+	// };
+
+	// const uploadPhotoPathsToSupabaseNotPromise = async (
+	// 	packId: string,
+	// 	pathsArr: string[]
+	// ) => {
+	// 	const { data, error } = await supabase
+	// 		.from("ab_pack_id_image_paths")
+	// 		.insert([
+	// 			{ pack_id: packId, photo_paths: pathsArr, user_id: userId },
+	// 		])
+	// 		.select();
+	// 	if (data) {
+	// 		console.log("upload photo paths is a success", data);
+	// 	} else {
+	// 		console.error(error);
+	// 	}
+	// };
+
+	const uploadPhotoPathsToSupabase = (packId: string, pathsArr: string[]) => {
+		return new Promise(async (resolve, reject) => {
+			const { data, error } = await supabase
+				.from("ab_pack_id_image_paths")
+				.insert([
+					{
+						pack_id: packId,
+						photo_paths: pathsArr ? pathsArr : null,
+						user_id: userId,
+					},
+				])
+				.select();
+			if (data) {
+				console.log("upload photo paths is a success", data);
+				resolve(data);
+			} else {
+				console.error(error);
+				reject(error);
+			}
+		});
+	};
 
 	const onFinishFailed = (errorInfo: any) => {
 		console.log("Failed:", errorInfo);
 	};
+
+	// const handleSubmit = Promise.all([
+	// 	uploadPhotoPathsToSupabase(packId, photoPaths),
+	// 	uploadAmiiboToSupabase(packData),
+	// ])
+	// 	.then(() => "success")
+	// 	.catch(() => "fail");
 
 	if (!isLoading) {
 		return (
@@ -263,6 +453,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 					labelCol={{ span: 4 }}
 					onFinish={onFinish}
 					onFinishFailed={onFinishFailed}
+					scrollToFirstError
 				>
 					{numberOfAmiibos > 1 ? (
 						<Form.Item
@@ -309,7 +500,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 							label="# of amiibos in pack"
 							labelCol={{ span: 17 }}
 							wrapperCol={{ span: 7 }}
-							style={{ width: "100%" }}
+							style={{ minWidth: "145px" }}
 							initialValue={"1"}
 							className="amiibo-pack-selector"
 						>
@@ -413,9 +604,12 @@ export const AddAmiibo: React.FC<{}> = () => {
 					))}
 					<div className="amiibo-image-banner">
 						{amiibosArr.map(
-							(amiibo) =>
+							(amiibo, index) =>
 								amiibo && (
-									<div className="amiibo-image-card">
+									<div
+										className="amiibo-image-card"
+										key={index}
+									>
 										<h4
 											style={{ fontWeight: "lighter" }}
 											className={
@@ -442,7 +636,8 @@ export const AddAmiibo: React.FC<{}> = () => {
 					<UploadImage
 						fileList={fileList}
 						setFileList={setFileList}
-						submit={submit}
+						submit={submitImage}
+						setUploadStatus={setUploadStatus}
 						packId={packId}
 					/>
 
@@ -451,7 +646,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 						label="Rate"
 						style={{ color: "white", textAlign: "center" }}
 					>
-						<>
+						<div>
 							Awful
 							<Rate
 								count={5}
@@ -465,7 +660,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 								onChange={(value) => handleRateChange(value)}
 							/>
 							Perfect
-						</>
+						</div>
 					</Form.Item>
 
 					<FormItem name="condition" label="Condition">
@@ -557,9 +752,23 @@ export const AddAmiibo: React.FC<{}> = () => {
 						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<Button type="primary" htmlType="submit">
-							Add to Inventory
-						</Button>
+						<div
+							style={{
+								display: "flex",
+								justifyContent: "space-around",
+								width: "70%",
+								margin: "auto",
+							}}
+						>
+							<Button type="default" ghost>
+								Reset Form
+							</Button>
+							<SubmitFormButton
+								setClearForm={setClearForm}
+								setFormSubmit={setFormSubmit}
+								submitResult={submitResult}
+							/>
+						</div>
 					</Form.Item>
 				</Form>
 			</>
