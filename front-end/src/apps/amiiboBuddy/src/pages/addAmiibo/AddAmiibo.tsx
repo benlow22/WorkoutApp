@@ -52,6 +52,24 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [packId, setPackId] = useState<string>("");
 	const [uploadSuccess, setUploadSuccess] = useState<boolean>(false);
 	const [submitLoading, setSubmitLoading] = useState<boolean>(false);
+	const [submitForm, setSubmitForm] = useState<boolean>(false);
+	const [submitResult, setSubmitResult] = useState<string>("");
+	const [formSubmit, setFormSubmit] = useState<boolean>(false);
+	const [clearForm, setClearForm] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (formSubmit) {
+			setTimeout(() => {
+				setSubmitResult("fail");
+			}, 2000);
+		}
+	}, [formSubmit]);
+
+	useEffect(() => {
+		if (clearForm) {
+			//CLEAR FORM
+		}
+	}, [clearForm]);
 
 	const handleSubmitLoading = () => {
 		setSubmitLoading(true);
@@ -598,7 +616,11 @@ export const AddAmiibo: React.FC<{}> = () => {
 						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
-						<SubmitFormButton />
+						<SubmitFormButton
+							setClearForm={setClearForm}
+							setFormSubmit={setFormSubmit}
+							submitResult={submitResult}
+						/>
 					</Form.Item>
 				</Form>
 			</>

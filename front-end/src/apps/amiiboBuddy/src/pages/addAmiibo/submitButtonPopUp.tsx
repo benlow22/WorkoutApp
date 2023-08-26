@@ -1,46 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Modal } from "antd";
 import { useNavigate } from "react-router";
 
-export const SubmitFormButton: React.FC = () =>
+type TProps = {
+	setClearForm: () => void;
+	setFormSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+	submitResult: string;
+};
+
+export const SubmitFormButton = ({
+	setClearForm,
+	setFormSubmit,
+	submitResult,
+}: TProps) =>
 	// { handleSubmitFn }
 	{
 		const [openModal, setOpenModal] = useState(false);
-		const [submitLoading, setSubmitLoading] = useState(false);
+		// const [submitLoading, setSubmitLoading] = useState(false);
 		const [modalText, setModalText] = useState(
 			"Please check to make sure fields are filled accurately."
 		);
-		const [okText, setOkText] = useState<string>("Yes");
-		const [cancelText, setCancelText] = useState<string>("Cancel");
+		// const [okText, setOkText] = useState<string>("Yes");
+		// const [cancelText, setCancelText] = useState<string>("Cancel");
 		const [titleText, setTitleText] = useState("Ready to submit?");
-		const [isSuccess, setIsSuccess] = useState<boolean>(false);
+		// const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
 		const navigate = useNavigate();
+
 		const showModal = () => {
 			setOpenModal(true);
 		};
+
+		useEffect(() => {
+			if (submitResult === "success") {
+				handleSucessSubmit();
+			} else if (submitResult === "fail") {
+				handleSucessFail();
+			}
+		}, [submitResult]);
 
 		const handleCancel = () => {
 			if (openModal) {
 				setOpenModal(false);
 			}
-			setSubmitLoading(false);
+			// setSubmitLoading(false);
 			console.log("Clicked cancel Modal button");
 
 			setTitleText("Ready to submit?");
 			setModalText(
 				"Please check to make sure fields are filled accurately."
 			);
-			setCancelText("Cancel");
-			setOkText("Yes");
-			setIsSuccess(false);
+			// setCancelText("Cancel");
+			// setOkText("Yes");
+			// setIsSuccess(false);
 			setFooter([cancelButton, submitButton]);
-		};
-
-		const handleClose = () => {
-			if (isSuccess) {
-				handleCancel();
-			}
 		};
 
 		const cancelButton = (
@@ -84,28 +97,31 @@ export const SubmitFormButton: React.FC = () =>
 		);
 
 		const handleSubmit = () => {
-			setSubmitLoading(true);
+			setFormSubmit(true);
+			// setSubmitLoading(true);
 			setFooter([loadingSubmitButton]);
 			setTitleText("Uploading Amiibo...");
 			setModalText("This may take a minute.");
 			// here is where we wait for SUBMISSION
 			// figure out what to do if close while uploading, or maybe disable
-			setTimeout(() => {
-				if (openModal) {
-					handleSucessSubmit();
-				}
-			}, 2000);
-
-			// CATCH an error HANDLE SUBMIT FAIL
 		};
 
 		const handleSucessSubmit = () => {
-			setSubmitLoading(false);
+			// setSubmitLoading(false);
 			setFooter([goToCollectionButton, addMoreButton]);
 			setTitleText("SUCCESS!!");
-			setIsSuccess(true);
+			// setIsSuccess(true);
 			setModalText(
 				"Would you like to view your collection, or add more?"
+			);
+		};
+
+		const handleSucessFail = () => {
+			// setSubmitLoading(false);
+			setFooter([cancelButton]);
+			setTitleText("Warning!");
+			setModalText(
+				"Looks like an error occured while uploading. Please try again later"
 			);
 		};
 
