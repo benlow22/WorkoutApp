@@ -355,25 +355,25 @@ export const AddAmiibo: React.FC<{}> = () => {
 			console.error(error);
 		}
 	};
-	lets turn into promise
-	const uploadAmiiboToSupabase = (amiibodata: any) => {
-		return new Promise(async (resolve, reject) => {
-			const { data, error } = await supabase
-				.from("users_amiibos")
-				.insert(amiibodata)
-				.select();
-			if (data) {
-				console.log("upload is a success", data);
-				// setUploadSuccess(true);
-				resolve(data);
-			} else {
-				console.error(error);
-				reject(error);
-			}
-		});
-	};
+	// lets turn into promise
+	// const uploadAmiiboToSupabase = (amiibodata: any) => {
+	// 	return new Promise(async (resolve, reject) => {
+	// 		const { data, error } = await supabase
+	// 			.from("users_amiibos")
+	// 			.insert(amiibodata)
+	// 			.select();
+	// 		if (data) {
+	// 			console.log("upload is a success", data);
+	// 			// setUploadSuccess(true);
+	// 			resolve(data);
+	// 		} else {
+	// 			console.error(error);
+	// 			reject(error);
+	// 		}
+	// 	});
+	// };
 
-	const uploadImageStatus = () => {};
+	// const uploadImageStatus = () => {};
 
 	// const uploadImagesToSupabaseBuckets = () => {
 	// 	return new Promise(async (resolve, reject) => {

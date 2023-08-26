@@ -385,6 +385,7 @@ div.ant-space-item{
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;
+	justify-content: space-around;
 }
 
 .start-button-container::after,
