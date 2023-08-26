@@ -33,6 +33,7 @@ export const SubmitFormButton = ({
 
 		useEffect(() => {
 			if (submitResult === "success") {
+				console.log("ALMOST THERE");
 				handleSucessSubmit();
 			} else if (submitResult === "fail") {
 				handleSucessFail();

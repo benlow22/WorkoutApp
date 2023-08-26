@@ -59,30 +59,94 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [formValues, setFormValues] = useState();
 	const [photoPaths, setPhotoPaths] = useState<string[]>([]);
 	const [packData, setPackData] = useState<string[]>([]);
+	const [uploadStatus, setUploadStatus] = useState<any>(null);
+	const [imageprom, setImageprom] = useState<Promise<string>>();
 
 	const [form] = Form.useForm();
+
+	// useEffect(() => {
+	// 	if (uploadStatus) {
+	// 		const imagep = new Promise((resolve, reject) => {
+	// 			if (uploadStatus) {
+	// 				resolve(uploadStatus);
+	// 			}
+	// 		});
+	// 		// var foo = new Promise<string>((resolve, reject) => {
+	// 		// 	if (uploadStatus) {
+	// 		// 		resolve("Fine");
+	// 		// 	} else {
+	// 		// 		reject("Error message");
+	// 		// 	}
+	// 		// });
+
+	// 		// const cats = async () => {
+	// 		// 	foo.then(() => "image success").catch(() => "image fail");
+	// 		// };
+	// 		setImageprom(imagep);
+	// 	}
+	// }, [uploadStatus]);
+
+	// const waitForImageUpload = async () => {
+	// 	const data = await getDatafromUpload();
+	// };
 
 	useEffect(() => {
 		if (formSubmit) {
 			setSubmitImage(true);
 
-			// submit form here
-			Promise.all([
-				uploadPhotoPathsToSupabase(packId, photoPaths),
-				uploadAmiiboToSupabase(packData),
-			])
-				.then(() => setSubmitResult("success"))
-				.catch(() => setSubmitResult("fail"));
-			// handleSubmit().then((success: string) => setSubmitResult(success));
-			// setTimeout(() => {
-			// 	setSubmitResult("fail");
-			// }, 2000);
+			if (uploadStatus) {
+				console.log("uploadStatus", uploadStatus);
+				uploadStatus
+					.then((data) => {
+						console.log("3", data);
+						uploadPhotoPathsToSupabase(packId, photoPaths).then(
+							(data) => {
+								console.log("1", data);
+								uploadAmiiboToSupabase(packData).then((data) =>
+									console.log("2", data)
+								);
+							}
+						);
+					})
+					.then(() => {
+						console.log("made it out");
+						setSubmitResult("success");
+					})
+					.catch(() => setSubmitResult("fail"));
+
+				// // submit form here
+				// uploadPhotoPathsToSupabase(packId, photoPaths).then((data) => {
+				// 	console.log("SUCCESS !! uploadPhotoPathsToSupabase :", data);
+				// 	uploadAmiiboToSupabase(packData).then((data) => {
+				// 		console.log("SUCCESS !! uploadAmiiboToSupabase :", data);
+				// 		console.log("AHHH", imageprom);
+				// 		// .then((data) => {
+				// 		// 	console.log("SUCCESS !! imageprom :", data);
+				// 	if (data) {
+				// 		console.log("huhhh");
+				// 		setSubmitResult("success");
+				// 		setUploadSuccess(true);
+				// 	}
+				// })
+				// .catch((error) => {
+				// 		// 	console.log(error);
+				// 		// 	setSubmitResult("FAIL ERROR ERROR");
+				// 		// });
+				// 		// }
+				// 	});
+				// });
+				// handleSubmit().then((success: string) => setSubmitResult(success));
+				// setTimeout(() => {
+				// 	setSubmitResult("fail");
+				// }, 2000);
+			}
 		}
-	}, [formSubmit]);
+	}, [formSubmit, uploadStatus]);
 
 	//Reset Form
 	const onReset = () => {
 		form.resetFields();
+		setPackId(uuidv4());
 	};
 
 	// via modal in submit pop up
@@ -278,20 +342,20 @@ export const AddAmiibo: React.FC<{}> = () => {
 		// }
 	};
 
-	// //can update amiibodata type later
-	// const uploadAmiiboToSupabase = async (amiibodata: any) => {
-	// 	const { data, error } = await supabase
-	// 		.from("users_amiibos")
-	// 		.insert(amiibodata)
-	// 		.select();
-	// 	if (data) {
-	// 		console.log("upload is a success", data);
-	// 		setUploadSuccess(true);
-	// 	} else {
-	// 		console.error(error);
-	// 	}
-	// };
-	//lets turn into promise
+	//can update amiibodata type later
+	const uploadAmiiboToSupabase = async (amiibodata: any) => {
+		const { data, error } = await supabase
+			.from("users_amiibos")
+			.insert(amiibodata)
+			.select();
+		if (data) {
+			console.log("upload is a success", data);
+			setUploadSuccess(true);
+		} else {
+			console.error(error);
+		}
+	};
+	lets turn into promise
 	const uploadAmiiboToSupabase = (amiibodata: any) => {
 		return new Promise(async (resolve, reject) => {
 			const { data, error } = await supabase
@@ -300,7 +364,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 				.select();
 			if (data) {
 				console.log("upload is a success", data);
-				setUploadSuccess(true);
+				// setUploadSuccess(true);
 				resolve(data);
 			} else {
 				console.error(error);
@@ -308,6 +372,14 @@ export const AddAmiibo: React.FC<{}> = () => {
 			}
 		});
 	};
+
+	const uploadImageStatus = () => {};
+
+	// const uploadImagesToSupabaseBuckets = () => {
+	// 	return new Promise(async (resolve, reject) => {
+
+	// 	});
+	// };
 
 	// const uploadPhotoPathsToSupabaseNotPromise = async (
 	// 	packId: string,
@@ -565,6 +637,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 						fileList={fileList}
 						setFileList={setFileList}
 						submit={submitImage}
+						setUploadStatus={setUploadStatus}
 						packId={packId}
 					/>
 
