@@ -60,8 +60,7 @@ export const AddAmiibo: React.FC<{}> = () => {
 	const [photoPaths, setPhotoPaths] = useState<string[]>([]);
 	const [packData, setPackData] = useState<string[]>([]);
 	const [uploadStatus, setUploadStatus] = useState<any>(null);
-	const [imageprom, setImageprom] = useState<Promise<string>>();
-	const [uploadFn, setUploadFn] = useState<any>(null);
+
 	const [form] = Form.useForm();
 
 	const uploadImageToSupabase = (file: any, packid: string) => {
@@ -444,13 +443,6 @@ export const AddAmiibo: React.FC<{}> = () => {
 		console.log("Failed:", errorInfo);
 	};
 
-	// const handleSubmit = Promise.all([
-	// 	uploadPhotoPathsToSupabase(packId, photoPaths),
-	// 	uploadAmiiboToSupabase(packData),
-	// ])
-	// 	.then(() => "success")
-	// 	.catch(() => "fail");
-
 	if (!isLoading) {
 		return (
 			<>
@@ -656,10 +648,6 @@ export const AddAmiibo: React.FC<{}> = () => {
 					<UploadImage
 						fileList={fileList}
 						setFileList={setFileList}
-						submit={submitImage}
-						setUploadStatus={setUploadStatus}
-						packId={packId}
-						uploadFn={setUploadFn}
 					/>
 
 					<Form.Item
