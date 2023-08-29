@@ -203,3 +203,14 @@ a {
 .ant-modal .black-font {
 	color: black;
 }
+.ant-radio-button-wrapper-disabled {
+	background-color: rgba(120, 120, 120, 0.62);
+	border-color: rgba(255, 255, 255, 0.131);
+}
+/* 
+.amiibo-filter-menu .ant-radio-group {
+	width: 100%;
+}
+.ant-radio-button-wrapper > .ant-radio-button {
+	width: 75px;
+} */

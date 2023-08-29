@@ -4,6 +4,7 @@ import { AmiiboCard } from "./AmiiboCard";
 import { TAmiiboCard } from "../types/types";
 import "../styles/amiibos.css";
 import { AuthContext } from "../../../../contexts/AuthProvider";
+import { AmiiboFilter } from "./AmiiboFilter";
 
 export const BrowsePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
@@ -34,6 +35,7 @@ export const BrowsePage: React.FC<{}> = () => {
 	return (
 		<div className="amiibo-homepage">
 			<h2 className="page-heading">Amiibo Buddy</h2>
+			<AmiiboFilter />
 			<div className="amiibo-grid">
 				{!isLoading &&
 					amiibos.map((amiibo, index) => (
