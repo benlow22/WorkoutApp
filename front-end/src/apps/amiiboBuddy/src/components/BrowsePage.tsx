@@ -46,6 +46,7 @@ export const BrowsePage: React.FC<{}> = () => {
 	const indexOfFirstAmiibo = indexOfLastAmiibo - amiibosPerPage;
 	const currentAmiibos = amiibos.slice(indexOfFirstAmiibo, indexOfLastAmiibo);
 
+	const pageSizeOptions = [10, 20, 50, 100, filteredAmiibos.length];
 	return (
 		<div className="amiibo-homepage">
 			<h2 className="page-heading">Amiibo Buddy</h2>
@@ -60,6 +61,7 @@ export const BrowsePage: React.FC<{}> = () => {
 					}
 					defaultPageSize={50}
 					defaultCurrent={1}
+					pageSizeOptions={pageSizeOptions}
 					onChange={(page, pageSize) => {
 						setAmiibosPerPage(pageSize);
 						setCurrentPage(page);

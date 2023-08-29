@@ -10,10 +10,14 @@ import {
 	Space,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import { TAmiiboCard } from "../types/types";
 
-type TProps = {};
+type TProps = {
+	amiibos: TAmiiboCard[];
+	setFilteredAmiibos: React.Dispatch<React.SetStateAction<TAmiiboCard[]>>;
+};
 
-export const AmiiboFilter = ({}: TProps) => {
+export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
 	const { userId, session, supabase, isLoggedIn } = useContext(AuthContext);
 	const [sortAlphabetical, setSortAlphabetical] = useState<
@@ -25,50 +29,28 @@ export const AmiiboFilter = ({}: TProps) => {
 	// const [filterTypeBy, setFilterTypeBy] = useState<
 	// 	"All" | "Figure" | "Card" | "Yarn"
 	// >();
-	const [typeDropDown, setTypeDropDown] = useState<string>("Figures");
+	const [type, setType] = useState<string>("Figures");
 
-	typeDropDown;
 	useEffect(() => {}, []);
 	const radioCategoryOnChange = (e: RadioChangeEvent) => {
 		console.log(`radio checked:${e.target.value}`);
 		setFilterBy(e.target.value);
 	};
 
-	const onClick: MenuProps["onClick"] = () => {};
-	const items: MenuProps["items"] = [
-		{
-			key: "1",
-			label: <p style={{ color: "black" }}>Cards</p>,
-		},
-		{
-			key: "2",
-			label: <p onClick={(e) => setTypeDropDown(e)}>2nd menu item</p>,
-		},
-		{
-			key: "3",
-			label: (
-				<a
-					target="Card"
-					rel="noopener noreferrer"
-					href="https://www.luohanacademy.com"
-				>
-					3rd menu item
-				</a>
-			),
-		},
-		{
-			key: "3",
-			label: (
-				<a
-					target="Yarn"
-					rel="noopener noreferrer"
-					href="https://www.luohanacademy.com"
-				>
-					3rd menu item
-				</a>
-			),
-		},
-	];
+	useEffect(() => {
+		switch (filterBy) {
+			case "Multiples":
+				break;
+			case "Owned":
+				break;
+			case "Return":
+				break;
+			case "Wishlist":
+				break;
+			default:
+				setFilteredAmiibos(amiibos);
+		}
+	}, [filterBy]);
 
 	return (
 		<div className="amiibo-filter-nav">
@@ -91,7 +73,7 @@ export const AmiiboFilter = ({}: TProps) => {
 				<Form.Item>
 					<Radio.Group
 						onChange={radioCategoryOnChange}
-						defaultValue="a"
+						defaultValue="All"
 						style={{ marginTop: 16 }}
 					>
 						<Radio.Button
@@ -117,19 +99,11 @@ export const AmiiboFilter = ({}: TProps) => {
 				<Radio.Button value="f"> as</Radio.Button> */}
 					</Radio.Group>
 				</Form.Item>
+				<Form.Item>
+					<Radio.Group></Radio.Group>
+				</Form.Item>
 			</Form>
-			<Dropdown
-				menu={{ items, onClick }}
-				placement="bottomLeft"
-				arrow={{ pointAtCenter: true }}
-			>
-				<p>{typeDropDown}</p>
-			</Dropdown>
 
-			<p>Owned</p>
-			<p>Wishlist</p>
-			<p>Return</p>
-			<p>multiples</p>
 			<p>type</p>
 
 			<h1>FILTERS: {filterBy} </h1>

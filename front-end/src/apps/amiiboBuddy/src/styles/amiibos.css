@@ -221,10 +221,27 @@ a {
 }
 
 .amiibo-pagination {
-	background-color: rgb(172, 172, 172);
+	background-color: var(--domain-nav-links-active);
 	width: fit-content;
 	margin: auto;
-	border: white solid 4px;
+	border: var(--domain-header) solid 4px;
 	border-radius: 10px;
-	padding: 5px;
+	padding: 5px 10px;
+}
+
+.ant-radio-button-wrapper.ant-radio-button-wrapper-checked.ant-radio-button-wrapper-in-form-item {
+	border-color: rgb(184, 0, 0);
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+	color: var(--domain-header);
+}
+
+.ant-radio-button.ant-radio-button-checked {
+	border-color: rgb(184, 0, 0);
+	background-color: var(--domain-nav-links-active);
+	opacity: 0.75;
+}
+
+.amiibo-filter-menu .ant-radio-button-wrapper:hover {
+	color: var(--domain-header);
 }
