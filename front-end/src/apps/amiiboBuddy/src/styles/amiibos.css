@@ -39,7 +39,8 @@
 	max-width: 100px;
 }
 
-.amiibo-grid {
+.amiibo-grid,
+.list-group {
 	display: flex;
 	min-width: 600px;
 	flex-wrap: wrap;
@@ -214,3 +215,16 @@ a {
 .ant-radio-button-wrapper > .ant-radio-button {
 	width: 75px;
 } */
+
+.list-group-item {
+	list-style: none;
+}
+
+.amiibo-pagination {
+	background-color: rgb(172, 172, 172);
+	width: fit-content;
+	margin: auto;
+	border: white solid 4px;
+	border-radius: 10px;
+	padding: 5px;
+}

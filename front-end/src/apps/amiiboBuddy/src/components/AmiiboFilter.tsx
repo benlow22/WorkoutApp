@@ -78,6 +78,10 @@ export const AmiiboFilter = ({}: TProps) => {
 			<p>series</p>
 			<p>___</p>
 
+			<h3>Show </h3>
+			<p>list</p>
+			<p>grid</p>
+			<p>SIZE</p>
 			<h3>Group By</h3>
 			<p>type</p>
 			<p>___</p>
