@@ -38,7 +38,6 @@ export function UploadImage({ fileList, setFileList }: TProps) {
 		if (!file.url && !file.preview) {
 			file.preview = await getBase64(file.originFileObj as RcFile);
 		}
-
 		setPreviewImage(file.url || (file.preview as string));
 		setPreviewOpen(true);
 		setPreviewTitle(
