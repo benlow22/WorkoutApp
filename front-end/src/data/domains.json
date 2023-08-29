@@ -43,7 +43,8 @@
 			"class": "poke-buddy",
 			"pages": [
 				{ "name": "Type Effectiveness", "path": "typeEffectiveness" },
-				{ "name": "Quiz", "path": "quiz" }
+				{ "name": "Quiz", "path": "quiz" },
+				{ "name": "Search", "path": "search" }
 			],
 			"logo": "pb-logo.png"
 		},
