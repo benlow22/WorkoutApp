@@ -27,7 +27,6 @@ export const BrowsePage: React.FC<{}> = () => {
 				.select(
 					" amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail,type"
 				)
-				.eq("type", "Figure")
 				.order("amiibo_series");
 			if (data) {
 				setAmiibos(data);
@@ -71,7 +70,7 @@ export const BrowsePage: React.FC<{}> = () => {
 					}}
 				/>
 			)}
-			<Amiibos amiibos={currentAmiibos} loading={isLoading} />
+			<Amiibos amiibos={filteredAmiibos} loading={isLoading} />
 			{/* <div className="amiibo-grid">
 				{!isLoading &&
 					amiibos.map((amiibo, index) => (

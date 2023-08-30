@@ -12,6 +12,8 @@ import {
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { TAmiiboCard } from "../types/types";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
+import { Amiibos } from "./Amiibos";
 
 type TProps = {
 	amiibos: TAmiiboCard[];
@@ -30,11 +32,23 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	// const [filterTypeBy, setFilterTypeBy] = useState<
 	// 	"All" | "Figure" | "Card" | "Yarn"
 	// >();
-	const [type, setType] = useState<string>("Figures");
+	const [type, setType] = useState<CheckboxValueType[]>(["Figure"]);
 
 	useEffect(() => {}, []);
+
+	useEffect(() => {
+		const newAmiibosArr = amiibos.filter((amiibo) => {
+			// console.log("ami type:", amiibo.type);
+			if (type.includes(amiibo.type)) {
+				return amiibo;
+			}
+		});
+		// console.log("new", newAmiibosArr);
+		setFilteredAmiibos(newAmiibosArr);
+	}, [type]);
+
 	const radioCategoryOnChange = (e: RadioChangeEvent) => {
-		console.log(`radio checked:${e.target.value}`);
+		// console.log(`radio checked:${e.target.value}`);
 		setFilterBy(e.target.value);
 	};
 
@@ -52,11 +66,17 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				setFilteredAmiibos(amiibos);
 		}
 	}, [filterBy]);
+
 	const typeOptions = [
-		{ label: "Figures", value: "Figures" },
-		{ label: "Cards", value: "Cards" },
+		{ label: "Figures", value: "Figure" },
+		{ label: "Cards", value: "Card" },
 		{ label: "Yarn", value: "Yarn" },
+		{ label: "Band", value: "Band" },
 	];
+
+	const handleAmiiboTypeChange = () => {
+		const newTypes = new Array();
+	};
 	return (
 		<div className="amiibo-filter-nav">
 			<h3>Sort By</h3>
@@ -107,13 +127,18 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				<Form.Item label="Amiibo Type">
 					<Checkbox.Group
 						options={typeOptions}
-						defaultValue={["Figures"]}
+						defaultValue={["Figure"]}
 						className="white-font"
 						style={{
 							display: "flex",
 							justifyContent: "space-evenly",
 						}}
-						// onChange={onChange}
+						value={type}
+						onChange={(checkedValue) => {
+							if (checkedValue.length > 0) {
+								setType(checkedValue);
+							}
+						}}
 					/>
 				</Form.Item>
 			</Form>
