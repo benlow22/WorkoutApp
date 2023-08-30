@@ -38,45 +38,99 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	// >();
 	const [type, setType] = useState<CheckboxValueType[]>(["Figure"]);
 	const [groupings, setGroupings] = useState<CheckboxValueType[]>([""]);
+	const [filteredList, setFilteredList] = useState([]);
 
 	// initial sort, once amiibos have been fetched.
 	useEffect(() => {
-		const figures = amiibos.filter((amiibo) => amiibo.type === "Figure");
-		setFilteredAmiibos(figures);
+		if (amiibos) {
+			const figures = amiibos.filter(
+				(amiibo) => amiibo.type === "Figure"
+			);
+			setFilteredAmiibos(figures);
+		}
 	}, [amiibos]);
 
 	useEffect(() => {
-		if (type) {
-			const newAmiibosArr = amiibos.filter((amiibo) => {
-				if (type.includes(amiibo.type)) {
-					return amiibo;
-				}
-			});
-			setFilteredAmiibos(newAmiibosArr);
+		let filterByStatus = [];
+		switch (filterBy) {
+			case "Multiples":
+				break;
+			case "Owned":
+				const filterByCollectioned = amiibos.filter((amiibo) => {
+					if (amiibo.status.length > 0) {
+						if (amiibo.status[0].isChecklist === true) {
+							return amiibo;
+						}
+					}
+				});
+				filterByStatus = filterByCollectioned;
+				break;
+			case "Return":
+				break;
+			case "Wishlist":
+				const newAmiibosArr = amiibos.filter((amiibo) => {
+					if (amiibo.status.length > 0) {
+						if (amiibo.status[0].isWishlist === true) {
+							// console.log(amiibo.status);
+							return amiibo;
+						}
+					}
+				});
+				filterByStatus = newAmiibosArr;
+
+				break;
+			case "All":
+				filterByStatus = amiibos;
+				break;
 		}
 
-		// console.log("new", newAmiibosArr);
-	}, [type]);
+		const newAmiibosArr = filterByStatus.filter((amiibo) => {
+			if (type.includes(amiibo.type)) {
+				return amiibo;
+			}
+		});
+		setFilteredAmiibos(newAmiibosArr);
+	}, [filterBy, type]);
 
 	const radioCategoryOnChange = (e: RadioChangeEvent) => {
 		// console.log(`radio checked:${e.target.value}`);
 		setFilterBy(e.target.value);
 	};
 
-	useEffect(() => {
-		switch (filterBy) {
-			case "Multiples":
-				break;
-			case "Owned":
-				break;
-			case "Return":
-				break;
-			case "Wishlist":
-				break;
-			default:
-				setFilteredAmiibos(amiibos);
-		}
-	}, [filterBy]);
+	// useEffect(() => {
+	// 	switch (filterBy) {
+	// 		case "Multiples":
+	// 			break;
+	// 		case "Owned":
+	// 			const newAmiibosArrCollection = amiibos.filter((amiibo) => {
+	// 				if (amiibo.status.length > 0) {
+	// 					if (amiibo.status[0].isChecklist === true) {
+	// 						// console.log(amiibo.status);
+	// 						return amiibo;
+	// 					}
+	// 				}
+	// 			});
+	// 			setFilteredList(newAmiibosArrCollection);
+	// 			break;
+	// 			break;
+	// 		case "Return":
+	// 			break;
+	// 		case "Wishlist":
+	// 			const newAmiibosArr = amiibos.filter((amiibo) => {
+	// 				if (amiibo.status.length > 0) {
+	// 					if (amiibo.status[0].isWishlist === true) {
+	// 						// console.log(amiibo.status);
+	// 						return amiibo;
+	// 					}
+	// 				}
+	// 			});
+	// 			setFilteredList(newAmiibosArr);
+	// 			break;
+	// 		case "All":
+	// 			setFilteredList(amiibos);
+	// 			break;
+	// 	}
+	// }, [filterBy]);
 
 	const typeOptions = [
 		{ label: "All", value: "All" },

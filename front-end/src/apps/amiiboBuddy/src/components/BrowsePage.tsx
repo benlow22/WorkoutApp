@@ -11,14 +11,14 @@ import { TAmiiboWithStatus } from "./AmiiboLine";
 
 export const BrowsePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
-	const [amiibos, setAmiibos] = useState<TAmiiboWithStatus[]>([]);
+	const [amiibos, setAmiibos] = useState<TAmiiboWithStatus[] | any>([]);
 	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [filteredAmiibos, setFilteredAmiibos] = useState<TAmiiboWithStatus[]>(
-		[]
-	);
+	const [filteredAmiibos, setFilteredAmiibos] = useState<
+		TAmiiboWithStatus[] | any
+	>([]);
 	const [isList, setIsList] = useState<boolean>(false);
 
 	useEffect(() => {}, []);
