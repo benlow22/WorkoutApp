@@ -1,4 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+	ChangeEventHandler,
+	useContext,
+	useEffect,
+	useState,
+} from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import {
 	AutoComplete,
@@ -87,7 +92,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	}, [amiibos]);
 
 	useEffect(() => {
-		let filterByStatus = [];
+		let filterByStatus: TAmiiboWithStatus[] = [];
 		switch (filterBy) {
 			case "Multiples":
 				break;
@@ -202,7 +207,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 		}
 	};
 
-	const handleSearchChange = (e) => {
+	const handleSearchChange = (e: any) => {
 		console.log("TARGET:", e.target.value);
 		setSearch(e.target.value);
 	};
