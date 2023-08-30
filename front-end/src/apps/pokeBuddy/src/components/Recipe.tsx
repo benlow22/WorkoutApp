@@ -1,22 +1,3 @@
-import { Outlet } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../../../../contexts/AuthProvider";
-import sprigatito from "../../../../../images/sprigatito.jpg";
-import "../../styles/style.css";
-import {
-	Button,
-	Cascader,
-	Input,
-	InputNumber,
-	Radio,
-	Select,
-	Space,
-} from "antd";
-import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
-import { Option } from "antd/es/mentions";
-import recipesJSON from "../../../public/pokemonSleepRecipes.json";
-import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
-
 type TIngredient = {
 	id: number;
 	name: string;
@@ -26,7 +7,10 @@ type TIngredient = {
 	imageUrl: string;
 };
 
-export const PokemonSleep = () => {
+type TRecipe = {
+	meal;
+};
+export const Recipe = (recipe: TRecipe) => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
@@ -64,10 +48,6 @@ export const PokemonSleep = () => {
 	useEffect(() => {
 		console.log("unlockedIngredients ARR", unlockedIngredients);
 	}, [unlockedIngredients]);
-
-	useEffect(() => {
-		console.log("category", categories);
-	}, [categories]);
 	return (
 		<div className="recipe-page">
 			<div className="page-heading">
@@ -105,21 +85,6 @@ export const PokemonSleep = () => {
 						/>
 					))}
 			</div>
-			<Radio.Group
-				onChange={(e) => {
-					setCategories(e.target.value);
-				}}
-				defaultValue="Curries and Stews"
-				style={{ marginTop: 16 }}
-			>
-				<Radio.Button value="Curries and Stews">
-					Curries and Stews
-				</Radio.Button>
-				<Radio.Button value="Salads">Salads</Radio.Button>
-				<Radio.Button value="Desserts and Drinks">
-					Desserts and Drink
-				</Radio.Button>
-			</Radio.Group>
 		</div>
 	);
 };

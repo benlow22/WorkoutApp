@@ -257,7 +257,9 @@ li.ant-pagination-item-active {
 li.ant-pagination-item-active a {
 	color: var(--domain-header) !important;
 }
-.ant-radio-button-wrapper.ant-radio-button-wrapper-checked.ant-radio-button-wrapper-in-form-item {
+
+.amiibo-homepage
+	.ant-radio-button-wrapper.ant-radio-button-wrapper-checked.ant-radio-button-wrapper-in-form-item {
 	border-color: rgb(184, 0, 0);
 }
 .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {

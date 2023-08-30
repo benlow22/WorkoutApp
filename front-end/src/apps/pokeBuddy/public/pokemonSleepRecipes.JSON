@@ -1,20 +1,20 @@
 {
 	"categories": {
-		"Currey and Stews": [
+		"Curries and Stews": [
 			{
-				"meal": "Mixed Curry",
+				"name": "Mixed Curry",
 				"description": "Any random selection of ingredients",
 				"ingredients": "any",
 				"minimiumPotSize": 0
 			},
 			{
-				"meal": "Fancy Apple Curry",
+				"name": "Fancy Apple Curry",
 				"description": "A simple curry that lets the natural sweetness of it's apples shine.",
 				"ingredients": [{ "name": "Fancy Apple", "quantity": 7 }],
 				"minimiumPotSize": 7
 			},
 			{
-				"meal": "Solar Powered Tomato Curry",
+				"name": "Solar Powered Tomato Curry",
 				"description": "A curry made using tomatoes that have turned bright red in the sun.",
 				"ingredients": [
 					{ "name": "Fiery Herb", "quantity": 5 },
@@ -23,19 +23,19 @@
 				"minimiumPotSize": 15
 			},
 			{
-				"meal": "Beanburger Curry",
+				"name": "Beanburger Curry",
 				"description": "The tender bean patties are the star of the show in this curry.",
 				"ingredients": [{ "name": "Bean Sausage", "quantity": 7 }],
 				"minimiumPotSize": 7
 			},
 			{
-				"meal": "Mild Honey Curry",
+				"name": "Mild Honey Curry",
 				"description": "A mild curry containing plenty of honey. Kids gobble it down!",
 				"ingredients": [{ "name": "Honey", "quantity": 7 }],
 				"minimiumPotSize": 7
 			},
 			{
-				"meal": "Drought Katsu Curry",
+				"name": "Drought Katsu Curry",
 				"description": "The freshly-fried cutlet has a nice sparkle to it.",
 				"ingredients": [
 					{ "name": "Bean Sausage", "quantity": 10 },
@@ -44,7 +44,7 @@
 				"minimiumPotSize": 15
 			},
 			{
-				"meal": "Grilled Tail Curry",
+				"name": "Grilled Tail Curry",
 				"description": "The tasty tail elevates the flavor of the curry roux to the next level.",
 				"ingredients": [
 					{ "name": "Slowpoke Tail", "quantity": 8 },
@@ -53,7 +53,7 @@
 				"minimiumPotSize": 33
 			},
 			{
-				"meal": "Dream Eater Butter Curry",
+				"name": "Dream Eater Butter Curry",
 				"description": "The ingredients in this curry all share a connection to deep sleep.",
 				"ingredients": [
 					{ "name": "Soft Potato", "quantity": 18 },
@@ -64,7 +64,7 @@
 				"minimiumPotSize": 55
 			},
 			{
-				"meal": "Spicy Leek Curry",
+				"name": "Spicy Leek Curry",
 				"description": "The roasted leeks are fragrant and sweet as fruit, perfectly balancing the spicy roux.",
 				"ingredients": [
 					{ "name": "Large Leek", "quantity": 14 },
@@ -75,7 +75,7 @@
 			},
 
 			{
-				"Meal": "Spore Mushroom Curry",
+				"name": "Spore Mushroom Curry",
 				"Description": "A curry that puts you to sleep just as surely as the move Spore.",
 				"Ingredients": [
 					{ "name": "Tasty Mushroom", "quantity": 14 },
@@ -84,7 +84,7 @@
 				"minimiumPotSize": 23
 			},
 			{
-				"Meal": "Egg Bomb Curry",
+				"name": "Egg Bomb Curry",
 				"Description": "A curry made with oodles of love. Its ingredients are geared toward kids.",
 				"Ingredients": [
 					{ "name": "Honey", "quantity": 12 },
@@ -95,7 +95,7 @@
 				"minimiumPotSize": 35
 			},
 			{
-				"Meal": "Hearty Cheeseburger Curry",
+				"name": "Hearty Cheeseburger Curry",
 				"Description": "This voluminous curry is large enough to astound even a Snorlax.",
 				"Ingredients": [
 					{ "name": "Moomoo Milk", "quantity": 8 },
@@ -104,7 +104,7 @@
 				"minimiumPotSize": 16
 			},
 			{
-				"Meal": "Soft Potato Chowder",
+				"name": "Soft Potato Chowder",
 				"Description": "A thick chowder made from potatoes boiled until practically melting.",
 				"Ingredients": [
 					{ "name": "Moomoo Milk", "quantity": 10 },
@@ -114,13 +114,13 @@
 				"minimiumPotSize": 22
 			},
 			{
-				"Meal": "Simple Chowder",
+				"name": "Simple Chowder",
 				"Description": "You can really taste the richness of the milk in this simple chowder.",
 				"Ingredients": [{ "name": "Moomoo Milk ", "quantity": 7 }],
 				"minimiumPotSize": 7
 			},
 			{
-				"Meal": "Ninja Curry",
+				"name": "Ninja Curry",
 				"Description": "This tofu curry is said to have been a favorite dish of ninjas.",
 				"Ingredients": [
 					{ "name": "Greengrass Soybeans", "quantity": 15 },
@@ -132,7 +132,7 @@
 			},
 
 			{
-				"Meal": "Melty Omelette Curry",
+				"name": "Melty Omelette Curry",
 				"Description": "This curry is topped with a masterfully-cooked omelette that simply melts in the mouth.",
 				"Ingredients": [
 					{ "name": "Fancy Egg", "quantity": 10 },
@@ -141,7 +141,7 @@
 				"minimiumPotSize": 16
 			},
 			{
-				"Meal": "Bulk-Up Bean Curry",
+				"name": "Bulk-Up Bean Curry",
 				"Description": "A hearty curry packed with nutrients needed for bulking up.",
 				"Ingredients": [
 					{ "name": "Greengrass Soybeans", "quantity": 12 },

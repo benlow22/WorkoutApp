@@ -38,3 +38,15 @@
 	position: relative;
 	top: -2px;
 }
+
+.recipe-page .ant-radio-button.ant-radio-button-checked,
+.recipe-page .ant-radio-button-wrapper-checked,
+.recipe-page .ant-radio-button-wrapper:hover {
+	border-color: var(--domain-nav-links-active) !important;
+	color: rgb(134, 114, 0) !important;
+}
+.recipe-page .ant-radio-button-wrapper-checked::before {
+	background-color: var(--domain-nav-links-active) !important;
+}
+/* 	color: rgb(134, 114, 0);
+ */
