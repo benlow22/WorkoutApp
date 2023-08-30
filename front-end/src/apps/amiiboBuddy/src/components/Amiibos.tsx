@@ -17,15 +17,17 @@ export const Amiibos = ({ amiibos, loading, isList }: TProps) => {
 
 	return (
 		<ul className="list-group mb-4">
-			{amiibos.map((amiibo, index: number) => (
-				<li key={amiibo.id} className="list-group-item">
-					{isList ? (
+			{amiibos.map((amiibo, index: number) =>
+				isList ? (
+					<li key={amiibo.id} className="list-group-item">
 						<AmiiboCard amiibo={amiibo} key={index} />
-					) : (
+					</li>
+				) : (
+					<li key={amiibo.id} className="list-group-item">
 						<AmiiboLine amiibo={amiibo} key={index} />
-					)}
-				</li>
-			))}
+					</li>
+				)
+			)}
 		</ul>
 	);
 };

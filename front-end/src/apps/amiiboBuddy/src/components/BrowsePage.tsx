@@ -16,7 +16,7 @@ export const BrowsePage: React.FC<{}> = () => {
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [filteredAmiibos, setFilteredAmiibos] = useState<TAmiiboCard[]>([]);
-	const [isList, setIsList] = useState<boolean>(true);
+	const [isList, setIsList] = useState<boolean>(false);
 
 	useEffect(() => {}, []);
 

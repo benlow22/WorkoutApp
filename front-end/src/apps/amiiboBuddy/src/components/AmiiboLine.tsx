@@ -20,9 +20,9 @@ export const AmiiboLine = ({
 	}, [name]);
 
 	return (
-		<div className="amiibo-card">
+		<div className="amiibo-line">
 			<h3 className={`amiibo-name ${amiiboNameSize}`}>{name}</h3>
-			<div className="amiibo-image-container">
+			<div className="amiibo-line-image-container">
 				<img
 					src={image}
 					alt={`${character} from ${amiiboSeries} amiibo`}

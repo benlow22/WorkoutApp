@@ -298,3 +298,12 @@ li.ant-pagination-item-active a {
 .amiibo-filter-menu .ant-checkbox-checked:after {
 	border-color: brown !important;
 }
+
+/* amiiibo-line */
+
+.amiibo-line {
+	width: 600px;
+	height: 100px;
+	display: flex;
+	background-color: blue;
+}
