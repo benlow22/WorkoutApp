@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import {
 	Button,
+	Checkbox,
 	Dropdown,
 	Form,
 	MenuProps,
@@ -51,7 +52,11 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				setFilteredAmiibos(amiibos);
 		}
 	}, [filterBy]);
-
+	const typeOptions = [
+		{ label: "Figures", value: "Figures" },
+		{ label: "Cards", value: "Cards" },
+		{ label: "Yarn", value: "Yarn" },
+	];
 	return (
 		<div className="amiibo-filter-nav">
 			<h3>Sort By</h3>
@@ -99,8 +104,17 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				<Radio.Button value="f"> as</Radio.Button> */}
 					</Radio.Group>
 				</Form.Item>
-				<Form.Item>
-					<Radio.Group></Radio.Group>
+				<Form.Item label="Amiibo Type">
+					<Checkbox.Group
+						options={typeOptions}
+						defaultValue={["Figures"]}
+						className="white-font"
+						style={{
+							display: "flex",
+							justifyContent: "space-evenly",
+						}}
+						// onChange={onChange}
+					/>
 				</Form.Item>
 			</Form>
 

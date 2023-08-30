@@ -220,6 +220,14 @@ a {
 	list-style: none;
 }
 
+.amiibo-filter-menu {
+	background-color: rgb(139, 139, 139);
+	width: fit-content;
+	padding: 10px 25px;
+	margin: auto;
+	border: rgb(77, 77, 77) solid 5px;
+	border-radius: 10px;
+}
 .amiibo-pagination {
 	background-color: var(--domain-nav-links-active);
 	width: fit-content;
@@ -229,6 +237,13 @@ a {
 	padding: 5px 10px;
 }
 
+li.ant-pagination-item-active {
+	border-color: var(--domain-header) !important;
+}
+
+li.ant-pagination-item-active a {
+	color: var(--domain-header) !important;
+}
 .ant-radio-button-wrapper.ant-radio-button-wrapper-checked.ant-radio-button-wrapper-in-form-item {
 	border-color: rgb(184, 0, 0);
 }
@@ -244,4 +259,42 @@ a {
 
 .amiibo-filter-menu .ant-radio-button-wrapper:hover {
 	color: var(--domain-header);
+}
+
+/* .ant-checkbox.ant-checkbox-checked {
+	color: var(--domain-header);
+}  */
+
+/* .amiibo-filter-menu span.ant-checkbox:hover {
+	border-color: yellow;
+} */
+
+/* ////// */
+.ant-checkbox-checked .ant-checkbox-inner {
+	border-color: brown;
+}
+
+/* .ant-checkbox-checked .ant-checkbox-inner:hover {
+	border-color: brown;
+} */
+.amiibo-filter-menu .ant-checkbox-checked .ant-checkbox-inner {
+	background-color: var(--domain-header);
+}
+.amiibo-filter-menu
+	.ant-checkbox-wrapper:hover
+	.ant-checkbox-checked
+	.ant-checkbox-inner {
+	background-color: var(--domain-header) !important;
+	border-color: brown !important;
+}
+.amiibo-filter-menu .ant-checkbox-wrapper {
+	border-color: brown !important;
+}
+
+.amiibo-filter-menu .ant-checkbox-wrapper:hover * {
+	border-color: brown !important;
+}
+
+.amiibo-filter-menu .ant-checkbox-checked:after {
+	border-color: brown !important;
 }

@@ -50,7 +50,10 @@ export const BrowsePage: React.FC<{}> = () => {
 	return (
 		<div className="amiibo-homepage">
 			<h2 className="page-heading">Amiibo Buddy</h2>
-			<AmiiboFilter />
+			<AmiiboFilter
+				amiibos={amiibos}
+				setFilteredAmiibos={setFilteredAmiibos}
+			/>
 			{!isLoading && (
 				<Pagination
 					size="small"
