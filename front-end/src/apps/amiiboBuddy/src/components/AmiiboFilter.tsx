@@ -15,10 +15,13 @@ import { DownOutlined } from "@ant-design/icons";
 import { TAmiiboCard } from "../types/types";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { Amiibos } from "./Amiibos";
+import { TAmiiboWithStatus } from "./AmiiboLine";
 
 type TProps = {
-	amiibos: TAmiiboCard[];
-	setFilteredAmiibos: React.Dispatch<React.SetStateAction<TAmiiboCard[]>>;
+	amiibos: TAmiiboWithStatus[];
+	setFilteredAmiibos: React.Dispatch<
+		React.SetStateAction<TAmiiboWithStatus[]>
+	>;
 };
 
 export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {

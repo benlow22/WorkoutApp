@@ -5,7 +5,7 @@ import React, {
 	useState,
 } from "react";
 import { TAmiiboCard } from "../types/types";
-import { Button, Image, Modal } from "antd";
+import { Button, Image, Modal, message } from "antd";
 import {
 	CheckCircleFilled,
 	CheckCircleTwoTone,
@@ -19,20 +19,56 @@ import {
 } from "@ant-design/icons";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { useNavigate } from "react-router";
+import ErrorList from "antd/es/form/ErrorList";
+import { v4 as uuidv4 } from "uuid";
 
 type TProps = {
-	amiibo: TAmiiboCard;
+	amiibo: TAmiiboWithStatus;
+};
+export type TAmiiboWithStatus = TAmiiboCard & {
+	status: {
+		isWishlist: boolean;
+		isChecklist: boolean;
+		statusId: string;
+	}[];
 };
 export const AmiiboLine = ({
-	amiibo: { name, image, character, amiiboSeries },
+	amiibo: { id, name, image, character, amiiboSeries, status },
 }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
 	const [isChecklist, setIsChecklist] = useState<boolean>(false);
 	const [quantity, setQuantity] = useState(0);
-	const [isWishlist, setIsWishlist] = useState<boolean>(false);
+	const [isWishlist, setIsWishlist] = useState<boolean>();
+	const [wishlistLoading, setWishlistLoading] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [statusId, setStatusId] = useState<string>("");
+	const [messageApi, contextHolder] = message.useMessage();
+	const [messageKey, setMessageKey] = useState<string>("");
 
-	const { auth } = useContext(AuthContext);
+	useEffect(() => {
+		if (status.length > 0) {
+			setIsWishlist(status[0].isWishlist);
+			setIsChecklist(status[0].isChecklist);
+			setStatusId(status[0].statusId);
+		}
+	}, [status]);
+
+	useEffect(() => {
+		if (wishlistLoading) {
+			const newMessageKey = uuidv4();
+			setMessageKey(newMessageKey);
+			messageApi.open({
+				type: "loading",
+				content: "updating",
+				key: newMessageKey,
+			});
+			// Dismiss manually and asynchronously
+		} else {
+			messageApi.destroy(messageKey);
+		}
+	}, [wishlistLoading]);
+
+	const { auth, supabase, userId } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -58,12 +94,58 @@ export const AmiiboLine = ({
 	};
 
 	const handleWishlistClick = () => {
-		console.log("wishlist clicked");
 		setIsWishlist(!isWishlist);
+		setWishlistLoading(true);
+		setTimeout(async () => {
+			if (statusId) {
+				try {
+					const { data, error } = await supabase
+						.from("amiibo_buddy_amiibo_statuses")
+						.update({ is_wishlist: !isWishlist })
+						.eq("id", statusId)
+						.select();
+					if (data) {
+						console.log(data);
+						setWishlistLoading(false);
+					}
+					if (error) {
+						console.error(error);
+						setWishlistLoading(false);
+						setIsWishlist(isWishlist);
+					}
+				} catch (error) {
+					// @ts-expect-error
+					console.error(error.cause);
+				}
+			} else {
+				try {
+					const { data, error } = await supabase
+						.from("amiibo_buddy_amiibo_statuses")
+						.insert({
+							is_wishlist: !isWishlist,
+							user_id: userId,
+							amiibo_id: id,
+						})
+						.select();
+					if (data) {
+						console.log(data);
+						setWishlistLoading(false);
+					}
+					if (error) {
+						console.error(error);
+						setWishlistLoading(false);
+						setIsWishlist(isWishlist);
+					}
+				} catch (error) {
+					// @ts-expect-error
+					console.error(error.cause);
+				}
+			}
+		});
 	};
 
 	const handleChecklistClick = () => {
-		console.log("wishlist clicked");
+		console.log("checklist clicked");
 		setIsChecklist(!isChecklist);
 		setQuantity(!isChecklist ? 1 : 0);
 	};
@@ -75,6 +157,8 @@ export const AmiiboLine = ({
 
 	return (
 		<div className="amiibo-line">
+			{contextHolder}
+
 			<div className="amiibo-line-image-container">
 				<Image
 					src={image}
@@ -106,6 +190,7 @@ export const AmiiboLine = ({
 				>
 					<Button
 						type="primary"
+						disabled={wishlistLoading}
 						ghost={!auth || !isWishlist}
 						className={`amiibo-status-button-wishlist${
 							isWishlist ? "-added" : ""

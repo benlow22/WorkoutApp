@@ -2,11 +2,11 @@ import React from "react";
 import { SpiningLoadingIcon } from "../../../../components/loading/LoadingIcon";
 import { TAmiiboCard } from "../types/types";
 import { AmiiboCard } from "./AmiiboCard";
-import { AmiiboLine } from "./AmiiboLine";
+import { AmiiboLine, TAmiiboWithStatus } from "./AmiiboLine";
 import { Grid } from "antd";
 
 type TProps = {
-	amiibos: TAmiiboCard[];
+	amiibos: TAmiiboWithStatus[];
 	loading: boolean;
 	isList: boolean;
 };
