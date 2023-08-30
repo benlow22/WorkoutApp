@@ -143,12 +143,62 @@ export const AmiiboLine = ({
 			}
 		});
 	};
-
 	const handleChecklistClick = () => {
-		console.log("checklist clicked");
 		setIsChecklist(!isChecklist);
-		setQuantity(!isChecklist ? 1 : 0);
+		setWishlistLoading(true);
+		setTimeout(async () => {
+			if (statusId) {
+				try {
+					const { data, error } = await supabase
+						.from("amiibo_buddy_amiibo_statuses")
+						.update({ is_checklist: !isChecklist })
+						.eq("id", statusId)
+						.select();
+					if (data) {
+						console.log(data);
+						setWishlistLoading(false);
+					}
+					if (error) {
+						console.error(error);
+						setWishlistLoading(false);
+						setIsChecklist(isChecklist);
+					}
+				} catch (error) {
+					// @ts-expect-error
+					console.error(error.cause);
+				}
+			} else {
+				try {
+					const { data, error } = await supabase
+						.from("amiibo_buddy_amiibo_statuses")
+						.insert({
+							is_checklist: !isChecklist,
+							user_id: userId,
+							amiibo_id: id,
+						})
+						.select();
+					if (data) {
+						console.log(data);
+						setWishlistLoading(false);
+					}
+					if (error) {
+						console.error(error);
+						setWishlistLoading(false);
+						setIsChecklist(isChecklist);
+					}
+				} catch (error) {
+					// @ts-expect-error
+					console.error(error.cause);
+				}
+			}
+		});
 	};
+
+	// const handleChecklistClick = () => {
+	// 	console.log("checklist clicked");
+	// 	setIsChecklist(!isChecklist);
+	// 	setQuantity(!isChecklist ? 1 : 0);
+	// };
 
 	const handleInventoryClick = () => {
 		// console.log("wishlist clicked");
@@ -206,6 +256,7 @@ export const AmiiboLine = ({
 					<Button
 						type="primary"
 						ghost={!auth || !isChecklist}
+						disabled={wishlistLoading}
 						className="amiibo-status-button-checklist"
 						onClick={() =>
 							auth ? handleChecklistClick() : setIsModalOpen(true)
