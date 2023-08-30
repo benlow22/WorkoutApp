@@ -43,7 +43,10 @@ export const BrowsePage: React.FC<{}> = () => {
 	//get current posts
 	const indexOfLastAmiibo = currentPage * amiibosPerPage;
 	const indexOfFirstAmiibo = indexOfLastAmiibo - amiibosPerPage;
-	const currentAmiibos = amiibos.slice(indexOfFirstAmiibo, indexOfLastAmiibo);
+	const currentFilteredAmiibos = filteredAmiibos.slice(
+		indexOfFirstAmiibo,
+		indexOfLastAmiibo
+	);
 
 	const pageSizeOptions = [10, 20, 50, 100, filteredAmiibos.length];
 	return (
@@ -70,7 +73,7 @@ export const BrowsePage: React.FC<{}> = () => {
 					}}
 				/>
 			)}
-			<Amiibos amiibos={filteredAmiibos} loading={isLoading} />
+			<Amiibos amiibos={currentFilteredAmiibos} loading={isLoading} />
 			{/* <div className="amiibo-grid">
 				{!isLoading &&
 					amiibos.map((amiibo, index) => (
