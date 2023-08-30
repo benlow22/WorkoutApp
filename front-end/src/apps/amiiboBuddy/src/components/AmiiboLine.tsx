@@ -29,10 +29,10 @@ export const AmiiboLine = ({
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
 	const [isChecklist, setIsChecklist] = useState<boolean>(false);
 	const [quantity, setQuantity] = useState(0);
-	const [isWishlist, setIsWishlist] = useState("");
+	const [isWishlist, setIsWishlist] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const { isLoggedIn } = useContext(AuthContext);
+	const { auth } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -49,7 +49,7 @@ export const AmiiboLine = ({
 		setIsModalOpen(true);
 	};
 	const handleOk = () => {
-		navigate("login");
+		navigate("login", { state: { previousPath: location.pathname } });
 		setIsModalOpen(false);
 	};
 
@@ -59,23 +59,18 @@ export const AmiiboLine = ({
 
 	const handleWishlistClick = () => {
 		console.log("wishlist clicked");
-		if (!isLoggedIn) {
-			setIsModalOpen(true);
-		}
+		setIsWishlist(!isWishlist);
 	};
 
 	const handleChecklistClick = () => {
 		console.log("wishlist clicked");
-		if (!isLoggedIn) {
-			setIsModalOpen(true);
-		}
+		setIsChecklist(!isChecklist);
+		setQuantity(!isChecklist ? 1 : 0);
 	};
 
 	const handleInventoryClick = () => {
-		console.log("wishlist clicked");
-		if (!isLoggedIn) {
-			setIsModalOpen(true);
-		}
+		// console.log("wishlist clicked");
+		setQuantity(isChecklist ? 1 : 0);
 	};
 
 	return (
@@ -107,18 +102,16 @@ export const AmiiboLine = ({
 					</p>
 				</Modal>
 				<div
-					className={`amiibo-line-buttons${
-						isLoggedIn ? "" : "-disabled"
-					}`}
+					className={`amiibo-line-buttons${auth ? "" : "-disabled"}`}
 				>
 					<Button
 						type="primary"
-						ghost={!isLoggedIn}
-						className="amiibo-status-button-wishlist"
+						ghost={!auth || !isWishlist}
+						className={`amiibo-status-button-wishlist${
+							isWishlist ? "-added" : ""
+						}`}
 						onClick={() =>
-							isLoggedIn
-								? setIsModalOpen(true)
-								: handleWishlistClick()
+							auth ? handleWishlistClick() : setIsModalOpen(true)
 						}
 						value="wishlist"
 					>
@@ -127,31 +120,33 @@ export const AmiiboLine = ({
 
 					<Button
 						type="primary"
-						ghost={!isLoggedIn}
+						ghost={!auth || !isChecklist}
 						className="amiibo-status-button-checklist"
 						onClick={() =>
-							isLoggedIn
-								? setIsModalOpen(true)
-								: handleChecklistClick()
+							auth ? handleChecklistClick() : setIsModalOpen(true)
 						}
 					>
 						<CheckCircleFilled />
 					</Button>
 					<Button
 						type="primary"
-						ghost={!isLoggedIn}
+						ghost={!auth || !quantity}
 						className="amiibo-status-button-inventory"
 						onClick={() =>
-							isLoggedIn
-								? setIsModalOpen(true)
-								: handleInventoryClick()
+							auth ? handleInventoryClick() : setIsModalOpen(true)
 						}
 					>
 						<TagFilled />
 					</Button>
 
-					<div style={{ display: "flex", alignItems: "center" }}>
-						{isLoggedIn && (
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+							width: "30px",
+						}}
+					>
+						{auth && (
 							<p className={`inventory-quantity inv-${quantity}`}>
 								x {quantity}
 							</p>

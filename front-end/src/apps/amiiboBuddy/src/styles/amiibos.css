@@ -390,6 +390,34 @@ button {
 		border-color: rgb(104, 44, 44) !important;
 	}
 }
+
+.amiibo-line-buttons {
+	.ant-btn-primary {
+		color: var(--domain-header);
+		background-color: var(--domain-nav-links);
+		border-color: var(--domain-header) !important;
+	}
+	.ant-btn-primary:hover {
+		background-color: var(--domain-nav-links-active) !important;
+	}
+	.amiibo-status-button-wishlist-added svg {
+		color: #e4ddbd;
+	}
+	.amiibo-status-button-wishlist-added svg > path {
+		fill: #ffd000;
+	}
+	.amiibo-status-button-checklist-added svg {
+		color: #2e6e2b;
+	}
+	.amiibo-status-button-inventory-added svg {
+		color: #2f4594;
+	}
+	.ant-btn-primary.ant-btn-background-ghost {
+		color: var(--domain-header);
+		background-color: rgb(92, 78, 78);
+		border-color: rgb(104, 44, 44) !important;
+	}
+}
 /* .amiibo-line-buttons-disabled .ant-button-primary {
 	background-color: #2e6e2b !important;
 } */
