@@ -1,5 +1,5 @@
-[
-	{
+{
+	"categories": {
 		"Currey and Stews": [
 			{
 				"meal": "Mixed Curry",
@@ -153,4 +153,4 @@
 			}
 		]
 	}
-]
+}
