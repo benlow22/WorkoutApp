@@ -11,6 +11,7 @@ import {
 	Radio,
 	Select,
 	Space,
+	Switch,
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
@@ -38,6 +39,8 @@ export const PokemonSleep = () => {
 	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>(
 		[]
 	);
+	const [showAll, setShowAll] = useState<boolean>(false);
+
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
 	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
 
@@ -65,6 +68,30 @@ export const PokemonSleep = () => {
 			setUnlockedIngredients(newIngredientArray);
 		}
 	};
+	useEffect(() => {
+		console.log("unlockedIngredients ARR", showAll);
+		if (showAll) {
+			setUnlockedIngredients([
+				"Large Leek",
+				"Tasty Mushroom",
+				"Fancy Egg",
+				"Honey",
+				"Soft Potato",
+				"Fancy Apple",
+				"Pure Oil",
+				"Greengrass Soybeans",
+				"Slowpoke Tail",
+				"Soothing Cacao",
+				"Moomoo Milk",
+				"Bean Sausage",
+				"Snoozy Tomato",
+				"Warming Ginger",
+				"Fiery Herb",
+			]);
+		} else {
+			setUnlockedIngredients([]);
+		}
+	}, [showAll]);
 
 	useEffect(() => {
 		console.log("unlockedIngredients ARR", unlockedIngredients);
@@ -82,10 +109,18 @@ export const PokemonSleep = () => {
 
 		if (recipes) {
 			let cookableMeals: TRecipe[] = recipes.filter(
-				(recipe) => recipe.minimumPotSize <= potSize
+				(recipe) =>
+					recipe.minimumPotSize <= potSize &&
+					recipe.ingredients.every((ingredient) =>
+						unlockedIngredients.includes(ingredient.name)
+					)
 			);
 			let uncookableMeals: TRecipe[] = recipes.filter(
-				(recipe) => recipe.minimumPotSize > potSize
+				(recipe) =>
+					recipe.minimumPotSize > potSize &&
+					recipe.ingredients.every((ingredient) =>
+						unlockedIngredients.includes(ingredient.name)
+					)
 			);
 			console.log("cook ARR", cookableMeals);
 			console.log("uncook ARR", uncookableMeals);
@@ -93,7 +128,7 @@ export const PokemonSleep = () => {
 			setCookableRecipes(cookableMeals);
 			setUncookableRecipes(uncookableMeals);
 		}
-	}, [recipes, potSize]);
+	}, [recipes, potSize, unlockedIngredients]);
 
 	return (
 		<div className="recipe-page">
@@ -111,6 +146,13 @@ export const PokemonSleep = () => {
 					style={{ margin: "20px" }}
 				/>
 			</Space>
+			<Switch
+				checkedChildren="Check All"
+				unCheckedChildren="Uncheck All"
+				onClick={() => {
+					setShowAll(!showAll);
+				}}
+			/>
 			<div className="ingredient-buttons-container">
 				{ingredients.length > 0 &&
 					ingredients.map((ingredient) => (
