@@ -155,16 +155,26 @@ export const PokemonSleep = () => {
 								<Recipe recipe={recipe} />
 							))}
 					</div> */}
-					<div className="cookable-recipes">
-						{cookableRecipes &&
-							cookableRecipes.map((recipe: TRecipe) => (
-								<Recipe recipe={recipe} />
+					{cookableRecipes.length > 0 && (
+						<div className="cookable-recipes">
+							<h3 className="cookable-recipes-header">
+								Cookable Recipes
+							</h3>
+							{cookableRecipes.map((recipe: TRecipe) => (
+								<Recipe
+									recipe={recipe}
+									ingredients={ingredients}
+								/>
 							))}
-					</div>
+						</div>
+					)}
 					<div className="uncookable-recipes">
 						{uncookableRecipes &&
 							uncookableRecipes.map((recipe: TRecipe) => (
-								<Recipe recipe={recipe} />
+								<Recipe
+									recipe={recipe}
+									ingredients={ingredients}
+								/>
 							))}
 					</div>
 				</div>

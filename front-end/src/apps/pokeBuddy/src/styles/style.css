@@ -50,3 +50,66 @@
 }
 /* 	color: rgb(134, 114, 0);
  */
+
+.cookable-recipes-header {
+	padding: 10px;
+	margin: 20px 0px 0px;
+	background-color: rgb(227, 211, 170);
+	border: rgb(237, 199, 29) solid 5px;
+	border-radius: 10px;
+	color: rgb(181, 160, 0);
+}
+.cookable-recipes {
+	background-color: rgb(197, 193, 182);
+	border-radius: 10px;
+}
+
+.recipe-list {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 50px;
+	border-bottom: rgb(212, 175, 96) solid 5px;
+	border-right: rgb(212, 175, 96) solid 5px;
+	border-left: rgb(212, 175, 96) solid 5px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.recipe-list p {
+	margin-left: 5px;
+}
+.ingredient-list p {
+	font-size: 12px;
+	text-align: left;
+}
+
+.recipe-image {
+	position: relative;
+	height: 60px !important;
+}
+
+.ingredient-and-image {
+	display: flex;
+	flex-wrap: nowrap;
+	min-height: 50px;
+	width: 225px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredient-icon-in-recipe {
+	height: 20px;
+	width: 20px;
+}
+
+.ingr {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.uncookable-recipes {
+	background-color: rgb(148, 139, 111);
+	opacity: 0.5;
+}

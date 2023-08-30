@@ -1,6 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
-import { Space } from "antd";
+import { Image, Space } from "antd";
 
 type TIngredient = {
 	id: number;
@@ -21,20 +21,57 @@ export type TRecipe = {
 
 type Tprops = {
 	recipe: TRecipe;
+	ingredients: TIngredient[];
 };
-export const Recipe = ({ recipe }: Tprops) => {
+export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>();
+	const [imageUrls, setImageUrls] = useState<{ ingredientName: string }[]>(
+		[]
+	);
 
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
 	);
 
+	useEffect(() => {
+		if (ingredients) {
+			const imageArr = {};
+			ingredients.map((ingredient) => {
+				imageArr[ingredient.name] = ingredient.imageUrl;
+			});
+			imageArr.Any = "anyIngredient.png";
+
+			console.log("ingARr", imageArr);
+			setImageUrls(imageArr);
+		}
+	}, [ingredients]);
+
 	return (
 		<div className="recipe-list">
-			<p>
-				{recipe.name} {recipe.minimumPotSize}
-			</p>
+			<p>{recipe.name}</p>
+			<div className="ingredient-and-image">
+				<div className="ingredient-list">
+					{recipe.ingredients &&
+						recipe.ingredients.map((ingredient) => (
+							<div className="ingr">
+								<img
+									src={`/pokemonSleepIngredients/${
+										imageUrls[ingredient.name]
+									}`}
+									className="ingredient-icon-in-recipe"
+								/>
+								<p>
+									{ingredient.name} x {ingredient.quantity}
+								</p>
+							</div>
+						))}
+				</div>
+				<Image
+					src={`/recipes/${recipe.imageUrl}`}
+					className="recipe-image"
+				/>
+			</div>
 		</div>
 	);
 };
