@@ -21,13 +21,16 @@
 	justify-content: space-evenly;
 }
 .recipe-page .ant-btn {
-	width: 80px;
-	height: 80px;
+	width: 80px !important;
+	height: 80px !important;
 }
 
 .ingredient-button {
 	width: 100px;
 	margin: 10px;
+}
+.ingredient-button.unlocked-ingredient {
+	box-shadow: 0px 0px 10px 8px rgb(0, 170, 255);
 }
 
 .ingredient-button-icon {
