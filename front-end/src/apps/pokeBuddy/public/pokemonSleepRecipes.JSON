@@ -5,13 +5,13 @@
 				"name": "Mixed Curry",
 				"description": "Any random selection of ingredients",
 				"ingredients": "any",
-				"minimiumPotSize": 0
+				"minimumPotSize": 0
 			},
 			{
 				"name": "Fancy Apple Curry",
 				"description": "A simple curry that lets the natural sweetness of it's apples shine.",
 				"ingredients": [{ "name": "Fancy Apple", "quantity": 7 }],
-				"minimiumPotSize": 7
+				"minimumPotSize": 7
 			},
 			{
 				"name": "Solar Powered Tomato Curry",
@@ -20,19 +20,19 @@
 					{ "name": "Fiery Herb", "quantity": 5 },
 					{ "name": "Snoozy Tomato", "quantity": 10 }
 				],
-				"minimiumPotSize": 15
+				"minimumPotSize": 15
 			},
 			{
 				"name": "Beanburger Curry",
 				"description": "The tender bean patties are the star of the show in this curry.",
 				"ingredients": [{ "name": "Bean Sausage", "quantity": 7 }],
-				"minimiumPotSize": 7
+				"minimumPotSize": 7
 			},
 			{
 				"name": "Mild Honey Curry",
 				"description": "A mild curry containing plenty of honey. Kids gobble it down!",
 				"ingredients": [{ "name": "Honey", "quantity": 7 }],
-				"minimiumPotSize": 7
+				"minimumPotSize": 7
 			},
 			{
 				"name": "Drought Katsu Curry",
@@ -41,7 +41,7 @@
 					{ "name": "Bean Sausage", "quantity": 10 },
 					{ "name": "Pure Oil", "quantity": 5 }
 				],
-				"minimiumPotSize": 15
+				"minimumPotSize": 15
 			},
 			{
 				"name": "Grilled Tail Curry",
@@ -50,7 +50,7 @@
 					{ "name": "Slowpoke Tail", "quantity": 8 },
 					{ "name": "Fiery Herb", "quantity": 25 }
 				],
-				"minimiumPotSize": 33
+				"minimumPotSize": 33
 			},
 			{
 				"name": "Dream Eater Butter Curry",
@@ -61,7 +61,7 @@
 					{ "name": "Soothing Cacao", "quantity": 12 },
 					{ "name": "Moomoo Milk", "quantity": 10 }
 				],
-				"minimiumPotSize": 55
+				"minimumPotSize": 55
 			},
 			{
 				"name": "Spicy Leek Curry",
@@ -71,7 +71,7 @@
 					{ "name": "Warming Ginger", "quantity": 10 },
 					{ "name": "FanFiery Herbcy", "quantity": 8 }
 				],
-				"minimiumPotSize": 32
+				"minimumPotSize": 32
 			},
 
 			{
@@ -81,7 +81,7 @@
 					{ "name": "Tasty Mushroom", "quantity": 14 },
 					{ "name": "Soft Potato", "quantity": 9 }
 				],
-				"minimiumPotSize": 23
+				"minimumPotSize": 23
 			},
 			{
 				"name": "Egg Bomb Curry",
@@ -92,7 +92,7 @@
 					{ "name": "Fancy Egg", "quantity": 8 },
 					{ "name": "Soft Potato", "quantity": 4 }
 				],
-				"minimiumPotSize": 35
+				"minimumPotSize": 35
 			},
 			{
 				"name": "Hearty Cheeseburger Curry",
@@ -101,7 +101,7 @@
 					{ "name": "Moomoo Milk", "quantity": 8 },
 					{ "name": "Bean Sausage", "quantity": 8 }
 				],
-				"minimiumPotSize": 16
+				"minimumPotSize": 16
 			},
 			{
 				"name": "Soft Potato Chowder",
@@ -111,13 +111,13 @@
 					{ "name": "Soft Potato", "quantity": 8 },
 					{ "name": "Tasty Mushroom", "quantity": 4 }
 				],
-				"minimiumPotSize": 22
+				"minimumPotSize": 22
 			},
 			{
 				"name": "Simple Chowder",
 				"Description": "You can really taste the richness of the milk in this simple chowder.",
 				"Ingredients": [{ "name": "Moomoo Milk ", "quantity": 7 }],
-				"minimiumPotSize": 7
+				"minimumPotSize": 7
 			},
 			{
 				"name": "Ninja Curry",
@@ -128,7 +128,7 @@
 					{ "name": "Large Leek", "quantity": 9 },
 					{ "name": "Tasty Mushroom", "quantity": 5 }
 				],
-				"minimiumPotSize": 38
+				"minimumPotSize": 38
 			},
 
 			{
@@ -138,7 +138,7 @@
 					{ "name": "Fancy Egg", "quantity": 10 },
 					{ "name": "Snoozy Tomato", "quantity": 6 }
 				],
-				"minimiumPotSize": 16
+				"minimumPotSize": 16
 			},
 			{
 				"name": "Bulk-Up Bean Curry",
@@ -149,7 +149,7 @@
 					{ "name": "Fiery Herb", "quantity": 4 },
 					{ "name": "Fancy Egg", "quantity": 4 }
 				],
-				"minimiumPotSize": 37
+				"minimumPotSize": 37
 			}
 		]
 	}

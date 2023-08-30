@@ -16,6 +16,7 @@ import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
 import recipesJSON from "../../../public/pokemonSleepRecipes.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
+import { Recipe, TRecipe } from "../../components/Recipe";
 
 type TIngredient = {
 	id: number;
@@ -30,11 +31,15 @@ export const PokemonSleep = () => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
-	const [categories, setCategories] = useState();
+	const [categories, setCategories] = useState("Curries and Stews");
+	const [chosenCategories, setChosenCategories] = useState();
+	const [recipes, setRecipes] = useState<TRecipe[]>([]);
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
 	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>(
 		[]
 	);
+	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
+	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
 
 	useEffect(() => {
 		const categories = varFromJSON(recipesJSON, "categories");
@@ -66,8 +71,30 @@ export const PokemonSleep = () => {
 	}, [unlockedIngredients]);
 
 	useEffect(() => {
-		console.log("category", categories);
-	}, [categories]);
+		console.log("category", chosenCategories);
+		if (chosenCategories) {
+			setRecipes(categories[chosenCategories]);
+		}
+	}, [chosenCategories]);
+
+	useEffect(() => {
+		console.log("rec ARR", recipes);
+
+		if (recipes) {
+			let cookableMeals: TRecipe[] = recipes.filter(
+				(recipe) => recipe.minimumPotSize <= potSize
+			);
+			let uncookableMeals: TRecipe[] = recipes.filter(
+				(recipe) => recipe.minimumPotSize > potSize
+			);
+			console.log("cook ARR", cookableMeals);
+			console.log("uncook ARR", uncookableMeals);
+
+			setCookableRecipes(cookableMeals);
+			setUncookableRecipes(uncookableMeals);
+		}
+	}, [recipes, potSize]);
+
 	return (
 		<div className="recipe-page">
 			<div className="page-heading">
@@ -80,7 +107,7 @@ export const PokemonSleep = () => {
 					max={81}
 					step={3}
 					defaultValue={15}
-					onChange={(value) => setPotSize(value!)}
+					onChange={(value: number) => setPotSize(value)}
 					style={{ margin: "20px" }}
 				/>
 			</Space>
@@ -107,9 +134,8 @@ export const PokemonSleep = () => {
 			</div>
 			<Radio.Group
 				onChange={(e) => {
-					setCategories(e.target.value);
+					setChosenCategories(e.target.value);
 				}}
-				defaultValue="Curries and Stews"
 				style={{ marginTop: 16 }}
 			>
 				<Radio.Button value="Curries and Stews">
@@ -120,6 +146,29 @@ export const PokemonSleep = () => {
 					Desserts and Drink
 				</Radio.Button>
 			</Radio.Group>
+
+			{recipes && (
+				<div className="recipes">
+					{/* <div className="cookable-recipes">
+						{recipes &&
+							recipes.map((recipe: TRecipe) => (
+								<Recipe recipe={recipe} />
+							))}
+					</div> */}
+					<div className="cookable-recipes">
+						{cookableRecipes &&
+							cookableRecipes.map((recipe: TRecipe) => (
+								<Recipe recipe={recipe} />
+							))}
+					</div>
+					<div className="uncookable-recipes">
+						{uncookableRecipes &&
+							uncookableRecipes.map((recipe: TRecipe) => (
+								<Recipe recipe={recipe} />
+							))}
+					</div>
+				</div>
+			)}
 		</div>
 	);
 };
