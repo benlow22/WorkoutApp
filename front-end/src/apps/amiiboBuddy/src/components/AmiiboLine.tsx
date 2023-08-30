@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TAmiiboCard } from "../types/types";
+import { Image } from "antd";
 
 type TProps = {
 	amiibo: TAmiiboCard;
@@ -21,15 +22,17 @@ export const AmiiboLine = ({
 
 	return (
 		<div className="amiibo-line">
-			<h3 className={`amiibo-name ${amiiboNameSize}`}>{name}</h3>
+			<div>
+				<h3 className={`amiibo-name-line ${amiiboNameSize}`}>{name}</h3>
+				<h5>{amiiboSeries}</h5>
+			</div>
 			<div className="amiibo-line-image-container">
-				<img
+				<Image
 					src={image}
 					alt={`${character} from ${amiiboSeries} amiibo`}
-					className="amiibo-image"
+					className="amiibo-image-line"
 				/>
 			</div>
-			<h5>{amiiboSeries}</h5>
 		</div>
 	);
 };

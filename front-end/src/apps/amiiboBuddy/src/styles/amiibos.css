@@ -302,8 +302,19 @@ li.ant-pagination-item-active a {
 /* amiiibo-line */
 
 .amiibo-line {
-	width: 600px;
-	height: 100px;
+	width: 400px;
+	height: 120px;
 	display: flex;
 	background-color: blue;
+	padding: 10px 20px;
+	align-items: center;
+	justify-content: space-between;
+}
+.amiibo-line-image-container {
+	display: flex;
+	height: 100px;
+	float: right;
+}
+.amiibo-image-line {
+	max-height: 100px;
 }
