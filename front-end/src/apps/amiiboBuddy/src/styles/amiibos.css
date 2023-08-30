@@ -39,14 +39,20 @@
 	max-width: 100px;
 }
 
-.amiibo-grid,
+/* .amiibo-grid,
 .list-group {
 	display: flex;
 	min-width: 600px;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
-}
+} */
 
+.list-group-grid {
+	display: flex;
+	min-width: 600px;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
 .amiibo-inventory-form-price {
 	display: flex;
 	justify-content: space-between;
@@ -303,11 +309,13 @@ li.ant-pagination-item-active a {
 
 .amiibo-line {
 	width: 400px;
-	height: 120px;
+	height: auto;
 	display: flex;
-	background-color: blue;
-	padding: 10px 20px;
-	align-items: center;
+	background-color: rgb(68, 68, 68);
+	border: rgb(78, 78, 78) solid 3px;
+	border-radius: 4px;
+	margin: 3px;
+	padding: 10px;
 	justify-content: space-between;
 }
 .amiibo-line-image-container {
@@ -316,5 +324,72 @@ li.ant-pagination-item-active a {
 	float: right;
 }
 .amiibo-image-line {
-	max-height: 100px;
+	max-height: 126px;
 }
+.amiibo-line-buttons {
+	display: flex;
+	justify-content: end;
+}
+.amiibo-line-buttons-disabled {
+	display: flex;
+	justify-content: end;
+	margin-right: 20px;
+}
+
+.amiibo-line-data {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+ul {
+	padding: 0px;
+}
+
+.list-group-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.amiibo-line .inventory-quantity {
+	margin-left: 6px;
+}
+
+.inv-0 {
+	visibility: hidden;
+}
+/* 
+button {
+	border-color: rgb(59, 41, 41) !important;
+} */
+
+.amiibo-status-button-wishlist svg {
+	color: #a88a14;
+}
+
+.amiibo-status-button-checklist svg {
+	color: #089b00;
+}
+.amiibo-status-button-inventory svg {
+	color: #0032e5;
+}
+.amiibo-line-buttons-disabled {
+	.amiibo-status-button-wishlist svg {
+		color: #81712e;
+	}
+
+	.amiibo-status-button-checklist svg {
+		color: #2e6e2b;
+	}
+	.amiibo-status-button-inventory svg {
+		color: #2f4594;
+	}
+	.ant-btn-primary.ant-btn-background-ghost {
+		color: var(--domain-header);
+		background-color: rgb(92, 78, 78);
+		border-color: rgb(104, 44, 44) !important;
+	}
+}
+/* .amiibo-line-buttons-disabled .ant-button-primary {
+	background-color: #2e6e2b !important;
+} */

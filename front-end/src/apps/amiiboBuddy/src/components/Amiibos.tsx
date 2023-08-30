@@ -3,6 +3,7 @@ import { SpiningLoadingIcon } from "../../../../components/loading/LoadingIcon";
 import { TAmiiboCard } from "../types/types";
 import { AmiiboCard } from "./AmiiboCard";
 import { AmiiboLine } from "./AmiiboLine";
+import { Grid } from "antd";
 
 type TProps = {
 	amiibos: TAmiiboCard[];
@@ -16,7 +17,7 @@ export const Amiibos = ({ amiibos, loading, isList }: TProps) => {
 	}
 
 	return (
-		<ul className="list-group mb-4">
+		<ul className={`list-group-${isList ? "grid" : "grid"} mb-4`}>
 			{amiibos.map((amiibo, index: number) =>
 				isList ? (
 					<li key={amiibo.id} className="list-group-item">

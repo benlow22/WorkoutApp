@@ -141,7 +141,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	};
 	return (
 		<div className="amiibo-filter-nav">
-			<h3>Sort By</h3>
+			{/* <h3>Sort By</h3>
 			<p>release date</p>
 			<p>alphabetical</p>
 			<p>series</p>
@@ -155,7 +155,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 			<p>type</p>
 			<p>___</p>
 
-			<h3>Filter By</h3>
+			<h3>Filter By</h3> */}
 			<Form className="amiibo-filter-menu">
 				<Form.Item>
 					<Radio.Group
