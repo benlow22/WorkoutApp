@@ -6,7 +6,7 @@ import "../styles/amiibos.css";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { AmiiboFilter } from "./AmiiboFilter";
 import { Amiibos } from "./Amiibos";
-import { Pagination } from "antd";
+import { Pagination, Switch } from "antd";
 
 export const BrowsePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
@@ -16,6 +16,7 @@ export const BrowsePage: React.FC<{}> = () => {
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const [filteredAmiibos, setFilteredAmiibos] = useState<TAmiiboCard[]>([]);
+	const [isList, setIsList] = useState<boolean>(true);
 
 	useEffect(() => {}, []);
 
@@ -57,23 +58,34 @@ export const BrowsePage: React.FC<{}> = () => {
 				setFilteredAmiibos={setFilteredAmiibos}
 			/>
 			{!isLoading && (
-				<Pagination
-					size="small"
-					className="amiibo-pagination"
-					total={filteredAmiibos.length}
-					showTotal={(total, range) =>
-						`${range[0]}-${range[1]} of ${total} items`
-					}
-					defaultPageSize={50}
-					defaultCurrent={1}
-					pageSizeOptions={pageSizeOptions}
-					onChange={(page, pageSize) => {
-						setAmiibosPerPage(pageSize);
-						setCurrentPage(page);
-					}}
-				/>
+				<>
+					<Pagination
+						size="small"
+						className="amiibo-pagination"
+						total={filteredAmiibos.length}
+						showTotal={(total, range) =>
+							`${range[0]}-${range[1]} of ${total} items`
+						}
+						defaultPageSize={50}
+						defaultCurrent={1}
+						pageSizeOptions={pageSizeOptions}
+						onChange={(page, pageSize) => {
+							setAmiibosPerPage(pageSize);
+							setCurrentPage(page);
+						}}
+					/>
+					<Switch
+						checkedChildren="grid"
+						unCheckedChildren="list"
+						onChange={() => setIsList(!isList)}
+					/>
+				</>
 			)}
-			<Amiibos amiibos={currentFilteredAmiibos} loading={isLoading} />
+			<Amiibos
+				amiibos={currentFilteredAmiibos}
+				loading={isLoading}
+				isList={isList}
+			/>
 			{/* <div className="amiibo-grid">
 				{!isLoading &&
 					amiibos.map((amiibo, index) => (
