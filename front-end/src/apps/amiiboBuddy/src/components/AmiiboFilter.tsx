@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import {
+	AutoComplete,
 	Button,
 	Checkbox,
 	Dropdown,
 	Form,
+	Input,
 	MenuProps,
 	Radio,
 	RadioChangeEvent,
@@ -16,6 +18,8 @@ import { TAmiiboCard } from "../types/types";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { Amiibos } from "./Amiibos";
 import { TAmiiboWithStatus } from "./AmiiboLine";
+import { TAmiiboCache } from "../pages/addAmiibo/AddAmiibo";
+import Search from "antd/es/input/Search";
 
 type TProps = {
 	amiibos: TAmiiboWithStatus[];
@@ -26,6 +30,10 @@ type TProps = {
 
 export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
+	const [amiibosArr, setAmiibosArr] = useState<TAmiiboCard[]>([]);
+	const [amiibosArrBackup, setAmiibosArrBackup] = useState<TAmiiboCard[]>([]);
+	const [amiibovalArr, setAmiibovalArr] = useState<string[]>([]);
+	const [search, setSearch] = useState<string>("");
 	const { userId, session, supabase, isLoggedIn } = useContext(AuthContext);
 	const [sortAlphabetical, setSortAlphabetical] = useState<
 		"asc" | "desc" | null
@@ -33,12 +41,10 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	const [filterBy, setFilterBy] = useState<
 		"All" | "Owned" | "Wishlist" | "Multiples" | "Return"
 	>("All");
-	// const [filterTypeBy, setFilterTypeBy] = useState<
-	// 	"All" | "Figure" | "Card" | "Yarn"
-	// >();
 	const [type, setType] = useState<CheckboxValueType[]>(["Figure"]);
 	const [groupings, setGroupings] = useState<CheckboxValueType[]>([""]);
-	const [filteredList, setFilteredList] = useState([]);
+	const [options, setOptions] = useState<{ value: string }[]>([]);
+	const [cache, setCache] = useState<TAmiiboCache>();
 
 	// initial sort, once amiibos have been fetched.
 	useEffect(() => {
@@ -47,6 +53,36 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				(amiibo) => amiibo.type === "Figure"
 			);
 			setFilteredAmiibos(figures);
+		}
+		const amiiboCache: TAmiiboCache = {};
+		const concatData = amiibos.map((amiibo, index: number) => {
+			const concatName = `${amiibo.name} - ${amiibo.amiiboSeries} (${amiibo.type})`;
+			amiiboCache[concatName] = amiibo;
+
+			return {
+				value: concatName,
+				label: (
+					<div
+						style={{
+							display: "flex",
+							alignItems: "center",
+						}}
+					>
+						<img
+							src={amiibo.image}
+							style={{ width: "40px", paddingRight: "10px" }}
+						/>
+						{amiibo.name} - {amiibo.amiiboSeries}
+					</div>
+				),
+				key: index,
+				children: amiibo,
+			};
+		});
+		if (concatData) {
+			setOptions(concatData);
+			setCache(amiiboCache);
+			// setIsLoading(false);
 		}
 	}, [amiibos]);
 
@@ -89,48 +125,31 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				return amiibo;
 			}
 		});
-		setFilteredAmiibos(newAmiibosArr);
-	}, [filterBy, type]);
+		if (search) {
+			const withSearch = newAmiibosArr.filter((amiibo) => {
+				if (
+					amiibo.name.toUpperCase().indexOf(search.toUpperCase()) !==
+					-1
+				) {
+					return amiibo;
+				} else if (
+					amiibo.amiiboSeries
+						.toUpperCase()
+						.indexOf(search.toUpperCase()) !== -1
+				) {
+					return amiibo;
+				}
+			});
+			setFilteredAmiibos(withSearch);
+		} else {
+			setFilteredAmiibos(newAmiibosArr);
+		}
+	}, [filterBy, type, search]);
 
 	const radioCategoryOnChange = (e: RadioChangeEvent) => {
 		// console.log(`radio checked:${e.target.value}`);
 		setFilterBy(e.target.value);
 	};
-
-	// useEffect(() => {
-	// 	switch (filterBy) {
-	// 		case "Multiples":
-	// 			break;
-	// 		case "Owned":
-	// 			const newAmiibosArrCollection = amiibos.filter((amiibo) => {
-	// 				if (amiibo.status.length > 0) {
-	// 					if (amiibo.status[0].isChecklist === true) {
-	// 						// console.log(amiibo.status);
-	// 						return amiibo;
-	// 					}
-	// 				}
-	// 			});
-	// 			setFilteredList(newAmiibosArrCollection);
-	// 			break;
-	// 			break;
-	// 		case "Return":
-	// 			break;
-	// 		case "Wishlist":
-	// 			const newAmiibosArr = amiibos.filter((amiibo) => {
-	// 				if (amiibo.status.length > 0) {
-	// 					if (amiibo.status[0].isWishlist === true) {
-	// 						// console.log(amiibo.status);
-	// 						return amiibo;
-	// 					}
-	// 				}
-	// 			});
-	// 			setFilteredList(newAmiibosArr);
-	// 			break;
-	// 		case "All":
-	// 			setFilteredList(amiibos);
-	// 			break;
-	// 	}
-	// }, [filterBy]);
 
 	const typeOptions = [
 		{ label: "All", value: "All" },
@@ -170,6 +189,22 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 			setType(checkedValue);
 		}
 		// const newTypes = new Array();
+	};
+	const handleAmiiboSelect = (value: string) => {
+		if (cache) {
+			if (value in cache) {
+				let newAmiiboArr = new Array(...amiibosArr);
+				let newAmiibovalArr = new Array(...amiibovalArr);
+				setAmiibovalArr(newAmiibovalArr);
+				setAmiibosArr(newAmiiboArr);
+				setAmiibosArrBackup(newAmiiboArr);
+			}
+		}
+	};
+
+	const handleSearchChange = (e) => {
+		console.log("TARGET:", e.target.value);
+		setSearch(e.target.value);
 	};
 
 	const handleGroupingChange = (checkedValue: CheckboxValueType[]) => {
@@ -214,6 +249,28 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 
 			<h3>Filter By</h3> */}
 			<Form className="amiibo-filter-menu">
+				{/* <AutoComplete
+					options={options.filter(
+						(option) => !amiibovalArr.includes(option.value)
+					)}
+					placeholder={`pick an amiibo`}
+					filterOption={(inputValue, option) =>
+						option!.value
+							.toUpperCase()
+							.indexOf(inputValue.toUpperCase()) !== -1
+					}
+					onSelect={(value, index) => handleAmiiboSelect(value)}
+					defaultActiveFirstOption
+					style={{ color: "black", width: "400px" }}
+				/> */}
+				<Search
+					placeholder="input search text"
+					allowClear
+					onChange={(e) => {
+						handleSearchChange(e);
+					}}
+					style={{ width: 200 }}
+				/>
 				<Form.Item>
 					<Radio.Group
 						onChange={radioCategoryOnChange}

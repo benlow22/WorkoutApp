@@ -135,6 +135,13 @@
 	.ant-upload-list {
 		margin-top: 10px;
 	}
+	.list-group-grid {
+		display: flex;
+		min-width: 300px;
+		flex-wrap: wrap;
+		justify-content: space-evenly;
+		width: 100%;
+	}
 }
 
 .map-container {
