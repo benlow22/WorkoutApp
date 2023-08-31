@@ -30,9 +30,9 @@ type TIngredient = {
 
 export const PokemonSleep = () => {
 	const { auth, username } = useContext(AuthContext);
-	const [potSize, setPotSize] = useState<number>(15);
+	const [potSize, setPotSize] = useState<number | null>(15);
 	const [allRecipes, setAllRecipes] = useState();
-	const [categories, setCategories] = useState("Curries and Stews");
+	const [categories, setCategories] = useState<{ category: TRecipe[] }>();
 	const [chosenCategories, setChosenCategories] = useState();
 	const [recipes, setRecipes] = useState<TRecipe[]>([]);
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
@@ -98,8 +98,8 @@ export const PokemonSleep = () => {
 	}, [unlockedIngredients]);
 
 	useEffect(() => {
-		console.log("category", chosenCategories);
-		if (chosenCategories) {
+		console.log("category", categories);
+		if (categories && chosenCategories) {
 			setRecipes(categories[chosenCategories]);
 		}
 	}, [chosenCategories]);
@@ -110,14 +110,14 @@ export const PokemonSleep = () => {
 		if (recipes) {
 			let cookableMeals: TRecipe[] = recipes.filter(
 				(recipe) =>
-					recipe.minimumPotSize <= potSize &&
+					recipe.minimumPotSize <= potSize! &&
 					recipe.ingredients.every((ingredient) =>
 						unlockedIngredients.includes(ingredient.name)
 					)
 			);
 			let uncookableMeals: TRecipe[] = recipes.filter(
 				(recipe) =>
-					recipe.minimumPotSize > potSize &&
+					recipe.minimumPotSize > potSize! &&
 					recipe.ingredients.every((ingredient) =>
 						unlockedIngredients.includes(ingredient.name)
 					)
@@ -142,7 +142,7 @@ export const PokemonSleep = () => {
 					max={81}
 					step={3}
 					defaultValue={15}
-					onChange={(value: number) => setPotSize(value)}
+					onChange={(value) => setPotSize(value)}
 					style={{ margin: "20px" }}
 				/>
 			</Space>
