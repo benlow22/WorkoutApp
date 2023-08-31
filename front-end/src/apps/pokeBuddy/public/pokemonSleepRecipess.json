@@ -1,0 +1,479 @@
+{
+	"categories": {
+		"Curries and Stews": [
+			{
+				"name": "Mixed Curry",
+				"description": "Any random selection of ingredients",
+				"ingredients": [{ "name": "Any", "quantity": 0 }],
+				"minimumPotSize": 0,
+				"imageUrl": "mixedcurry.png"
+			},
+			{
+				"name": "Fancy Apple Curry",
+				"description": "A simple curry that lets the natural sweetness of it's apples shine.",
+				"ingredients": [{ "name": "Fancy Apple", "quantity": 7 }],
+				"minimumPotSize": 7,
+				"imageUrl": "fancyapplecurry.png"
+			},
+			{
+				"name": "Solar Powered Tomato Curry",
+				"description": "A curry made using tomatoes that have turned bright red in the sun.",
+				"ingredients": [
+					{ "name": "Fiery Herb", "quantity": 5 },
+					{ "name": "Snoozy Tomato", "quantity": 10 }
+				],
+				"minimumPotSize": 15,
+				"imageUrl": "solarpowertomatocurry.png"
+			},
+			{
+				"name": "Beanburger Curry",
+				"description": "The tender bean patties are the star of the show in this curry.",
+				"ingredients": [{ "name": "Bean Sausage", "quantity": 7 }],
+				"minimumPotSize": 7,
+				"imageUrl": "beanburgercurry.png"
+			},
+			{
+				"name": "Mild Honey Curry",
+				"description": "A mild curry containing plenty of honey. Kids gobble it down!",
+				"ingredients": [{ "name": "Honey", "quantity": 7 }],
+				"minimumPotSize": 7,
+				"imageUrl": "mildhoneycurry.png"
+			},
+			{
+				"name": "Drought Katsu Curry",
+				"description": "The freshly-fried cutlet has a nice sparkle to it.",
+				"ingredients": [
+					{ "name": "Bean Sausage", "quantity": 10 },
+					{ "name": "Pure Oil", "quantity": 5 }
+				],
+				"minimumPotSize": 15,
+				"imageUrl": "droughtkatsucurry.png"
+			},
+			{
+				"name": "Grilled Tail Curry",
+				"description": "The tasty tail elevates the flavor of the curry roux to the next level.",
+				"ingredients": [
+					{ "name": "Slowpoke Tail", "quantity": 8 },
+					{ "name": "Fiery Herb", "quantity": 25 }
+				],
+				"minimumPotSize": 33,
+				"imageUrl": "grilledtailcurry.png"
+			},
+			{
+				"name": "Dream Eater Butter Curry",
+				"description": "The ingredients in this curry all share a connection to deep sleep.",
+				"ingredients": [
+					{ "name": "Soft Potato", "quantity": 18 },
+					{ "name": "Snoozy Tomato", "quantity": 15 },
+					{ "name": "Soothing Cacao", "quantity": 12 },
+					{ "name": "Moomoo Milk", "quantity": 10 }
+				],
+				"minimumPotSize": 55,
+				"imageUrl": "dreameaterbuttercurry.png"
+			},
+			{
+				"name": "Spicy Leek Curry",
+				"description": "The roasted leeks are fragrant and sweet as fruit, perfectly balancing the spicy roux.",
+				"ingredients": [
+					{ "name": "Large Leek", "quantity": 14 },
+					{ "name": "Warming Ginger", "quantity": 10 },
+					{ "name": "Fiery Herb", "quantity": 8 }
+				],
+				"minimumPotSize": 32,
+				"imageUrl": "spicyleekcurry.png"
+			},
+
+			{
+				"name": "Spore Mushroom Curry",
+				"Description": "A curry that puts you to sleep just as surely as the move Spore.",
+				"ingredients": [
+					{ "name": "Tasty Mushroom", "quantity": 14 },
+					{ "name": "Soft Potato", "quantity": 9 }
+				],
+				"minimumPotSize": 23,
+				"imageUrl": "sporemushroomcurry.png"
+			},
+			{
+				"name": "Egg Bomb Curry",
+				"Description": "A curry made with oodles of love. Its ingredients are geared toward kids.",
+				"ingredients": [
+					{ "name": "Honey", "quantity": 12 },
+					{ "name": "Fancy Apple", "quantity": 11 },
+					{ "name": "Fancy Egg", "quantity": 8 },
+					{ "name": "Soft Potato", "quantity": 4 }
+				],
+				"minimumPotSize": 35,
+				"imageUrl": "eggbombcurry.png"
+			},
+			{
+				"name": "Hearty Cheeseburger Curry",
+				"Description": "This voluminous curry is large enough to astound even a Snorlax.",
+				"ingredients": [
+					{ "name": "Moomoo Milk", "quantity": 8 },
+					{ "name": "Bean Sausage", "quantity": 8 }
+				],
+				"minimumPotSize": 16,
+				"imageUrl": "heartycheeseburgercurry.png"
+			},
+			{
+				"name": "Soft Potato Chowder",
+				"Description": "A thick chowder made from potatoes boiled until practically melting.",
+				"ingredients": [
+					{ "name": "Moomoo Milk", "quantity": 10 },
+					{ "name": "Soft Potato", "quantity": 8 },
+					{ "name": "Tasty Mushroom", "quantity": 4 }
+				],
+				"minimumPotSize": 22,
+				"imageUrl": "softpotatochowder.png"
+			},
+			{
+				"name": "Simple Chowder",
+				"Description": "You can really taste the richness of the milk in this simple chowder.",
+				"ingredients": [{ "name": "Moomoo Milk", "quantity": 7 }],
+				"minimumPotSize": 7,
+				"imageUrl": "simplechowder.png"
+			},
+			{
+				"name": "Ninja Curry",
+				"Description": "This tofu curry is said to have been a favorite dish of ninjas.",
+				"ingredients": [
+					{ "name": "Greengrass Soybeans", "quantity": 15 },
+					{ "name": "Bean Sausage", "quantity": 9 },
+					{ "name": "Large Leek", "quantity": 9 },
+					{ "name": "Tasty Mushroom", "quantity": 5 }
+				],
+				"minimumPotSize": 38,
+				"imageUrl": "ninjacurry.png"
+			},
+
+			{
+				"name": "Melty Omelette Curry",
+				"Description": "This curry is topped with a masterfully-cooked omelette that simply melts in the mouth.",
+				"ingredients": [
+					{ "name": "Fancy Egg", "quantity": 10 },
+					{ "name": "Snoozy Tomato", "quantity": 6 }
+				],
+				"minimumPotSize": 16,
+				"imageUrl": "meltyomelettecurry.png"
+			},
+			{
+				"name": "Bulk-Up Bean Curry",
+				"Description": "A hearty curry packed with nutrients needed for bulking up.",
+				"ingredients": [
+					{ "name": "Greengrass Soybeans", "quantity": 12 },
+					{ "name": "Bean Sausage", "quantity": 7 },
+					{ "name": "Fiery Herb", "quantity": 4 },
+					{ "name": "Fancy Egg", "quantity": 4 }
+				],
+				"minimumPotSize": 37,
+				"imageUrl": "bulkupbeancurry.png"
+			}
+		],
+		"Salads": [
+			{
+				"imageUrl": "mixedsalad.png",
+				"name": "Mixed Salad",
+				"description": "",
+				"ingredients": [
+					{
+						"name": "Any",
+						"quantity": 0
+					}
+				]
+			},
+			{
+				"imageUrl": "slowpoketailpeppersalad.png",
+				"name": "Slowpoke Tail Pepper Salad",
+				"description": "The mouth-tinglingly spicy pepper highlights the sweetness of the tail.",
+				"ingredients": [
+					{
+						"name": "Slowpoke Tail",
+						"quantity": 10
+					},
+					{
+						"name": "Fiery Herb",
+						"quantity": 10
+					},
+					{
+						"name": "Pure Oil",
+						"quantity": 15
+					}
+				]
+			},
+			{
+				"imageUrl": "sporemushroomsalad.png",
+				"name": "Spore Mushroom Salad",
+				"description": "A salad rich in minerals that improve the quality of sleep.",
+				"ingredients": [
+					{
+						"name": "Tasty Mushroom",
+						"quantity": 17
+					},
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 8
+					},
+					{
+						"name": "Pure Oil",
+						"quantity": 8
+					}
+				]
+			},
+			{
+				"imageUrl": "snowcloakcaesarsalad.png",
+				"name": "Snow Cloak Caesar Salad",
+				"description": "A bacon salad topped with a generous snowy sprinkling of cheese.",
+				"ingredients": [
+					{
+						"name": "Moomoo Milk",
+						"quantity": 10
+					},
+					{
+						"name": "Bean Sausage",
+						"quantity": 6
+					}
+				]
+			},
+
+			{
+				"imageUrl": "gluttonypotatosalad.png",
+				"name": "Gluttony Potato Salad",
+				"description": "This potato salad contains just a hint of flavor from the Fancy Apples.",
+				"ingredients": [
+					{
+						"name": "Soft Potato",
+						"quantity": 14
+					},
+					{
+						"name": "Fancy Egg",
+						"quantity": 9
+					},
+					{
+						"name": "Bean Sausage",
+						"quantity": 7
+					},
+					{
+						"name": "Fancy Apple",
+						"quantity": 6
+					}
+				]
+			},
+
+			{
+				"imageUrl": "waterveiltofusalad.png",
+				"name": "Water Veil Tofu Salad",
+				"description": "A salad topped with wobbly cubes of tofu.",
+				"ingredients": [
+					{
+						"name": "Greengrass Soybeans",
+						"quantity": 10
+					},
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 6
+					}
+				]
+			},
+
+			{
+				"imageUrl": "superpowerextremesalad.png",
+				"name": "Superpower Extreme Salad ",
+				"description": "A hefty salad that provides all your daily nutrients at once.",
+				"ingredients": [
+					{
+						"name": "Bean Sausage",
+						"quantity": 9
+					},
+					{
+						"name": "Warming Ginger",
+						"quantity": 6
+					},
+					{
+						"name": "Fancy Egg",
+						"quantity": 5
+					},
+					{
+						"name": "Soft Potato",
+						"quantity": 3
+					}
+				],
+				"minimumPotSize": 23
+			},
+
+			{
+				"imageUrl": "beanhamsalad.png",
+				"name": "Bean Ham Salad",
+				"description": "This simple salad features ham made from Bean Sausages.",
+				"ingredients": [
+					{
+						"name": "Bean Sausage",
+						"quantity": 8
+					}
+				],
+				"minimumPotSize": 8
+			},
+			{
+				"imageUrl": "snoozytomatosalad.png",
+				"name": "Snoozy Tomato Salad",
+				"description": "The Snoozy Tomatoes in this simple salad are a great aid for sleep.",
+				"ingredients": [
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 8
+					}
+				],
+				"minimumPotSize": 8
+			},
+			{
+				"imageUrl": "moomoocapresesalad.png",
+				"name": "Moomoo Caprese Salad",
+				"description": "A basic salad containing only cheese, tomatoes, and a splash of oil.",
+				"ingredients": [
+					{
+						"name": "Moomoo Milk",
+						"quantity": 12
+					},
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 6
+					},
+					{
+						"name": "Pure Oil",
+						"quantity": 5
+					}
+				],
+				"minimumPotSize": 23
+			},
+
+			{
+				"imageUrl": "contrarychocolatemeatsalad.png",
+				"name": "Contrary Chocolate Meat Salad",
+				"description": "The savory sauce and sweet chocolate sauce let you enjoy a mix of flavors.",
+				"ingredients": [
+					{
+						"name": "Soothing Cacao",
+						"quantity": 14
+					},
+					{
+						"name": "Bean Sausage",
+						"quantity": 9
+					}
+				],
+				"minimumPotSize": 23
+			},
+
+			{
+				"imageUrl": "overheatgingersalad.png",
+				"name": "Overheat Ginger Salad",
+				"description": "This salad's special ginger dressing warms you through and through.",
+				"ingredients": [
+					{
+						"name": "Fiery Herb",
+						"quantity": 17
+					},
+					{
+						"name": "Warming Ginger",
+						"quantity": 10
+					},
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 8
+					}
+				],
+				"minimumPotSize": 35
+			},
+
+			{
+				"imageUrl": "fancyapplesalad.png",
+				"name": "Fancy Apple Salad",
+				"description": "A simple salad accentuated by a mashed apple dressing.",
+				"ingredients": [
+					{
+						"name": "Fancy Apple",
+						"quantity": 8
+					}
+				],
+				"minimumPotSize": 8
+			},
+			{
+				"imageUrl": "immunityleeksalad.png",
+				"name": "Immunity Leek Salad",
+				"description": "The crisp leeks in this salad do wonders for the immune system.",
+				"ingredients": [
+					{
+						"name": "Large Leek",
+						"quantity": 10
+					},
+					{
+						"name": "Warming Ginger",
+						"quantity": 5
+					}
+				],
+				"minimumPotSize": 15
+			},
+
+			{
+				"imageUrl": "dazzlingapplecheesesalad.png",
+				"name": "Dazzling Apple Cheese Salad",
+				"description": "The simple seasoning keeps the focus on the sublime pairing of ingredients.",
+				"ingredients": [
+					{
+						"name": "Fancy Apple",
+						"quantity": 15
+					},
+					{
+						"name": "Moomoo Milk",
+						"quantity": 5
+					},
+					{
+						"name": "Pure Oil",
+						"quantity": 3
+					}
+				],
+				"minimumPotSize": 23
+			},
+
+			{
+				"imageUrl": "ninjasalad.png",
+				"name": "Ninja Salad",
+				"description": "Ninjas cannot resist the flavor of this tofu salad. It's eaten in a flash!",
+				"ingredients": [
+					{
+						"name": "Large Leek",
+						"quantity": 15
+					},
+					{
+						"name": "Greengrass Soybeans",
+						"quantity": 15
+					},
+					{
+						"name": "Tasty Mushroom",
+						"quantity": 12
+					},
+					{
+						"name": "Warming Ginger",
+						"quantity": 11
+					}
+				],
+				"minimumPotSize": 43
+			},
+
+			{
+				"imageUrl": "heatwavetofusalad.png",
+				"name": "Heat Wave Tofu Salad",
+				"description": "A tofu salad covered in bright red spicy sauce.",
+				"ingredients": [
+					{
+						"name": "Greengrass Soybeans",
+						"quantity": 10
+					},
+					{
+						"name": "Fiery Herb",
+						"quantity": 6
+					}
+				],
+				"minimumPotSize": 16
+			}
+		]
+	}
+}

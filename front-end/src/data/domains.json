@@ -44,7 +44,8 @@
 			"pages": [
 				{ "name": "Type Effectiveness", "path": "typeEffectiveness" },
 				{ "name": "Quiz", "path": "quiz" },
-				{ "name": "Search", "path": "search" }
+				{ "name": "Search", "path": "search" },
+				{ "name": "Sleep", "path": "pokemonSleep" }
 			],
 			"logo": "pb-logo.png"
 		},

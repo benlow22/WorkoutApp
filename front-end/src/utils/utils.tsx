@@ -143,6 +143,10 @@ export const varFromDomainsJSON = (json: TDomainsJson, key: string) => {
 	const { [key]: keyName } = JSON.parse(JSON.stringify(json));
 	return keyName;
 };
+export const varFromJSON = (json: any, key: string) => {
+	const { [key]: keyName } = JSON.parse(JSON.stringify(json));
+	return keyName;
+};
 
 // export const domains: TDomains = {
 // 	workoutBuddy: {

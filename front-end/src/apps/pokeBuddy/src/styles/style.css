@@ -1,0 +1,163 @@
+/* .pokemon-sleep-page {
+	max-width: 600px;
+	margin: auto;
+} */
+.recipe-page {
+	background-color: rgb(238, 231, 193);
+	width: fit-content;
+	margin: 20px auto;
+	padding: 20px 20px;
+	border: rgb(237, 199, 29) solid 7px;
+	border-radius: 25px;
+}
+.recipe-page .page-heading {
+	margin-top: 0px;
+}
+.ingredient-buttons-container {
+	display: flex;
+	flex-wrap: wrap;
+	width: 500px;
+	margin: auto;
+	justify-content: space-evenly;
+}
+.recipe-page .ant-btn {
+	width: 80px !important;
+	height: 80px !important;
+}
+
+.ingredient-button {
+	width: 100px;
+	margin: 10px;
+}
+.ingredient-button.unlocked-ingredient {
+	box-shadow: 0px 0px 10px 8px rgb(0, 170, 255);
+}
+
+.ingredient-button-icon {
+	width: 70px;
+	position: relative;
+	top: -2px;
+}
+
+.recipe-page .ant-radio-button.ant-radio-button-checked,
+.recipe-page .ant-radio-button-wrapper-checked,
+.recipe-page .ant-radio-button-wrapper:hover {
+	border-color: var(--domain-nav-links-active) !important;
+	color: rgb(134, 114, 0) !important;
+}
+.recipe-page .ant-radio-button-wrapper-checked::before {
+	background-color: var(--domain-nav-links-active) !important;
+}
+/* 	color: rgb(134, 114, 0);
+ */
+
+.cookable-recipes-header {
+	padding: 10px;
+	margin: 20px 0px 0px;
+	background-color: rgb(227, 211, 170);
+	border: rgb(237, 199, 29) solid 5px;
+	border-radius: 10px;
+	color: rgb(181, 160, 0);
+}
+.cookable-recipes {
+	background-color: rgb(197, 193, 182);
+	border-radius: 10px;
+}
+
+.recipe-list {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	min-height: 50px;
+	border-bottom: rgb(212, 175, 96) solid 5px;
+	border-right: rgb(212, 175, 96) solid 5px;
+	border-left: rgb(212, 175, 96) solid 5px;
+	border-bottom-left-radius: 10px;
+	border-bottom-right-radius: 10px;
+}
+
+.recipe-list p {
+	margin-left: 5px;
+}
+.ingredient-list p {
+	font-size: 12px;
+	text-align: left;
+}
+
+.recipe-image {
+	position: relative;
+	height: 60px !important;
+}
+
+.ingredient-and-image {
+	display: flex;
+	flex-wrap: nowrap;
+	min-height: 50px;
+	width: 235px;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ingredient-icon-in-recipe {
+	height: 20px;
+	width: 20px;
+}
+
+.ingr {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
+.uncookable-recipes {
+	background-color: rgb(148, 139, 111);
+	opacity: 0.5;
+}
+
+@media only screen and (max-width: 414px) {
+	.recipe-page {
+		width: 400px;
+		padding: 2px;
+		margin: auto;
+	}
+	.recipe-name {
+		width: 150px;
+	}
+	.recipe-page .ant-btn {
+		width: 60px !important;
+		height: 60px !important;
+	}
+	.ingredient-button-icon {
+		width: 40px;
+		position: relative;
+		top: 2px;
+	}
+	.ingredient-buttons-container {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		justify-content: space-evenly;
+	}
+	.ingredient-button {
+		width: 100px;
+		margin: 5px;
+	}
+	.ingredient-and-image p {
+		font-size: 11px;
+	}
+
+	.ingredient-and-image {
+		width: 200px;
+		font-size: 11px;
+	}
+	.recipe-image {
+		position: relative;
+		height: 50px !important;
+	}
+
+	.recipe-page h2 {
+		position: relative;
+		top: 20px;
+		color: rgb(165, 140, 0);
+	}
+}

@@ -104,7 +104,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 						setAuth(true);
 						setUserId(session.user.id);
 						setUsername(session.user.user_metadata.username);
-						setIsLoggedIn(true); // later can be removed and replaced with auth
+						// setIsLoggedIn(true); // later can be removed and replaced with auth
 						setUser(session.user);
 					}
 				} else if (event === "SIGNED_OUT") {
@@ -115,7 +115,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setSession(null);
 					setAuth(false);
 					setUser(null);
-					setIsLoggedIn(false);
+					// setIsLoggedIn(false);
 
 					// remove cookies, when signed out
 					const expires = new Date(0).toUTCString();

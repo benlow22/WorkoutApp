@@ -18,7 +18,7 @@ import {
 import FormItem from "antd/es/form/FormItem";
 import { UploadImage } from "../../components/UploadImage";
 import Places from "../../components/Places";
-type TAmiiboCache = {
+export type TAmiiboCache = {
 	[concatName: string]: TAmiiboCard;
 };
 const { Option } = Select;

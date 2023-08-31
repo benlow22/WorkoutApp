@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Switch } from "antd";
 import { CollectionCard } from "../../components/CollectionCard";
-import { AmiiboFilter } from "../../components/AmiiboFilter";
+// import { AmiiboFilter } from "../../components/AmiiboFilter";
+import { TAmiiboWithStatus } from "../../components/AmiiboLine";
 
 type TProps = {
 	myAmiibos: any;
@@ -9,12 +10,18 @@ type TProps = {
 
 export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 	const [slideNumber, setSlideNumber] = useState(0);
+	const [filteredAmiibos, setFilteredAmiibos] = useState<TAmiiboWithStatus[]>(
+		[]
+	);
 
 	console.log(myAmiibos);
 	return (
 		<div className="amiibo-inventory-page">
 			<p>A collection of all your amiibos</p>
-			<AmiiboFilter />
+			{/* <AmiiboFilter
+				amiibos={myAmiibos}
+				setFilteredAmiibos={setFilteredAmiibos}
+			/> */}
 			<p style={{ float: "left" }}>
 				Amiibo
 				<Switch
@@ -28,7 +35,17 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 				Photos
 			</p>
 
-			{myAmiibos && (
+			{myAmiibos ? (
+				<div className="my-collection-grid">
+					{myAmiibos.map((amiibo: any, index: number) => (
+						<CollectionCard
+							amiibo={amiibo}
+							key={index}
+							slideNumber={slideNumber}
+						/>
+					))}
+				</div>
+			) : (
 				<div className="my-collection-grid">
 					{myAmiibos.map((amiibo: any, index: number) => (
 						<CollectionCard
