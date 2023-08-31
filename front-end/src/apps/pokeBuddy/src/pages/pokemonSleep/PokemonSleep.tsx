@@ -15,7 +15,7 @@ import {
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
-import recipesJSON from "../../../public/pokemonSleepRecipes.json";
+import recipesJSON from "../../../public/pokemonSleepRecipess.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
 import { Recipe, TRecipe } from "../../components/Recipe";
 
