@@ -39,7 +39,7 @@ export const SearchPage = ({}: TProps) => {
 		<div className="poke-search-page">
 			<h3 className="page-heading">Search</h3>
 			{/* <Input style={{ width: "400px" }} /> */}
-			<AutoComplete
+			{/* <AutoComplete
 				style={{ width: 200 }}
 				options={pokemonsOptions}
 				placeholder="choose a pokemon"
@@ -56,12 +56,8 @@ export const SearchPage = ({}: TProps) => {
 					});
 					setPokemon(chosen[0]);
 				}}
-			/>
-			{pokemon && (
-				<div>
-					<p>{pokemon.speciesName}</p>
-				</div>
-			)}
+			/> */}
+			{pokemon && <div>{/* <p>{pokemon.speciesName}</p> */}</div>}
 		</div>
 	);
 };
