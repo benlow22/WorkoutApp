@@ -115,13 +115,10 @@
 }
 
 @media only screen and (max-width: 414px) {
-	body {
-		min-width: 400px;
-	}
 	.recipe-page {
 		width: 400px;
 		padding: 2px;
-		margin: 0px;
+		margin: auto;
 	}
 	.recipe-name {
 		width: 150px;
@@ -156,5 +153,11 @@
 	.recipe-image {
 		position: relative;
 		height: 50px !important;
+	}
+
+	.recipe-page h2 {
+		position: relative;
+		top: 20px;
+		color: rgb(165, 140, 0);
 	}
 }
