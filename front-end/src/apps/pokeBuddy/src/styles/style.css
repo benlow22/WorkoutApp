@@ -153,6 +153,7 @@
 	.recipe-image {
 		position: relative;
 		height: 50px !important;
+		object-fit: contain;
 		width: auto;
 	}
 
