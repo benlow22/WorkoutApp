@@ -113,3 +113,48 @@
 	background-color: rgb(148, 139, 111);
 	opacity: 0.5;
 }
+
+@media only screen and (max-width: 414px) {
+	body {
+		min-width: 400px;
+	}
+	.recipe-page {
+		width: 400px;
+		padding: 2px;
+		margin: 0px;
+	}
+	.recipe-name {
+		width: 150px;
+	}
+	.recipe-page .ant-btn {
+		width: 60px !important;
+		height: 60px !important;
+	}
+	.ingredient-button-icon {
+		width: 40px;
+		position: relative;
+		top: 2px;
+	}
+	.ingredient-buttons-container {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		justify-content: space-evenly;
+	}
+	.ingredient-button {
+		width: 100px;
+		margin: 5px;
+	}
+	.ingredient-and-image p {
+		font-size: 11px;
+	}
+
+	.ingredient-and-image {
+		width: 200px;
+		font-size: 11px;
+	}
+	.recipe-image {
+		position: relative;
+		height: 50px !important;
+	}
+}

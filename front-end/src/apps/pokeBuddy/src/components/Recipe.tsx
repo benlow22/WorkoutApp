@@ -26,9 +26,9 @@ type Tprops = {
 export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>();
-	const [imageUrls, setImageUrls] = useState<{ ingredientName: string }[]>(
-		[]
-	);
+	const [imageUrls, setImageUrls] = useState<{
+		[ingredient: string]: string;
+	}>({});
 
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
@@ -36,7 +36,10 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 
 	useEffect(() => {
 		if (ingredients) {
-			const imageArr = {};
+			const imageArr: {
+				[ingredient: string]: string;
+			} = {};
+
 			ingredients.map((ingredient) => {
 				imageArr[ingredient.name] = ingredient.imageUrl;
 			});
@@ -49,7 +52,9 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 
 	return (
 		<div className="recipe-list">
-			<p>{recipe.name}</p>
+			<div className="recipe-name">
+				<p>{recipe.name}</p>
+			</div>
 			<div className="ingredient-and-image">
 				<div className="ingredient-list">
 					{recipe.ingredients &&
