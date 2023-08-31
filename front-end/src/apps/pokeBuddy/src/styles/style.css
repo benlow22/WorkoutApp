@@ -153,6 +153,7 @@
 	.recipe-image {
 		position: relative;
 		height: 50px !important;
+		width: auto;
 	}
 
 	.recipe-page h2 {
