@@ -17,6 +17,11 @@ export type TRecipe = {
 	ingredients: { name: string; quantity: number }[];
 	minimumPotSize: number;
 	imageUrl: string;
+	levels: {
+		level: number;
+		experience: number;
+		expNeeded: number;
+	}[];
 };
 
 type Tprops = {

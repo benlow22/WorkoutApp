@@ -13,7 +13,249 @@
 				"description": "A simple curry that lets the natural sweetness of it's apples shine.",
 				"ingredients": [{ "name": "Fancy Apple", "quantity": 7 }],
 				"minimumPotSize": 7,
-				"imageUrl": "fancyapplecurry.png"
+				"imageUrl": "fancyapplecurry.png",
+				"levels": [
+					{
+						"level": 1,
+						"experience": 0,
+						"expNeeded": 1080,
+						"value": 668
+					},
+					{
+						"level": 2,
+						"experience": 1080,
+						"expNeeded": 1244,
+						"value": 681
+					},
+					{
+						"level": 3,
+						"experience": 2324,
+						"expNeeded": 1612,
+						"value": 695
+					},
+					{
+						"level": 4,
+						"experience": 3936,
+						"expNeeded": 1609,
+						"value": 708
+					},
+					{
+						"level": 5,
+						"experience": 5545,
+						"expNeeded": 1796,
+						"value": 721
+					},
+					{
+						"level": 6,
+						"experience": 7341,
+						"expNeeded": 2371,
+						"value": 728
+					},
+					{
+						"level": 7,
+						"experience": 9712,
+						"expNeeded": 3048,
+						"value": 741
+					},
+					{
+						"level": 8,
+						"experience": 12760,
+						"expNeeded": 3666,
+						"value": 755
+					},
+					{
+						"level": 9,
+						"experience": 16426,
+						"expNeeded": 4365,
+						"value": 775
+					},
+					{
+						"level": 10,
+						"experience": 20791,
+						"expNeeded": 4848,
+						"value": 788
+					},
+					{
+						"level": 11,
+						"experience": 25639,
+						"expNeeded": 5272,
+						"value": 795
+					},
+					{
+						"level": 12,
+						"experience": 30911,
+						"expNeeded": 5710,
+						"value": 808
+					},
+					{
+						"level": 13,
+						"experience": 36621,
+						"expNeeded": 6301,
+						"value": 822
+					},
+					{
+						"level": 14,
+						"experience": 42922,
+						"expNeeded": 6960,
+						"value": 828
+					},
+					{
+						"level": 15,
+						"experience": 49882,
+						"expNeeded": 7669,
+						"value": 842
+					},
+					{
+						"level": 16,
+						"experience": 57551,
+						"expNeeded": 8450,
+						"value": 855
+					},
+					{
+						"level": 17,
+						"experience": 66001,
+						"expNeeded": 9130,
+						"value": 868
+					},
+					{
+						"level": 18,
+						"experience": 75131,
+						"expNeeded": 9850,
+						"value": 875
+					},
+					{
+						"level": 19,
+						"experience": 84981,
+						"expNeeded": 10661,
+						"value": 888
+					},
+					{
+						"level": 20,
+						"experience": 95642,
+						"expNeeded": 11517,
+						"value": 902
+					},
+					{
+						"level": 21,
+						"experience": 107159,
+						"expNeeded": 12417,
+						"value": 915
+					},
+					{
+						"level": 22,
+						"experience": 119576,
+						"expNeeded": 13362,
+						"value": 935
+					},
+					{
+						"level": 23,
+						"experience": 132938,
+						"expNeeded": 14371,
+						"value": 949
+					},
+					{
+						"level": 24,
+						"experience": 147309,
+						"expNeeded": 15312,
+						"value": 969
+					},
+					{
+						"level": 25,
+						"experience": 162621,
+						"expNeeded": 16308,
+						"value": 982
+					},
+					{
+						"level": 26,
+						"experience": 178929,
+						"expNeeded": 17634,
+						"value": 1002
+					},
+					{
+						"level": 27,
+						"experience": 196563,
+						"expNeeded": 19042,
+						"value": 1015
+					},
+					{
+						"level": 28,
+						"experience": 215605,
+						"expNeeded": 20544,
+						"value": 1035
+					},
+					{
+						"level": 29,
+						"experience": 236149,
+						"expNeeded": 22150,
+						"value": 1055
+					},
+					{
+						"level": 30,
+						"experience": 258299,
+						"expNeeded": 23656,
+						"value": 1075
+					},
+					{
+						"level": 31,
+						"experience": 281955,
+						"expNeeded": 24804,
+						"value": 1096
+					},
+					{
+						"level": 32,
+						"experience": 306759,
+						"expNeeded": 26010,
+						"value": 1116
+					},
+					{
+						"level": 33,
+						"experience": 332769,
+						"expNeeded": 27700,
+						"value": 1136
+					},
+					{
+						"level": 34,
+						"experience": 360469,
+						"expNeeded": 29474,
+						"value": 1162
+					},
+					{
+						"level": 35,
+						"experience": 389943,
+						"expNeeded": 31578,
+						"value": 1182
+					},
+					{
+						"level": 36,
+						"experience": 421521,
+						"expNeeded": 33859,
+						"value": 1209
+					},
+					{
+						"level": 37,
+						"experience": 455380,
+						"expNeeded": 35675,
+						"value": 1229
+					},
+					{
+						"level": 38,
+						"experience": 491055,
+						"expNeeded": 37608,
+						"value": 1256
+					},
+					{
+						"level": 39,
+						"experience": 528663,
+						"expNeeded": 40255,
+						"value": 1283
+					},
+					{
+						"level": 40,
+						"experience": 568918,
+						"expNeeded": 0,
+						"value": 1309
+					}
+				]
 			},
 			{
 				"name": "Solar Powered Tomato Curry",
