@@ -115,6 +115,9 @@
 	flex-wrap: wrap;
 	align-content: space-evenly;
 }
+.ingr {
+	width: 140px;
+}
 
 .base-value {
 	position: relative;
@@ -130,13 +133,17 @@
 	top: -2px;
 	height: 60px !important;
 }
-
+.recipe-level p {
+	margin: 0px;
+	width: 50px;
+}
 .recipe-level {
 	display: flex;
 	flex-wrap: wrap;
 	width: 50px;
 	height: 60px;
 	margin-left: 10px;
+	justify-content: center;
 	align-content: space-around;
 }
 .recipe-level-and-image {
@@ -234,6 +241,9 @@
 	}
 	.recipe-image-and-base-value {
 		height: 100%;
+	}
+	.ingr {
+		width: 90px;
 	}
 
 	.recipe-page h2 {
