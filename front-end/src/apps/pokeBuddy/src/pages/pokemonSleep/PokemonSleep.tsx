@@ -153,7 +153,9 @@ export const PokemonSleep = () => {
 								setPotSize(potSize - 3);
 							}
 						}}
-					></Button>
+					>
+						-
+					</Button>
 
 					<Input
 						defaultValue={potSize}
@@ -175,8 +177,8 @@ export const PokemonSleep = () => {
 				</Space.Compact>
 			</Space>
 			<Switch
-				checkedChildren="Check All"
-				unCheckedChildren="Uncheck All"
+				checkedChildren="Uncheck All"
+				unCheckedChildren="Check All"
 				onClick={() => {
 					setShowAll(!showAll);
 				}}
