@@ -12,6 +12,7 @@ import {
 	Select,
 	Space,
 	Switch,
+	Tooltip,
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
@@ -30,8 +31,8 @@ type TIngredient = {
 };
 
 export const PokemonSleep = () => {
-	const { auth, username } = useContext(AuthContext);
-	const [potSize, setPotSize] = useState<number>(21);
+	const { auth, username, supabase } = useContext(AuthContext);
+	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{ category: TRecipe[] }>();
 	const [chosenCategories, setChosenCategories] = useState();
@@ -62,13 +63,33 @@ export const PokemonSleep = () => {
 				ingredient.name
 			);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
-			// console.log("newIngredientArray", newIngredientArray);
+			console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
 		} else {
 			newIngredientArray.push(ingredient.name);
 			setUnlockedIngredients(newIngredientArray);
 		}
 	};
+	const getIngredients = async () => {
+		let { data, error } = await supabase
+			.from("pokemon_sleep_users_recipe_data")
+			.select(
+				"myUnlockedIngredients: unlocked_ingredients, myPotSize: pot_size, saladsLevel: salads_level, curriesLevel: curries_level, drinksLevel: drinks_level, currentCategory: current_weeks_category"
+			)
+			.single();
+		if (data) {
+			console.log("ingr data from supabase", data);
+			setUnlockedIngredients(data.myUnlockedIngredients);
+			setPotSize(data.myPotSize);
+			setChosenCategories(data.currentCategory);
+		} else {
+			console.error("error", error);
+		}
+	};
+
+	useEffect(() => {
+		getIngredients();
+	}, []);
 	useEffect(() => {
 		// console.log("unlockedIngredients ARR", showAll);
 		if (showAll) {
@@ -211,6 +232,7 @@ export const PokemonSleep = () => {
 					setChosenCategories(e.target.value);
 				}}
 				style={{ marginTop: 16 }}
+				defaultValue={chosenCategories}
 			>
 				<Radio.Button value="Curries and Stews">
 					Curries and Stews
@@ -249,6 +271,7 @@ export const PokemonSleep = () => {
 						{uncookableRecipes &&
 							uncookableRecipes.map(
 								(recipe: TRecipe, index: number) => (
+									// <Tooltip
 									<Recipe
 										key={index}
 										recipe={recipe}
