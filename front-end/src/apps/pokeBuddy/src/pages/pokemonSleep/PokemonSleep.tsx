@@ -18,6 +18,7 @@ import { Option } from "antd/es/mentions";
 import recipesJSON from "../../../public/pokemonSleepRecipes.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
 import { Recipe, TRecipe } from "../../components/Recipe";
+import { Helmet } from "react-helmet";
 
 type TIngredient = {
 	id: number;
@@ -132,6 +133,12 @@ export const PokemonSleep = () => {
 
 	return (
 		<div className="recipe-page">
+			<Helmet>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+				></meta>
+			</Helmet>
 			<div className="page-heading">
 				<h2>Pokemon Sleep HomePage</h2>
 			</div>

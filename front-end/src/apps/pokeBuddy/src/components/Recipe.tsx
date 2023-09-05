@@ -18,12 +18,14 @@ export type TRecipe = {
 	minimumPotSize: number;
 	imageUrl: string;
 	levels: {
-		[recipeLevel: string]: {
-			experience: number;
-			expNeeded: number;
-			value: number;
-		}[];
+		[recipeLevel: string]: TLevel;
 	};
+};
+
+type TLevel = {
+	experience: number;
+	expNeeded: number;
+	value: number;
 };
 
 type Tprops = {
@@ -55,8 +57,10 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 
 			// console.log("ingARr", imageArr);
 			setImageUrls(imageArr);
+
 			if (recipe.levels) {
-				console.log("test value", recipe.levels[recipeLevel].value);
+				const level = recipe;
+				console.log("test value", level);
 				setRecipeBaseValue(recipe.levels[recipeLevel].value);
 			}
 		}
@@ -91,7 +95,7 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 					/>
 					<Tooltip title="base value of recipe">
 						<p className="base-value">
-							{recipeBaseValue ? recipeBaseValue : ""}
+							{recipeBaseValue ? recipeBaseValue : "8888"}
 						</p>
 					</Tooltip>
 				</div>

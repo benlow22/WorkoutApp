@@ -458,9 +458,9 @@ div.ant-space-item{
 	justify-content: space-between;
 }
 
-@media only screen and (min-width: 40px) {
+@media only screen and (min-width: 350px) {
 	body {
-		min-width: 400px;
+		min-width: 350;
 	}
 }
 
