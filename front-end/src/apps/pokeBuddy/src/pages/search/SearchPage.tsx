@@ -5,9 +5,33 @@ import pokemonsJSON from "../../../public/pokemon.json";
 import { DefaultOptionType } from "antd/es/select";
 type TProps = {};
 
+type TOpponent = {
+	opponent: string;
+	rating: number;
+};
+
+type TMove = { moveId: string; uses: number };
+type TIVStats = { product: number; atk: number; def: number; hp: number };
+
+type TPokemonData = {
+	speciesId: string;
+	speciesName: string;
+	rating: number;
+	matchups: TOpponent[];
+	counters: TOpponent[];
+	moves: {
+		fastMoves: TMove[];
+		chargedMoves: TMove[];
+	};
+	moveset: string[];
+	score: number;
+	scores: number[];
+	stats: TIVStats;
+};
+
 export const SearchPage = ({}: TProps) => {
-	const [pokemons, setPokemons] = useState<any>();
-	const [pokemon, setPokemon] = useState("");
+	const [pokemons, setPokemons] = useState<TPokemonData[]>();
+	const [pokemon, setPokemon] = useState<TPokemonData>();
 	const [pokemonsOptions, setPokemonsOptions] = useState<{ value: string }[]>(
 		[]
 	);
@@ -39,7 +63,7 @@ export const SearchPage = ({}: TProps) => {
 		<div className="poke-search-page">
 			<h3 className="page-heading">Search</h3>
 			{/* <Input style={{ width: "400px" }} /> */}
-			{/* <AutoComplete
+			<AutoComplete
 				style={{ width: 200 }}
 				options={pokemonsOptions}
 				placeholder="choose a pokemon"
@@ -51,13 +75,20 @@ export const SearchPage = ({}: TProps) => {
 					inputValue.length > 1
 				}
 				onSelect={(value) => {
-					const chosen = pokemons.filter((pokemon: any) => {
-						return pokemon.speciesName === value;
-					});
-					setPokemon(chosen[0]);
+					if (pokemons) {
+						const chosen = pokemons.filter(
+							(pokemon: TPokemonData) =>
+								pokemon.speciesName === value
+						);
+						setPokemon(chosen[0]);
+					}
 				}}
-			/> */}
-			{pokemon && <div>{/* <p>{pokemon.speciesName}</p> */}</div>}
+			/>
+			{pokemon && (
+				<div>
+					<p>{pokemon.speciesName}</p>
+				</div>
+			)}
 		</div>
 	);
 };
