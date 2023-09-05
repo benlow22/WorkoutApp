@@ -63,7 +63,7 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	useEffect(() => {
 		if (recipe.levels) {
 			const level = recipe;
-			console.log("test value", level);
+			// console.log("test value", level);
 			setRecipeBaseValue(recipe.levels[recipeLevel].value);
 		}
 	}, [recipeLevel]);

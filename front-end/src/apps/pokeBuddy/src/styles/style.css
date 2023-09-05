@@ -38,6 +38,14 @@
 	box-shadow: 0px 0px 10px 8px rgb(0, 170, 255);
 }
 
+.save-and-filter {
+	display: flex;
+	width: 250px;
+	margin-top: 10px;
+	justify-content: space-between;
+	margin: auto;
+}
+
 .ingredient-button-icon {
 	width: 70px;
 	position: relative;

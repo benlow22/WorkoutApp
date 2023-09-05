@@ -6,8 +6,10 @@ import "../../styles/style.css";
 import {
 	Button,
 	Cascader,
+	Dropdown,
 	Input,
 	InputNumber,
+	MenuProps,
 	Radio,
 	Select,
 	Space,
@@ -20,6 +22,12 @@ import recipesJSON from "../../../public/pokemonSleepRecipes.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
 import { Recipe, TRecipe } from "../../components/Recipe";
 import { Helmet } from "react-helmet";
+import {
+	ArrowDownOutlined,
+	ArrowUpOutlined,
+	FilterFilled,
+	UserOutlined,
+} from "@ant-design/icons";
 
 type TIngredient = {
 	id: number;
@@ -41,6 +49,9 @@ export const PokemonSleep = () => {
 	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>(
 		[]
 	);
+	const [filterName, setFilterName] = useState<any>("Filter by");
+
+	const [filterKey, setFilterKey] = useState<number>();
 	const [showAll, setShowAll] = useState<boolean>(false);
 
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
@@ -86,6 +97,14 @@ export const PokemonSleep = () => {
 			console.error("error", error);
 		}
 	};
+	useEffect(() => {
+		switch (filterKey) {
+			case 1:
+				setFilterName("Ingredient Names");
+		}
+		console.log("filterKey", filterKey);
+		console.log("filterKey", filterName);
+	}, [filterKey]);
 
 	useEffect(() => {
 		getIngredients();
@@ -151,6 +170,105 @@ export const PokemonSleep = () => {
 			setUncookableRecipes(uncookableMeals);
 		}
 	}, [recipes, potSize, unlockedIngredients]);
+
+	const items: MenuProps["items"] = [
+		{
+			label: "Ingredient Names",
+			key: "1",
+			icon: <ArrowUpOutlined />,
+			onClick: () => {
+				setFilterKey(1);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowUpOutlined />
+						{" Ingredient Names"}
+					</p>
+				);
+			},
+		},
+
+		{
+			label: "Recipe Base Value",
+			key: "2",
+			icon: <ArrowUpOutlined />,
+			onClick: () => {
+				setFilterKey(2);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowUpOutlined />
+						{" Recipe Base Value"}
+					</p>
+				);
+			},
+		},
+		{
+			label: "# of Ingredients",
+			key: "3",
+			icon: <ArrowUpOutlined />,
+			onClick: () => {
+				setFilterKey(3);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowUpOutlined />
+						{" # of Ingredients"}
+					</p>
+				);
+			},
+		},
+		{
+			label: "Ingredient Names",
+			key: "4",
+			icon: <ArrowDownOutlined />,
+			onClick: () => {
+				setFilterKey(4);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowDownOutlined />
+						{" Ingredient Names"}
+					</p>
+				);
+			},
+		},
+		{
+			label: "Recipe Base Value",
+			key: "5",
+			icon: <ArrowDownOutlined />,
+			onClick: () => {
+				setFilterKey(5);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowDownOutlined />
+						{" Recipe Base Value"}
+					</p>
+				);
+			},
+		},
+
+		{
+			label: "# of Ingredients",
+			key: "6",
+			icon: <ArrowDownOutlined />,
+			onClick: () => {
+				setFilterKey(6);
+				setFilterName(
+					<p style={{ color: "black" }}>
+						<ArrowDownOutlined />
+						{" # of Ingredients"}
+					</p>
+				);
+			},
+		},
+	];
+
+	const handleFilterClick = (event: any) => {
+		console.log("target", event);
+		setFilterKey(event.key);
+	};
+
+	const menuProps = {
+		items,
+		onClick: handleFilterClick,
+	};
 
 	return (
 		<div className="recipe-page">
@@ -242,7 +360,30 @@ export const PokemonSleep = () => {
 					Desserts and Drink
 				</Radio.Button>
 			</Radio.Group>
-
+			<div className="save-and-filter">
+				<Button type="primary">Save</Button>
+				<Dropdown
+					menu={{ items }}
+					arrow
+					// onClick={(event) => handleFilterClick(event)}
+					// icon={<FilterFilled />}
+					// style={{ width: "175px" }}
+				>
+					<Space.Compact>
+						<Button
+							style={{
+								width: "200px",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							{filterName}
+							<FilterFilled />
+						</Button>
+					</Space.Compact>
+				</Dropdown>
+			</div>
 			{recipes && (
 				<div className="recipes">
 					{/* <div className="cookable-recipes">
