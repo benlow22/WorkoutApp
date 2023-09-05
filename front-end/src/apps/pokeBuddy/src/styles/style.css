@@ -84,8 +84,21 @@
 	text-align: left;
 }
 
+.recipe-image-and-base-value {
+	position: relative;
+}
+
+.base-value {
+	position: absolute;
+	top: 42px;
+	width: 40px;
+	left: 10px;
+	margin: 0px !important;
+	font-size: 14px;
+}
 .recipe-image {
 	position: relative;
+	top: -7px;
 	height: 60px !important;
 }
 

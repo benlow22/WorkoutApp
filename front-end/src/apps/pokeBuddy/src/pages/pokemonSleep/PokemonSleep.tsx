@@ -30,7 +30,7 @@ type TIngredient = {
 
 export const PokemonSleep = () => {
 	const { auth, username } = useContext(AuthContext);
-	const [potSize, setPotSize] = useState<number | null>(15);
+	const [potSize, setPotSize] = useState<number>(21);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{ category: TRecipe[] }>();
 	const [chosenCategories, setChosenCategories] = useState();
@@ -61,7 +61,7 @@ export const PokemonSleep = () => {
 				ingredient.name
 			);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
-			console.log("newIngredientArray", newIngredientArray);
+			// console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
 		} else {
 			newIngredientArray.push(ingredient.name);
@@ -69,7 +69,7 @@ export const PokemonSleep = () => {
 		}
 	};
 	useEffect(() => {
-		console.log("unlockedIngredients ARR", showAll);
+		// console.log("unlockedIngredients ARR", showAll);
 		if (showAll) {
 			setUnlockedIngredients([
 				"Large Leek",
@@ -94,7 +94,7 @@ export const PokemonSleep = () => {
 	}, [showAll]);
 
 	useEffect(() => {
-		console.log("unlockedIngredients ARR", unlockedIngredients);
+		// console.log("unlockedIngredients ARR", unlockedIngredients);
 	}, [unlockedIngredients]);
 
 	useEffect(() => {
@@ -105,7 +105,7 @@ export const PokemonSleep = () => {
 	}, [chosenCategories]);
 
 	useEffect(() => {
-		console.log("rec ARR", recipes);
+		// console.log("rec ARR", recipes);
 
 		if (recipes) {
 			let cookableMeals: TRecipe[] = recipes.filter(
@@ -122,8 +122,8 @@ export const PokemonSleep = () => {
 						unlockedIngredients.includes(ingredient.name)
 					)
 			);
-			console.log("cook ARR", cookableMeals);
-			console.log("uncook ARR", uncookableMeals);
+			// console.log("cook ARR", cookableMeals);
+			// console.log("uncook ARR", uncookableMeals);
 
 			setCookableRecipes(cookableMeals);
 			setUncookableRecipes(uncookableMeals);
@@ -141,8 +141,8 @@ export const PokemonSleep = () => {
 					min={15}
 					max={81}
 					step={3}
-					defaultValue={15}
-					onChange={(value) => setPotSize(value)}
+					defaultValue={potSize}
+					onChange={(value) => setPotSize(value!)}
 					style={{ margin: "20px" }}
 				/>
 			</Space>
@@ -155,8 +155,9 @@ export const PokemonSleep = () => {
 			/>
 			<div className="ingredient-buttons-container">
 				{ingredients.length > 0 &&
-					ingredients.map((ingredient) => (
+					ingredients.map((ingredient, index: number) => (
 						<Button
+							key={index}
 							shape="circle"
 							size="large"
 							className={`ingredient-button ${
@@ -202,22 +203,28 @@ export const PokemonSleep = () => {
 							<h3 className="cookable-recipes-header">
 								Cookable Recipes
 							</h3>
-							{cookableRecipes.map((recipe: TRecipe) => (
-								<Recipe
-									recipe={recipe}
-									ingredients={ingredients}
-								/>
-							))}
+							{cookableRecipes.map(
+								(recipe: TRecipe, index: number) => (
+									<Recipe
+										key={index}
+										recipe={recipe}
+										ingredients={ingredients}
+									/>
+								)
+							)}
 						</div>
 					)}
 					<div className="uncookable-recipes">
 						{uncookableRecipes &&
-							uncookableRecipes.map((recipe: TRecipe) => (
-								<Recipe
-									recipe={recipe}
-									ingredients={ingredients}
-								/>
-							))}
+							uncookableRecipes.map(
+								(recipe: TRecipe, index: number) => (
+									<Recipe
+										key={index}
+										recipe={recipe}
+										ingredients={ingredients}
+									/>
+								)
+							)}
 					</div>
 				</div>
 			)}
