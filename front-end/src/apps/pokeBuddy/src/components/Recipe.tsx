@@ -20,6 +20,7 @@ export type TRecipe = {
 	levels: {
 		[recipeLevel: string]: TLevel;
 	};
+	level?: number;
 };
 
 type TLevel = {
@@ -31,14 +32,19 @@ type TLevel = {
 type Tprops = {
 	recipe: TRecipe;
 	ingredients: TIngredient[];
+	// recipeLevel: number;
 };
-export const Recipe = ({ recipe, ingredients }: Tprops) => {
+export const Recipe = ({
+	recipe,
+	ingredients,
+}: // , recipeLevel
+Tprops) => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>();
 	const [imageUrls, setImageUrls] = useState<{
 		[ingredient: string]: string;
 	}>({});
-	const [recipeLevel, setRecipeLevel] = useState<number>(4);
+	const [recipeLevel, setRecipeLevel] = useState<number>(1);
 	const [recipeBaseValue, setRecipeBaseValue] = useState<number>(0);
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
@@ -61,12 +67,13 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	}, [ingredients]);
 
 	useEffect(() => {
-		if (recipe.levels) {
-			const level = recipe;
+		if (recipe.level) {
+			const level = recipe.level;
 			// console.log("test value", level);
-			setRecipeBaseValue(recipe.levels[recipeLevel].value);
+			setRecipeLevel(level);
+			setRecipeBaseValue(recipe.levels[level].value);
 		}
-	}, [recipeLevel]);
+	}, [recipeLevel, recipe.level]);
 
 	const handleRecipeLevelDecrease = () => {
 		if (recipeLevel > 1) {

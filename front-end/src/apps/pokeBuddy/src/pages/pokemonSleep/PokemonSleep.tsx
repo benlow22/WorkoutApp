@@ -43,19 +43,21 @@ export const PokemonSleep = () => {
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{ category: TRecipe[] }>();
-	const [chosenCategories, setChosenCategories] = useState();
+	const [chosenCategories, setChosenCategories] = useState<string>("");
 	const [recipes, setRecipes] = useState<TRecipe[]>([]);
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
 	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>(
 		[]
 	);
 	const [filterName, setFilterName] = useState<any>("Filter by");
-
 	const [filterKey, setFilterKey] = useState<number>();
 	const [showAll, setShowAll] = useState<boolean>(false);
-
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
 	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
+	const [saladsLevels, setSaladLevels] = useState<string[]>([]);
+	const [curriesLevels, setCurriesLevels] = useState<any>([]);
+	// { [recipeName: string]: number }[]
+	const [drinksLevels, setDrinksLevels] = useState<string[]>([]);
 
 	useEffect(() => {
 		const categories = varFromJSON(recipesJSON, "categories");
@@ -93,6 +95,12 @@ export const PokemonSleep = () => {
 			setUnlockedIngredients(data.myUnlockedIngredients);
 			setPotSize(data.myPotSize);
 			setChosenCategories(data.currentCategory);
+			setCurriesLevels(data.curriesLevel);
+			setSaladLevels(data.saladsLevel);
+			console.log("ingr data from curr", data.curriesLevel);
+
+			// setCurriesLevels(JSON.stringify(data.curriesLevel));
+			setDrinksLevels(data.drinksLevel);
 		} else {
 			console.error("error", error);
 		}
@@ -163,13 +171,74 @@ export const PokemonSleep = () => {
 						unlockedIngredients.includes(ingredient.name)
 					)
 			);
-			// console.log("cook ARR", cookableMeals);
+			if (cookableMeals.length > 0) {
+				console.log("cook ARR", cookableMeals);
+			}
 			// console.log("uncook ARR", uncookableMeals);
+			if (curriesLevels.length > 0) {
+				console.log("curryLVL", curriesLevels);
+			}
 
-			setCookableRecipes(cookableMeals);
+			// 			0
+			// :
+			// {name: 'Fancy Apple Curry', description: "A simple curry that lets the natural sweetness of it's apples shine.", ingredients: Array(1), minimumPotSize: 7, imageUrl: 'fancyapplecurry.png', …}
+			// 1
+			// :
+			// {name: 'Solar Powered Tomato Curry', description: 'A curry made using tomatoes that have turned bright red in the sun.', ingredients: Array(2), minimumPotSize: 15, imageUrl: 'solarpowertomatocurry.png', …}
+			// 2
+			// :
+			// {name: 'Beanburger Curry', description: 'The tender bean patties are the star of the show in this curry.', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'beanburgercurry.png', …}
+			// 3
+			// :
+			// {name: 'Mild Honey Curry', description: 'A mild curry containing plenty of honey. Kids gobble it down!', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'mildhoneycurry.png', …}
+			// 4
+			// :
+			// {name: 'Drought Katsu Curry', description: 'The freshly-fried cutlet has a nice sparkle to it.', ingredients: Array(2), minimumPotSize: 15, imageUrl: 'droughtkatsucurry.png', …}
+			// 5
+			// :
+			// {name: 'Hearty Cheeseburger Curry', Description: 'This voluminous curry is large enough to astound even a Snorlax.', ingredients: Array(2), minimumPotSize: 16, imageUrl: 'heartycheeseburgercurry.png', …}
+			// 6
+			// :
+			// {name: 'Simple Chowder', Description: 'You can really taste the richness of the milk in this simple chowder.', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'simplechowder.png', …}
+			// length
+			// :
+
+			// 7
+
+			// [
+			// 	{
+			// 	  "name": "Fancy Apple Curry",
+			// 	  "level": 5
+			// 	},
+			// 	{
+			// 	  "name": "Solar Powered Tomato Curry",
+			// 	  "level": 9
+			// 	}
+			//   ]
+			let cookableMealAndLevel = cookableMeals.map((cookableMeal) => {
+				console.log("cookable meal", cookableMeal);
+				let level = 1;
+				for (let i = 0; i < curriesLevels.length; i++) {
+					console.log("CLPASD", curriesLevels[i]);
+					if (cookableMeal.name === curriesLevels[i].name) {
+						level = curriesLevels[i].level;
+						console.log("levelYP", cookableMeal, curriesLevels[i]);
+						return {
+							...cookableMeal,
+							level: level,
+						};
+					}
+				}
+				return { ...cookableMeal, level: level };
+			});
+
+			console.log("cooknealLEVEL", cookableMealAndLevel);
+			if (cookableMealAndLevel) {
+				setCookableRecipes(cookableMealAndLevel);
+			}
 			setUncookableRecipes(uncookableMeals);
 		}
-	}, [recipes, potSize, unlockedIngredients]);
+	}, [recipes, potSize, unlockedIngredients, curriesLevels]);
 
 	const items: MenuProps["items"] = [
 		{
@@ -378,7 +447,15 @@ export const PokemonSleep = () => {
 								alignItems: "center",
 							}}
 						>
-							{filterName}
+							<p
+								style={{
+									color: "black",
+									width: "200px",
+									textAlign: "center",
+								}}
+							>
+								{filterName}
+							</p>
 							<FilterFilled />
 						</Button>
 					</Space.Compact>
