@@ -144,14 +144,35 @@ export const PokemonSleep = () => {
 			</div>
 			<Space className="pokemon-sleep-page">
 				<p>Pot Size:</p>
-				<InputNumber
-					min={15}
-					max={81}
-					step={3}
-					defaultValue={potSize}
-					onChange={(value) => setPotSize(value!)}
-					style={{ margin: "20px" }}
-				/>
+				<Space.Compact>
+					<Button
+						type="primary"
+						className="pot-size-adjuster decrease"
+						onClick={() => {
+							if (potSize >= 18) {
+								setPotSize(potSize - 3);
+							}
+						}}
+					></Button>
+
+					<Input
+						defaultValue={potSize}
+						onChange={(e) => setPotSize(Number(e.target.value))}
+						style={{ margin: "0px" }}
+						value={potSize}
+					/>
+					<Button
+						type="primary"
+						className="pot-size-adjuster increase"
+						onClick={() => {
+							if (potSize < 81) {
+								setPotSize(potSize + 3);
+							}
+						}}
+					>
+						+
+					</Button>
+				</Space.Compact>
 			</Space>
 			<Switch
 				checkedChildren="Check All"
@@ -159,6 +180,7 @@ export const PokemonSleep = () => {
 				onClick={() => {
 					setShowAll(!showAll);
 				}}
+				className="uncheck-all-switch"
 			/>
 			<div className="ingredient-buttons-container">
 				{ingredients.length > 0 &&

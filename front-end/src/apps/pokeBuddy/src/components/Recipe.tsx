@@ -95,7 +95,7 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 					/>
 					<Tooltip title="base value of recipe">
 						<p className="base-value">
-							{recipeBaseValue ? recipeBaseValue : "8888"}
+							{recipeBaseValue ? recipeBaseValue : "?????"}
 						</p>
 					</Tooltip>
 				</div>
