@@ -13,7 +13,7 @@ type TProps = {
 	from: string;
 };
 
-export const LoginPage = () => {
+export const ResetPasswordPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	const { auth, contextIsLoading, supabase } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);

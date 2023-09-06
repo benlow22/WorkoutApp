@@ -18,6 +18,7 @@ import { AmiiboBuddy } from "./apps/amiiboBuddy/src/App";
 import { LorcanaBuddy } from "./apps/lorcanaBuddy/src/App";
 import { PokeBuddy } from "./apps/pokeBuddy/src/App";
 import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
+import { ResetPasswordPage } from "./components/auth/login/ResetPasswordPage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -35,6 +36,10 @@ const router = createBrowserRouter(
 				<Route path="createUsername" element={<CreateUsernamePage />} />
 				</Route> */}
 			{/* </Route> */}
+			<Route
+				path="buddySystem/resetpassword"
+				element={<ResetPasswordPage />}
+			/>
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)

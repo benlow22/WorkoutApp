@@ -58,7 +58,7 @@ export const PokemonSleep = () => {
 		[]
 	);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [filterName, setFilterName] = useState<any>("Filter by");
+	const [filterName, setFilterName] = useState<any>("Sort by");
 	const [filterKey, setFilterKey] = useState<number>();
 	const [showAll, setShowAll] = useState<boolean>(false);
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
@@ -153,7 +153,7 @@ export const PokemonSleep = () => {
 				setFilterName("Ingredient Names");
 		}
 		console.log("filterKey", filterKey);
-		console.log("filterKey", filterName);
+		// console.log("filterKey", filterName);
 	}, [filterKey]);
 
 	const updateLevels = async (

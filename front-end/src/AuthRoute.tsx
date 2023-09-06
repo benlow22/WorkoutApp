@@ -6,7 +6,7 @@ import { SpiningLoadingIcon } from "./components/loading/LoadingIcon";
 import domainsJSON from "./data/domains.json";
 import { varFromDomainsJSON } from "./utils/utils";
 
-const AuthRoute = () => {
+const TESTAuthRoute = () => {
 	const { auth, contextIsLoading } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
 	const location = useLocation();
@@ -27,4 +27,4 @@ const AuthRoute = () => {
 		return <Outlet />;
 	}
 };
-export default AuthRoute;
+export default TESTAuthRoute;
