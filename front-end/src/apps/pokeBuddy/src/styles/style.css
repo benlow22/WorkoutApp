@@ -69,7 +69,6 @@
 }
 .recipe-page .ant-radio-button-wrapper-checked::before,
 .recipe-page .pot-size-adjuster,
-.ant-btn-primary,
 .recipe-level-adjuster {
 	background-color: var(--domain-nav-links-active) !important;
 }
