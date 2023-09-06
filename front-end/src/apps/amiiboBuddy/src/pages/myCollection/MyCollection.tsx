@@ -72,8 +72,8 @@ export const MyCollection = () => {
 			{contextHolder}
 			<h2 className="page-heading"> Amiibo Buddy My Collection</h2>
 			<Switch
-				checkedChildren="Inventory"
-				unCheckedChildren="Checklist"
+				checkedChildren="Checklist"
+				unCheckedChildren="Inventory"
 				defaultChecked={isInventory}
 				checked={isInventory}
 				disabled={switchIsDisabled}
