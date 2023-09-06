@@ -133,7 +133,7 @@ export const PokemonSleep = () => {
 		setIsLoading(true);
 		const { data, error } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.update({ column_name: dataToUpdate })
+			.update({ [column_name]: dataToUpdate })
 			.eq("user_id", userId)
 			.select();
 		if (data) {
@@ -276,10 +276,10 @@ export const PokemonSleep = () => {
 		console.log("unlockedIngredients", unlockedIngredients);
 		const { data, error } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.upsert({
+			.update({
 				unlocked_ingredients: unlockedIngredients,
-				user_id: userId,
 			})
+			.eq("user_id", userId)
 			.select();
 		if (data) {
 			console.log(data);
