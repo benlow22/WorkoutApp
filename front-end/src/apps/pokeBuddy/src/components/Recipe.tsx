@@ -44,7 +44,9 @@ Tprops) => {
 	const [imageUrls, setImageUrls] = useState<{
 		[ingredient: string]: string;
 	}>({});
+	const [usersRecipeLevel, setUsersRecipeLevel] = useState<number>(1);
 	const [recipeLevel, setRecipeLevel] = useState<number>(1);
+
 	const [recipeBaseValue, setRecipeBaseValue] = useState<number>(0);
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
@@ -67,13 +69,20 @@ Tprops) => {
 	}, [ingredients]);
 
 	useEffect(() => {
+		const level = recipeLevel;
+		setRecipeLevel(level);
+		setRecipeBaseValue(recipe.levels[level].value);
+	}, [recipeLevel]);
+
+	useEffect(() => {
 		if (recipe.level) {
 			const level = recipe.level;
 			// console.log("test value", level);
+			setUsersRecipeLevel(level);
 			setRecipeLevel(level);
 			setRecipeBaseValue(recipe.levels[level].value);
 		}
-	}, [recipeLevel, recipe.level]);
+	}, [recipe.level]);
 
 	const handleRecipeLevelDecrease = () => {
 		if (recipeLevel > 1) {
