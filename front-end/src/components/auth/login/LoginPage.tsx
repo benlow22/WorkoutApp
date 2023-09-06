@@ -17,7 +17,7 @@ export const LoginPage = () => {
 	// when going to AuthPage, get session, set if logged in
 	const { auth, contextIsLoading, supabase } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [previousDomain, setPreviousDomain] = useState<string>();
+	const [previousDomain, setPreviousDomain] = useState<string>("buddySystem");
 	const [currentDomain, setCurrentDomain] = useState<string>();
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const location = useLocation();
@@ -37,11 +37,13 @@ export const LoginPage = () => {
 						? splitPathName[1]
 						: "buddySystem";
 				setCurrentDomain(subDomain);
+				console.log("hi");
 			} else {
 				setCurrentDomain(undefined);
 			}
 			setIsLoading(false);
 		}
+		console.log("location", location);
 	}, [auth]);
 	// if location = null = no location.state = went STRAIGHT to login page
 
@@ -67,6 +69,7 @@ export const LoginPage = () => {
 							},
 						},
 					}}
+					providers={["google", "github", "azure"]}
 				/>
 			</div>
 		)
