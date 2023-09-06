@@ -42,7 +42,9 @@ export const PokemonSleep = () => {
 	const { auth, username, supabase } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
-	const [categories, setCategories] = useState<{ category: TRecipe[] }>();
+	const [categories, setCategories] = useState<{
+		[category: string]: TRecipe[];
+	}>();
 	const [chosenCategories, setChosenCategories] = useState<string>("");
 	const [recipes, setRecipes] = useState<TRecipe[]>([]);
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
@@ -216,13 +218,13 @@ export const PokemonSleep = () => {
 			// 	}
 			//   ]
 			let cookableMealAndLevel = cookableMeals.map((cookableMeal) => {
-				console.log("cookable meal", cookableMeal);
+				// console.log("cookable meal", cookableMeal);
 				let level = 1;
 				for (let i = 0; i < curriesLevels.length; i++) {
-					console.log("CLPASD", curriesLevels[i]);
+					// console.log("CLPASD", curriesLevels[i]);
 					if (cookableMeal.name === curriesLevels[i].name) {
 						level = curriesLevels[i].level;
-						console.log("levelYP", cookableMeal, curriesLevels[i]);
+						// console.log("levelYP", cookableMeal, curriesLevels[i]);
 						return {
 							...cookableMeal,
 							level: level,
@@ -232,7 +234,16 @@ export const PokemonSleep = () => {
 				return { ...cookableMeal, level: level };
 			});
 
-			console.log("cooknealLEVEL", cookableMealAndLevel);
+			// for (let i = 0; i < recipes.length; i++) {
+			// if (
+			// 	chosenCategories === "Curries and Stew"
+			// 	// recipes[i].name === "Mixed Curry"
+			// ) {
+			// 	// console.log("RECIPE BASIC", recipes[i]);
+			// 	cookableMealAndLevel.push({ ...recipes[0], level: 1 });
+			// }
+
+			// console.log("cooknealLEVEL", cookableMealAndLevel);
 			if (cookableMealAndLevel) {
 				setCookableRecipes(cookableMealAndLevel);
 			}
