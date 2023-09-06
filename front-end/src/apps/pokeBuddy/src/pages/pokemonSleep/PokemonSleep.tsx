@@ -133,7 +133,8 @@ export const PokemonSleep = () => {
 		setIsLoading(true);
 		const { data, error } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.upsert({ column_name: dataToUpdate })
+			.update({ column_name: dataToUpdate })
+			.eq("user_id", userId)
 			.select();
 		if (data) {
 			console.log(data);
@@ -270,6 +271,23 @@ export const PokemonSleep = () => {
 		}
 	}, [chosenCategories]);
 
+	const handlesave = async () => {
+		setIsLoading(true);
+		console.log("unlockedIngredients", unlockedIngredients);
+		const { data, error } = await supabase
+			.from("pokemon_sleep_users_recipe_data")
+			.upsert({
+				unlocked_ingredients: unlockedIngredients,
+				user_id: userId,
+			})
+			.select();
+		if (data) {
+			console.log(data);
+			setIsLoading(false);
+		} else {
+			console.log(error);
+		}
+	};
 	useEffect(() => {
 		// console.log("rec ARR", recipes);
 
@@ -592,7 +610,9 @@ export const PokemonSleep = () => {
 				</Radio.Button>
 			</Radio.Group>
 			<div className="save-and-filter">
-				<Button type="primary">Save</Button>
+				<Button type="primary" onClick={() => handlesave()}>
+					Save
+				</Button>
 				<Dropdown
 					menu={{ items }}
 					arrow
