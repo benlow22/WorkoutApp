@@ -184,7 +184,6 @@ export const PokemonSleep = () => {
 			let cookableMealAndLevel = cookableMeals.map((cookableMeal) => {
 				// console.log("cookable meal", cookableMeal);
 				let level = 1;
-
 				if (chosenCategories === "Curries and Stews" && curriesLevels) {
 					for (let i = 0; i < curriesLevels.length; i++) {
 						// console.log("CLPASD", curriesLevels[i]);
@@ -229,20 +228,62 @@ export const PokemonSleep = () => {
 			});
 			console.log("cookableMealAndLevel", cookableMealAndLevel);
 
-			// for (let i = 0; i < recipes.length; i++) {
-			// if (
-			// 	chosenCategories === "Curries and Stew"
-			// 	// recipes[i].name === "Mixed Curry"
-			// ) {
-			// 	// console.log("RECIPE BASIC", recipes[i]);
-			// 	cookableMealAndLevel.push({ ...recipes[0], level: 1 });
-			// }
+			let uncookableMealAndLevel = uncookableMeals.map((cookableMeal) => {
+				// console.log("cookable meal", cookableMeal);
+				let level = 1;
+				if (chosenCategories === "Curries and Stews" && curriesLevels) {
+					for (let i = 0; i < curriesLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
+					}
+				} else if (chosenCategories === "Salads" && saladsLevels) {
+					for (let i = 0; i < saladsLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
+					}
+				} else if (
+					chosenCategories === "Drinks and Desserts" &&
+					drinksLevels
+				) {
+					for (let i = 0; i < curriesLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
+					}
+				}
+				return { ...cookableMeal, level: level };
+			});
 
-			// console.log("cooknealLEVEL", cookableMealAndLevel);
 			if (cookableMealAndLevel) {
 				setCookableRecipes(cookableMealAndLevel);
+			} else {
+				setCookableRecipes(cookableMeals);
 			}
-			setUncookableRecipes(uncookableMeals);
+			if (uncookableMealAndLevel) {
+				setUncookableRecipes(uncookableMealAndLevel);
+			} else {
+				setUncookableRecipes(uncookableMeals);
+			}
 		}
 	}, [recipes, potSize, unlockedIngredients, curriesLevels]);
 
