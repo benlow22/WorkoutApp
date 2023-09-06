@@ -13,14 +13,19 @@
 .recipe-page .page-heading {
 	margin-top: 0px;
 }
+.recipe-image-and-base-value {
+	display: flex;
+	height: 100%;
+	align-content: space-between;
+}
 .ingredient-buttons-container {
 	display: flex;
 	flex-wrap: wrap;
 	width: 500px;
-	margin: auto;
+	margin: 10px auto;
 	justify-content: space-evenly;
 }
-.recipe-page .ant-btn {
+.recipe-page .ant-btn.ingredient-button {
 	width: 80px !important;
 	height: 80px !important;
 }
@@ -33,24 +38,47 @@
 	box-shadow: 0px 0px 10px 8px rgb(0, 170, 255);
 }
 
+.save-and-filter {
+	display: flex;
+	width: 250px;
+	margin-top: 10px;
+	justify-content: space-between;
+	margin: auto;
+}
+
 .ingredient-button-icon {
 	width: 70px;
 	position: relative;
 	top: -2px;
 }
 
+.ant-input {
+	width: 75px;
+}
 .recipe-page .ant-radio-button.ant-radio-button-checked,
 .recipe-page .ant-radio-button-wrapper-checked,
-.recipe-page .ant-radio-button-wrapper:hover {
+.recipe-page .ant-radio-button-wrapper:hover,
+.ant-input:hover,
+.ant-btn.ant-btn-sm.pot-size-adjuster,
+.recipe-level-adjuster {
 	border-color: var(--domain-nav-links-active) !important;
 	color: rgb(134, 114, 0) !important;
 }
-.recipe-page .ant-radio-button-wrapper-checked::before {
+.recipe-level-adjuster:hover {
+	border-color: rgb(87, 75, 4) !important;
+}
+.recipe-page .ant-radio-button-wrapper-checked::before,
+.recipe-page .pot-size-adjuster,
+.ant-btn-primary,
+.recipe-level-adjuster {
 	background-color: var(--domain-nav-links-active) !important;
 }
 /* 	color: rgb(134, 114, 0);
  */
 
+.uncheck-all-switch {
+	margin-left: 30px;
+}
 .cookable-recipes-header {
 	padding: 10px;
 	margin: 20px 0px 0px;
@@ -84,16 +112,58 @@
 	text-align: left;
 }
 
+.recipe-list .pot-size-adjuster {
+	width: 50px !important;
+}
+.recipe-image-and-base-value {
+	position: relative;
+	display: flex;
+	max-width: 60px;
+	height: 100%;
+	flex-wrap: wrap;
+	align-content: space-evenly;
+}
+.ingr {
+	width: 140px;
+}
+
+.base-value {
+	position: relative;
+	width: 40px;
+	left: 10px;
+	margin: 0px !important;
+	font-size: 14px;
+	bottom: 5px;
+	color: rgb(95, 82, 0);
+}
 .recipe-image {
 	position: relative;
+	top: -2px;
 	height: 60px !important;
+}
+.recipe-level p {
+	margin: 0px;
+	width: 50px;
+}
+.recipe-level {
+	display: flex;
+	flex-wrap: wrap;
+	width: 50px;
+	height: 60px;
+	margin-left: 10px;
+	justify-content: center;
+	align-content: space-around;
+}
+.recipe-level-and-image {
+	display: flex;
+	align-items: center;
 }
 
 .ingredient-and-image {
 	display: flex;
 	flex-wrap: nowrap;
 	min-height: 50px;
-	width: 235px;
+	width: 260px;
 	justify-content: space-between;
 	align-items: center;
 }
@@ -114,23 +184,43 @@
 	opacity: 0.5;
 }
 
-@media only screen and (max-width: 414px) {
+@media only screen and (max-width: 600px) {
+	#root {
+		width: 100%;
+	}
+	main {
+		width: 100%;
+		margin: 15px 0px;
+	}
+	.base-value {
+		position: absolute;
+		top: 35px;
+		width: 30px;
+		left: 10px;
+		text-align: center;
+		margin: 0px !important;
+	}
 	.recipe-page {
-		width: 400px;
+		width: 95%;
 		padding: 2px;
 		margin: auto;
+		box-sizing: border-box;
 	}
 	.recipe-name {
 		width: 150px;
 	}
-	.recipe-page .ant-btn {
-		width: 60px !important;
-		height: 60px !important;
+	.ingredient-button.unlocked-ingredient {
+		box-shadow: 0px 0px 3px 6px rgb(0, 170, 255);
 	}
+	.recipe-page .ant-btn.ingredient-button {
+		width: 50px !important;
+		height: 50px !important;
+	}
+
 	.ingredient-button-icon {
 		width: 40px;
 		position: relative;
-		top: 2px;
+		top: -3px;
 	}
 	.ingredient-buttons-container {
 		display: flex;
@@ -140,7 +230,7 @@
 	}
 	.ingredient-button {
 		width: 100px;
-		margin: 5px;
+		margin: 10px;
 	}
 	.ingredient-and-image p {
 		font-size: 11px;
@@ -152,8 +242,15 @@
 	}
 	.recipe-image {
 		position: relative;
+		top: -5px;
 		height: 50px !important;
 		width: 50px !important;
+	}
+	.recipe-image-and-base-value {
+		height: 100%;
+	}
+	.ingr {
+		width: 90px;
 	}
 
 	.recipe-page h2 {

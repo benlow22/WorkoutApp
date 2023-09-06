@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
-import { Image, Space } from "antd";
+import { Button, Image, Space, Tooltip } from "antd";
 
 type TIngredient = {
 	id: number;
@@ -17,6 +17,15 @@ export type TRecipe = {
 	ingredients: { name: string; quantity: number }[];
 	minimumPotSize: number;
 	imageUrl: string;
+	levels: {
+		[recipeLevel: string]: TLevel;
+	};
+};
+
+type TLevel = {
+	experience: number;
+	expNeeded: number;
+	value: number;
 };
 
 type Tprops = {
@@ -29,7 +38,8 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	const [imageUrls, setImageUrls] = useState<{
 		[ingredient: string]: string;
 	}>({});
-
+	const [recipeLevel, setRecipeLevel] = useState<number>(4);
+	const [recipeBaseValue, setRecipeBaseValue] = useState<number>(0);
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
 	);
@@ -43,13 +53,31 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 			ingredients.map((ingredient) => {
 				imageArr[ingredient.name] = ingredient.imageUrl;
 			});
-			imageArr.Any = "anyIngredient.png";
+			// imageArr.Any = "anyIngredient.png";
 
-			console.log("ingARr", imageArr);
+			// console.log("ingARr", imageArr);
 			setImageUrls(imageArr);
 		}
 	}, [ingredients]);
 
+	useEffect(() => {
+		if (recipe.levels) {
+			const level = recipe;
+			// console.log("test value", level);
+			setRecipeBaseValue(recipe.levels[recipeLevel].value);
+		}
+	}, [recipeLevel]);
+
+	const handleRecipeLevelDecrease = () => {
+		if (recipeLevel > 1) {
+			setRecipeLevel(recipeLevel - 1);
+		}
+	};
+	const handleRecipeLevelIncrease = () => {
+		if (recipeLevel < 40) {
+			setRecipeLevel(recipeLevel + 1);
+		}
+	};
 	return (
 		<div className="recipe-list">
 			<div className="recipe-name">
@@ -58,8 +86,8 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 			<div className="ingredient-and-image">
 				<div className="ingredient-list">
 					{recipe.ingredients &&
-						recipe.ingredients.map((ingredient) => (
-							<div className="ingr">
+						recipe.ingredients.map((ingredient, index: number) => (
+							<div className="ingr" key={index}>
 								<img
 									src={`/pokemonSleepIngredients/${
 										imageUrls[ingredient.name]
@@ -72,10 +100,36 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 							</div>
 						))}
 				</div>
-				<Image
-					src={`/recipes/${recipe.imageUrl}`}
-					className="recipe-image"
-				/>
+				<div className="recipe-level-and-image">
+					<div className="recipe-level">
+						<p>lvl. {recipeLevel}</p>
+						<Button
+							size="small"
+							className="recipe-level-adjuster"
+							onClick={() => handleRecipeLevelDecrease()}
+						>
+							-
+						</Button>
+						<Button
+							size="small"
+							className="recipe-level-adjuster"
+							onClick={() => handleRecipeLevelIncrease()}
+						>
+							+
+						</Button>
+					</div>
+					<div className="recipe-image-and-base-value">
+						<Image
+							src={`/recipes/${recipe.imageUrl}`}
+							className="recipe-image"
+						/>
+						<Tooltip title="base value of recipe">
+							<p className="base-value">
+								{recipeBaseValue ? recipeBaseValue : "0"}
+							</p>
+						</Tooltip>
+					</div>
+				</div>
 			</div>
 		</div>
 	);
