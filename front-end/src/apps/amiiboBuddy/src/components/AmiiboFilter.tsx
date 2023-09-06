@@ -18,13 +18,18 @@ import {
 	Select,
 	Space,
 } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import {
+	ArrowDownOutlined,
+	ArrowUpOutlined,
+	DownOutlined,
+} from "@ant-design/icons";
 import { TAmiiboCard } from "../types/types";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { Amiibos } from "./Amiibos";
 import { TAmiiboWithStatus } from "./AmiiboLine";
 import { TAmiiboCache } from "../pages/addAmiibo/AddAmiibo";
 import Search from "antd/es/input/Search";
+import { Option } from "antd/es/mentions";
 
 type TProps = {
 	amiibos: TAmiiboWithStatus[];
@@ -338,10 +343,46 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 						options={groupingOptions}
 					/>
 				</Form.Item>
+				<Form.Item label="Sort By">
+					<Select allowClear placeholder={"Sorting Options"}>
+						<Option value="None">
+							----------- None -----------
+						</Option>
+						<Option value="Alphabetical">
+							<ArrowDownOutlined />
+							Alphabetical (A-Z)
+						</Option>
+						<Option value="AlphabeticalReverse">
+							<ArrowUpOutlined />
+							Alphabetical (Z-A)
+						</Option>
+						<Option value="Price">
+							<ArrowDownOutlined />
+							Price (high to low)
+						</Option>
+						<Option value="PriceReverse">
+							<ArrowUpOutlined />
+							Price (low to high)
+						</Option>
+						<Option value="ReleaseDate">
+							<ArrowDownOutlined />
+							Release Date (newest to oldest)
+						</Option>
+						<Option value="ReleaseDateReverse">
+							<ArrowUpOutlined />
+							Release Date (oldest to newest)
+						</Option>
+						<Option value="PurchaseDate">
+							<ArrowDownOutlined />
+							Purhase Date (newest to oldest)
+						</Option>
+						<Option value="PurchaseDateReverse">
+							<ArrowUpOutlined />
+							Puchase Date (oldest to newest)
+						</Option>
+					</Select>
+				</Form.Item>
 			</Form>
-
-			<p>type</p>
-
 			<h1>{`FILTERS: ${filterBy} > ${type} > ${groupings} `}</h1>
 		</div>
 	);

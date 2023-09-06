@@ -3,6 +3,7 @@ import { Switch } from "antd";
 import { CollectionCard } from "../../components/CollectionCard";
 // import { AmiiboFilter } from "../../components/AmiiboFilter";
 import { TAmiiboWithStatus } from "../../components/AmiiboLine";
+import { AmiiboFilter } from "../../components/AmiiboFilter";
 
 type TProps = {
 	myAmiibos: any;
@@ -18,10 +19,10 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 	return (
 		<div className="amiibo-inventory-page">
 			<p>A collection of all your amiibos</p>
-			{/* <AmiiboFilter
+			<AmiiboFilter
 				amiibos={myAmiibos}
 				setFilteredAmiibos={setFilteredAmiibos}
-			/> */}
+			/>
 			<p style={{ float: "left" }}>
 				Amiibo
 				<Switch
