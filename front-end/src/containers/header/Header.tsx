@@ -33,6 +33,8 @@ export const Header: React.FC<{}> = () => {
 	}, []);
 
 	useEffect(() => {
+		const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
+		setDomainObj(domains[domain]);
 		let curDom = domain;
 		let prevDom = undefined;
 		let headerTransition = "";
@@ -41,10 +43,10 @@ export const Header: React.FC<{}> = () => {
 		}
 		if (prevDom === curDom || !prevDom) {
 			headerTransition = `${curDom}`;
-			// console.log(headerTransition);
+			// console.log("headerTransition", headerTransition);
 		} else {
 			headerTransition = `${prevDom}-to-${curDom}`;
-			// console.log(headerTransition);
+			console.log(headerTransition);
 		}
 		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
