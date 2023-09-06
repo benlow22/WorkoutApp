@@ -133,8 +133,7 @@ export const PokemonSleep = () => {
 		setIsLoading(true);
 		const { data, error } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.update({ [column_name]: dataToUpdate })
-			.eq("user_id", userId)
+			.upsert({ column_name: dataToUpdate })
 			.select();
 		if (data) {
 			console.log(data);
