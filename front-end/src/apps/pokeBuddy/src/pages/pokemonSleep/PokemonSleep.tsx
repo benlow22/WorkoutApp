@@ -97,24 +97,45 @@ export const PokemonSleep = () => {
 		}
 	};
 	const getIngredients = async () => {
-		let { data, error } = await supabase
+		const { count, error: testError } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.select(
-				"myUnlockedIngredients: unlocked_ingredients, myPotSize: pot_size, saladsLevel: salads_level, curriesLevel: curries_level, drinksLevel: drinks_level, currentCategory: current_weeks_category"
-			);
-		if (data) {
-			console.log("ingr data from supabase", data);
-			setUnlockedIngredients(data[0].myUnlockedIngredients);
-			setPotSize(data[0].myPotSize);
-			setChosenCategories(data[0].currentCategory);
-			setCurriesLevels(data[0].curriesLevel);
-			setSaladLevels(data[0].saladsLevel);
-			console.log("ingr data from curr", data[0].curriesLevel);
+			.select(`*`, { count: "exact", head: true });
+		console.log("count", count);
+		if (testError) {
+			console.error(testError);
+		}
+		if (count) {
+			let { data, error } = await supabase
+				.from("pokemon_sleep_users_recipe_data")
+				.select(
+					"myUnlockedIngredients: unlocked_ingredients, myPotSize: pot_size, saladsLevel: salads_level, curriesLevel: curries_level, drinksLevel: drinks_level, currentCategory: current_weeks_category"
+				);
+			if (data) {
+				console.log("ingr data from supabase", data);
+				if (data[0].myUnlockedIngredients) {
+					setUnlockedIngredients(data[0].myUnlockedIngredients);
+				}
+				if (data[0].myPotSize) {
+					setPotSize(data[0].myPotSize);
+				}
+				if (data[0].currentCategory) {
+					setChosenCategories(data[0].currentCategory);
+				}
+				if (data[0].curriesLevel) {
+					setCurriesLevels(data[0].curriesLevel);
+				}
+				if (data[0].saladsLevel) {
+					setSaladLevels(data[0].saladsLevel);
+				}
+				console.log("ingr data from curr", data[0].curriesLevel);
 
-			// setCurriesLevels(JSON.stringify(data.curriesLevel));
-			setDrinksLevels(data[0].drinksLevel);
-		} else {
-			console.error("error", error);
+				// setCurriesLevels(JSON.stringify(data.curriesLevel));
+				if (data[0].drinksLevel) {
+					setDrinksLevels(data[0].drinksLevel);
+				}
+			} else {
+				console.error("error", error);
+			}
 		}
 	};
 	useEffect(() => {
@@ -276,10 +297,12 @@ export const PokemonSleep = () => {
 		console.log("unlockedIngredients", unlockedIngredients);
 		const { data, error } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
-			.update({
+			.upsert({
+				user_id: userId,
 				unlocked_ingredients: unlockedIngredients,
+				pot_size: potSize,
+				current_weeks_category: chosenCategories,
 			})
-			.eq("user_id", userId)
 			.select();
 		if (data) {
 			console.log(data);
@@ -332,8 +355,8 @@ export const PokemonSleep = () => {
 				} else if (chosenCategories === "Salads" && saladsLevels) {
 					for (let i = 0; i < saladsLevels.length; i++) {
 						// console.log("CLPASD", curriesLevels[i]);
-						if (cookableMeal.name === curriesLevels[i].name) {
-							level = curriesLevels[i].level;
+						if (cookableMeal.name === saladsLevels[i].name) {
+							level = saladsLevels[i].level;
 							// console.log("levelYP", cookableMeal, curriesLevels[i]);
 							return {
 								...cookableMeal,
@@ -345,10 +368,10 @@ export const PokemonSleep = () => {
 					chosenCategories === "Drinks and Desserts" &&
 					drinksLevels
 				) {
-					for (let i = 0; i < curriesLevels.length; i++) {
+					for (let i = 0; i < drinksLevels.length; i++) {
 						// console.log("CLPASD", curriesLevels[i]);
-						if (cookableMeal.name === curriesLevels[i].name) {
-							level = curriesLevels[i].level;
+						if (cookableMeal.name === drinksLevels[i].name) {
+							level = drinksLevels[i].level;
 							// console.log("levelYP", cookableMeal, curriesLevels[i]);
 							return {
 								...cookableMeal,
