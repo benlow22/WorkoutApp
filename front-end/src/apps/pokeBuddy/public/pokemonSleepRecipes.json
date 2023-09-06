@@ -1,6 +1,6 @@
 {
 	"categories": {
-		"Drinks": [
+		"Drinks and Desserts": [
 			{
 				"name": "Mixed Juice",
 				"description": "Any combination that doesn't match a recipe",
@@ -12,22 +12,28 @@
 				],
 				"minimumPotSize": 0,
 				"imageUrl": "mixedjuice.png",
-				"": ""
+				"levels": {
+					"1": {
+						"experience": "0",
+						"value": 1783,
+						"expNeeded": "0"
+					}
+				}
 			},
 			{
 				"name": "Fluffy Sweet Potatoes",
 				"description": "These perfectly ripe potatoes don't rely on honey to deliver a sweet kick.",
 				"ingredients": [
 					{
-						"ingredients": "Soft Potato",
-						"quantity": "9"
+						"name": "Soft Potato",
+						"quantity": 9
 					},
 					{
-						"ingredients": "Moomoo Milk",
-						"quantity": "5"
+						"name": "Moomoo Milk",
+						"quantity": 5
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 14,
 				"imageUrl": "fluffysweetpotatoes.png",
 				"levels": {
 					"1": {
@@ -287,23 +293,23 @@
 				"description": "These cookies give you the power to tackle hardships without crumbling.",
 				"ingredients": [
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "14"
 					},
 					{
-						"ingredients": "Warming Ginger",
+						"name": "Warming Ginger",
 						"quantity": "12"
 					},
 					{
-						"ingredients": "Soothing Cacao",
+						"name": "Soothing Cacao",
 						"quantity": "5"
 					},
 					{
-						"ingredients": "Fancy Egg",
+						"name": "Fancy Egg",
 						"quantity": "4"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 35,
 				"imageUrl": "steadfastgingercookies.png",
 				"levels": {
 					"1": {
@@ -563,11 +569,11 @@
 				"description": "A rich juice containing only the very best apples.",
 				"ingredients": [
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "8"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 8,
 				"imageUrl": "fancyapplejuice.png",
 				"levels": {
 					"1": {
@@ -827,11 +833,11 @@
 				"description": "A highly carbonated artisan soda.",
 				"ingredients": [
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "9"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 9,
 				"imageUrl": "craftsodapop.png",
 				"levels": {
 					"1": {
@@ -1091,15 +1097,15 @@
 				"description": "Apples have been added to the spicy ginger, helping the tea go down easily.",
 				"ingredients": [
 					{
-						"ingredients": "Warming Ginger",
+						"name": "Warming Ginger",
 						"quantity": "9"
 					},
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 16,
 				"imageUrl": "embergingertea.png",
 				"levels": {
 					"1": {
@@ -1359,23 +1365,23 @@
 				"description": "A very special flan that's as springy as a balloon.",
 				"ingredients": [
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "20"
 					},
 					{
-						"ingredients": "Fancy Egg",
+						"name": "Fancy Egg",
 						"quantity": "15"
 					},
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "10"
 					},
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "10"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 55,
 				"imageUrl": "jigglypuff'sfruityflan.png",
 				"levels": {
 					"1": {
@@ -1635,23 +1641,23 @@
 				"description": "A relaxing drink that soothes your weariness and envelops you in sleep.",
 				"ingredients": [
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "11"
 					},
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "9"
 					},
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "7"
 					},
 					{
-						"ingredients": "Soothing Cacao",
+						"name": "Soothing Cacao",
 						"quantity": "8"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 35,
 				"imageUrl": "lovelykisssmoothie.png",
 				"levels": {
 					"1": {
@@ -1911,15 +1917,15 @@
 				"description": "The chunky pieces of apple in this pie are lucky finds!",
 				"ingredients": [
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "12"
 					},
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "4"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 16,
 				"imageUrl": "luckychantapplepie.png",
 				"levels": {
 					"1": {
@@ -2179,19 +2185,19 @@
 				"description": "A special restorative tea made by Professor Neroli.",
 				"ingredients": [
 					{
-						"ingredients": "Warming Ginger",
+						"name": "Warming Ginger",
 						"quantity": "11"
 					},
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "15"
 					},
 					{
-						"ingredients": "Tasty Mushroom",
+						"name": "Tasty Mushroom",
 						"quantity": "9"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 35,
 				"imageUrl": "neroli'srestorativetea.png",
 				"levels": {
 					"1": {
@@ -2451,20 +2457,20 @@
 				"description": "Neither people nor Pokémon can resist the lure of this cake's sweet aroma.",
 				"ingredients": [
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "9"
 					},
 					{
-						"ingredients": "Soothing Cacao",
+						"name": "Soothing Cacao",
 						"quantity": "8"
 					},
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
-				"imageUrl": "",
+				"minimumPotSize": 24,
+				"imageUrl": "sweetscentchocolatecake.png",
 				"levels": {
 					"1": {
 						"experience": "0",
@@ -2723,11 +2729,11 @@
 				"description": "Moomoo Milk that has been heated to further draw out its sweetness.",
 				"ingredients": [
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 7,
 				"imageUrl": "warmmoomoomilk.png",
 				"levels": {
 					"1": {
@@ -2987,15 +2993,15 @@
 				"description": "A soy cake with a nice, light texture.",
 				"ingredients": [
 					{
-						"ingredients": "Fancy Egg",
+						"name": "Fancy Egg",
 						"quantity": "8"
 					},
 					{
-						"ingredients": "Greengrass Soybeans",
+						"name": "Greengrass Soybeans",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 15,
 				"imageUrl": "cloudninesoycake.png",
 				"levels": {
 					"1": {
@@ -3255,15 +3261,15 @@
 				"description": "A glass of this sweet smoothie goes down a treat after a training session.",
 				"ingredients": [
 					{
-						"ingredients": "Greengrass Soybeans",
+						"name": "Greengrass Soybeans",
 						"quantity": "15"
 					},
 					{
-						"ingredients": "Soothing Cacao",
+						"name": "Soothing Cacao",
 						"quantity": "8"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 23,
 				"imageUrl": "hustleproteinsmoothie.png",
 				"levels": {
 					"1": {
@@ -3523,15 +3529,15 @@
 				"description": "An easy-to-make juice with natural sweet and sour flavors.",
 				"ingredients": [
 					{
-						"ingredients": "Snoozy Tomato",
+						"name": "Snoozy Tomato",
 						"quantity": "9"
 					},
 					{
-						"ingredients": "Fancy Apple",
+						"name": "Fancy Apple",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 16,
 				"imageUrl": "stalwartvegetablejuice.png",
 				"levels": {
 					"1": {
@@ -3791,19 +3797,19 @@
 				"description": "A special fried bread made using a recipe from the Alola region.",
 				"ingredients": [
 					{
-						"ingredients": "Pure Oil",
+						"name": "Pure Oil",
 						"quantity": "10"
 					},
 					{
-						"ingredients": "Moomoo Milk",
+						"name": "Moomoo Milk",
 						"quantity": "7"
 					},
 					{
-						"ingredients": "Honey",
+						"name": "Honey",
 						"quantity": "6"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 23,
 				"imageUrl": "bigmalasada.png",
 				"levels": {
 					"1": {
@@ -4063,21 +4069,272 @@
 				"description": "Soy donuts fried to crisp perfection. They're bodybuilders' friends.",
 				"ingredients": [
 					{
-						"ingredients": "Pure Oil",
+						"name": "Pure Oil",
 						"quantity": "9"
 					},
 					{
-						"ingredients": "Greengrass Soybeans",
+						"name": "Greengrass Soybeans",
 						"quantity": "6"
 					},
 					{
-						"ingredients": "Soothing Cacao",
+						"name": "Soothing Cacao",
 						"quantity": "7"
 					}
 				],
-				"minimumPotSize": "",
+				"minimumPotSize": 22,
 				"imageUrl": "hugepowersoydonuts.png",
-				"": ""
+				"levels":{
+					"1": {
+					   "experience": "0",
+					   "value": 3213,
+					   "expNeeded": "1,080"
+					},
+					"2": {
+					   "experience": "1,080",
+					   "value": 3277,
+					   "expNeeded": "1,244"
+					},
+					"3": {
+					   "experience": "2,324",
+					   "value": 3342,
+					   "expNeeded": "1,612"
+					},
+					"4": {
+					   "experience": "3,936",
+					   "value": 3406,
+					   "expNeeded": "1,609"
+					},
+					"5": {
+					   "experience": "5,545",
+					   "value": 3470,
+					   "expNeeded": "1,796"
+					},
+					"6": {
+					   "experience": "7,341",
+					   "value": 3502,
+					   "expNeeded": "2,371"
+					},
+					"7": {
+					   "experience": "9,712",
+					   "value": 3566,
+					   "expNeeded": "3,048"
+					},
+					"8": {
+					   "experience": "12,760",
+					   "value": 3631,
+					   "expNeeded": "3,666"
+					},
+					"9": {
+					   "experience": "16,426",
+					   "value": 3727,
+					   "expNeeded": "4,365"
+					},
+					"10": {
+					   "experience": "20,791",
+					   "value": 3791,
+					   "expNeeded": "4,848"
+					},
+					"11": {
+					   "experience": "25,639",
+					   "value": 3823,
+					   "expNeeded": "5,272"
+					},
+					"12": {
+					   "experience": "30,911",
+					   "value": 3888,
+					   "expNeeded": "5,710"
+					},
+					"13": {
+					   "experience": "36,621",
+					   "value": 3952,
+					   "expNeeded": "6,301"
+					},
+					"14": {
+					   "experience": "42,922",
+					   "value": 3984,
+					   "expNeeded": "6,960"
+					},
+					"15": {
+					   "experience": "49,882",
+					   "value": 4048,
+					   "expNeeded": "7,669"
+					},
+					"16": {
+					   "experience": "57,551",
+					   "value": 4113,
+					   "expNeeded": "8,450"
+					},
+					"17": {
+					   "experience": "66,001",
+					   "value": 4177,
+					   "expNeeded": "9,130"
+					},
+					"18": {
+					   "experience": "75,131",
+					   "value": 4209,
+					   "expNeeded": "9,850"
+					},
+					"19": {
+					   "experience": "84,981",
+					   "value": 4273,
+					   "expNeeded": "10,661"
+					},
+					"20": {
+					   "experience": "95,642",
+					   "value": 4338,
+					   "expNeeded": "11,517"
+					},
+					"21": {
+					   "experience": "107,159",
+					   "value": 4402,
+					   "expNeeded": "12,417"
+					},
+					"22": {
+					   "experience": "119,576",
+					   "value": 4498,
+					   "expNeeded": "13,362"
+					},
+					"23": {
+					   "experience": "132,938",
+					   "value": 4562,
+					   "expNeeded": "14,371"
+					},
+					"24": {
+					   "experience": "147,309",
+					   "value": 4659,
+					   "expNeeded": "15,312"
+					},
+					"25": {
+					   "experience": "162,621",
+					   "value": 4723,
+					   "expNeeded": "16,308"
+					},
+					"26": {
+					   "experience": "178,929",
+					   "value": 4820,
+					   "expNeeded": "17,634"
+					},
+					"27": {
+					   "experience": "196,563",
+					   "value": 4884,
+					   "expNeeded": "19,042"
+					},
+					"28": {
+					   "experience": "215,605",
+					   "value": 4980,
+					   "expNeeded": "20,544"
+					},
+					"29": {
+					   "experience": "236,149",
+					   "value": 5077,
+					   "expNeeded": "22,150"
+					},
+					"30": {
+					   "experience": "258,299",
+					   "value": 5173,
+					   "expNeeded": "23,656"
+					},
+					"31": {
+					   "experience": "281,955",
+					   "value": 5269,
+					   "expNeeded": "24,804"
+					},
+					"32": {
+					   "experience": "306,759",
+					   "value": 5366,
+					   "expNeeded": "26,010"
+					},
+					"33": {
+					   "experience": "332,769",
+					   "value": 5462,
+					   "expNeeded": "27,700"
+					},
+					"34": {
+					   "experience": "360,469",
+					   "value": 5591,
+					   "expNeeded": "29,474"
+					},
+					"35": {
+					   "experience": "389,943",
+					   "value": 5687,
+					   "expNeeded": "31,578"
+					},
+					"36": {
+					   "experience": "421,521",
+					   "value": 5816,
+					   "expNeeded": "33,859"
+					},
+					"37": {
+					   "experience": "455,380",
+					   "value": 5912,
+					   "expNeeded": "35,675"
+					},
+					"38": {
+					   "experience": "491,055",
+					   "value": 6040,
+					   "expNeeded": "37,608"
+					},
+					"39": {
+					   "experience": "528,663",
+					   "value": 6169,
+					   "expNeeded": "40,255"
+					},
+					"40": {
+					   "experience": "568,918",
+					   "value": 6297,
+					   "expNeeded": "42,623"
+					},
+					"41": {
+					   "experience": "611,541",
+					   "value": 6426,
+					   "expNeeded": "45,105"
+					},
+					"42": {
+					   "experience": "656,646",
+					   "value": 6555,
+					   "expNeeded": "47,698"
+					},
+					"43": {
+					   "experience": "704,344",
+					   "value": 6683,
+					   "expNeeded": "50,404"
+					},
+					"44": {
+					   "experience": "754,748",
+					   "value": 6844,
+					   "expNeeded": "52,436"
+					},
+					"45": {
+					   "experience": "807,184",
+					   "value": 6972,
+					   "expNeeded": "55,021"
+					},
+					"46": {
+					   "experience": "862,205",
+					   "value": 7133,
+					   "expNeeded": "58,731"
+					},
+					"47": {
+					   "experience": "920,936",
+					   "value": 7294,
+					   "expNeeded": "62,654"
+					},
+					"48": {
+					   "experience": "983,590",
+					   "value": 7454,
+					   "expNeeded": "66,801"
+					},
+					"49": {
+					   "experience": "1,050,391",
+					   "value": 7615,
+					   "expNeeded": "71,191"
+					},
+					"50": {
+					   "experience": "1,121,582",
+					   "value": 7775,
+					   "expNeeded": "0"
+					}
+				 }
 			}
 		],
 		"Curries and Stews": [
@@ -4091,7 +4348,7 @@
 					"1": {
 						"experience": 0,
 						"expNeeded": 1080,
-						"value": "????"
+						"value": 0
 					}
 				}
 			},

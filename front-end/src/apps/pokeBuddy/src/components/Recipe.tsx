@@ -70,8 +70,9 @@ Tprops) => {
 
 	useEffect(() => {
 		const level = recipeLevel;
-		setRecipeLevel(level);
-		setRecipeBaseValue(recipe.levels[level].value);
+		setUsersRecipeLevel(level);
+		console.log(recipe.levels[level].value);
+		// setRecipeBaseValue(recipe.levels[].value);
 	}, [recipeLevel]);
 
 	useEffect(() => {

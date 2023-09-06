@@ -149,8 +149,8 @@ export const PokemonSleep = () => {
 	}, [unlockedIngredients]);
 
 	useEffect(() => {
-		console.log("category", categories);
 		if (categories && chosenCategories) {
+			console.log("category", categories[chosenCategories]);
 			setRecipes(categories[chosenCategories]);
 		}
 	}, [chosenCategories]);
@@ -181,58 +181,53 @@ export const PokemonSleep = () => {
 				console.log("curryLVL", curriesLevels);
 			}
 
-			// 			0
-			// :
-			// {name: 'Fancy Apple Curry', description: "A simple curry that lets the natural sweetness of it's apples shine.", ingredients: Array(1), minimumPotSize: 7, imageUrl: 'fancyapplecurry.png', …}
-			// 1
-			// :
-			// {name: 'Solar Powered Tomato Curry', description: 'A curry made using tomatoes that have turned bright red in the sun.', ingredients: Array(2), minimumPotSize: 15, imageUrl: 'solarpowertomatocurry.png', …}
-			// 2
-			// :
-			// {name: 'Beanburger Curry', description: 'The tender bean patties are the star of the show in this curry.', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'beanburgercurry.png', …}
-			// 3
-			// :
-			// {name: 'Mild Honey Curry', description: 'A mild curry containing plenty of honey. Kids gobble it down!', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'mildhoneycurry.png', …}
-			// 4
-			// :
-			// {name: 'Drought Katsu Curry', description: 'The freshly-fried cutlet has a nice sparkle to it.', ingredients: Array(2), minimumPotSize: 15, imageUrl: 'droughtkatsucurry.png', …}
-			// 5
-			// :
-			// {name: 'Hearty Cheeseburger Curry', Description: 'This voluminous curry is large enough to astound even a Snorlax.', ingredients: Array(2), minimumPotSize: 16, imageUrl: 'heartycheeseburgercurry.png', …}
-			// 6
-			// :
-			// {name: 'Simple Chowder', Description: 'You can really taste the richness of the milk in this simple chowder.', ingredients: Array(1), minimumPotSize: 7, imageUrl: 'simplechowder.png', …}
-			// length
-			// :
-
-			// 7
-
-			// [
-			// 	{
-			// 	  "name": "Fancy Apple Curry",
-			// 	  "level": 5
-			// 	},
-			// 	{
-			// 	  "name": "Solar Powered Tomato Curry",
-			// 	  "level": 9
-			// 	}
-			//   ]
 			let cookableMealAndLevel = cookableMeals.map((cookableMeal) => {
 				// console.log("cookable meal", cookableMeal);
 				let level = 1;
-				for (let i = 0; i < curriesLevels.length; i++) {
-					// console.log("CLPASD", curriesLevels[i]);
-					if (cookableMeal.name === curriesLevels[i].name) {
-						level = curriesLevels[i].level;
-						// console.log("levelYP", cookableMeal, curriesLevels[i]);
-						return {
-							...cookableMeal,
-							level: level,
-						};
+
+				if (chosenCategories === "Curries and Stews" && curriesLevels) {
+					for (let i = 0; i < curriesLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
+					}
+				} else if (chosenCategories === "Salads" && saladsLevels) {
+					for (let i = 0; i < saladsLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
+					}
+				} else if (
+					chosenCategories === "Drinks and Desserts" &&
+					drinksLevels
+				) {
+					for (let i = 0; i < curriesLevels.length; i++) {
+						// console.log("CLPASD", curriesLevels[i]);
+						if (cookableMeal.name === curriesLevels[i].name) {
+							level = curriesLevels[i].level;
+							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							return {
+								...cookableMeal,
+								level: level,
+							};
+						}
 					}
 				}
 				return { ...cookableMeal, level: level };
 			});
+			console.log("cookableMealAndLevel", cookableMealAndLevel);
 
 			// for (let i = 0; i < recipes.length; i++) {
 			// if (
@@ -436,7 +431,7 @@ export const PokemonSleep = () => {
 					Curries and Stews
 				</Radio.Button>
 				<Radio.Button value="Salads">Salads</Radio.Button>
-				<Radio.Button value="Desserts and Drinks">
+				<Radio.Button value="Drinks and Desserts">
 					Desserts and Drink
 				</Radio.Button>
 			</Radio.Group>
