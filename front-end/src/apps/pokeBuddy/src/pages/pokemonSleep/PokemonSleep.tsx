@@ -15,6 +15,7 @@ import {
 	Space,
 	Switch,
 	Tooltip,
+	message,
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
@@ -72,6 +73,14 @@ export const PokemonSleep = () => {
 		{ name: string; level: number }[]
 	>([]);
 
+	const [messageApi, contextHolder] = message.useMessage();
+	const warningMessage = () => {
+		messageApi.open({
+			type: "warning",
+			content: "you must log in first to save settings",
+			duration: 6,
+		});
+	};
 	useEffect(() => {
 		const categories = varFromJSON(recipesJSON, "categories");
 		setCategories(categories);
@@ -151,17 +160,19 @@ export const PokemonSleep = () => {
 		column_name: string,
 		dataToUpdate: { name: string; level: number }[]
 	) => {
-		setIsLoading(true);
-		const { data, error } = await supabase
-			.from("pokemon_sleep_users_recipe_data")
-			.update({ [column_name]: dataToUpdate })
-			.eq("user_id", userId)
-			.select();
-		if (data) {
-			console.log(data);
-			setIsLoading(false);
-		} else {
-			console.log(error);
+		if (auth) {
+			setIsLoading(true);
+			const { data, error } = await supabase
+				.from("pokemon_sleep_users_recipe_data")
+				.update({ [column_name]: dataToUpdate })
+				.eq("user_id", userId)
+				.select();
+			if (data) {
+				console.log(data);
+				setIsLoading(false);
+			} else {
+				console.log(error);
+			}
 		}
 	};
 	useEffect(() => {
@@ -293,22 +304,26 @@ export const PokemonSleep = () => {
 	}, [chosenCategories]);
 
 	const handlesave = async () => {
-		setIsLoading(true);
-		console.log("unlockedIngredients", unlockedIngredients);
-		const { data, error } = await supabase
-			.from("pokemon_sleep_users_recipe_data")
-			.upsert({
-				user_id: userId,
-				unlocked_ingredients: unlockedIngredients,
-				pot_size: potSize,
-				current_weeks_category: chosenCategories,
-			})
-			.select();
-		if (data) {
-			console.log(data);
-			setIsLoading(false);
+		if (auth) {
+			setIsLoading(true);
+			console.log("unlockedIngredients", unlockedIngredients);
+			const { data, error } = await supabase
+				.from("pokemon_sleep_users_recipe_data")
+				.upsert({
+					user_id: userId,
+					unlocked_ingredients: unlockedIngredients,
+					pot_size: potSize,
+					current_weeks_category: chosenCategories,
+				})
+				.select();
+			if (data) {
+				console.log(data);
+				setIsLoading(false);
+			} else {
+				console.log(error);
+			}
 		} else {
-			console.log(error);
+			warningMessage();
 		}
 	};
 	useEffect(() => {
@@ -544,6 +559,7 @@ export const PokemonSleep = () => {
 
 	return (
 		<div className="recipe-page">
+			{contextHolder}
 			<Helmet>
 				<meta
 					name="viewport"
