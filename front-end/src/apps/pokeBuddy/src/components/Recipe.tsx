@@ -20,6 +20,7 @@ export type TRecipe = {
 	levels: {
 		[recipeLevel: string]: TLevel;
 	};
+	level?: number;
 };
 
 type TLevel = {
@@ -31,14 +32,33 @@ type TLevel = {
 type Tprops = {
 	recipe: TRecipe;
 	ingredients: TIngredient[];
+	// recipeLevel: number;
+	setNewRecipeLevel: React.Dispatch<
+		React.SetStateAction<
+			| {
+					name: string;
+					level: number;
+			  }
+			| undefined
+		>
+	>;
+	disable: boolean;
 };
-export const Recipe = ({ recipe, ingredients }: Tprops) => {
+export const Recipe = ({
+	recipe,
+	ingredients,
+	setNewRecipeLevel,
+	disable,
+}: // , recipeLevel
+Tprops) => {
 	const { auth, username } = useContext(AuthContext);
 	const [potSize, setPotSize] = useState<number>();
 	const [imageUrls, setImageUrls] = useState<{
 		[ingredient: string]: string;
 	}>({});
-	const [recipeLevel, setRecipeLevel] = useState<number>(4);
+	const [usersRecipeLevel, setUsersRecipeLevel] = useState<number>();
+	const [recipeLevel, setRecipeLevel] = useState<number>();
+
 	const [recipeBaseValue, setRecipeBaseValue] = useState<number>(0);
 	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
 		[]
@@ -61,20 +81,29 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 	}, [ingredients]);
 
 	useEffect(() => {
-		if (recipe.levels) {
-			const level = recipe;
+		if (recipe.level) {
+			const level = recipe.level;
 			// console.log("test value", level);
+			setUsersRecipeLevel(level);
+			setRecipeLevel(level);
+			setRecipeBaseValue(recipe.levels[level].value);
+		}
+	}, [recipe.level]);
+
+	useEffect(() => {
+		if (recipeLevel && recipeLevel !== recipe.level) {
+			setNewRecipeLevel({ name: recipe.name, level: recipeLevel });
 			setRecipeBaseValue(recipe.levels[recipeLevel].value);
 		}
 	}, [recipeLevel]);
 
 	const handleRecipeLevelDecrease = () => {
-		if (recipeLevel > 1) {
+		if (recipeLevel && recipeLevel > 1) {
 			setRecipeLevel(recipeLevel - 1);
 		}
 	};
 	const handleRecipeLevelIncrease = () => {
-		if (recipeLevel < 40) {
+		if (recipeLevel && recipeLevel < 40) {
 			setRecipeLevel(recipeLevel + 1);
 		}
 	};
@@ -107,6 +136,7 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 							size="small"
 							className="recipe-level-adjuster"
 							onClick={() => handleRecipeLevelDecrease()}
+							disabled={disable}
 						>
 							-
 						</Button>
@@ -114,6 +144,7 @@ export const Recipe = ({ recipe, ingredients }: Tprops) => {
 							size="small"
 							className="recipe-level-adjuster"
 							onClick={() => handleRecipeLevelIncrease()}
+							disabled={disable}
 						>
 							+
 						</Button>
