@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { SpiningLoadingIcon } from "../../../../components/loading/LoadingIcon";
 import { TAmiiboCard } from "../types/types";
 import { AmiiboCard } from "./AmiiboCard";
 import { AmiiboLine, TAmiiboWithStatus } from "./AmiiboLine";
-import { Grid } from "antd";
+import { Button, Grid } from "antd";
 import { ChecklistAmiiboCard } from "./ChecklistAmiiboCard";
 
 type TProps = {

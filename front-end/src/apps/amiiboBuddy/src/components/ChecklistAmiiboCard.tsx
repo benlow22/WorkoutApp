@@ -4,13 +4,17 @@ import { Button } from "antd";
 
 type TProps = {
 	amiibo: TAmiiboCard;
+	isChecked: boolean;
+	setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export const ChecklistAmiiboCard = ({
 	amiibo: { name, image, character, amiiboSeries },
+	isChecked,
+	setIsChecked,
 }: TProps) => {
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
+	const [checkedStatus, setCheckedStatus] = useState(isChecked);
 
-	const [checkedStatus, setCheckedStatus] = useState("");
 	useEffect(() => {
 		if (name.length < 15) {
 			setAmiiboNameSize("");
@@ -22,13 +26,23 @@ export const ChecklistAmiiboCard = ({
 	}, [name]);
 
 	return (
-		<Button className={`amiibo-card-checklist ${checkedStatus}`}>
+		<Button
+			className={`amiibo-card-checklist ${
+				checkedStatus ? "checked" : "unchecked"
+			}`}
+			onClick={() => setCheckedStatus(!checkedStatus)}
+		>
 			<h3 className={`amiibo-name ${amiiboNameSize}`}>{name}</h3>
 			<div className="amiibo-image-container">
 				<img
 					src={image}
 					alt={`${character} from ${amiiboSeries} amiibo`}
 					className="amiibo-image"
+				/>
+				<img
+					src="/checkmark.png"
+					className="checkmark"
+					hidden={!checkedStatus}
 				/>
 			</div>
 			<h5>{amiiboSeries}</h5>

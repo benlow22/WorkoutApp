@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { Pagination, Switch } from "antd";
+import { Button, Pagination, Switch } from "antd";
 import { TAmiiboCard } from "../../types/types";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { AmiiboFilter } from "../../components/AmiiboFilter";
@@ -36,6 +36,7 @@ export const AmiiboChecklist = ({ amiibos }: TProps) => {
 	}, [filteredAmiibos]);
 
 	const pageSizeOptions = [10, 20, 50, 100, filteredAmiibos.length];
+	const [checklistData, setChecklistData] = useState<[]>([]);
 
 	return (
 		<>
@@ -44,6 +45,8 @@ export const AmiiboChecklist = ({ amiibos }: TProps) => {
 				amiibos={amiibos}
 				setFilteredAmiibos={setFilteredAmiibos}
 			/>
+			<Button style={{ marginBottom: "20px" }}>checkAll</Button>
+
 			{!isLoading && (
 				<>
 					<Pagination

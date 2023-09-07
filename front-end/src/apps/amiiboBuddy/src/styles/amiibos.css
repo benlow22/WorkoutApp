@@ -382,7 +382,16 @@ button {
 .amiibo-status-button-inventory svg {
 	color: #0032e5;
 }
+.amiibo-card-checklist.checked {
+	background-color: rgb(5, 95, 0);
+	border-color: #089b00;
+}
 
+.ant-btn.amiibo-card-checklist.checked:hover,
+.ant-btn.amiibo-card-checklist.unchecked:hover {
+	color: rgb(5, 95, 0);
+	border-color: #089b00;
+}
 .amiibo-card-checklist {
 	width: 100px;
 	height: 150px;
@@ -428,6 +437,11 @@ button {
 	.amiibo-image {
 		max-height: 100px;
 		max-width: 70px;
+	}
+	.checkmark {
+		position: absolute;
+		width: 80px;
+		opacity: 0.8;
 	}
 }
 
