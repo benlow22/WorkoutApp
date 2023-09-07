@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { TLorcanaCardData } from "../types/lorcana.types";
 import { Button, Image, Input, Radio, Space, Tooltip } from "antd";
+import {
+	CheckCircleFilled,
+	PlusCircleOutlined,
+	PlusOutlined,
+	StarFilled,
+	StarOutlined,
+} from "@ant-design/icons";
 // import { TAmiiboCard } from "../types/types";
 
 type TProps = {
@@ -50,6 +57,8 @@ export const LorcanaCard = ({ card }: TProps) => {
 	const handleFoilQuantityChange = (event) => {
 		setFoilQuantityValue(Number(event.target.value));
 	};
+	const [isFoilWishlist, setIsFoilWishList] = useState<boolean>(false);
+	const [isWishlist, setIsWishlist] = useState<boolean>(false);
 
 	return (
 		<div className="lorcana-card">
@@ -109,6 +118,32 @@ export const LorcanaCard = ({ card }: TProps) => {
 						</Button>
 					</Space.Compact>
 				</Tooltip>
+			</div>
+			<div className="wishlist-buttons">
+				<Button
+					type="primary"
+					className={`add-to-wishlist-button ${
+						isWishlist ? "add-to-wishlist" : ""
+					}`}
+					// size="small"
+					// ghost={isWishlist}
+					onClick={() => setIsWishlist(!isWishlist)}
+				>
+					{isWishlist ? (
+						<CheckCircleFilled />
+					) : (
+						<PlusCircleOutlined />
+					)}
+				</Button>
+				<Button
+					type="primary"
+					onClick={() => setIsFoilWishList(!isFoilWishlist)}
+					className={`add-foil-to-wishlist-button ${
+						isFoilWishlist ? "add-to-foil-wishlist" : ""
+					}`}
+				>
+					{isFoilWishlist ? <StarFilled /> : <StarOutlined />}
+				</Button>
 			</div>
 		</div>
 	);

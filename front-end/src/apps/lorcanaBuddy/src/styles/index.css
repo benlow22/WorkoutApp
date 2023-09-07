@@ -14,6 +14,17 @@
 		left: 5%;
 		opacity: 0.9;
 	}
+	.ant-btn-primary {
+		background-color: var(--domain-nav-links-active);
+	}
+	.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+		background-color: var(--domain-primary-button);
+	}
+	.ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover,
+	.ant-input:focus {
+		border-color: var(--domain-nav-links-active);
+		color: var(--domain-nav-links-active);
+	}
 
 	.foil-quantity-buttons {
 		position: absolute;
@@ -23,6 +34,24 @@
 		height: 41px;
 	}
 
+	.add-foil-to-wishlist-button.add-to-foil-wishlist,
+	.add-to-wishlist-button.add-to-wishlist {
+		background-color: rgba(132, 104, 3, 0.837);
+		color: rgb(246, 255, 0);
+	}
+	.add-to-wishlist-button.add-to-wishlist.ant-btn-primary:not(:disabled):not(
+			.ant-btn-disabled
+		):hover,
+	.add-foil-to-wishlist-button.add-to-foil-wishlist.ant-btn-primary:not(
+			:disabled
+		):not(.ant-btn-disabled):hover {
+		background-color: rgba(178, 145, 24, 0.837);
+		color: rgb(246, 255, 0);
+	}
+
+	.ant-input {
+		color: var(--domain-nav-links-active);
+	}
 	.quantity-button,
 	.foil-quantity-button {
 		/* box-sizing: content-box; */
@@ -33,6 +62,22 @@
 	}
 	.foil-quantity-button {
 		height: 31.5px;
+	}
+	.wishlist-buttons {
+		display: flex;
+		flex-direction: column;
+		width: 40px;
+		height: 67px;
+		justify-content: space-between;
+		position: absolute;
+		top: 67%;
+		left: 75%;
+	}
+	.add-to-wishlist-button,
+	.add-foil-to-wishlist-button {
+		width: 32px;
+		padding: 4px 8px;
+		/* text-align: center; */
 	}
 }
 
