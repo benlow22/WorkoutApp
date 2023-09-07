@@ -91,25 +91,8 @@ export const MyCollection = () => {
 					}
 				}}
 			/>
-			{ready ? (
-				allAmiibos && (
-					<>
-						{isLoggedIn ? (
-							<>
-								{isInventory ? (
-									<AmiiboInventory myAmiibos={myAmiibos} />
-								) : (
-									<AmiiboChecklist amiibos={allAmiibos} />
-								)}
-							</>
-						) : (
-							<AmiiboChecklist amiibos={allAmiibos} />
-						)}
-					</>
-				)
-			) : (
-				<SpiningLoadingIcon />
-			)}
+
+			<AmiiboInventory myAmiibos={myAmiibos} />
 		</>
 	);
 };
