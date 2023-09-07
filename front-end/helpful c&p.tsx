@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "./src/contexts/AuthProvider";
 
 type TProps = {
 	name: string;
