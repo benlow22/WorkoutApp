@@ -8,11 +8,17 @@ import {
 	StarFilled,
 	StarOutlined,
 } from "@ant-design/icons";
+import { TCardStatus } from "../pages/browse/BrowsePage";
 // import { TAmiiboCard } from "../types/types";
 
 type TProps = {
 	card: TLorcanaCardData;
+	usersUpdatedCardStatuses: TCardStatus;
+	setUsersUpdatedCardStatuses: React.Dispatch<
+		React.SetStateAction<TCardStatus>
+	>;
 };
+
 export const LorcanaCard = ({ card }: TProps) => {
 	//
 	const [quantityValue, setQuantityValue] = useState<number>(0);
@@ -21,13 +27,14 @@ export const LorcanaCard = ({ card }: TProps) => {
 			setQuantityValue(quantityValue - 1);
 		}
 	};
+
 	//current capped at 10
 	const handleQuantityAdd = () => {
 		if (quantityValue < 100) {
 			setQuantityValue(quantityValue + 1);
 		}
 	};
-	const handleQuantityChange = (event) => {
+	const handleQuantityChange = (event: any) => {
 		setQuantityValue(Number(event.target.value));
 	};
 	// const [amiiboNameSize, setAmiiboNameSize] = useState("");
@@ -54,7 +61,7 @@ export const LorcanaCard = ({ card }: TProps) => {
 			setFoilQuantityValue(foilQuantityValue + 1);
 		}
 	};
-	const handleFoilQuantityChange = (event) => {
+	const handleFoilQuantityChange = (event: any) => {
 		setFoilQuantityValue(Number(event.target.value));
 	};
 	const [isFoilWishlist, setIsFoilWishList] = useState<boolean>(false);

@@ -6,10 +6,56 @@ import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
 import lorcanaData from "./../../public/lorcanaCards.json";
 import { LorcanaCard } from "../../components/LorcanaCard";
 import "./../../styles/index.css";
+
+export type TCardStatus = {
+	[cardname: string]: {
+		quantity: number;
+		"foil-quanity": number;
+		wishlist: boolean;
+		"foil-wishlist": boolean;
+	};
+};
+
 export const BrowsePage = () => {
 	const { auth, username, session } = useContext(AuthContext);
 	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>(lorcanaData);
+	const [usersUpdatedCardStatuses, setUsersUpdatedCardStatuses] =
+		useState<TCardStatus>({});
+	// <{[cardname: string]:{"quantity": number,
+	// 		"foil-quanity": mumber;,
+	// 		"wishlist": boolean,
+	// 		"foil-wishlist": boolean}}[]>
 
+	/* 
+	1. create upserter to add individual card status data to usersUpdatedCardStatuses
+	. get old usersUpdatedCardStatuses
+	. if old statuses exist, add them to lorcsna all cards. 
+	2. create button to upsert new status object 
+	
+	
+
+	status object : 
+		{
+			[cardname]: {
+				quantity: number
+				foil-quanity: mumber
+				wishlist: boolean,
+				foil-wishlist: boolean
+			}
+		}
+
+
+
+	can go through array,
+	
+	lorcanaAllCards.map(card=>
+		{if (card.name in usersCArdStatuses){
+			return {...card, status: usersCArdStatuses[card.name]}
+		} else {
+			return {...card, status: null}
+		}
+	})
+	 */
 	// API to get lorcana data
 	/* const lorcanaNames = [
 		"hades-king_of_olympus",
