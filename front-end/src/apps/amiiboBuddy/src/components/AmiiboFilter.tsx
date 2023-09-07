@@ -308,7 +308,9 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				items={[
 					{
 						key: "1",
-						label: "Filter",
+						label: (
+							<h5>{`FILTERS: ${filterBy} > ${type} > ${groupings} `}</h5>
+						),
 						children: (
 							<Form className="amiibo-filter-menu">
 								{/* <AutoComplete
@@ -459,7 +461,6 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 					},
 				]}
 			></Collapse>
-			<h1>{`FILTERS: ${filterBy} > ${type} > ${groupings} `}</h1>
 		</div>
 	);
 };

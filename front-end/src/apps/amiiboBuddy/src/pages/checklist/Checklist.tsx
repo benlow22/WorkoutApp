@@ -158,60 +158,62 @@ export const Checklist = () => {
 	return (
 		<>
 			<h3 className="page-heading">AmiiboChecklist</h3>
-			<AmiiboFilter
-				amiibos={allAmiibos}
-				setFilteredAmiibos={setFilteredAmiibos}
-			/>
-			<div style={{ margin: "20px" }}>
-				<Button
-					onClick={() => handleCheckAll()}
-					disabled={isUpsertLoading}
-				>
-					Check All
-				</Button>
-				<Button
-					disabled={isUpsertLoading}
-					onClick={() => handleUncheckPage()}
-				>
-					Uncheck Page
-				</Button>
-				<Button
-					disabled={isUpsertLoading}
-					onClick={() => handleCheckPage()}
-				>
-					Check Page
-				</Button>
-				<Button
-					disabled={isUpsertLoading}
-					onClick={() => handleUncheckAll()}
-				>
-					Uncheck All
-				</Button>
+			<div className="filter-nav-section">
+				<AmiiboFilter
+					amiibos={allAmiibos}
+					setFilteredAmiibos={setFilteredAmiibos}
+				/>
+				<div style={{ margin: "20px" }}>
+					<Button
+						onClick={() => handleCheckAll()}
+						disabled={isUpsertLoading}
+					>
+						Check All
+					</Button>
+					<Button
+						disabled={isUpsertLoading}
+						onClick={() => handleUncheckPage()}
+					>
+						Uncheck Page
+					</Button>
+					<Button
+						disabled={isUpsertLoading}
+						onClick={() => handleCheckPage()}
+					>
+						Check Page
+					</Button>
+					<Button
+						disabled={isUpsertLoading}
+						onClick={() => handleUncheckAll()}
+					>
+						Uncheck All
+					</Button>
+				</div>
+				{!isLoading && (
+					<>
+						<Pagination
+							size="small"
+							className="amiibo-pagination"
+							total={filteredAmiibos.length}
+							showTotal={(total, range) =>
+								`${range[0]} - ${range[1]} of ${total} items`
+							}
+							defaultPageSize={50}
+							defaultCurrent={1}
+							pageSizeOptions={pageSizeOptions}
+							onChange={(page, pageSize) => {
+								setAmiibosPerPage(pageSize);
+								setCurrentPage(page);
+							}}
+						/>
+					</>
+				)}
 			</div>
-			{!isLoading && (
-				<>
-					<Pagination
-						size="small"
-						className="amiibo-pagination"
-						total={filteredAmiibos.length}
-						showTotal={(total, range) =>
-							`${range[0]} - ${range[1]} of ${total} items`
-						}
-						defaultPageSize={50}
-						defaultCurrent={1}
-						pageSizeOptions={pageSizeOptions}
-						onChange={(page, pageSize) => {
-							setAmiibosPerPage(pageSize);
-							setCurrentPage(page);
-						}}
-					/>
-					<ChecklistAmiibos
-						amiibos={currentFilteredAmiibos}
-						loading={isLoading}
-						isList={isList}
-					/>
-				</>
-			)}
+			<ChecklistAmiibos
+				amiibos={currentFilteredAmiibos}
+				loading={isLoading}
+				isList={isList}
+			/>
 		</>
 	);
 };

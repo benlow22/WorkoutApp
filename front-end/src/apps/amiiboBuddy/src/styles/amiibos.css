@@ -39,6 +39,12 @@
 	max-width: 100px;
 }
 
+.filter-nav-section {
+	background-color: #0032e5;
+	padding: 20px;
+	max-width: 550px;
+	margin: auto;
+}
 /* .amiibo-grid,
 .list-group {
 	display: flex;
