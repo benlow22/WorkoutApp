@@ -143,6 +143,26 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				filterByStatus.sort((a, b) => b.name.localeCompare(a.name));
 				console.log("sorted", filterByStatus);
 				break;
+			// case 3:
+			// 	filterByStatus.sort((a, b) => a.name.localeCompare(b.name));
+			// 	console.log("sorted", filterByStatus);
+			// 	break;
+			// case 4:
+			// 	filterByStatus.sort((a, b) => b.name.localeCompare(a.name));
+			// 	console.log("sorted", filterByStatus);
+			// 	break;
+			case 5:
+				filterByStatus.sort((a, b) =>
+					a.release_na.localeCompare(b.release_na)
+				);
+				console.log("sorted", filterByStatus);
+				break;
+			case 6:
+				filterByStatus.sort((a, b) =>
+					b.release_na.localeCompare(a.release_na)
+				);
+				console.log("sorted", filterByStatus);
+				break;
 			default:
 				break;
 		}
@@ -408,14 +428,14 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 											<ArrowUpOutlined />
 											Alphabetical (Z-A)
 										</Option>
-										<Option value="3">
+										{/* <Option value="3">
 											<ArrowDownOutlined />
 											Price (high to low)
 										</Option>
 										<Option value="4">
 											<ArrowUpOutlined />
 											Price (low to high)
-										</Option>
+										</Option> */}
 										<Option value="5">
 											<ArrowDownOutlined />
 											Release Date (newest to oldest)
@@ -424,14 +444,14 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 											<ArrowUpOutlined />
 											Release Date (oldest to newest)
 										</Option>
-										<Option value="7">
+										{/* <Option value="7">
 											<ArrowDownOutlined />
 											Purhase Date (newest to oldest)
 										</Option>
 										<Option value="8">
 											<ArrowUpOutlined />
 											Puchase Date (oldest to newest)
-										</Option>
+										</Option> */}
 									</Select>
 								</Form.Item>
 							</Form>
