@@ -22,7 +22,15 @@ export const ChecklistAmiibos = ({ amiibos, loading, isList }: TProps) => {
 			{amiibos.map((amiibo, index: number) => (
 				// isList ? (
 				<li key={amiibo.id} className="list-group-item">
-					<ChecklistAmiiboCard amiibo={amiibo} key={index} />
+					<ChecklistAmiiboCard
+						amiibo={amiibo}
+						key={index}
+						// isChecked={amiibo.status.isChecklist ? true : null}
+
+						// setIsChecked={function (value: React.SetStateAction<boolean>): void {
+						// 	throw new Error("Function not implemented.");
+						// } }
+					/>
 				</li>
 			))}
 			{/* ) : (

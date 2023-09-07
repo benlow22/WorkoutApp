@@ -48,7 +48,6 @@ export const AmiiboLine = ({
 		if (status.length > 0) {
 			setIsWishlist(status[0].isWishlist);
 			setIsChecklist(status[0].isChecklist);
-			setStatusId(status[0].statusId);
 		}
 	}, [status]);
 

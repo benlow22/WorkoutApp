@@ -1,19 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { TAmiiboCard } from "../types/types";
 import { Button } from "antd";
+import { TAmiiboWithStatus } from "./AmiiboLine";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 type TProps = {
-	amiibo: TAmiiboCard;
-	isChecked: boolean;
-	setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+	amiibo: TAmiiboWithStatus;
+	// isChecked: boolean;
+	// setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
 };
 export const ChecklistAmiiboCard = ({
-	amiibo: { name, image, character, amiiboSeries },
-	isChecked,
-	setIsChecked,
-}: TProps) => {
+	amiibo: { id, name, image, character, amiiboSeries, status },
+}: // isChecked,
+// setIsChecked,
+TProps) => {
+	const { auth, supabase, userId } = useContext(AuthContext);
+
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
-	const [checkedStatus, setCheckedStatus] = useState(isChecked);
+	const [checkedStatus, setCheckedStatus] = useState<boolean>(false);
+	const [upsertLoading, setUpsertLoading] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (status.length > 0) {
+			setCheckedStatus(status[0].isChecklist);
+		}
+	}, [status]);
 
 	useEffect(() => {
 		if (name.length < 15) {
@@ -23,14 +34,43 @@ export const ChecklistAmiiboCard = ({
 		} else {
 			setAmiiboNameSize("three-lines");
 		}
+		console.log('STATUS",', status);
 	}, [name]);
+
+	const handleCheckButton = async () => {
+		setCheckedStatus(!checkedStatus);
+		setUpsertLoading(true);
+		try {
+			const { data, error } = await supabase
+				.from("amiibo_buddy_amiibo_statuses")
+				.upsert({
+					amiibo_id: id,
+					user_id: userId,
+					is_checklist: !checkedStatus,
+				})
+				.select();
+			if (data) {
+				console.log(data);
+				setUpsertLoading(false);
+			}
+			if (error) {
+				console.error(error);
+				setUpsertLoading(false);
+				setCheckedStatus(checkedStatus);
+			}
+		} catch (error) {
+			// @ts-expect-error
+			console.error(error.cause);
+		}
+	};
 
 	return (
 		<Button
 			className={`amiibo-card-checklist ${
 				checkedStatus ? "checked" : "unchecked"
 			}`}
-			onClick={() => setCheckedStatus(!checkedStatus)}
+			onClick={() => handleCheckButton()}
+			disabled={upsertLoading}
 		>
 			<h3 className={`amiibo-name ${amiiboNameSize}`}>{name}</h3>
 			<div className="amiibo-image-container">
