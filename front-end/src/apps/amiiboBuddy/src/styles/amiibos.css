@@ -426,6 +426,30 @@ button {
 		font-size: 0.6em;
 		width: 90px;
 	}
+
+	.amiibo-series {
+		display: flex;
+		height: 30px;
+		width: 90px;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.8em;
+		border-radius: 5px;
+		white-space: normal;
+		position: relative;
+		top: -5px;
+	}
+
+	.amiibo-series.two-lines {
+		font-size: 0.7em;
+		width: 90px;
+		flex-wrap: wrap;
+		word-wrap: break-word;
+	}
+	.amiibo-series.three-lines {
+		font-size: 0.6em;
+		width: 90px;
+	}
 	.amiibo-image-container {
 		display: flex;
 		height: fit-content;
@@ -435,13 +459,18 @@ button {
 		justify-content: center;
 	}
 	.amiibo-image {
-		max-height: 100px;
+		max-height: 80px;
 		max-width: 70px;
 	}
 	.checkmark {
 		position: absolute;
 		width: 80px;
 		opacity: 0.8;
+	}
+	.amiibo-series {
+		position: relative;
+		top: -10px;
+		white-space: normal;
 	}
 }
 

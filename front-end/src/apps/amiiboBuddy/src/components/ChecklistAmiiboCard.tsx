@@ -17,6 +17,8 @@ TProps) => {
 	const { auth, supabase, userId } = useContext(AuthContext);
 
 	const [amiiboNameSize, setAmiiboNameSize] = useState("");
+	const [amiiboSeriesSize, setAmiiboSeriesSize] = useState("");
+
 	const [checkedStatus, setCheckedStatus] = useState<boolean>(false);
 	const [upsertLoading, setUpsertLoading] = useState<boolean>(false);
 
@@ -36,6 +38,16 @@ TProps) => {
 		}
 		console.log('STATUS",', status);
 	}, [name]);
+	useEffect(() => {
+		if (amiiboSeries.length < 15) {
+			setAmiiboSeriesSize("");
+		} else if (amiiboSeries.length < 30) {
+			setAmiiboSeriesSize("two-lines");
+		} else {
+			setAmiiboSeriesSize("three-lines");
+		}
+		console.log('STATUS",', status);
+	}, [amiiboSeries]);
 
 	const handleCheckButton = async () => {
 		setCheckedStatus(!checkedStatus);
@@ -85,7 +97,9 @@ TProps) => {
 					hidden={!checkedStatus}
 				/>
 			</div>
-			<h5>{amiiboSeries}</h5>
+			<div className={`amiibo-series ${amiiboSeriesSize}`}>
+				<h5>{amiiboSeries}</h5>
+			</div>
 		</Button>
 	);
 };
