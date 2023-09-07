@@ -19,11 +19,19 @@ type TProps = {
 	>;
 };
 
-export const LorcanaCard = ({ card }: TProps) => {
+export const LorcanaCard = ({
+	card,
+	usersUpdatedCardStatuses,
+	setUsersUpdatedCardStatuses,
+}: TProps) => {
 	//
+	const [isUpdating, setIsUpdating] = useState<boolean>(false);
+
 	const [quantityValue, setQuantityValue] = useState<number>(0);
 	const handleQuantitySubtract = () => {
 		if (quantityValue > 0) {
+			setIsUpdating(true);
+
 			setQuantityValue(quantityValue - 1);
 		}
 	};
@@ -31,10 +39,13 @@ export const LorcanaCard = ({ card }: TProps) => {
 	//current capped at 10
 	const handleQuantityAdd = () => {
 		if (quantityValue < 100) {
+			setIsUpdating(true);
 			setQuantityValue(quantityValue + 1);
 		}
 	};
 	const handleQuantityChange = (event: any) => {
+		setIsUpdating(true);
+
 		setQuantityValue(Number(event.target.value));
 	};
 	// const [amiiboNameSize, setAmiiboNameSize] = useState("");
@@ -52,20 +63,41 @@ export const LorcanaCard = ({ card }: TProps) => {
 	const [foilQuantityValue, setFoilQuantityValue] = useState<number>(0);
 	const handleFoilQuantitySubtract = () => {
 		if (foilQuantityValue > 0) {
+			setIsUpdating(true);
+
 			setFoilQuantityValue(foilQuantityValue - 1);
 		}
 	};
 	//current capped at 10
 	const handleFoilQuantityAdd = () => {
 		if (foilQuantityValue < 100) {
+			setIsUpdating(true);
+
 			setFoilQuantityValue(foilQuantityValue + 1);
 		}
 	};
 	const handleFoilQuantityChange = (event: any) => {
+		setIsUpdating(true);
+
 		setFoilQuantityValue(Number(event.target.value));
 	};
 	const [isFoilWishlist, setIsFoilWishList] = useState<boolean>(false);
 	const [isWishlist, setIsWishlist] = useState<boolean>(false);
+
+	useEffect(() => {
+		if (isUpdating) {
+			const updatedCardStatus = {
+				[card.name]: {
+					quantity: quantityValue,
+					"foil-quanity": foilQuantityValue,
+					wishlist: isWishlist,
+					"foil-wishlist": isFoilWishlist,
+				},
+			};
+			console.log("Updated card status", updatedCardStatus);
+			setIsUpdating(false);
+		}
+	}, [quantityValue, foilQuantityValue, isWishlist, isFoilWishlist]);
 
 	return (
 		<div className="lorcana-card">

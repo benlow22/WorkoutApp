@@ -295,8 +295,15 @@ export const BrowsePage = () => {
 			<div className="page-heading">
 				<h2>Lorcana Buddy Browse</h2>
 				<div className="card-grid">
-					{lorcanaAllCards.map((card) => (
-						<LorcanaCard card={card} />
+					{lorcanaAllCards.map((card, index) => (
+						<LorcanaCard
+							key={index}
+							card={card}
+							setUsersUpdatedCardStatuses={
+								setUsersUpdatedCardStatuses
+							}
+							usersUpdatedCardStatuses={usersUpdatedCardStatuses}
+						/>
 					))}
 				</div>
 				<img
