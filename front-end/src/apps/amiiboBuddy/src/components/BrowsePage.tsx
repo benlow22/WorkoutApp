@@ -78,8 +78,8 @@ export const BrowsePage: React.FC<{}> = () => {
 						}}
 					/>
 					<Switch
-						checkedChildren="grid"
-						unCheckedChildren="list"
+						checkedChildren="list"
+						unCheckedChildren="grid"
 						onChange={() => setIsList(!isList)}
 					/>
 				</>

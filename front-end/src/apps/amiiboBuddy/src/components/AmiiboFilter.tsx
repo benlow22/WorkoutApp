@@ -9,6 +9,7 @@ import {
 	AutoComplete,
 	Button,
 	Checkbox,
+	Collapse,
 	Dropdown,
 	Form,
 	Input,
@@ -258,8 +259,22 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 			<p>___</p>
 
 			<h3>Filter By</h3> */}
-			<Form className="amiibo-filter-menu">
-				{/* <AutoComplete
+			<Collapse
+				style={{
+					minWidth: "300px",
+					backgroundColor: "var(--domain-header)",
+					maxWidth: "500px",
+					margin: "auto",
+					padding: "0px",
+					borderBlockColor: "black",
+				}}
+				items={[
+					{
+						key: "1",
+						label: "Filter",
+						children: (
+							<Form className="amiibo-filter-menu">
+								{/* <AutoComplete
 					options={options.filter(
 						(option) => !amiibovalArr.includes(option.value)
 					)}
@@ -273,58 +288,70 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 					defaultActiveFirstOption
 					style={{ color: "black", width: "400px" }}
 				/> */}
-				<Search
-					placeholder="input search text"
-					allowClear
-					onChange={(e) => {
-						handleSearchChange(e);
-					}}
-					style={{ width: 200 }}
-				/>
-				<Form.Item>
-					<Radio.Group
-						onChange={radioCategoryOnChange}
-						defaultValue="All"
-						style={{ marginTop: 16 }}
-					>
-						<Radio.Button
-							value="All"
-							defaultChecked
-							style={{ width: "75px" }}
-						>
-							All
-						</Radio.Button>
-						<Radio.Button value="Owned" disabled={!isLoggedIn}>
-							Owned
-						</Radio.Button>
-						<Radio.Button value="Wishlist" disabled={!isLoggedIn}>
-							Wishlist
-						</Radio.Button>
-						<Radio.Button value="Multiples" disabled={!isLoggedIn}>
-							Multiples
-						</Radio.Button>
-						<Radio.Button value="Return" disabled={!isLoggedIn}>
-							Return
-						</Radio.Button>
-						{/* <Radio.Button value="e">Beijing</Radio.Button>
+								<Search
+									placeholder="input search text"
+									allowClear
+									onChange={(e) => {
+										handleSearchChange(e);
+									}}
+									style={{ width: 200 }}
+								/>
+								<Form.Item>
+									<Radio.Group
+										onChange={radioCategoryOnChange}
+										defaultValue="All"
+										style={{ marginTop: 16 }}
+									>
+										<Radio.Button
+											value="All"
+											defaultChecked
+											style={{ width: "75px" }}
+										>
+											All
+										</Radio.Button>
+										<Radio.Button
+											value="Owned"
+											disabled={!isLoggedIn}
+										>
+											Owned
+										</Radio.Button>
+										<Radio.Button
+											value="Wishlist"
+											disabled={!isLoggedIn}
+										>
+											Wishlist
+										</Radio.Button>
+										<Radio.Button
+											value="Multiples"
+											disabled={!isLoggedIn}
+										>
+											Multiples
+										</Radio.Button>
+										<Radio.Button
+											value="Return"
+											disabled={!isLoggedIn}
+										>
+											Return
+										</Radio.Button>
+										{/* <Radio.Button value="e">Beijing</Radio.Button>
 				<Radio.Button value="f"> as</Radio.Button> */}
-					</Radio.Group>
-				</Form.Item>
-				<Form.Item label="Amiibo Type">
-					<Checkbox.Group
-						options={typeOptions}
-						defaultValue={["Figure"]}
-						className="white-font"
-						style={{
-							display: "flex",
-							justifyContent: "space-evenly",
-						}}
-						value={type}
-						onChange={handleAmiiboTypeChange}
-					/>
-				</Form.Item>
-				<Form.Item label="Group By">
-					{/* <Checkbox.Group
+									</Radio.Group>
+								</Form.Item>
+								<Form.Item label="Amiibo Type">
+									<Checkbox.Group
+										options={typeOptions}
+										defaultValue={["Figure"]}
+										className="white-font"
+										style={{
+											display: "flex",
+											justifyContent: "space-evenly",
+										}}
+										value={type}
+										onChange={handleAmiiboTypeChange}
+									/>
+								</Form.Item>
+								<Form.Item label="Group By">
+									{/* <Checkbox.Group
 						options={groupingOptions}
 						className="white-font"
 						style={{
@@ -334,55 +361,64 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 						value={groupings}
 						onChange={handleGroupingChange}
 					/> */}
-					<Select
-						mode="multiple"
-						allowClear
-						style={{ width: "100%" }}
-						placeholder="Please select in order of grouping"
-						onChange={(checkedValue) => setGroupings(checkedValue)}
-						options={groupingOptions}
-					/>
-				</Form.Item>
-				<Form.Item label="Sort By">
-					<Select allowClear placeholder={"Sorting Options"}>
-						<Option value="None">
-							----------- None -----------
-						</Option>
-						<Option value="Alphabetical">
-							<ArrowDownOutlined />
-							Alphabetical (A-Z)
-						</Option>
-						<Option value="AlphabeticalReverse">
-							<ArrowUpOutlined />
-							Alphabetical (Z-A)
-						</Option>
-						<Option value="Price">
-							<ArrowDownOutlined />
-							Price (high to low)
-						</Option>
-						<Option value="PriceReverse">
-							<ArrowUpOutlined />
-							Price (low to high)
-						</Option>
-						<Option value="ReleaseDate">
-							<ArrowDownOutlined />
-							Release Date (newest to oldest)
-						</Option>
-						<Option value="ReleaseDateReverse">
-							<ArrowUpOutlined />
-							Release Date (oldest to newest)
-						</Option>
-						<Option value="PurchaseDate">
-							<ArrowDownOutlined />
-							Purhase Date (newest to oldest)
-						</Option>
-						<Option value="PurchaseDateReverse">
-							<ArrowUpOutlined />
-							Puchase Date (oldest to newest)
-						</Option>
-					</Select>
-				</Form.Item>
-			</Form>
+									<Select
+										mode="multiple"
+										allowClear
+										style={{ width: "100%" }}
+										placeholder="Please select in order of grouping"
+										onChange={(checkedValue) =>
+											setGroupings(checkedValue)
+										}
+										options={groupingOptions}
+									/>
+								</Form.Item>
+								<Form.Item label="Sort By">
+									<Select
+										allowClear
+										placeholder={"Sorting Options"}
+									>
+										<Option value="None">
+											----------- None -----------
+										</Option>
+										<Option value="Alphabetical">
+											<ArrowDownOutlined />
+											Alphabetical (A-Z)
+										</Option>
+										<Option value="AlphabeticalReverse">
+											<ArrowUpOutlined />
+											Alphabetical (Z-A)
+										</Option>
+										<Option value="Price">
+											<ArrowDownOutlined />
+											Price (high to low)
+										</Option>
+										<Option value="PriceReverse">
+											<ArrowUpOutlined />
+											Price (low to high)
+										</Option>
+										<Option value="ReleaseDate">
+											<ArrowDownOutlined />
+											Release Date (newest to oldest)
+										</Option>
+										<Option value="ReleaseDateReverse">
+											<ArrowUpOutlined />
+											Release Date (oldest to newest)
+										</Option>
+										<Option value="PurchaseDate">
+											<ArrowDownOutlined />
+											Purhase Date (newest to oldest)
+										</Option>
+										<Option value="PurchaseDateReverse">
+											<ArrowUpOutlined />
+											Puchase Date (oldest to newest)
+										</Option>
+									</Select>
+								</Form.Item>
+							</Form>
+						),
+					},
+				]}
+			></Collapse>
 			<h1>{`FILTERS: ${filterBy} > ${type} > ${groupings} `}</h1>
 		</div>
 	);
