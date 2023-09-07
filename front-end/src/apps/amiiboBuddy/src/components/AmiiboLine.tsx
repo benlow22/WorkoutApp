@@ -39,7 +39,7 @@ export const AmiiboLine = ({
 	const [isChecklist, setIsChecklist] = useState<boolean>(false);
 	const [quantity, setQuantity] = useState(0);
 	const [isWishlist, setIsWishlist] = useState<boolean>();
-	const [wishlistLoading, setWishlistLoading] = useState<boolean>(false);
+	const [upsertLoading, setUpsertLoading] = useState<boolean>(false);
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [statusId, setStatusId] = useState<string>("");
 	const [messageApi, contextHolder] = message.useMessage();
@@ -54,7 +54,7 @@ export const AmiiboLine = ({
 	}, [status]);
 
 	useEffect(() => {
-		if (wishlistLoading) {
+		if (upsertLoading) {
 			const newMessageKey = uuidv4();
 			setMessageKey(newMessageKey);
 			messageApi.open({
@@ -66,7 +66,7 @@ export const AmiiboLine = ({
 		} else {
 			messageApi.destroy(messageKey);
 		}
-	}, [wishlistLoading]);
+	}, [upsertLoading]);
 
 	const { auth, supabase, userId } = useContext(AuthContext);
 
@@ -93,105 +93,57 @@ export const AmiiboLine = ({
 		setIsModalOpen(false);
 	};
 
-	const handleWishlistClick = () => {
+	const handleWishlistClick = async () => {
+		setUpsertLoading(true);
 		setIsWishlist(!isWishlist);
-		setWishlistLoading(true);
-		setTimeout(async () => {
-			if (statusId) {
-				try {
-					const { data, error } = await supabase
-						.from("amiibo_buddy_amiibo_statuses")
-						.update({ is_wishlist: !isWishlist })
-						.eq("id", statusId)
-						.select();
-					if (data) {
-						console.log(data);
-						setWishlistLoading(false);
-					}
-					if (error) {
-						console.error(error);
-						setWishlistLoading(false);
-						setIsWishlist(isWishlist);
-					}
-				} catch (error) {
-					// @ts-expect-error
-					console.error(error.cause);
-				}
-			} else {
-				try {
-					const { data, error } = await supabase
-						.from("amiibo_buddy_amiibo_statuses")
-						.insert({
-							is_wishlist: !isWishlist,
-							user_id: userId,
-							amiibo_id: id,
-						})
-						.select();
-					if (data) {
-						console.log(data);
-						setWishlistLoading(false);
-					}
-					if (error) {
-						console.error(error);
-						setWishlistLoading(false);
-						setIsWishlist(isWishlist);
-					}
-				} catch (error) {
-					// @ts-expect-error
-					console.error(error.cause);
-				}
+		try {
+			const { data, error } = await supabase
+				.from("amiibo_buddy_amiibo_statuses")
+				.upsert({
+					amiibo_id: id,
+					user_id: userId,
+					is_wishlist: !isWishlist,
+				})
+				.select();
+			if (data) {
+				console.log(data);
+				setUpsertLoading(false);
 			}
-		});
+			if (error) {
+				console.error(error);
+				setUpsertLoading(false);
+				setIsWishlist(isWishlist);
+			}
+		} catch (error) {
+			// @ts-expect-error
+			console.error(error.cause);
+		}
 	};
-	const handleChecklistClick = () => {
+	const handleChecklistClick = async () => {
 		setIsChecklist(!isChecklist);
-		setWishlistLoading(true);
-		setTimeout(async () => {
-			if (statusId) {
-				try {
-					const { data, error } = await supabase
-						.from("amiibo_buddy_amiibo_statuses")
-						.update({ is_checklist: !isChecklist })
-						.eq("id", statusId)
-						.select();
-					if (data) {
-						console.log(data);
-						setWishlistLoading(false);
-					}
-					if (error) {
-						console.error(error);
-						setWishlistLoading(false);
-						setIsChecklist(isChecklist);
-					}
-				} catch (error) {
-					// @ts-expect-error
-					console.error(error.cause);
-				}
-			} else {
-				try {
-					const { data, error } = await supabase
-						.from("amiibo_buddy_amiibo_statuses")
-						.insert({
-							is_checklist: !isChecklist,
-							user_id: userId,
-							amiibo_id: id,
-						})
-						.select();
-					if (data) {
-						console.log(data);
-						setWishlistLoading(false);
-					}
-					if (error) {
-						console.error(error);
-						setWishlistLoading(false);
-						setIsChecklist(isChecklist);
-					}
-				} catch (error) {
-					// @ts-expect-error
-					console.error(error.cause);
-				}
+		setUpsertLoading(true);
+		try {
+			const { data, error } = await supabase
+				.from("amiibo_buddy_amiibo_statuses")
+				.upsert({
+					amiibo_id: id,
+					user_id: userId,
+					is_checklist: !isChecklist,
+				})
+				.select();
+			if (data) {
+				console.log(data);
+				setUpsertLoading(false);
 			}
-		});
+			if (error) {
+				console.error(error);
+				setUpsertLoading(false);
+				setIsChecklist(isChecklist);
+			}
+		} catch (error) {
+			// @ts-expect-error
+			console.error(error.cause);
+		}
 	};
 
 	// const handleChecklistClick = () => {
@@ -241,7 +193,7 @@ export const AmiiboLine = ({
 					<Tooltip title="add to wishlist" placement="bottomLeft">
 						<Button
 							type="primary"
-							disabled={wishlistLoading}
+							disabled={upsertLoading}
 							ghost={!auth || !isWishlist}
 							className={`amiibo-status-button-wishlist${
 								isWishlist ? "-added" : ""
@@ -261,7 +213,7 @@ export const AmiiboLine = ({
 						<Button
 							type="primary"
 							ghost={!auth || !isChecklist}
-							disabled={wishlistLoading}
+							disabled={upsertLoading}
 							className="amiibo-status-button-checklist"
 							onClick={() =>
 								auth
