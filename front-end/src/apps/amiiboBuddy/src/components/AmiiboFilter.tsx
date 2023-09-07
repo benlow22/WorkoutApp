@@ -31,6 +31,7 @@ import { TAmiiboWithStatus } from "./AmiiboLine";
 import { TAmiiboCache } from "../pages/addAmiibo/AddAmiibo";
 import Search from "antd/es/input/Search";
 import { Option } from "antd/es/mentions";
+import { OptionProps } from "antd/es/select";
 
 type TProps = {
 	amiibos: TAmiiboWithStatus[];
@@ -45,6 +46,8 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 	const [amiibosArrBackup, setAmiibosArrBackup] = useState<TAmiiboCard[]>([]);
 	const [amiibovalArr, setAmiibovalArr] = useState<string[]>([]);
 	const [search, setSearch] = useState<string>("");
+	const [sort, setSort] = useState<number>(0);
+
 	const { userId, session, supabase, isLoggedIn } = useContext(AuthContext);
 	const [sortAlphabetical, setSortAlphabetical] = useState<
 		"asc" | "desc" | null
@@ -131,6 +134,18 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				break;
 		}
 
+		switch (sort) {
+			case 1:
+				filterByStatus.sort((a, b) => a.name.localeCompare(b.name));
+				console.log("sorted", filterByStatus);
+				break;
+			case 2:
+				filterByStatus.sort((a, b) => b.name.localeCompare(a.name));
+				console.log("sorted", filterByStatus);
+				break;
+			default:
+				break;
+		}
 		const newAmiibosArr = filterByStatus.filter((amiibo) => {
 			if (type.includes(amiibo.type)) {
 				return amiibo;
@@ -155,7 +170,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 		} else {
 			setFilteredAmiibos(newAmiibosArr);
 		}
-	}, [filterBy, type, search]);
+	}, [filterBy, type, search, sort]);
 
 	const radioCategoryOnChange = (e: RadioChangeEvent) => {
 		// console.log(`radio checked:${e.target.value}`);
@@ -217,7 +232,9 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 		console.log("TARGET:", e.target.value);
 		setSearch(e.target.value);
 	};
-
+	const handleSort = (option: OptionProps) => {
+		setSort(Number(option));
+	};
 	const handleGroupingChange = (checkedValue: CheckboxValueType[]) => {
 		setGroupings(checkedValue);
 		// if (!type.includes("All") && checkedValue.includes("All")) {
@@ -376,39 +393,42 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 									<Select
 										allowClear
 										placeholder={"Sorting Options"}
+										onSelect={(option) =>
+											handleSort(option)
+										}
 									>
-										<Option value="None">
+										<Option value="0">
 											----------- None -----------
 										</Option>
-										<Option value="Alphabetical">
+										<Option value="1">
 											<ArrowDownOutlined />
 											Alphabetical (A-Z)
 										</Option>
-										<Option value="AlphabeticalReverse">
+										<Option value="2">
 											<ArrowUpOutlined />
 											Alphabetical (Z-A)
 										</Option>
-										<Option value="Price">
+										<Option value="3">
 											<ArrowDownOutlined />
 											Price (high to low)
 										</Option>
-										<Option value="PriceReverse">
+										<Option value="4">
 											<ArrowUpOutlined />
 											Price (low to high)
 										</Option>
-										<Option value="ReleaseDate">
+										<Option value="5">
 											<ArrowDownOutlined />
 											Release Date (newest to oldest)
 										</Option>
-										<Option value="ReleaseDateReverse">
+										<Option value="6">
 											<ArrowUpOutlined />
 											Release Date (oldest to newest)
 										</Option>
-										<Option value="PurchaseDate">
+										<Option value="7">
 											<ArrowDownOutlined />
 											Purhase Date (newest to oldest)
 										</Option>
-										<Option value="PurchaseDateReverse">
+										<Option value="8">
 											<ArrowUpOutlined />
 											Puchase Date (oldest to newest)
 										</Option>
