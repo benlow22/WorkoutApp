@@ -229,6 +229,8 @@ export const BrowsePage = () => {
 						}
 					})
 				);
+				solution.sort((a, b) => a["card-number"] - b["card-number"]);
+				// console.log("sorted", filterByStatus);
 				setLorcanaAllCards(solution);
 			};
 			lorcanaData();
