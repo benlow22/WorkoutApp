@@ -29,7 +29,6 @@ export type TAmiiboWithStatus = TAmiiboCard & {
 	status: {
 		isWishlist: boolean;
 		isChecklist: boolean;
-		statusId: string;
 	}[];
 };
 export const AmiiboLine = ({

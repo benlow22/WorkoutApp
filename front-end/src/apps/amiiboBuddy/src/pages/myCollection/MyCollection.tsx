@@ -30,14 +30,14 @@ export const MyCollection = () => {
 		});
 	};
 	// create type for amiibo with image.
-	const getAmiibos = async () => {
+	const getMyAmiibos = async () => {
 		let { data, error } = await supabase
 			.from("users_amiibos")
 			.select(
 				"*, ...amiibo(image, name, series: amiibo_series), ...ab_pack_id_image_paths(photoPaths: photo_paths)"
 			);
 		if (data) {
-			console.log(myAmiibos);
+			// console.log(myAmiibos);
 			setMyAmiibos(data);
 		} else {
 			console.error(error);
@@ -47,16 +47,20 @@ export const MyCollection = () => {
 	const getAllAmiibos = async () => {
 		let { data: allAmiibos, error } = await supabase
 			.from("amiibo")
-			.select("*");
+			.select(
+				"*, status: amiibo_buddy_amiibo_statuses(isChecklist: is_checklist, isWishlist: is_wishlist)"
+			);
 		if (error) {
 			console.error(error);
 		} else {
+			console.log("all amiibos + statuses", allAmiibos);
 			setAllAmiibos(allAmiibos);
 		}
 	};
 
 	useEffect(() => {
-		getAmiibos();
+		getMyAmiibos();
+		getAllAmiibos();
 		setIsInventory(isLoggedIn);
 	}, [isLoggedIn]);
 

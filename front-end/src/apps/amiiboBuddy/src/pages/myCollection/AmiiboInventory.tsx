@@ -15,7 +15,7 @@ export const AmiiboInventory = ({ myAmiibos }: TProps) => {
 		[]
 	);
 
-	console.log(myAmiibos);
+	// console.log(myAmiibos);
 	return (
 		<div className="amiibo-inventory-page">
 			<p>A collection of all your amiibos</p>

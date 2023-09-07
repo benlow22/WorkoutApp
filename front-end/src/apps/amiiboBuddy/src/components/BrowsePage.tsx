@@ -12,7 +12,6 @@ import { TAmiiboWithStatus } from "./AmiiboLine";
 export const BrowsePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
 	const [amiibos, setAmiibos] = useState<TAmiiboWithStatus[] | any>([]);
-	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,7 +28,7 @@ export const BrowsePage: React.FC<{}> = () => {
 			let { data, error } = await supabase
 				.from("amiibo")
 				.select(
-					`amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail, type, status: amiibo_buddy_amiibo_statuses(isWishlist: is_wishlist, isChecklist: is_checklist, statusId: id)`
+					`amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail, type, status: amiibo_buddy_amiibo_statuses (isWishlist: is_wishlist, isChecklist: is_checklist)`
 				);
 			// .order("amiibo_series");
 			if (data) {

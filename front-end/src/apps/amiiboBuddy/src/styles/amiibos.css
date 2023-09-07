@@ -382,6 +382,55 @@ button {
 .amiibo-status-button-inventory svg {
 	color: #0032e5;
 }
+
+.amiibo-card-checklist {
+	width: 100px;
+	height: 150px;
+	background-color: rgb(77, 77, 77);
+	border: 2px solid white;
+	border-radius: 10px;
+	padding: 5px;
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	.amiibo-name {
+		display: flex;
+		height: 30px;
+		width: 90px;
+		background-color: rgb(36, 36, 36);
+		justify-content: center;
+		align-items: center;
+		font-size: 0.8em;
+		border-radius: 5px;
+		white-space: normal;
+	}
+
+	.amiibo-name.two-lines {
+		font-size: 0.7em;
+		width: 90px;
+		flex-wrap: wrap;
+		word-wrap: break-word;
+	}
+	.amiibo-name.three-lines {
+		font-size: 0.6em;
+		width: 90px;
+	}
+	.amiibo-image-container {
+		display: flex;
+		height: fit-content;
+		width: 100%;
+		align-items: center;
+		margin: 10px auto;
+		justify-content: center;
+	}
+	.amiibo-image {
+		max-height: 100px;
+		max-width: 70px;
+	}
+}
+
 .amiibo-line-buttons-disabled {
 	.amiibo-status-button-wishlist svg {
 		color: #81712e;
