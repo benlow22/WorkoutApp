@@ -16,6 +16,6 @@
 		"noEmit": true,
 		"jsx": "react-jsx"
 	},
-	"include": ["src", "../theming"],
+	"include": ["src", "../theming", "helpful c&p.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }
