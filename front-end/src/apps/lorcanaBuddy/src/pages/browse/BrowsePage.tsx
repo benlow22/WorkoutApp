@@ -6,6 +6,8 @@ import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
 import lorcanaData from "./../../public/lorcanaCards.json";
 import { LorcanaCard } from "../../components/LorcanaCard";
 import "./../../styles/index.css";
+import { FloatButton, Tooltip } from "antd";
+import { SaveFilled } from "@ant-design/icons";
 
 export type TCardStatus = {
 	[cardname: string]: {
@@ -17,10 +19,38 @@ export type TCardStatus = {
 };
 
 export const BrowsePage = () => {
-	const { auth, username, session } = useContext(AuthContext);
+	const { auth, userId, session, supabase } = useContext(AuthContext);
 	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>(lorcanaData);
+	const [isUploading, setIsUploading] = useState<boolean>(false);
 	const [usersUpdatedCardStatuses, setUsersUpdatedCardStatuses] =
 		useState<TCardStatus>({});
+	// const [usersCardStatuses, setUsersCardStatuses] = useState<TCardStatus>({});
+
+	const getUsersCardStatuses = async () => {
+		let { data, error } = await supabase
+			.from("lorb_cards_statuses")
+			.select("cards_statuses")
+			.single();
+		if (error) {
+			console.log("Error getting card statuses", error);
+		} else if (data) {
+			console.log("GET card statuses", data);
+			// setUsersCardStatuses(data.cards_statuses);
+			setUsersUpdatedCardStatuses(data.cards_statuses);
+		}
+	};
+
+	useEffect(() => {
+		getUsersCardStatuses();
+	}, []);
+
+	// useEffect(() => {
+	// 	console.log("SATUS", usersCardStatuses);
+	// }, [usersCardStatuses]);
+
+	useEffect(() => {
+		console.log("updated Card MEga status", usersUpdatedCardStatuses);
+	}, [usersUpdatedCardStatuses]);
 	// <{[cardname: string]:{"quantity": number,
 	// 		"foil-quanity": mumber;,
 	// 		"wishlist": boolean,
@@ -290,6 +320,22 @@ export const BrowsePage = () => {
 		console.log(lorcanaAllCards);
 	}, [lorcanaAllCards]);
 
+	const handleFloatSave = async () => {
+		setIsUploading(true);
+		const { data, error } = await supabase
+			.from("lorb_cards_statuses")
+			.update({ cards_statuses: usersUpdatedCardStatuses })
+			.eq("user_id", userId)
+			.select();
+		if (data) {
+			console.log("upload success", data);
+			setIsUploading(false);
+		} else {
+			console.log(error);
+			setIsUploading(false);
+		}
+	};
+
 	return (
 		<>
 			<div className="page-heading">
@@ -297,15 +343,27 @@ export const BrowsePage = () => {
 				<div className="card-grid">
 					{lorcanaAllCards.map((card, index) => (
 						<LorcanaCard
+							disabled={isUploading}
 							key={index}
 							card={card}
 							setUsersUpdatedCardStatuses={
 								setUsersUpdatedCardStatuses
 							}
 							usersUpdatedCardStatuses={usersUpdatedCardStatuses}
+							// status={usersCardStatuses}
 						/>
 					))}
 				</div>
+				<div className="save-float-button">
+					<FloatButton
+						tooltip={<div>Save Updates</div>}
+						icon={<SaveFilled />}
+						type="primary"
+						style={{ right: 24 }}
+						onClick={handleFloatSave}
+					/>
+				</div>
+
 				<img
 					src={lorcanaMickey}
 					style={{ maxWidth: "400px" }}
