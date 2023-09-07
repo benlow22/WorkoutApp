@@ -5,7 +5,7 @@ import React, {
 	useState,
 } from "react";
 import { TAmiiboCard } from "../types/types";
-import { Button, Image, Modal, message } from "antd";
+import { Button, Image, Modal, Tooltip, message } from "antd";
 import {
 	CheckCircleFilled,
 	CheckCircleTwoTone,
@@ -238,42 +238,54 @@ export const AmiiboLine = ({
 				<div
 					className={`amiibo-line-buttons${auth ? "" : "-disabled"}`}
 				>
-					<Button
-						type="primary"
-						disabled={wishlistLoading}
-						ghost={!auth || !isWishlist}
-						className={`amiibo-status-button-wishlist${
-							isWishlist ? "-added" : ""
-						}`}
-						onClick={() =>
-							auth ? handleWishlistClick() : setIsModalOpen(true)
-						}
-						value="wishlist"
-					>
-						<StarFilled />
-					</Button>
+					<Tooltip title="add to wishlist" placement="bottomLeft">
+						<Button
+							type="primary"
+							disabled={wishlistLoading}
+							ghost={!auth || !isWishlist}
+							className={`amiibo-status-button-wishlist${
+								isWishlist ? "-added" : ""
+							}`}
+							onClick={() =>
+								auth
+									? handleWishlistClick()
+									: setIsModalOpen(true)
+							}
+							value="wishlist"
+						>
+							<StarFilled />
+						</Button>
+					</Tooltip>
 
-					<Button
-						type="primary"
-						ghost={!auth || !isChecklist}
-						disabled={wishlistLoading}
-						className="amiibo-status-button-checklist"
-						onClick={() =>
-							auth ? handleChecklistClick() : setIsModalOpen(true)
-						}
-					>
-						<CheckCircleFilled />
-					</Button>
-					<Button
-						type="primary"
-						ghost={!auth || !quantity}
-						className="amiibo-status-button-inventory"
-						onClick={() =>
-							auth ? handleInventoryClick() : setIsModalOpen(true)
-						}
-					>
-						<TagFilled />
-					</Button>
+					<Tooltip title="add to checklist" placement="bottomLeft">
+						<Button
+							type="primary"
+							ghost={!auth || !isChecklist}
+							disabled={wishlistLoading}
+							className="amiibo-status-button-checklist"
+							onClick={() =>
+								auth
+									? handleChecklistClick()
+									: setIsModalOpen(true)
+							}
+						>
+							<CheckCircleFilled />
+						</Button>
+					</Tooltip>
+					<Tooltip title="add to inventory" placement="bottomLeft">
+						<Button
+							type="primary"
+							ghost={!auth || !quantity}
+							className="amiibo-status-button-inventory"
+							onClick={() =>
+								auth
+									? handleInventoryClick()
+									: setIsModalOpen(true)
+							}
+						>
+							<TagFilled />
+						</Button>{" "}
+					</Tooltip>
 
 					<div
 						style={{
