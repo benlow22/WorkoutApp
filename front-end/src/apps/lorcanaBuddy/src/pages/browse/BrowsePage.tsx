@@ -4,7 +4,8 @@ import { AuthContext } from "../../../../../contexts/AuthProvider";
 import lorcanaMickey from "../../../../../images/lorcanaMickey.avif";
 import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
 import lorcanaData from "./../../public/lorcanaCards.json";
-
+import { LorcanaCard } from "../../components/LorcanaCard";
+import "./../../styles/index.css";
 export const BrowsePage = () => {
 	const { auth, username, session } = useContext(AuthContext);
 	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>(lorcanaData);
@@ -247,6 +248,11 @@ export const BrowsePage = () => {
 		<>
 			<div className="page-heading">
 				<h2>Lorcana Buddy Browse</h2>
+				<div className="card-grid">
+					{lorcanaAllCards.map((card) => (
+						<LorcanaCard card={card} />
+					))}
+				</div>
 				<img
 					src={lorcanaMickey}
 					style={{ maxWidth: "400px" }}

@@ -1,0 +1,50 @@
+.lorcana-card {
+	min-width: 190px;
+	min-height: 260px;
+	margin: 10px;
+	position: relative;
+
+	.ant-image-img {
+		border-radius: 10px;
+		max-height: 260px;
+	}
+	.quantity-buttons {
+		position: absolute;
+		top: 67%;
+		left: 5%;
+		opacity: 0.9;
+	}
+
+	.foil-quantity-buttons {
+		position: absolute;
+		top: 81%;
+		left: 5%;
+		opacity: 0.9;
+		height: 41px;
+	}
+
+	.quantity-button,
+	.foil-quantity-button {
+		/* box-sizing: content-box; */
+		width: 50px;
+		text-align: center;
+		opacity: 1;
+		/* padding: 0px auto; */
+	}
+	.foil-quantity-button {
+		height: 31.5px;
+	}
+}
+
+.ant-image .ant-image-mask {
+	width: 190px;
+	height: 135px;
+	z-index: 3;
+}
+
+.card-grid {
+	display: flex;
+	max-width: 95%;
+	margin: auto;
+	flex-wrap: wrap;
+}
