@@ -32,6 +32,7 @@
 				{ "name": "Browse", "path": "browse" },
 				{ "name": "My Collection", "path": "myCollection" },
 				{ "name": "Wishlist", "path": "wishlist" },
+				{ "name": "Checklist", "path": "checklist" },
 				{ "name": "Returns", "path": "returns" },
 				{ "name": "Add Amiibo", "path": "addAmiibo" }
 			],
