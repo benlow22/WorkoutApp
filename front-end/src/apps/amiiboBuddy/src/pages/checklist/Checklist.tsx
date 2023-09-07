@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import fuecoco from "../../../../../images/fuecoco.jpeg";
-import { Pagination, Switch, message } from "antd";
+import { Button, Pagination, Switch, message } from "antd";
 import { AmiiboInventory } from "../myCollection/AmiiboInventory";
 import { AmiiboChecklist } from "../myCollection/AmiiboChecklist";
 import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIcon";
@@ -11,12 +11,13 @@ import { AmiiboFilter } from "../../components/AmiiboFilter";
 import { ChecklistAmiibos } from "../../components/ChecklistAmiibos";
 
 export const Checklist = () => {
-	const { auth, username, supabase, isLoggedIn } = useContext(AuthContext);
+	const { auth, userId, supabase, isLoggedIn } = useContext(AuthContext);
 	const [messageApi, contextHolder] = message.useMessage();
 	const [allAmiibos, setAllAmiibos] = useState<TAmiiboWithStatus[]>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [isUpsertLoading, setIsUpsertLoading] = useState<boolean>(false);
 
 	const [filteredAmiibos, setFilteredAmiibos] = useState<TAmiiboWithStatus[]>(
 		[]
@@ -63,9 +64,97 @@ export const Checklist = () => {
 	};
 
 	useEffect(() => {
-		getAllAmiibos();
-	}, [isLoggedIn]);
+		if (!isUpsertLoading) {
+			getAllAmiibos();
+		}
+	}, [isLoggedIn, isUpsertLoading]);
 
+	const handleCheckAll = async () => {
+		setIsUpsertLoading(true);
+		const checkAll = filteredAmiibos.map((amiibo) => ({
+			amiibo_id: amiibo.id,
+			user_id: userId,
+			is_checklist: true,
+		}));
+
+		const { data, error } = await supabase
+			.from("amiibo_buddy_amiibo_statuses")
+			.upsert(checkAll)
+			.select();
+		if (data) {
+			console.log(data);
+			setIsUpsertLoading(false);
+		}
+		if (error) {
+			console.error(error);
+			setIsUpsertLoading(false);
+		}
+	};
+
+	const handleCheckPage = async () => {
+		setIsUpsertLoading(true);
+		const checkPage = currentFilteredAmiibos.map((amiibo) => ({
+			amiibo_id: amiibo.id,
+			user_id: userId,
+			is_checklist: true,
+		}));
+
+		const { data, error } = await supabase
+			.from("amiibo_buddy_amiibo_statuses")
+			.upsert(checkPage)
+			.select();
+		if (data) {
+			console.log(data);
+			setIsUpsertLoading(false);
+		}
+		if (error) {
+			console.error(error);
+			setIsUpsertLoading(false);
+		}
+	};
+	const handleUncheckPage = async () => {
+		setIsUpsertLoading(true);
+		const uncheckPage = currentFilteredAmiibos.map((amiibo) => ({
+			amiibo_id: amiibo.id,
+			user_id: userId,
+			is_checklist: false,
+		}));
+
+		const { data, error } = await supabase
+			.from("amiibo_buddy_amiibo_statuses")
+			.upsert(uncheckPage)
+			.select();
+		if (data) {
+			console.log(data);
+			setIsUpsertLoading(false);
+		}
+		if (error) {
+			console.error(error);
+			setIsUpsertLoading(false);
+		}
+	};
+
+	const handleUncheckAll = async () => {
+		setIsUpsertLoading(true);
+		const uncheckAll = filteredAmiibos.map((amiibo) => ({
+			amiibo_id: amiibo.id,
+			user_id: userId,
+			is_checklist: false,
+		}));
+
+		const { data, error } = await supabase
+			.from("amiibo_buddy_amiibo_statuses")
+			.upsert(uncheckAll)
+			.select();
+		if (data) {
+			console.log(data);
+			setIsUpsertLoading(false);
+		}
+		if (error) {
+			console.error(error);
+			setIsUpsertLoading(false);
+		}
+	};
 	return (
 		<>
 			<h3 className="page-heading">AmiiboChecklist</h3>
@@ -73,6 +162,32 @@ export const Checklist = () => {
 				amiibos={allAmiibos}
 				setFilteredAmiibos={setFilteredAmiibos}
 			/>
+			<div style={{ margin: "20px" }}>
+				<Button
+					onClick={() => handleCheckAll()}
+					disabled={isUpsertLoading}
+				>
+					Check All
+				</Button>
+				<Button
+					disabled={isUpsertLoading}
+					onClick={() => handleUncheckPage()}
+				>
+					Uncheck Page
+				</Button>
+				<Button
+					disabled={isUpsertLoading}
+					onClick={() => handleCheckPage()}
+				>
+					Check Page
+				</Button>
+				<Button
+					disabled={isUpsertLoading}
+					onClick={() => handleUncheckAll()}
+				>
+					Uncheck All
+				</Button>
+			</div>
 			{!isLoading && (
 				<>
 					<Pagination
