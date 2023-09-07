@@ -39,6 +39,40 @@
 	max-width: 100px;
 }
 
+.filter-nav-section {
+	background-color: #0032e5;
+	padding: 20px;
+	max-width: 650px;
+	margin: auto;
+
+	.amiibo-filter-menu .ant-radio-button-wrapper:hover,
+	.ant-select .ant-select-in-form-item:hover {
+		color: var(--domain-header);
+	}
+	.ant-radio-button.ant-radio-button-checked {
+		border-color: rgb(184, 0, 0);
+		background-color: var(--domain-nav-links-active);
+		opacity: 0.75;
+	}
+	.ant-radio-button-wrapper.ant-radio-button-wrapper-checked.ant-radio-button-wrapper-in-form-item,
+	.ant-input-affix-wrapper:hover,
+	.ant-btn.ant-input-search-button:hover,
+	.ant-input-affix-wrapper:focus,
+	.ant-select.ant-select-in-form-item:hover {
+		border-color: rgb(184, 0, 0) !important;
+		color: var(--domain-header) !important;
+	}
+	.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+		color: var(--domain-header);
+	}
+	.ant-radio-button-wrapper-checked:not(
+			.ant-radio-button-wrapper-disabled
+		)::before {
+		background-color: rgb(184, 0, 0);
+	}
+
+	.ant-select.ant-select-in-form-item;
+}
 /* .amiibo-grid,
 .list-group {
 	display: flex;
@@ -235,7 +269,7 @@ a {
 
 .amiibo-filter-menu {
 	background-color: rgb(139, 139, 139);
-	width: fit-content;
+	width: 100%;
 	padding: 10px 25px;
 	margin: auto;
 	border: rgb(77, 77, 77) solid 5px;
@@ -382,6 +416,98 @@ button {
 .amiibo-status-button-inventory svg {
 	color: #0032e5;
 }
+.amiibo-card-checklist.checked {
+	background-color: rgb(5, 95, 0);
+	border-color: #089b00;
+}
+
+.ant-btn.amiibo-card-checklist.checked:hover,
+.ant-btn.amiibo-card-checklist.unchecked:hover {
+	color: rgb(5, 95, 0);
+	border-color: #089b00;
+}
+.amiibo-card-checklist {
+	width: 100px;
+	height: 150px;
+	background-color: rgb(77, 77, 77);
+	border: 2px solid white;
+	border-radius: 10px;
+	padding: 5px;
+	margin: 10px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+
+	.amiibo-name {
+		display: flex;
+		height: 30px;
+		width: 90px;
+		background-color: rgb(36, 36, 36);
+		justify-content: center;
+		align-items: center;
+		font-size: 0.8em;
+		border-radius: 5px;
+		white-space: normal;
+	}
+
+	.amiibo-name.two-lines {
+		font-size: 0.7em;
+		width: 90px;
+		flex-wrap: wrap;
+		word-wrap: break-word;
+	}
+	.amiibo-name.three-lines {
+		font-size: 0.6em;
+		width: 90px;
+	}
+
+	.amiibo-series {
+		display: flex;
+		height: 30px;
+		width: 90px;
+		justify-content: center;
+		align-items: center;
+		font-size: 0.8em;
+		border-radius: 5px;
+		white-space: normal;
+		position: relative;
+		top: -5px;
+	}
+
+	.amiibo-series.two-lines {
+		font-size: 0.7em;
+		width: 90px;
+		flex-wrap: wrap;
+		word-wrap: break-word;
+	}
+	.amiibo-series.three-lines {
+		font-size: 0.6em;
+		width: 90px;
+	}
+	.amiibo-image-container {
+		display: flex;
+		height: fit-content;
+		width: 100%;
+		align-items: center;
+		margin: 10px auto;
+		justify-content: center;
+	}
+	.amiibo-image {
+		max-height: 80px;
+		max-width: 70px;
+	}
+	.checkmark {
+		position: absolute;
+		width: 80px;
+		opacity: 0.8;
+	}
+	.amiibo-series {
+		position: relative;
+		top: -10px;
+		white-space: normal;
+	}
+}
+
 .amiibo-line-buttons-disabled {
 	.amiibo-status-button-wishlist svg {
 		color: #81712e;

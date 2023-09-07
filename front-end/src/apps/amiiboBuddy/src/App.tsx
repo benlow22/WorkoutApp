@@ -5,6 +5,7 @@ import { Returns } from "./pages/returns/Returns";
 import { Wishlist } from "./pages/wishlist/Wishlist";
 import { AddAmiibo } from "./pages/addAmiibo/AddAmiibo";
 import { BrowsePage } from "./components/BrowsePage";
+import { Checklist } from "./pages/checklist/Checklist";
 
 export const AmiiboBuddy = [
 	<Route index element={<AmiiboBuddyHomePage />} key={"AB1"} />,
@@ -12,6 +13,8 @@ export const AmiiboBuddy = [
 	<Route path="myCollection" element={<MyCollection />} key={"AB3"} />,
 	<Route path="returns" element={<Returns />} key={"AB4"} />,
 	<Route path="wishlist" element={<Wishlist />} key={"AB5"} />,
+	<Route path="checklist" element={<Checklist />} key={"AB5"} />,
+
 	<Route path="addAmiibo" element={<AddAmiibo />} key={"AB6"} />,
 	<Route path="*" element={<Navigate to="" />} key={"AB7"} />,
 ];

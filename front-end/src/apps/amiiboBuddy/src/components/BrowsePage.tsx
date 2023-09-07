@@ -12,7 +12,6 @@ import { TAmiiboWithStatus } from "./AmiiboLine";
 export const BrowsePage: React.FC<{}> = () => {
 	const { supabase } = useContext(AuthContext);
 	const [amiibos, setAmiibos] = useState<TAmiiboWithStatus[] | any>([]);
-	const [loading, setLoading] = useState<boolean>(false);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -29,7 +28,7 @@ export const BrowsePage: React.FC<{}> = () => {
 			let { data, error } = await supabase
 				.from("amiibo")
 				.select(
-					`amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail, type, status: amiibo_buddy_amiibo_statuses(isWishlist: is_wishlist, isChecklist: is_checklist, statusId: id)`
+					`amiiboSeries :amiibo_series ,character, gameSeries: game_series , head, id, image, name,release_au,release_eu,release_jp,release_na,tail, type, status: amiibo_buddy_amiibo_statuses (isWishlist: is_wishlist, isChecklist: is_checklist)`
 				);
 			// .order("amiibo_series");
 			if (data) {
@@ -78,8 +77,8 @@ export const BrowsePage: React.FC<{}> = () => {
 						}}
 					/>
 					<Switch
-						checkedChildren="grid"
-						unCheckedChildren="list"
+						checkedChildren="list"
+						unCheckedChildren="grid"
 						onChange={() => setIsList(!isList)}
 					/>
 				</>
@@ -95,6 +94,21 @@ export const BrowsePage: React.FC<{}> = () => {
 						<AmiiboCard amiibo={amiibo} key={index} />
 					))}
 			</div> */}
+			<Pagination
+				size="small"
+				className="amiibo-pagination"
+				total={filteredAmiibos.length}
+				showTotal={(total, range) =>
+					`${range[0]}-${range[1]} of ${total} items`
+				}
+				defaultPageSize={50}
+				defaultCurrent={1}
+				pageSizeOptions={pageSizeOptions}
+				onChange={(page, pageSize) => {
+					setAmiibosPerPage(pageSize);
+					setCurrentPage(page);
+				}}
+			/>
 		</div>
 	);
 };
