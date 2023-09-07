@@ -53,7 +53,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 		"asc" | "desc" | null
 	>();
 	const [filterBy, setFilterBy] = useState<
-		"All" | "Owned" | "Wishlist" | "Multiples" | "Return"
+		"All" | "Owned" | "Wishlist" | "Multiples" | "Return" | "Unchecked"
 	>("All");
 	const [type, setType] = useState<CheckboxValueType[]>(["Figure"]);
 	const [groupings, setGroupings] = useState<CheckboxValueType[]>([""]);
@@ -127,6 +127,21 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 					}
 				});
 				filterByStatus = newAmiibosArr;
+
+				break;
+			case "Unchecked":
+				const uncheckedArr = amiibos.filter((amiibo) => {
+					if (amiibo.status.length > 0) {
+						if (amiibo.status[0].isChecklist === false) {
+							// console.log(amiibo.status);
+							return amiibo;
+						}
+					}
+					if (amiibo.status.length < 1) {
+						return amiibo;
+					}
+				});
+				filterByStatus = uncheckedArr;
 
 				break;
 			case "All":
@@ -300,7 +315,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 				style={{
 					minWidth: "300px",
 					backgroundColor: "var(--domain-header)",
-					maxWidth: "500px",
+					maxWidth: "600px",
 					margin: "auto",
 					padding: "0px",
 					borderBlockColor: "black",
@@ -344,7 +359,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 										<Radio.Button
 											value="All"
 											defaultChecked
-											style={{ width: "75px" }}
+											style={{ width: "55px" }}
 										>
 											All
 										</Radio.Button>
@@ -359,6 +374,12 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 											disabled={!isLoggedIn}
 										>
 											Wishlist
+										</Radio.Button>
+										<Radio.Button
+											value="Unchecked"
+											disabled={!isLoggedIn}
+										>
+											Unchecked
 										</Radio.Button>
 										<Radio.Button
 											value="Multiples"

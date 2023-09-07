@@ -94,6 +94,21 @@ export const BrowsePage: React.FC<{}> = () => {
 						<AmiiboCard amiibo={amiibo} key={index} />
 					))}
 			</div> */}
+			<Pagination
+				size="small"
+				className="amiibo-pagination"
+				total={filteredAmiibos.length}
+				showTotal={(total, range) =>
+					`${range[0]}-${range[1]} of ${total} items`
+				}
+				defaultPageSize={50}
+				defaultCurrent={1}
+				pageSizeOptions={pageSizeOptions}
+				onChange={(page, pageSize) => {
+					setAmiibosPerPage(pageSize);
+					setCurrentPage(page);
+				}}
+			/>
 		</div>
 	);
 };
