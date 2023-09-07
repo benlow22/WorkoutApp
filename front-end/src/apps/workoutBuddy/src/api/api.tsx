@@ -196,6 +196,30 @@ export const _name_API = async (
 
 */
 
+export const getLorcanaCards = async (
+	session: ISession,
+	cardName: string
+): Promise<{
+	data: any | null;
+	error: TError;
+}> => {
+	let [error, response] = await fetcher(`/public/cards/${cardName}`, session);
+	let data: any | null = null;
+	// if success
+	if (response.ok) {
+		let respJSON = await response.json();
+		// alter data if need be
+
+		// console.log("resp", respJSON);
+		data = respJSON;
+	} else {
+		error = new Error(`Getting all cards from Supabase`, {
+			cause: error,
+		});
+	}
+	return { data, error };
+};
+
 // GET /api/authorized/exercises = get all users and public Exercises
 export const usersAndPublicExercisesAPI = async (
 	session: ISession
@@ -205,9 +229,11 @@ export const usersAndPublicExercisesAPI = async (
 }> => {
 	let [error, response] = await fetcher(`/authorized/exercises`, session);
 	let data: IExercise[] | null = null;
+	console.log(data);
 	// if success
 	if (response.ok) {
 		let respJSON = await response.json();
+		console.log("RESPJWON", respJSON);
 		// alter data if need be
 		data = respJSON;
 	} else {

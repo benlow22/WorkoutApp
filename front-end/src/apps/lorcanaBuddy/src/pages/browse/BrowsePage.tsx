@@ -1,11 +1,12 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import lorcanaMickey from "../../../../../images/lorcanaMickey.avif";
+import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
 
 export const BrowsePage = () => {
-	const { auth, username } = useContext(AuthContext);
-
+	const { auth, username, session } = useContext(AuthContext);
+	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>([]);
 	const lorcanaNames = [
 		"hades-king_of_olympus",
 		"steal_from_the_rich",
@@ -213,17 +214,30 @@ export const BrowsePage = () => {
 		"cut_to_the_chase",
 	];
 
-	fetch("https://api.lorcana-api.com/strict/captain_hook")
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (data) {
-			console.log("dad", data);
-		})
-		.catch(function (err) {
-			console.log("Fetch Error :-S", err);
-		});
+	useEffect(() => {
+		if (session) {
+			// console.log(session);
+			const lorcanaData = async () => {
+				const solution = await Promise.all(
+					lorcanaNames.map(async (name) => {
+						const { data, error } = await getLorcanaCards(
+							session!,
+							name
+						);
+						if (data) {
+							return data;
+						}
+					})
+				);
+				setLorcanaAllCards(solution);
+			};
+			lorcanaData();
+		}
+	}, [session]);
 
+	useEffect(() => {
+		console.log(lorcanaAllCards);
+	}, [lorcanaAllCards]);
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>
