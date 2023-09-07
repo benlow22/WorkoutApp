@@ -3,11 +3,14 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import lorcanaMickey from "../../../../../images/lorcanaMickey.avif";
 import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
+import lorcanaData from "./../../public/lorcanaCards.json";
 
 export const BrowsePage = () => {
 	const { auth, username, session } = useContext(AuthContext);
-	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>([]);
-	const lorcanaNames = [
+	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>(lorcanaData);
+
+	// API to get lorcana data
+	/* const lorcanaNames = [
 		"hades-king_of_olympus",
 		"steal_from_the_rich",
 		"let_it_go",
@@ -212,35 +215,34 @@ export const BrowsePage = () => {
 		"lantern",
 		"gramma_tala-storyteller",
 		"cut_to_the_chase",
-	];
-
-	useEffect(() => {
-		if (session) {
-			// console.log(session);
-			const lorcanaData = async () => {
-				const solution = await Promise.all(
-					lorcanaNames.map(async (name) => {
-						const { data, error } = await getLorcanaCards(
-							session!,
-							name
-						);
-						if (data) {
-							return data;
-						}
-					})
-				);
-				solution.sort((a, b) => a["card-number"] - b["card-number"]);
-				// console.log("sorted", filterByStatus);
-				setLorcanaAllCards(solution);
-			};
-			lorcanaData();
-		}
-	}, [session]);
+	]; */
+	// useEffect(() => {
+	// 	if (session) {
+	// 		// console.log(session);
+	// 		const lorcanaData = async () => {
+	// 			const solution = await Promise.all(
+	// 				lorcanaNames.map(async (name) => {
+	// 					const { data, error } = await getLorcanaCards(
+	// 						session!,
+	// 						name
+	// 					);
+	// 					if (data) {
+	// 						return data;
+	// 					}
+	// 				})
+	// 			);
+	// 			solution.sort((a, b) => a["card-number"] - b["card-number"]);
+	// 			// console.log("sorted", filterByStatus);
+	// 			setLorcanaAllCards(solution);
+	// 		};
+	// 		lorcanaData();
+	// 	}
+	// }, [session]);
 
 	useEffect(() => {
 		console.log(lorcanaAllCards);
 	}, [lorcanaAllCards]);
-	// if logged in, will show dashboard with home page underneat, if not, just home page
+
 	return (
 		<>
 			<div className="page-heading">
