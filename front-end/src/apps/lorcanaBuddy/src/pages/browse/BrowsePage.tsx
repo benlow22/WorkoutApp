@@ -1,12 +1,93 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import lorcanaMickey from "../../../../../images/lorcanaMickey.avif";
+import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
+import lorcanaData from "./../../public/lorcanaCards.json";
+import { LorcanaCard } from "../../components/LorcanaCard";
+import "./../../styles/index.css";
+import { FloatButton, Tooltip } from "antd";
+import { SaveFilled } from "@ant-design/icons";
+
+export type TCardStatus = {
+	[cardname: string]: {
+		quantity: number;
+		"foil-quanity": number;
+		wishlist: boolean;
+		"foil-wishlist": boolean;
+	};
+};
 
 export const BrowsePage = () => {
-	const { auth, username } = useContext(AuthContext);
+	const { auth, userId, session, supabase } = useContext(AuthContext);
+	const [lorcanaAllCards, setLorcanaAllCards] = useState<any[]>(lorcanaData);
+	const [isUploading, setIsUploading] = useState<boolean>(false);
+	const [usersUpdatedCardStatuses, setUsersUpdatedCardStatuses] =
+		useState<TCardStatus>({});
+	// const [usersCardStatuses, setUsersCardStatuses] = useState<TCardStatus>({});
 
-	const lorcanaNames = [
+	const getUsersCardStatuses = async () => {
+		let { data, error } = await supabase
+			.from("lorb_cards_statuses")
+			.select("cards_statuses")
+			.single();
+		if (error) {
+			console.log("Error getting card statuses", error);
+		} else if (data) {
+			console.log("GET card statuses", data);
+			// setUsersCardStatuses(data.cards_statuses);
+			setUsersUpdatedCardStatuses(data.cards_statuses);
+		}
+	};
+
+	useEffect(() => {
+		getUsersCardStatuses();
+	}, []);
+
+	// useEffect(() => {
+	// 	console.log("SATUS", usersCardStatuses);
+	// }, [usersCardStatuses]);
+
+	useEffect(() => {
+		console.log("updated Card MEga status", usersUpdatedCardStatuses);
+	}, [usersUpdatedCardStatuses]);
+	// <{[cardname: string]:{"quantity": number,
+	// 		"foil-quanity": mumber;,
+	// 		"wishlist": boolean,
+	// 		"foil-wishlist": boolean}}[]>
+
+	/* 
+	1. create upserter to add individual card status data to usersUpdatedCardStatuses
+	. get old usersUpdatedCardStatuses
+	. if old statuses exist, add them to lorcsna all cards. 
+	2. create button to upsert new status object 
+	
+	
+
+	status object : 
+		{
+			[cardname]: {
+				quantity: number
+				foil-quanity: mumber
+				wishlist: boolean,
+				foil-wishlist: boolean
+			}
+		}
+
+
+
+	can go through array,
+	
+	lorcanaAllCards.map(card=>
+		{if (card.name in usersCArdStatuses){
+			return {...card, status: usersCArdStatuses[card.name]}
+		} else {
+			return {...card, status: null}
+		}
+	})
+	 */
+	// API to get lorcana data
+	/* const lorcanaNames = [
 		"hades-king_of_olympus",
 		"steal_from_the_rich",
 		"let_it_go",
@@ -211,24 +292,79 @@ export const BrowsePage = () => {
 		"lantern",
 		"gramma_tala-storyteller",
 		"cut_to_the_chase",
-	];
+	]; */
+	// useEffect(() => {
+	// 	if (session) {
+	// 		// console.log(session);
+	// 		const lorcanaData = async () => {
+	// 			const solution = await Promise.all(
+	// 				lorcanaNames.map(async (name) => {
+	// 					const { data, error } = await getLorcanaCards(
+	// 						session!,
+	// 						name
+	// 					);
+	// 					if (data) {
+	// 						return data;
+	// 					}
+	// 				})
+	// 			);
+	// 			solution.sort((a, b) => a["card-number"] - b["card-number"]);
+	// 			// console.log("sorted", filterByStatus);
+	// 			setLorcanaAllCards(solution);
+	// 		};
+	// 		lorcanaData();
+	// 	}
+	// }, [session]);
 
-	fetch("https://api.lorcana-api.com/strict/captain_hook")
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (data) {
-			console.log("dad", data);
-		})
-		.catch(function (err) {
-			console.log("Fetch Error :-S", err);
-		});
+	useEffect(() => {
+		console.log(lorcanaAllCards);
+	}, [lorcanaAllCards]);
+
+	const handleFloatSave = async () => {
+		setIsUploading(true);
+		const { data, error } = await supabase
+			.from("lorb_cards_statuses")
+			.update({ cards_statuses: usersUpdatedCardStatuses })
+			.eq("user_id", userId)
+			.select();
+		if (data) {
+			console.log("upload success", data);
+			setIsUploading(false);
+		} else {
+			console.log(error);
+			setIsUploading(false);
+		}
+	};
 
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>
 			<div className="page-heading">
 				<h2>Lorcana Buddy Browse</h2>
+				<div className="card-grid">
+					{lorcanaAllCards.map((card, index) => (
+						<LorcanaCard
+							disabled={isUploading}
+							key={index}
+							card={card}
+							setUsersUpdatedCardStatuses={
+								setUsersUpdatedCardStatuses
+							}
+							usersUpdatedCardStatuses={usersUpdatedCardStatuses}
+							// status={usersCardStatuses}
+						/>
+					))}
+				</div>
+				<div className="save-float-button">
+					<FloatButton
+						tooltip={<div>Save Updates</div>}
+						icon={<SaveFilled />}
+						type="primary"
+						style={{ right: 24 }}
+						onClick={handleFloatSave}
+					/>
+				</div>
+
 				<img
 					src={lorcanaMickey}
 					style={{ maxWidth: "400px" }}
