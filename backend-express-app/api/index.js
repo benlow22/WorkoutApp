@@ -7,9 +7,6 @@ const cors = require("cors");
 const { v4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
-// const authorizedRouter = require("../routes/authorized");
-
-//git pull origin a-exp -r 		pull updated branch, to rebase onto
 
 env.config();
 
@@ -18,21 +15,7 @@ var corsOptions = {
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
-
-// const supabase = createClient(
-// 	process.env.SUPABASE_URL,
-// 	process.env.SUPABASE_ANON_KEY,
-// 	{
-// 		auth: {
-// 			autoRefreshToken: true,
-// 			persistSession: false,
-// 			detectSessionInUrl: true,
-// 		},
-// 	}
-// );
-
 const app = express();
-// app.use(cors({ origin: /test\-workout\-app\-vercel\.vercel\.app.*/ }));
 
 const port = process.env.PORT || 8000;
 
@@ -69,42 +52,6 @@ app.use((req, res, next) => {
 
 //Routes
 app.use("/api", require("../routes/index"));
-
-// // app.use("/api/authorized", authorizedRouter);
-// app.use("/api/public", publicRouter);
-
-// // ROUTE Middleware = specific routes, like authorization
-
-// // EVENTUALLY SEPERATE TO OWN FILE and import in
-// // public Routes
-
-//TEST ROUTES (can delete)
-// publicRouter.get("/cats", (req, res) => {
-// 	res.send(res.header);
-// });
-
-// publicRouter.get("/", (req, res) => {
-// 	const path = `/api/item/${v4()}`;
-// 	res.setHeader("Content-Type", "text/html");
-// 	res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-// 	res.end(`Hello! Go to item: <a href="${path}">${path}</a>`);
-// });
-
-// publicRouter.get("/api/item/:slug", (req, res) => {
-// 	const { slug } = req.params;
-// 	res.end(`Item: ${slug}`);
-// });
-
-// does not need to be authenticated.
-// publicRouter.get("/exercises", async (req, res) => {
-// 	let { data: exercises, error } = await supabase
-// 		.from("exercises")
-// 		.select("name");
-// 	console.log(exercises);
-// 	res.send(exercises);
-// });
-
-// app.use("/workouts", workoutsRouter);
 
 app.listen(port, () => {
 	// eslint-disable-next-line no-console

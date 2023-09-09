@@ -6,7 +6,7 @@ import { TUsersExerciseData } from "../../../../../api/types";
 import { Set } from "../sets/Set";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { arrToNum } from "../../../../../utils/utils";
-
+import "./../../../../../styles/exercises.css";
 type TProps = {
 	exercise: TUsersExerciseData;
 	index: number;
@@ -96,7 +96,15 @@ const ExercisesCollapseChild = ({
 			}}
 		>
 			{weightsRepsTime.map((sets: number[], index: number) => (
-				<div className={`collapse-exercise-sets`} key={index}>
+				<div
+					className={`collapse-exercise-sets`}
+					key={index}
+					style={{
+						display: "flex",
+						flexWrap: "nowrap",
+						width: "100%",
+					}}
+				>
 					<Set
 						set={sets}
 						weightUnits={exercise.weightUnits}

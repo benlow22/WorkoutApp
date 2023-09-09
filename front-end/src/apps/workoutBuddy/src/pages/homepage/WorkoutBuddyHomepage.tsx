@@ -9,10 +9,7 @@ export const WorkoutBuddyHomepage = () => {
 	return (
 		<>
 			{auth && (
-				<div
-					className="page-heading"
-					style={{ backgroundColor: "pink" }}
-				>
+				<div className="page-heading">
 					<h2>Workout Buddy DASHBOARD</h2>
 				</div>
 			)}
