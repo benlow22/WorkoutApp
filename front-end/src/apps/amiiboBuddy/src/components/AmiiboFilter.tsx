@@ -348,7 +348,7 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 									onChange={(e) => {
 										handleSearchChange(e);
 									}}
-									style={{ width: 200 }}
+									style={{ width: "300pxs" }}
 								/>
 								<Form.Item>
 									<Radio.Group
