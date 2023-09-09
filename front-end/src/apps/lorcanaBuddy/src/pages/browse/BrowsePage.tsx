@@ -336,6 +336,7 @@ export const BrowsePage = () => {
 		}
 	};
 
+	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<>
 			<div className="page-heading">
