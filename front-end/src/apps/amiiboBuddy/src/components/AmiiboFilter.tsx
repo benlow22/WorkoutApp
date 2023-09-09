@@ -348,13 +348,15 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 									onChange={(e) => {
 										handleSearchChange(e);
 									}}
-									style={{ width: "300pxs" }}
+									style={{ width: "300px" }}
 								/>
-								<Form.Item>
+								<Form.Item style={{ width: "500px" }}>
 									<Radio.Group
 										onChange={radioCategoryOnChange}
 										defaultValue="All"
-										style={{ marginTop: 16 }}
+										style={{
+											marginTop: 16,
+										}}
 									>
 										<Radio.Button
 											value="All"

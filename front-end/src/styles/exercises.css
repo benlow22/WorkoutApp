@@ -104,9 +104,9 @@ textarea.ant-input {
 .set-reps {
 	width: 75px;
 }
-label.ant-radio-button-wrapper {
+/* label.ant-radio-button-wrapper {
 	width: 40px;
-}
+} */
 
 /* Add Exercise - verify sets before adding to workout */
 .add-exercise-data-box {
