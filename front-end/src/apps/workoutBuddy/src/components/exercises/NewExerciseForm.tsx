@@ -55,7 +55,7 @@ const NewExerciseForm: React.FC<{}> = () => {
 		if (error) {
 			console.log(error);
 		}
-		navigate(`/exercises`);
+		navigate(`/workoutBuddy/exercises`);
 	};
 
 	const [exerciseName, setExerciseName] = useState<string>(exerciseNameURL!);

@@ -49,7 +49,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
 					</div>
 				)}
-				<Link to={`/newWorkout`}>
+				<Link to={`/workoutBuddy/newWorkout`}>
 					<Button
 						type="primary"
 						block
