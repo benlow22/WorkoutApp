@@ -33,7 +33,6 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 		.from("workouts")
 		.select(
 			"*, exercises: users_exercise(sets, time, weightUnits: weight_units, time_units, useTime, notes, personal_links, ...exercise!users_exercise_exercise_id_fkey(name, id, description, defaultLinks: links))"
-			// "*, exercises: exercise(name, id, 	defaultSets: default_sets, defaultWeightUnits: default_weight_units,defaultTime: default_time, defaultTimeUnits: default_time_units)"
 		)
 		// can add extra info later? to tooltip
 
@@ -192,7 +191,3 @@ router.post("/workout/:workoutId/:exerciseId", async (req, res) => {
 	}
 });
 module.exports = router;
-// d79ccff2-0177-46e8-93a2-ea3353691d28
-// a71a2fae-c4ed-4f9d-900f-e99b125beb52
-// c161894e-d2d8-4b94-8ed2-5703ac2e90f4
-// 38172551-72fd-4920-8523-27639957cac8

@@ -37,7 +37,7 @@ export const WorkoutPage = () => {
 		messageApi.open({
 			type: "success",
 			content: "The workout was successfully deleted. redirecting...",
-			onClose: () => navigate("/"),
+			onClose: () => navigate("/workoutBuddy/workouts"),
 		});
 	};
 

@@ -124,6 +124,7 @@ input[value].new-workout-input,
 }
 .new-workout-input {
 	margin-bottom: 12px;
+	min-width: 300px;
 }
 .new-workout-name {
 	display: flex;

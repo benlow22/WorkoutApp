@@ -24,7 +24,7 @@ export const EditWorkoutPage = () => {
 	let { workoutUrl } = useParams();
 
 	const redirectToWelcomepage = () => {
-		navigate("/");
+		navigate("/workoutBuddy/workouts");
 	};
 
 	const deleteWorkout = async () => {
