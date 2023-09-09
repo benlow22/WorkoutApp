@@ -36,7 +36,7 @@ export const EditWorkoutNameButton: React.FC<{
 				if (updatedWorkout) {
 					// returned updated workout
 					console.log("updated workout data:", updatedWorkout);
-					navigate(`/workouts/${updatedWorkout.url}`, {
+					navigate(`/workoutBuddy/workouts/${updatedWorkout.url}`, {
 						state: {
 							id: updatedWorkout.id,
 							name: updatedWorkout.name,
