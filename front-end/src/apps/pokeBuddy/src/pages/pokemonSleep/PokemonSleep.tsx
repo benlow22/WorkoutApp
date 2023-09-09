@@ -74,6 +74,7 @@ export const PokemonSleep = () => {
 	>([]);
 
 	const [messageApi, contextHolder] = message.useMessage();
+
 	const warningMessage = () => {
 		messageApi.open({
 			type: "warning",
@@ -81,6 +82,7 @@ export const PokemonSleep = () => {
 			duration: 6,
 		});
 	};
+
 	useEffect(() => {
 		const categories = varFromJSON(recipesJSON, "categories");
 		setCategories(categories);
@@ -90,29 +92,35 @@ export const PokemonSleep = () => {
 		setIngredients(ingredients);
 	}, []);
 
+	// when clicked sets unlocked ingredient to array of ingr.
 	const handleIconClick = (ingredient: TIngredient) => {
-		console.log("icon clicked", ingredient.name);
+		// console.log("icon clicked", ingredient.name);
 		const newIngredientArray = new Array(...unlockedIngredients);
+		// remove if clicked ing is in list
 		if (newIngredientArray.includes(ingredient.name)) {
 			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(
 				ingredient.name
 			);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
-			console.log("newIngredientArray", newIngredientArray);
+			// console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
 		} else {
+			// add if ing is not in list
 			newIngredientArray.push(ingredient.name);
 			setUnlockedIngredients(newIngredientArray);
 		}
 	};
-	const getIngredients = async () => {
+
+	// if logged in get Users data
+	const getUsersData = async () => {
+		// check if data exists
 		const { count, error: testError } = await supabase
 			.from("pokemon_sleep_users_recipe_data")
 			.select(`*`, { count: "exact", head: true });
-		console.log("count", count);
 		if (testError) {
 			console.error(testError);
 		}
+		//if exists
 		if (count) {
 			let { data, error } = await supabase
 				.from("pokemon_sleep_users_recipe_data")
@@ -147,6 +155,7 @@ export const PokemonSleep = () => {
 			}
 		}
 	};
+
 	useEffect(() => {
 		switch (filterKey) {
 			case 1:
@@ -261,11 +270,20 @@ export const PokemonSleep = () => {
 			// // console.log("old user data", userOldData);
 			// console.log("new user data", userOldData);
 		}
-	}, [newRecipeLevel]);
+	}, [newRecipeLevel, chosenCategories]);
 
 	useEffect(() => {
-		getIngredients();
-	}, []);
+		if (auth) {
+			getUsersData();
+		} else {
+			setUnlockedIngredients([]);
+			setPotSize(15);
+			setChosenCategories("");
+			setCurriesLevels([]);
+			setSaladLevels([]);
+			setDrinksLevels([]);
+		}
+	}, [auth]);
 
 	useEffect(() => {
 		// console.log("unlockedIngredients ARR", showAll);
