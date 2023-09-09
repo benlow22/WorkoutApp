@@ -19,7 +19,7 @@ export const LorcanaCards = ({ cards, loading, isList }: TProps) => {
 
 	return (
 		<ul className={`list-group-${isList ? "grid" : "grid"} mb-4`}>
-			{cards.map((card, index: number) =>
+			{/* {cards.map((card, index: number) =>
 				isList ? (
 					<li key={amiibo.id} className="list-group-item">
 						<AmiiboCard amiibo={amiibo} key={index} />
@@ -29,7 +29,7 @@ export const LorcanaCards = ({ cards, loading, isList }: TProps) => {
 						<AmiiboLine amiibo={amiibo} key={index} />
 					</li>
 				)
-			)}
+			)} */}
 		</ul>
 	);
 };
