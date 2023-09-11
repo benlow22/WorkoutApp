@@ -88,7 +88,7 @@ Tprops) => {
 			setRecipeLevel(level);
 			setRecipeBaseValue(recipe.levels[level].value);
 		}
-	}, [recipe.level]);
+	}, [recipe]);
 
 	useEffect(() => {
 		if (recipeLevel !== recipe.level) {
