@@ -42,6 +42,7 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 
 	// if there is data, send it back = 200 status
 	if (data) {
+		console.log("DATA:m", data);
 		res.send(data);
 		// console.log("exerciseDATA", data);
 	} else {
