@@ -225,6 +225,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 			{
 				// isShowExistingExerciseField ||
 				// 	(isShowExerciseConfirmation &&
+				// usersExerciseLoading &&z
 				exerciseDefaultValues && (
 					<AddExerciseData
 						exercise={exerciseDefaultValues}

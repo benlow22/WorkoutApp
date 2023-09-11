@@ -156,7 +156,8 @@ export const SearchExercises = ({
 					);
 					if (exercise) {
 						handleAddExistingExercise(exercise);
-						usersExerciseRequest(exercise.id, session!);
+						// usersExerciseRequest(exercise.id, session!);
+
 					}
 					setAddExistingExerciseBox(true);
 					// addExerciseToWorkout(workout.id, exercise, userId);
