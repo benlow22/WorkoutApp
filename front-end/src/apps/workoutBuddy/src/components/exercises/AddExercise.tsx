@@ -49,6 +49,9 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 	const [isShowSearchExerciseBar, setIsShowSearchExerciseBar] =
 		useState<boolean>(false);
 	isShowSearchExerciseBar;
+
+	const [isShowExistingExerciseField, setIsShowExistingExerciseField] =
+		useState<boolean>(false);
 	const [exerciseName, setExerciseName] = useState<string>("");
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const [exercise, setExercise] = useState<INewExerciseInput>(); // change type
@@ -101,6 +104,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 		if (exerciseName) {
 			setIsShowSearchExerciseBar(false);
 			setIsShowAddExerciseButton(false);
+			setIsShowExistingExerciseField(true);
 		}
 	}, [exerciseName]);
 
@@ -139,6 +143,7 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 	};
 
 	const handleAddExistingExercise = (exercise: IExercise) => {
+		console.log("exerciseID", exercise.id);
 		usersExerciseRequest(exercise.id, session!);
 	};
 
@@ -217,14 +222,20 @@ export const AddExercise = ({ workout, addExerciseToWorkout }: TProps) => {
 					handleCreateNewExercise={handleCreateNewExercise}
 				/>
 			)}
-			{isShowExerciseConfirmation && exerciseDefaultValues && (
-				<AddExerciseData
-					exercise={exerciseDefaultValues}
-					workout={workout}
-					handleAddExercise={handleAddExercise}
-					handleRemoveExercise={handleRemoveExerciseData}
-				/>
-			)}
+			{
+				// isShowExistingExerciseField ||
+				// 	(isShowExerciseConfirmation &&
+				// usersExerciseLoading &&z
+				exerciseDefaultValues && (
+					<AddExerciseData
+						exercise={exerciseDefaultValues}
+						workout={workout}
+						handleAddExercise={handleAddExercise}
+						handleRemoveExercise={handleRemoveExerciseData}
+					/>
+					// )
+				)
+			}
 		</div>
 	);
 };

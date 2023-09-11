@@ -19,7 +19,7 @@ export const WorkoutPage = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 
-	const { session } = useContext(AuthContext);
+	const { session, auth } = useContext(AuthContext);
 	// const [addExercise, setAddExercise] = useState<boolean>(false);
 	const [exercises, setExercises] = useState<TUsersExerciseData[]>([]);
 	const [workout, setWorkout] = useState<IWorkout>(location.state); // if routing from NewWorkoutPage, state is passed, no need for API call
@@ -31,6 +31,7 @@ export const WorkoutPage = () => {
 		getWorkoutAndExercisesError,
 		getWorkoutAndExercisesRequest,
 	] = useRequest(getWorkoutAndExercisesAPI);
+
 	const [messageApi, contextHolder] = message.useMessage();
 
 	const deleteWorkoutSuccess = () => {
@@ -56,10 +57,10 @@ export const WorkoutPage = () => {
 	] = useRequest(usersAndPublicExercisesAPI);
 
 	useEffect(() => {
-		if (workoutUrl) {
+		if (workoutUrl && auth) {
 			getWorkoutAndExercisesRequest(workoutUrl, session!);
 		}
-	}, []);
+	}, [auth]);
 
 	useEffect(() => {
 		if (exercises) {

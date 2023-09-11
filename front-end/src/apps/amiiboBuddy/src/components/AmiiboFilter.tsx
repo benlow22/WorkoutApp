@@ -357,7 +357,6 @@ export const AmiiboFilter = ({ amiibos, setFilteredAmiibos }: TProps) => {
 										style={{
 											marginTop: 16,
 										}}
-
 									>
 										<Radio.Button
 											value="All"
