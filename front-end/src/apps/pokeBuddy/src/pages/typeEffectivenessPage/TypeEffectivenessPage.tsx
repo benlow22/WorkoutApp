@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import sprigatito from "../../../../../images/sprigatito.jpg";
+import { Homepage } from "./Components/Homepage";
 
 export const TypeEffectiveness = () => {
 	const { auth, username } = useContext(AuthContext);
@@ -16,6 +17,7 @@ export const TypeEffectiveness = () => {
 				alt="sprigatito"
 			/>
 			<h5>Coming soon...</h5>
+			<Homepage />
 		</div>
 	);
 };
