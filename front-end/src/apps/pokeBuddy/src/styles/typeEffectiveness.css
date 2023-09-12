@@ -195,7 +195,7 @@
 .type-effectiveness-page .stat-box {
 	background-color: #b4b3b3;
 	height: 410px;
-	width: 300px;
+	width: 330px;
 	border-style: solid;
 	border-radius: 20px;
 	border-width: 10px;
@@ -270,8 +270,9 @@
 	height: 100px;
 }
 .type-effectiveness-page .ant-switch {
-	height: 30px;
+	height: 42px;
 	text-align: left;
+	margin: 0px;
 }
 /* // 	],
 // 	"notVeryEffective": [
@@ -283,8 +284,48 @@
 // 	],
 // 	"weakEffective": [ */
 
-@media only screen and (max-width: 420px) {
-	.pokemon-logo {
-		max-width: 60px;
+@media only screen and (max-width: 500px) {
+	.type-effectiveness-page {
+		.pokemon-logo {
+			max-width: 60px;
+		}
+		.opponent-Stats {
+			width: 100%;
+			flex-wrap: wrap;
+			flex-direction: column-reverse;
+		}
+		.stat-box.weak,
+		.stat-box.resistant {
+			width: 100%;
+			margin: 0px;
+			height: 200px;
+			h5 {
+				font-size: 20px !important;
+			}
+		}
+		.two-types {
+			width: 100%;
+			justify-content: space-evenly;
+		}
+		.type-indicator {
+			width: 40%;
+		}
+		.settings-bar {
+			height: fit-content;
+			width: fit-content;
+		}
+		.reset-button {
+			margin: 0px 0px 10px;
+		}
+	}
+	.type-effectiveness-page h4 {
+		font-size: 15px;
+	}
+	.type-effectiveness-page h5 {
+		font-size: 10px;
+	}
+	.type-effectiveness-page .small-button {
+		width: 50px;
+		height: 20px;
 	}
 }
