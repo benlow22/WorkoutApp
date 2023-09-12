@@ -1,0 +1,290 @@
+.App .type-effectiveness-page {
+	text-align: center;
+	background-color: #444444;
+}
+
+.App-logo .type-effectiveness-page {
+	height: 40vmin;
+	pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.App-logo {
+		animation: App-logo-spin infinite 20s linear;
+	}
+}
+.pokemon-logo .type-effectiveness-page {
+	max-height: 300px;
+}
+
+.App-header .type-effectiveness-page {
+	background-color: #282c34;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	font-size: calc(10px + 2vmin);
+	color: white;
+}
+
+.type-effectiveness-page button {
+	color: white;
+	font-size: 1.5rem;
+	font-family: Arial;
+	font-variant-caps: small-caps;
+	margin: 0.75rem;
+	width: 105px;
+	padding: 6px;
+	border-radius: 10px;
+	text-shadow: 0 1px 1px rgb(207, 207, 207);
+	box-shadow: 0 0 0 1px #b3b3b3 inset,
+		0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #444444,
+		0 4px 0 1px rgba(0, 0, 0, 0.4), 0 5px 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+.type-effectiveness-page button:active {
+	color: rgba(255, 255, 255, 0);
+}
+
+.type-effectiveness-page button:disabled {
+	color: white;
+}
+
+.type-effectiveness-page .small-button {
+	width: 75px;
+	font-size: 1.1rem;
+	font-family: Arial;
+	font-variant-caps: small-caps;
+	margin: 0.35rem;
+	padding: 6px;
+	border-radius: 10px;
+	text-shadow: 0 1px 1px rgb(207, 207, 207);
+	display: inline;
+}
+.type-effectiveness-page .full-List {
+	max-width: 675px;
+}
+
+.type-effectiveness-page .list-Of-Buttons {
+	display: flex;
+	justify-content: center;
+}
+
+.type-effectiveness-page .Bug {
+	background-color: #8ebc2e;
+}
+
+.type-effectiveness-page .Dark {
+	background-color: #5b545d;
+}
+
+.Dragon {
+	background-color: #0074d6;
+}
+
+.Electric {
+	background-color: #f7d041;
+}
+
+.Fairy {
+	background-color: #e792e8;
+}
+
+.Fighting {
+	background-color: #d23c67;
+}
+
+.Fire {
+	background-color: #fc9b59;
+}
+
+.Flying {
+	background-color: #92a7e4;
+}
+
+.Ghost {
+	background-color: #516aac;
+}
+
+.Grass {
+	background-color: #62bf57;
+}
+
+.Ground {
+	background-color: #dd7443;
+}
+
+.Ice {
+	background-color: #72d1c1;
+}
+
+.Normal {
+	background-color: #909aa3;
+}
+
+.Poison {
+	background-color: #b167c6;
+}
+
+.Psychic {
+	background-color: #fa7578;
+}
+
+.Rock {
+	background-color: #c8b58d;
+}
+
+.Steel {
+	background-color: #578fa6;
+}
+
+.Water {
+	background-color: var(--water-color);
+}
+
+.type-effectiveness-page .opponent-Stats {
+	display: flex;
+	justify-content: center;
+	min-height: 400px;
+}
+
+.type-effectiveness-page .two-types {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	width: 350px;
+	align-content: center;
+}
+.type-effectiveness-page .type-indicator {
+	height: 90px;
+	width: 210px;
+	align-self: center;
+	color: white;
+	font-size: 40px;
+}
+
+.type-effectiveness-page h4 {
+	color: rgb(109, 109, 109);
+	font-size: 35px;
+	margin: 0;
+}
+
+.type-effectiveness-page .stat-box p {
+	font-size: small;
+	color: rgb(4, 3, 3);
+}
+
+.type-effectiveness-page .stat-box.weak {
+	border-color: #1ba814;
+}
+.type-effectiveness-page .stat-box.resistant {
+	border-color: #a21212;
+}
+
+.type-effectiveness-page p {
+	margin: 0;
+}
+
+.type-effectiveness-page h5 {
+	font-size: 20px;
+	display: flex;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.type-effectiveness-page .stat-box {
+	background-color: #b4b3b3;
+	height: 410px;
+	width: 300px;
+	border-style: solid;
+	border-radius: 20px;
+	border-width: 10px;
+	margin: 25px 5px;
+	padding: 15px;
+	display: flexbox;
+	align-content: flex-start;
+	justify-content: flex-start;
+	align-items: flex-start;
+	flex-wrap: wrap;
+}
+
+.type-effectiveness-page .type-buttons {
+	display: flex;
+	flex-direction: column;
+}
+
+.App-link {
+	color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+:root {
+	--water-color: #4d91d2;
+}
+
+.type-effectiveness-page .types-box {
+	height: 48px;
+	display: flex;
+	flex-wrap: inherit;
+	justify-content: center;
+}
+
+.type-effectiveness-page .reset-button {
+	margin: 0px 25px;
+	margin-top: 50px;
+	background-color: rgb(103, 103, 103);
+}
+
+.type-effectiveness-page .super-effective-attack {
+	border-style: solid;
+	box-shadow: 0 0 0 1px #a40000 inset,
+		0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #b80000,
+		0 4px 0 1px rgb(0, 60, 172), 0 5px 4px 1px rgb(155, 0, 0);
+	border-color: red;
+}
+.type-effectiveness-page .not-very-effective-attack {
+	border-style: solid;
+	box-shadow: 0 0 0 1px #38cf02 inset,
+		0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #30ac03,
+		0 4px 0 1px rgba(0, 0, 0, 0.4), 0 5px 4px 1px rgb(0, 155, 0);
+	border-color: rgb(0, 182, 18);
+}
+.type-effectiveness-page .weak-effective-attack {
+	border-style: solid;
+	box-shadow: 0 0 0 1px #38cf02 inset,
+		0 0 0 2px rgba(255, 255, 255, 0.15) inset, 0 4px 0 0 #3c5c31,
+		0 4px 0 1px rgba(0, 0, 0, 0.4), 0 5px 4px 1px rgb(43, 77, 43);
+	border-color: rgb(0, 182, 18);
+}
+
+.type-effectiveness-page .settings-bar {
+	width: 210px;
+	height: 100px;
+}
+.type-effectiveness-page .ant-switch {
+	height: 30px;
+	text-align: left;
+}
+/* // 	],
+// 	"notVeryEffective": [
+// 		"Bug",
+// 		"Fairy",
+// 		"Flying",
+// 		"Poison",
+// 		"Psychic"
+// 	],
+// 	"weakEffective": [ */
+
+@media only screen and (max-width: 420px) {
+	.pokemon-logo {
+		max-width: 60px;
+	}
+}
