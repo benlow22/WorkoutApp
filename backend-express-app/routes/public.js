@@ -94,40 +94,6 @@ router.get("/lorcana/cards", async (req, res) => {
 	res.send(sortedData).status(200);
 });
 
-// console.log("NAMES DATA", namesData);
-// const lorcanaData = async () => {
-// 	const solution = await Promise.all(
-// 		namesData.map(async (name) => {
-// 			const data = await fetch(
-// 				`https://api.lorcana-api.com/strict/${name}`,
-// 				{
-// 					method: "GET",
-// 					headers: {
-// 						"Content-Type": "application/json",
-// 						Accept: "text/html",
-// 					},
-// 				}
-// 			);
-// 			if (data) {
-// 				response = await data.json();
-// 				const item = { cardName: name, ...response };
-// 				return item;
-// 			}
-// 		})
-// 	);
-// 	solution.sort((a, b) => a["card-number"] - b["card-number"]);
-// 	res.send(solution).status(200);
-// 	// setTimeout(() => console.log("sol", solution), 10000);
-// };
-// lorcanaData();
-
-// if (data) {
-// 	response = await data.json();
-// 	const item = { cardName: cardName, ...response };
-// 	res.send(item).status(204);
-// 	// console.log("updated workout exercises", data);
-// }
-// });
 // // /api/authorized/:exerciseId = get users exercise id including sets and reps
 // router.get("/:exerciseId", async (req, res) => {
 // 	const exerciseId = req.params.exerciseId;
