@@ -70,7 +70,7 @@ export const LorcanaCard = ({
 	useEffect(() => {
 		setIsInitialLoading(true);
 		if (card.cardName in usersUpdatedCardStatuses) {
-			console.log("WOOOO", usersUpdatedCardStatuses[card.cardName]);
+			// console.log("WOOOO", usersUpdatedCardStatuses[card.cardName]);
 			setQuantityValue(usersUpdatedCardStatuses[card.cardName].quantity);
 			setFoilQuantityValue(
 				usersUpdatedCardStatuses[card.cardName]["foil-quanity"]

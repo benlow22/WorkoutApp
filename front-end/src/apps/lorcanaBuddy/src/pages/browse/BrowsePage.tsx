@@ -8,6 +8,9 @@ import { LorcanaCard } from "../../components/LorcanaCard";
 import "./../../styles/index.css";
 import { FloatButton, Tooltip } from "antd";
 import { SaveFilled } from "@ant-design/icons";
+import { amiiboFetchApi } from "../../../../amiiboBuddy/src/api/api";
+import { useRequest } from "../../../../../hooks/useRequest";
+import { getAllLorcanaCardsAPI } from "../../api";
 
 export type TCardStatus = {
 	[cardname: string]: {
@@ -26,6 +29,13 @@ export const BrowsePage = () => {
 		useState<TCardStatus>({});
 	// const [usersCardStatuses, setUsersCardStatuses] = useState<TCardStatus>({});
 
+	const [
+		getAllLorcanaCardsResponse,
+		getAllLorcanaCardsLoading,
+		getAllLorcanaCardsError,
+		getAllLorcanaCardsRequest,
+	] = useRequest(getAllLorcanaCardsAPI);
+
 	const getUsersCardStatuses = async () => {
 		let { data, error } = await supabase
 			.from("lorb_cards_statuses")
@@ -40,8 +50,31 @@ export const BrowsePage = () => {
 		}
 	};
 
+	// const fetchLor = async () => {
+	// 	const response = await fetch(
+	// 		"https://api.lorcana-api.com/strict/captain_hook",
+	// 		{ method: "POST", headers: { "Access-Control-Allow-Origin": "*" } }
+	// 	)
+	// 		.then(function (response) {
+	// 			return response.json();
+	// 		})
+	// 		.then(function (data) {
+	// 			console.log("dat", data);
+	// 		})
+	// 		.catch(function (err) {
+	// 			console.log("Fetch Error :-S", err);
+	// 		});
+	// 	return response;
+	// };
+
+	// const fetchLorcanaCards = async () => {
+	// 	console.log("lorcana GET response", response.json());
+	// 	return response;
+	// };
+
 	useEffect(() => {
 		getUsersCardStatuses();
+		getAllLorcanaCardsRequest(session!);
 	}, []);
 
 	// useEffect(() => {
