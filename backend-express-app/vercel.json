@@ -9,6 +9,7 @@
 				{
 					"key": "Access-Control-Allow-Origin",
 					"value": "https://www.buddy-system.me"
+
 				},
 				{
 					"key": "Access-Control-Allow-Methods",
