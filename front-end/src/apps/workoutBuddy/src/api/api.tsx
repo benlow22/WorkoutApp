@@ -55,7 +55,7 @@ import { arrToNum } from "../../../../utils/utils";
 
 // fetcher = sets headers, method, and credentials so they do not have to be set in every call.
 
-const fetcher = async <TData,>(
+export const fetcher = async <TData,>(
 	url: string,
 	session: ISession,
 	method: string | null = null,

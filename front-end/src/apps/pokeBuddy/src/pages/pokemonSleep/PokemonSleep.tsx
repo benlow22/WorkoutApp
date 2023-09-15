@@ -83,7 +83,6 @@ export const PokemonSleep = () => {
 		});
 	};
 
-
 	useEffect(() => {
 		// set categories = {[curries, drinks, salads:...]}
 		const categories = varFromJSON(recipesJSON, "categories");
