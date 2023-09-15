@@ -19,7 +19,7 @@ router.get("/workouts", async (req, res) => {
 	const { data, error } = await req.supabase.from("workouts").select("*");
 	if (data) {
 		// if there is data, send it back = 200 status
-		res.send(data);
+		res.send(data).status(200);
 	} else {
 		// if there is no data, send a 404 status with the err
 		res.status(404).send(error);
@@ -43,7 +43,7 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	// if there is data, send it back = 200 status
 	if (data) {
 		console.log("DATA:m", data);
-		res.send(data);
+		res.send(data).status(200);
 		// console.log("exerciseDATA", data);
 	} else {
 		res.status(404).send(error);
