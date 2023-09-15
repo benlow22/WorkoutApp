@@ -10,7 +10,7 @@ import { Pagination, Switch } from "antd";
 import { TAmiiboWithStatus } from "./AmiiboLine";
 
 export const BrowsePage: React.FC<{}> = () => {
-	const { supabase } = useContext(AuthContext);
+	const { supabase, auth } = useContext(AuthContext);
 	const [amiibos, setAmiibos] = useState<TAmiiboWithStatus[] | any>([]);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [amiibosPerPage, setAmiibosPerPage] = useState<number>(50);
@@ -20,6 +20,11 @@ export const BrowsePage: React.FC<{}> = () => {
 	>([]);
 	const [isList, setIsList] = useState<boolean>(false);
 
+	useEffect(() => {
+		if (auth) {
+			console.log("cookies", document.cookie);
+		}
+	}, [auth]);
 	useEffect(() => {}, []);
 
 	useEffect(() => {
