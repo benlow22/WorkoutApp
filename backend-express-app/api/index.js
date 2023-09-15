@@ -11,8 +11,7 @@ const bodyParser = require("body-parser");
 env.config();
 
 var corsOptions = {
-	origin: "https://buddy-system.me",
-
+	origin: "https://www.buddy-system.me",
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
