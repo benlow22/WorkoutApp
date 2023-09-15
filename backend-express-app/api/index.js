@@ -11,7 +11,7 @@ const bodyParser = require("body-parser");
 env.config();
 
 var corsOptions = {
-	origin: true,
+	origin: "https://www.buddy-system.me",
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
@@ -37,10 +37,7 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.header(
-			"Access-Control-Allow-Origin",
-			"https://www.buddy-system.me"
-		);
+		res.header("Access-Control-Allow-Origin", "https://buddy-system.me");
 		res.header("Access-Control-Allow-Credentials", "true");
 		res.header(
 			"Access-Control-Allow-Headers",
