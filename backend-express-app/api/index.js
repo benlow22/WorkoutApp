@@ -12,6 +12,7 @@ env.config();
 
 var corsOptions = {
 	origin: "https://buddy-system.me",
+
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
