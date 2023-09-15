@@ -11,7 +11,8 @@ const bodyParser = require("body-parser");
 env.config();
 
 var corsOptions = {
-	origin: "https://www.buddy-system.me",
+	origin: "https://buddy-system.me",
+
 	optionsSuccessStatus: 200,
 	credentials: true,
 };
@@ -45,7 +46,6 @@ app.use((req, res, next) => {
 		);
 		res.status(200).end();
 		return;
-
 	}
 	next();
 });
