@@ -20,6 +20,7 @@ router.get("/workouts", async (req, res) => {
 	if (data) {
 		// if there is data, send it back = 200 status
 		res.send(data).sendStatus(200);
+
 	} else {
 		// if there is no data, send a 404 status with the err
 		res.status(404).send(error);
