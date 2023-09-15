@@ -752,12 +752,20 @@ export const AddAmiibo: React.FC<{}> = () => {
 					</Form.Item>
 					<FormItem name="location" label="Bought at">
 						<>
-							<Places
-								selected={selected}
-								setSelected={setSelected}
-								setLocationName={setLocationName}
-							/>
-							<Input value={locationName} className="hidden" />
+							{setTimeout(() => (
+								<>
+									<Places
+										selected={selected}
+										setSelected={setSelected}
+										setLocationName={setLocationName}
+									/>
+									<Input
+										value={locationName}
+										className="hidden"
+									/>
+								</>
+							))}{" "}
+							s
 						</>
 					</FormItem>
 					<Form.Item wrapperCol={{ span: 24 }}>
