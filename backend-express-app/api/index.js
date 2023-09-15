@@ -33,18 +33,19 @@ app.use(bodyParser.json());
 // IMPORTANT = allow origin, headers, credentials, for headers or cookies
 app.use((req, res, next) => {
 	if (req.method === "OPTIONS") {
-		res.header(
+		res.setHeader(
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.header("Access-Control-Allow-Origin", "https://buddy-system.me");
-
-		res.header("Access-Control-Allow-Credentials", "true");
-		res.header(
+		res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+		res.setHeader("Access-Control-Allow-Credentials", "true");
+		res.setHeader(
 			"Access-Control-Allow-Headers",
 			"Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Token. Refresh-Token, User-Id"
 		);
-		return res.sendStatus(200).json({});
+		res.status(200).end();
+		return;
+
 	}
 	next();
 });
