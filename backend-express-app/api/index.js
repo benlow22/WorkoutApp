@@ -26,8 +26,8 @@ app.use(express.json()); // turns into object
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static("public"));
-app.use(cookieParser());
-app.use(cors(corsOptions));
+// app.use(cookieParser());
+// app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // Pre-Flight Request
