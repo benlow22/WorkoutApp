@@ -19,7 +19,8 @@ router.get("/workouts", async (req, res) => {
 	const { data, error } = await req.supabase.from("workouts").select("*");
 	if (data) {
 		// if there is data, send it back = 200 status
-		res.send(data).status(200);
+		res.send(data).sendStatus(200);
+
 	} else {
 		// if there is no data, send a 404 status with the err
 		res.status(404).send(error);
@@ -43,7 +44,7 @@ router.get("/workouts/:workoutUrl", async (req, res) => {
 	// if there is data, send it back = 200 status
 	if (data) {
 		console.log("DATA:m", data);
-		res.send(data).status(200);
+		res.send(data).sendStatus(200);
 		// console.log("exerciseDATA", data);
 	} else {
 		res.status(404).send(error);
@@ -60,7 +61,7 @@ router.delete("/workouts/:workoutId", async (req, res) => {
 	console.log("deleted workout: asdf", data); // show in terminal
 	if (error) {
 		// if there is data, send it back = 200 status
-		res.status(404).send(error);
+		res.status(404).sendStatus(error);
 	} else {
 		res.status(204);
 	}
@@ -73,7 +74,7 @@ router.get("/exercises", async (req, res) => {
 	if (data) {
 		res.send(data);
 	} else {
-		res.status(404).send(error);
+		res.status(404).sendStatus(error);
 	}
 });
 
