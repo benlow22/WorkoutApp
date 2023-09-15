@@ -11,7 +11,6 @@ import { SaveFilled } from "@ant-design/icons";
 import { useRequest } from "../../../../../hooks/useRequest";
 import { getAllLorcanaCardsAPI } from "../../api";
 
-
 export type TCardStatus = {
 	[cardname: string]: {
 		quantity: number;
@@ -36,7 +35,6 @@ export const BrowsePage = () => {
 		getAllLorcanaCardsRequest,
 	] = useRequest(getAllLorcanaCardsAPI);
 
-
 	const getUsersCardStatuses = async () => {
 		let { data, error } = await supabase
 			.from("lorb_cards_statuses")
@@ -51,10 +49,10 @@ export const BrowsePage = () => {
 		}
 	};
 
-
 	useEffect(() => {
 		getUsersCardStatuses();
 		getAllLorcanaCardsRequest(session!);
+	}, []);
 	useEffect(() => {
 		getUsersCardStatuses();
 	}, []);

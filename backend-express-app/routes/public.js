@@ -1,6 +1,7 @@
 // create another router for getting 'authorized' resources
 const { createClient } = require("@supabase/supabase-js");
 const { response } = require("express");
+const { response } = require("express");
 const supabase = createClient(
 	process.env.SUPABASE_URL,
 	process.env.SUPABASE_ANON_KEY,
@@ -31,6 +32,8 @@ router.get("/cats", (req, res) => {
 });
 
 router.get("/", (req, res) => {
+	// const path = `/api/item/${v4()}`;
+	console.log("HYIA");
 	// const path = `/api/item/${v4()}`;
 	console.log("HYIA");
 	res.setHeader("Content-Type", "text/html");
@@ -94,6 +97,91 @@ router.get("/lorcana/cards", async (req, res) => {
 	res.send(sortedData).status(200);
 });
 
+router.get("/cards/:cardName", async (req, res) => {
+	const cardName = req.params.cardName;
+
+	const data = await fetch(`https://api.lorcana-api.com/strict/${cardName}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "text/html",
+		},
+	});
+	if (data) {
+		response = await data.json();
+		const item = { cardName: cardName, ...response };
+		res.send(item).status(204);
+		// console.log("updated workout exercises", data);
+	}
+});
+
+router.get("/lorcana/cards", async (req, res) => {
+	console.log("hi");
+	const namesData = fetch(`https://api.lorcana-api.com/lists/names`)
+		.then((lorcanaNamesArr) => {
+			return lorcanaNamesArr.json();
+		})
+		.then((lorcanaArr) => {
+			const allCards = Promise.all(
+				lorcanaArr.map(async (name) => {
+					const data = await fetch(
+						`https://api.lorcana-api.com/strict/${name}`,
+						{
+							method: "GET",
+							headers: {
+								"Content-Type": "application/json",
+								Accept: "text/html",
+							},
+						}
+					);
+					if (data) {
+						const response = await data.json();
+						const item = { cardName: name, ...response };
+						return item;
+					}
+				})
+			);
+			return allCards;
+		});
+	let data = await namesData;
+	const sortedData = data.sort((a, b) => a["card-number"] - b["card-number"]);
+	res.send(sortedData).status(200);
+});
+
+// console.log("NAMES DATA", namesData);
+// const lorcanaData = async () => {
+// 	const solution = await Promise.all(
+// 		namesData.map(async (name) => {
+// 			const data = await fetch(
+// 				`https://api.lorcana-api.com/strict/${name}`,
+// 				{
+// 					method: "GET",
+// 					headers: {
+// 						"Content-Type": "application/json",
+// 						Accept: "text/html",
+// 					},
+// 				}
+// 			);
+// 			if (data) {
+// 				response = await data.json();
+// 				const item = { cardName: name, ...response };
+// 				return item;
+// 			}
+// 		})
+// 	);
+// 	solution.sort((a, b) => a["card-number"] - b["card-number"]);
+// 	res.send(solution).status(200);
+// 	// setTimeout(() => console.log("sol", solution), 10000);
+// };
+// lorcanaData();
+
+// if (data) {
+// 	response = await data.json();
+// 	const item = { cardName: cardName, ...response };
+// 	res.send(item).status(204);
+// 	// console.log("updated workout exercises", data);
+// }
+// });
 // // /api/authorized/:exerciseId = get users exercise id including sets and reps
 // router.get("/:exerciseId", async (req, res) => {
 // 	const exerciseId = req.params.exerciseId;

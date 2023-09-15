@@ -82,7 +82,6 @@ export const PokemonSleep = () => {
 			duration: 6,
 		});
 	};
-
 	useEffect(() => {
 		// set categories = {[curries, drinks, salads:...]}
 		const categories = varFromJSON(recipesJSON, "categories");
@@ -120,7 +119,6 @@ export const PokemonSleep = () => {
 		if (testError) {
 			console.error(testError);
 		}
-
 		if (count) {
 			let { data, error } = await supabase
 				.from("pokemon_sleep_users_recipe_data")
