@@ -31,6 +31,7 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 
 // Pre-Flight Request
+// should work
 // IMPORTANT = allow origin, headers, credentials, for headers or cookies
 app.use((req, res, next) => {
 	if (req.method === "OPTIONS") {
