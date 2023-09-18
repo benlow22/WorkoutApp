@@ -39,7 +39,10 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Methods",
 			"PUT, POST, PATCH, DELETE, GET"
 		);
-		res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+		res.setHeader(
+			"Access-Control-Allow-Origin",
+			"https://www.buddy-system.me"
+		);
 		res.setHeader("Access-Control-Allow-Credentials", "true");
 		res.setHeader(
 			"Access-Control-Allow-Headers",
