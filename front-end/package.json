@@ -62,5 +62,5 @@
 		"webpack-cli": "^5.1.4",
 		"webpack-dev-server": "^4.15.1"
 	},
-	"proxy": "https://api.lorcana-api.com/strict/captain_hook"
+	"proxy": "https://www.buddy-system.me"
 }
