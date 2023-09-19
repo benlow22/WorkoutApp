@@ -48,8 +48,9 @@ app.use((req, res, next) => {
 			"Access-Control-Allow-Headers",
 			"Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Token, Refresh-Token, User-Id"
 		);
-		res.status(200).end();
-		return;
+		// res.status(200).end();
+		// return;
+
 	}
 	next();
 });
