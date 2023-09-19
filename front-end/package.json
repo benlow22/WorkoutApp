@@ -63,4 +63,5 @@
 		"webpack-dev-server": "^4.15.1"
 	},
 	"proxy": "https://workout-app-express-backend.vercel.app/api/authorized/workouts"
+
 }
