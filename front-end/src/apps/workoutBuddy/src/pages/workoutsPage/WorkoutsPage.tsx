@@ -9,7 +9,7 @@ import { useRequest } from "../../../../../hooks/useRequest";
 import { SpiningLoadingIcon } from "../../../../../components/loading/LoadingIcon";
 
 export const WorkoutsPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId, session, supabase } =
+	const { workouts, setWorkouts, userId, auth, session, supabase } =
 		useContext(AuthContext);
 	const [
 		getAllUsersWorkoutsResponse,
@@ -21,10 +21,10 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	const location = useLocation();
 	useEffect(() => {
 		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
-		if (session) {
+		if (session && auth) {
 			getAllUsersWorkoutsRequest(session);
 		}
-	}, []);
+	}, [auth]);
 
 	useEffect(() => {
 		// set workouts from response
