@@ -42,7 +42,6 @@ app.use((req, res, next) => {
 		res.setHeader(
 			"Access-Control-Allow-Origin",
 			"https://www.buddy-system.me, https://buddy-system.vercel.app"
-
 		);
 		res.setHeader("Access-Control-Allow-Credentials", "true");
 		res.setHeader(
@@ -51,7 +50,6 @@ app.use((req, res, next) => {
 		);
 		// res.status(200).end();
 		// return;
-
 	}
 	next();
 });
