@@ -129,7 +129,7 @@ export const PokemonSleep = () => {
 				);
 			// set state with saved data
 			if (data) {
-				console.log("ingr data from supabase", data);
+				// console.log("ingr data from supabase", data);
 				if (data[0].myUnlockedIngredients) {
 					setUnlockedIngredients(data[0].myUnlockedIngredients);
 				}
@@ -145,7 +145,8 @@ export const PokemonSleep = () => {
 				if (data[0].saladsLevel) {
 					setSaladLevels(data[0].saladsLevel);
 				}
-				console.log("ingr data from curr", data);
+				// console.log("ingr data from curr", data);
+
 
 				// setCurriesLevels(JSON.stringify(data.curriesLevel));
 				if (data[0].drinksLevel) {
@@ -162,7 +163,7 @@ export const PokemonSleep = () => {
 			case 1:
 				setFilterName("Ingredient Names");
 		}
-		console.log("filterKey", filterKey);
+		// console.log("filterKey", filterKey);
 		// console.log("filterKey", filterName);
 	}, [filterKey]);
 
@@ -178,7 +179,7 @@ export const PokemonSleep = () => {
 				.eq("user_id", userId)
 				.select();
 			if (data) {
-				console.log(data);
+				// console.log(data);
 				setIsLoading(false);
 			} else {
 				console.log(error);
@@ -189,16 +190,16 @@ export const PokemonSleep = () => {
 	//
 	useEffect(() => {
 		if (newRecipeLevel) {
-			console.log("startupload", newRecipeLevel);
+			// console.log("startupload", newRecipeLevel);
 			let dataToUpdate: { name: string; level: number }[] = [];
 			if (chosenCategories === "Curries and Stews") {
 				if (curriesLevels) {
 					dataToUpdate = curriesLevels;
-					console.log("dataToUpdate", dataToUpdate);
+					// console.log("dataToUpdate", dataToUpdate);
 					let updatedDataIndex = dataToUpdate.findIndex(
 						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
 					);
-					console.log("indexxxx", updatedDataIndex);
+					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
 					} else {
@@ -207,17 +208,17 @@ export const PokemonSleep = () => {
 				} else {
 					dataToUpdate = [newRecipeLevel];
 					setCurriesLevels(dataToUpdate);
-					console.log("update data", dataToUpdate);
+					// console.log("update data", dataToUpdate);
 				}
 				updateLevels("curries_level", dataToUpdate);
 			} else if (chosenCategories === "Salads" && saladsLevels) {
 				if (saladsLevels) {
 					dataToUpdate = saladsLevels;
-					console.log("dataToUpdate", dataToUpdate);
+					// console.log("dataToUpdate", dataToUpdate);
 					let updatedDataIndex = dataToUpdate.findIndex(
 						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
 					);
-					console.log("indexxxx", updatedDataIndex);
+					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
 					} else {
@@ -226,17 +227,17 @@ export const PokemonSleep = () => {
 				} else {
 					let dataToUpdate = [newRecipeLevel];
 					setSaladLevels(dataToUpdate);
-					console.log("update data", dataToUpdate);
+					// console.log("update data", dataToUpdate);
 				}
 				updateLevels("salads_level", dataToUpdate);
 			} else if (chosenCategories === "Drinks and Desserts") {
 				if (drinksLevels) {
 					dataToUpdate = drinksLevels;
-					console.log("dataToUpdate", dataToUpdate);
+					// console.log("dataToUpdate", dataToUpdate);
 					let updatedDataIndex = dataToUpdate.findIndex(
 						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
 					);
-					console.log("indexxxx", updatedDataIndex);
+					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
 					} else {
@@ -245,7 +246,7 @@ export const PokemonSleep = () => {
 				} else {
 					let dataToUpdate = [newRecipeLevel];
 					setDrinksLevels(dataToUpdate);
-					console.log("update data", dataToUpdate);
+					// console.log("update data", dataToUpdate);
 				}
 				updateLevels("drinks_level", dataToUpdate);
 			}
@@ -316,7 +317,7 @@ export const PokemonSleep = () => {
 	const handlesave = async () => {
 		if (auth) {
 			setIsLoading(true);
-			console.log("unlockedIngredients", unlockedIngredients);
+			// console.log("unlockedIngredients", unlockedIngredients);
 			const { data, error } = await supabase
 				.from("pokemon_sleep_users_recipe_data")
 				.upsert({
@@ -327,7 +328,7 @@ export const PokemonSleep = () => {
 				})
 				.select();
 			if (data) {
-				console.log(data);
+				// console.log(data);
 				setIsLoading(false);
 			} else {
 				console.log(error);
@@ -358,11 +359,11 @@ export const PokemonSleep = () => {
 					)
 			);
 			if (cookableMeals.length > 0) {
-				console.log("cook ARR", cookableMeals);
+				// console.log("cook ARR", cookableMeals);
 			}
 			// console.log("uncook ARR", uncookableMeals);
 			if (curriesLevels.length > 0) {
-				console.log("curryLVL", curriesLevels);
+				// console.log("curryLVL", curriesLevels);
 			}
 
 			let cookableMealAndLevel = cookableMeals.map((cookableMeal) => {
@@ -385,11 +386,12 @@ export const PokemonSleep = () => {
 						// console.log("CLPASD", curriesLevels[i]);
 						if (cookableMeal.name === saladsLevels[i].name) {
 							level = saladsLevels[i].level;
-							console.log(
-								"levelYP",
-								cookableMeal,
-								saladsLevels[i]
-							);
+							// console.log(
+							// 	"levelYP",
+							// 	cookableMeal,
+							// 	saladsLevels[i]
+							// );
+
 							return {
 								...cookableMeal,
 								level: level,
@@ -578,7 +580,6 @@ export const PokemonSleep = () => {
 	];
 
 	const handleFilterClick = (event: any) => {
-		console.log("target", event);
 		setFilterKey(event.key);
 	};
 
