@@ -147,6 +147,7 @@ export const PokemonSleep = () => {
 				}
 				// console.log("ingr data from curr", data);
 
+
 				// setCurriesLevels(JSON.stringify(data.curriesLevel));
 				if (data[0].drinksLevel) {
 					setDrinksLevels(data[0].drinksLevel);
@@ -390,6 +391,7 @@ export const PokemonSleep = () => {
 							// 	cookableMeal,
 							// 	saladsLevels[i]
 							// );
+
 							return {
 								...cookableMeal,
 								level: level,
