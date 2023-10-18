@@ -41,11 +41,13 @@ type TIngredient = {
 
 export const PokemonSleep = () => {
 	const { auth, username, supabase, userId } = useContext(AuthContext);
+
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{
 		[category: string]: TRecipe[];
 	}>();
+
 	const [newRecipeLevel, setNewRecipeLevel] = useState<{
 		name: string;
 		level: number;
@@ -86,7 +88,7 @@ export const PokemonSleep = () => {
 		// set categories = {[curries, drinks, salads:...]}
 		const categories = varFromJSON(recipesJSON, "categories");
 		setCategories(categories);
-
+		// set ingredients = [{leek}, {tomato}]
 		const ingredients = varFromJSON(ingredientsJSON, "ingredients");
 		setIngredients(ingredients);
 	}, []);
@@ -143,7 +145,7 @@ export const PokemonSleep = () => {
 				if (data[0].saladsLevel) {
 					setSaladLevels(data[0].saladsLevel);
 				}
-				console.log("ingr data from curr", data[0].curriesLevel);
+				console.log("ingr data from curr", data);
 
 				// setCurriesLevels(JSON.stringify(data.curriesLevel));
 				if (data[0].drinksLevel) {
@@ -183,6 +185,8 @@ export const PokemonSleep = () => {
 			}
 		}
 	};
+
+	//
 	useEffect(() => {
 		if (newRecipeLevel) {
 			console.log("startupload", newRecipeLevel);
@@ -269,7 +273,7 @@ export const PokemonSleep = () => {
 			// // console.log("old user data", userOldData);
 			// console.log("new user data", userOldData);
 		}
-	}, [newRecipeLevel, chosenCategories]);
+	}, [newRecipeLevel]);
 
 	useEffect(() => {
 		if (auth) {
@@ -381,7 +385,11 @@ export const PokemonSleep = () => {
 						// console.log("CLPASD", curriesLevels[i]);
 						if (cookableMeal.name === saladsLevels[i].name) {
 							level = saladsLevels[i].level;
-							// console.log("levelYP", cookableMeal, curriesLevels[i]);
+							console.log(
+								"levelYP",
+								cookableMeal,
+								saladsLevels[i]
+							);
 							return {
 								...cookableMeal,
 								level: level,
@@ -655,21 +663,23 @@ export const PokemonSleep = () => {
 						/>
 					))}
 			</div>
-			<Radio.Group
-				onChange={(e) => {
-					setChosenCategories(e.target.value);
-				}}
-				style={{ marginTop: 16 }}
-				defaultValue={chosenCategories}
-			>
-				<Radio.Button value="Curries and Stews">
-					Curries and Stews
-				</Radio.Button>
-				<Radio.Button value="Salads">Salads</Radio.Button>
-				<Radio.Button value="Drinks and Desserts">
-					Desserts and Drink
-				</Radio.Button>
-			</Radio.Group>
+			{chosenCategories && (
+				<Radio.Group
+					onChange={(e) => {
+						setChosenCategories(e.target.value);
+					}}
+					style={{ marginTop: 16 }}
+					defaultValue={chosenCategories}
+				>
+					<Radio.Button value="Curries and Stews">
+						Curries and Stews
+					</Radio.Button>
+					<Radio.Button value="Salads">Salads</Radio.Button>
+					<Radio.Button value="Drinks and Desserts">
+						Desserts and Drink
+					</Radio.Button>
+				</Radio.Group>
+			)}
 			<div className="save-and-filter">
 				<Button type="primary" onClick={() => handlesave()}>
 					Save
