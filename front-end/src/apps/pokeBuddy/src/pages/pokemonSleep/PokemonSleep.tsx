@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import sprigatito from "../../../../../images/sprigatito.jpg";
 import "../../styles/style.css";
@@ -15,6 +15,7 @@ import {
 	Space,
 	Switch,
 	Tooltip,
+	Tour,
 	message,
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
@@ -23,6 +24,9 @@ import recipesJSON from "../../../public/pokemonSleepRecipes.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
 import { Recipe, TRecipe } from "../../components/Recipe";
 import { Helmet } from "react-helmet";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { FloatButton } from "antd";
+import type { TourProps } from "antd";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -41,6 +45,33 @@ type TIngredient = {
 
 export const PokemonSleep = () => {
 	const { auth, username, supabase, userId } = useContext(AuthContext);
+	const ref1 = useRef(null);
+	const ref2 = useRef(null);
+	const ref3 = useRef(null);
+	const [open, setOpen] = useState<boolean>(false);
+	const steps: TourProps["steps"] = [
+		{
+			title: "Upload File",
+			description: "Put your files here.",
+			cover: (
+				<img
+					alt="tour.png"
+					src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+				/>
+			),
+			target: () => ref1.current,
+		},
+		{
+			title: "Save",
+			description: "Save your changes.",
+			target: () => ref2.current,
+		},
+		{
+			title: "Other Actions",
+			description: "Click to see other actions.",
+			target: () => ref3.current,
+		},
+	];
 
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
@@ -600,37 +631,39 @@ export const PokemonSleep = () => {
 			</div>
 			<Space className="pokemon-sleep-page">
 				<p>Pot Size:</p>
-				<Space.Compact>
-					<Button
-						type="primary"
-						className="pot-size-adjuster decrease"
-						onClick={() => {
-							if (potSize >= 18) {
-								setPotSize(potSize - 3);
-							}
-						}}
-					>
-						-
-					</Button>
+				<div ref={ref1}>
+					<Space.Compact>
+						<Button
+							type="primary"
+							className="pot-size-adjuster decrease"
+							onClick={() => {
+								if (potSize >= 18) {
+									setPotSize(potSize - 3);
+								}
+							}}
+						>
+							-
+						</Button>
 
-					<Input
-						defaultValue={potSize}
-						onChange={(e) => setPotSize(Number(e.target.value))}
-						style={{ margin: "0px" }}
-						value={potSize}
-					/>
-					<Button
-						type="primary"
-						className="pot-size-adjuster increase"
-						onClick={() => {
-							if (potSize < 81) {
-								setPotSize(potSize + 3);
-							}
-						}}
-					>
-						+
-					</Button>
-				</Space.Compact>
+						<Input
+							defaultValue={potSize}
+							onChange={(e) => setPotSize(Number(e.target.value))}
+							style={{ margin: "0px" }}
+							value={potSize}
+						/>
+						<Button
+							type="primary"
+							className="pot-size-adjuster increase"
+							onClick={() => {
+								if (potSize < 81) {
+									setPotSize(potSize + 3);
+								}
+							}}
+						>
+							+
+						</Button>
+					</Space.Compact>
+				</div>
 			</Space>
 			<Switch
 				checkedChildren="Uncheck All"
@@ -756,6 +789,13 @@ export const PokemonSleep = () => {
 					</div>
 				</div>
 			)}
+			<FloatButton
+				icon={<QuestionCircleOutlined />}
+				type="primary"
+				style={{ right: 50 }}
+				onClick={() => setOpen(true)}
+			/>
+			<Tour open={open} onClose={() => setOpen(false)} steps={steps} />
 		</div>
 	);
 };
