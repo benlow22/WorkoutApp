@@ -129,7 +129,7 @@ export const PokemonSleep = () => {
 				);
 			// set state with saved data
 			if (data) {
-				// console.log("ingr data from supabase", data);
+				console.log("ingr data from supabase", data);
 				if (data[0].myUnlockedIngredients) {
 					setUnlockedIngredients(data[0].myUnlockedIngredients);
 				}
@@ -281,7 +281,7 @@ export const PokemonSleep = () => {
 		} else {
 			setUnlockedIngredients([]);
 			setPotSize(15);
-			setChosenCategories("");
+			setChosenCategories("Curries and Stews");
 			setCurriesLevels([]);
 			setSaladLevels([]);
 			setDrinksLevels([]);
