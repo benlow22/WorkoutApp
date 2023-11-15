@@ -48,10 +48,13 @@ export const PokemonSleep = () => {
 	const ref1 = useRef(null);
 	const ref2 = useRef(null);
 	const ref3 = useRef(null);
+	const ref4 = useRef(null);
+	const ref5 = useRef(null);
+	const ref6 = useRef(null);
 	const [open, setOpen] = useState<boolean>(false);
 	const steps: TourProps["steps"] = [
 		{
-			title: "Upload File",
+			title: "1. Choose Pot Size",
 			description: "Put your files here.",
 			cover: (
 				<img
@@ -62,14 +65,35 @@ export const PokemonSleep = () => {
 			target: () => ref1.current,
 		},
 		{
-			title: "Save",
+			title: "toggle all ingredients",
 			description: "Save your changes.",
 			target: () => ref2.current,
 		},
 		{
-			title: "Other Actions",
+			title: "select specific ingredients",
 			description: "Click to see other actions.",
 			target: () => ref3.current,
+		},
+		{
+			title: "Choose your weekly category",
+			description: "Put your files here.",
+			cover: (
+				<img
+					alt="tour.png"
+					src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
+				/>
+			),
+			target: () => ref4.current,
+		},
+		{
+			title: "Save",
+			description: "Save your changes.",
+			target: () => ref5.current,
+		},
+		{
+			title: "Recipes",
+			description: "Click to see other actions.",
+			target: () => ref6.current,
 		},
 	];
 
@@ -672,8 +696,9 @@ export const PokemonSleep = () => {
 					setShowAll(!showAll);
 				}}
 				className="uncheck-all-switch"
+				ref={ref2}
 			/>
-			<div className="ingredient-buttons-container">
+			<div className="ingredient-buttons-container" ref={ref3}>
 				{ingredients.length > 0 &&
 					ingredients.map((ingredient, index: number) => (
 						<Button
@@ -697,6 +722,7 @@ export const PokemonSleep = () => {
 			</div>
 			{chosenCategories && (
 				<Radio.Group
+					ref={ref4}
 					onChange={(e) => {
 						setChosenCategories(e.target.value);
 					}}
@@ -712,7 +738,7 @@ export const PokemonSleep = () => {
 					</Radio.Button>
 				</Radio.Group>
 			)}
-			<div className="save-and-filter">
+			<div className="save-and-filter" ref={ref5}>
 				<Button type="primary" onClick={() => handlesave()}>
 					Save
 				</Button>
@@ -789,6 +815,7 @@ export const PokemonSleep = () => {
 					</div>
 				</div>
 			)}
+			<div ref={ref6}></div>
 			<FloatButton
 				icon={<QuestionCircleOutlined />}
 				type="primary"
