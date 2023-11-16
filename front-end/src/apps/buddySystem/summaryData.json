@@ -1,0 +1,28 @@
+{
+	"apps": [
+		{
+			"color": "blue",
+			"description": "create new workouts and keep track of reps, set, weights",
+			"imagePath": "",
+			"appName": "Workout Buddy"
+		},
+		{
+			"color": "blue",
+			"description": "create new workouts and keep track of reps, set, weights",
+			"imagePath": "",
+			"appName": "Workout Buddy"
+		},
+		{
+			"color": "blue",
+			"description": "create new workouts and keep track of reps, set, weights",
+			"imagePath": "",
+			"appName": "Workout Buddy"
+		},
+		{
+			"color": "blue",
+			"description": "create new workouts and keep track of reps, set, weights",
+			"imagePath": "",
+			"appName": "Workout Buddy"
+		}
+	]
+}
