@@ -2,26 +2,32 @@ import { Outlet } from "react-router-dom";
 import React, { useContext } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import sprigatito from "../../../../../images/sprigatito.jpg";
+import { Link } from "react-router-dom";
 
 export const Homepage = () => {
 	const { auth, username } = useContext(AuthContext);
 
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
-		<div className="page-heading">
-			<h2>Welcome to Pokebuddy</h2>
+		<div className="pokebuddy-homepage">
+			<div className="page-heading">
+				<h2>Welcome to Pokebuddy</h2>
+			</div>
 			<h4>
 				There are currently two helpful apps available to assist you on
-				your journey
+				your Pokémon journey!!
 			</h4>
 			<div className="type-preview-section">
 				<div className="type-preview-section-center">
-					<h4>
-						Click on the 'Type Effectiveness' tab to see enter an
-						opponents typing from pokemon Go. you will quickly see
-						what moves they are weak to and what they are resistant
-						to.
-					</h4>
+					<p>
+						Click on the{" "}
+						<Link to="./typeEffectiveness">
+							'Type Effectiveness'
+						</Link>{" "}
+						tab to see enter an opponents typing from pokemon Go.
+						you will quickly see what moves they are weak to and
+						what they are resistant to.
+					</p>
 				</div>
 				<div>
 					<img

@@ -182,21 +182,34 @@
 	background-color: rgb(148, 139, 111);
 	opacity: 0.5;
 }
+
+/* homepage */
+.pokebuddy-homepage {
+	max-width: 1000px;
+	margin: auto;
+}
+
 .type-preview-section {
 	display: flex;
 	width: 1000px;
-	margin: auto;
-	text-align: center;
+	text-align: justify;
 	vertical-align: middle;
+	border: yellow 2px solid;
+	border-radius: 10px;
+	padding: 10px;
+	justify-content: space-between;
 }
 .type-preview-section-center {
-	height: 250px;
+	height: 240px;
 	line-height: 250px;
+	width: 400px;
+	padding: 0px 50px;
 }
 h4 {
 	display: inline-block;
 	vertical-align: middle;
 	line-height: 18px; /* <-- adjust this */
+	margin: 20px;
 }
 
 .center {
