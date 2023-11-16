@@ -16,7 +16,7 @@ export function WeakTo(props) {
 		} else if (attackEffectiveness["weakEffective"].includes(type)) {
 			effectiveness = "weak-effective";
 		}
-		console.log("type:", type, "effect", effectiveness);
+		// console.log("type:", type, "effect", effectiveness);
 		return effectiveness;
 	};
 
