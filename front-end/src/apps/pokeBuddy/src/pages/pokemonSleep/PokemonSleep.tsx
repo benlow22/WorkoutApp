@@ -96,7 +96,6 @@ export const PokemonSleep = () => {
 		},
 	];
 
-
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{
@@ -445,7 +444,7 @@ export const PokemonSleep = () => {
 							// 	cookableMeal,
 							// 	saladsLevels[i]
 							// );
-              
+
 							return {
 								...cookableMeal,
 								level: level,
