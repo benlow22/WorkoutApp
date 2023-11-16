@@ -6,6 +6,9 @@ import { ResistantTo } from "./resistantTo/ResistantTo";
 import { WeakTo } from "./weakTo/WeakTo";
 import { STABbutton } from "./button/STABbutton";
 import "./../../../styles/typeEffectiveness.css";
+import { Tour, FloatButton } from "antd";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+
 export function Homepage() {
 	const [type1, setType1] = useState(undefined);
 	const [type2, setType2] = useState(undefined);
@@ -84,33 +87,42 @@ export function Homepage() {
 	});
 
 	return (
-		<div className="type-effectiveness-page">
-			<div className="opponent-Stats">
-				<ResistantTo
-					type1={type1}
-					type2={type2}
-					isShowSTAB={showSTAB}
-				/>
-				<div className="two-types">
-					<TypeIndicator type={type1} placeholder={"Type 1"} />
-					<TypeIndicator type={type2} placeholder={"Type 2"} />
-					<button className="reset-button" onClick={clearButtons}>
-						RESET
-					</button>
-					<div className="settings-bar">
-						<STABbutton onClick={() => setShowSTAB(!showSTAB)} />
+		<div>
+			<div className="type-effectiveness-page">
+				<div className="opponent-Stats">
+					<ResistantTo
+						type1={type1}
+						type2={type2}
+						isShowSTAB={showSTAB}
+					/>
+					<div className="two-types">
+						<TypeIndicator type={type1} placeholder={"Type 1"} />
+						<TypeIndicator type={type2} placeholder={"Type 2"} />
+						<button className="reset-button" onClick={clearButtons}>
+							RESET
+						</button>
+						<div className="settings-bar">
+							<STABbutton
+								onClick={() => setShowSTAB(!showSTAB)}
+							/>
+						</div>
 					</div>
+					<WeakTo type1={type1} type2={type2} isShowSTAB={showSTAB} />
 				</div>
-				<WeakTo type1={type1} type2={type2} isShowSTAB={showSTAB} />
+				<div className="list-Of-Buttons">
+					<TypeList
+						onAdd={handleAdd}
+						type1={type1}
+						type2={type2}
+						isShowSTAB={showSTAB}
+					/>
+				</div>
 			</div>
-			<div className="list-Of-Buttons">
-				<TypeList
-					onAdd={handleAdd}
-					type1={type1}
-					type2={type2}
-					isShowSTAB={showSTAB}
-				/>
-			</div>
+			<FloatButton
+				icon={<QuestionCircleOutlined />}
+				type="primary"
+				style={{ right: 24 }}
+			/>
 		</div>
 	);
 }
