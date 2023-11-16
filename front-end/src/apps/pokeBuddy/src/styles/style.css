@@ -189,7 +189,8 @@
 	margin: auto;
 }
 
-.type-preview-section {
+.type-preview-section,
+.sleep-preview-section {
 	display: flex;
 	width: 1000px;
 	text-align: justify;
@@ -198,23 +199,46 @@
 	border-radius: 10px;
 	padding: 10px;
 	justify-content: space-between;
+	margin: 20px;
 }
-.type-preview-section-center {
+/* .type-preview-section-center {
 	height: 240px;
 	line-height: 250px;
 	width: 400px;
 	padding: 0px 50px;
+} */
+.sleep-preview-section-center,
+.type-preview-section-center,
+.coming-soon-section-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 25px 50px 50px;
 }
+.coming-soon-blurb {
+	margin: 10px;
+}
+
+.coming-soon-blurb li {
+	color: white;
+}
+
+.coming-soon-blurb ul {
+	margin-left: 40px;
+}
+.pokebuddy-homepage h3 {
+	text-align: center;
+}
+
+/* .pokebuddy-homepage Link {
+	co
+} */
+
 h4 {
 	display: inline-block;
 	vertical-align: middle;
 	line-height: 18px; /* <-- adjust this */
 	margin: 20px;
-}
-
-.center {
-	height: 700px;
-	line-height: 700px;
 }
 
 p {
@@ -238,15 +262,9 @@ p {
 .type-preview {
 	width: 600px;
 }
-.sleep-preview-section {
-	display: flex;
-	width: 1000px;
-	margin: auto;
-	text-align: center;
-	vertical-align: middle;
-}
+
 .sleep-preview {
-	width: 600px;
+	width: 300px;
 }
 @media only screen and (max-width: 600px) {
 	#root {
