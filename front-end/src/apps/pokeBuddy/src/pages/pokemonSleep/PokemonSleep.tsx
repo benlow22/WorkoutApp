@@ -742,7 +742,7 @@ export const PokemonSleep = () => {
 				<Button type="primary" onClick={() => handlesave()}>
 					Save
 				</Button>
-				<Dropdown
+				{/* <Dropdown
 					menu={{ items }}
 					arrow
 					// onClick={(event) => handleFilterClick(event)}
@@ -770,7 +770,7 @@ export const PokemonSleep = () => {
 							<FilterFilled />
 						</Button>
 					</Space.Compact>
-				</Dropdown>
+				</Dropdown> */}
 			</div>
 			{recipes && (
 				<div className="recipes">
