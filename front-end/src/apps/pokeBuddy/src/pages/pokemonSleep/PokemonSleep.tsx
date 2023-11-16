@@ -96,6 +96,7 @@ export const PokemonSleep = () => {
 		},
 	];
 
+
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{
@@ -183,7 +184,7 @@ export const PokemonSleep = () => {
 				);
 			// set state with saved data
 			if (data) {
-				console.log("ingr data from supabase", data);
+				// console.log("ingr data from supabase", data);
 				if (data[0].myUnlockedIngredients) {
 					setUnlockedIngredients(data[0].myUnlockedIngredients);
 				}
@@ -444,6 +445,7 @@ export const PokemonSleep = () => {
 							// 	cookableMeal,
 							// 	saladsLevels[i]
 							// );
+              
 							return {
 								...cookableMeal,
 								level: level,
