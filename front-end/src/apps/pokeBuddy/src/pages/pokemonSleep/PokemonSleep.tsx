@@ -54,45 +54,44 @@ export const PokemonSleep = () => {
 	const [open, setOpen] = useState<boolean>(false);
 	const steps: TourProps["steps"] = [
 		{
-			title: "1. Choose Pot Size",
-			description: "Put your files here.",
+			title: "Choose Pot Size",
+			description:
+				"Select how many ingredients you can use in your meal. you can find this on the top right when you start cooking.",
 			cover: (
-				<img
-					alt="tour.png"
-					src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-				/>
+				<div>
+					<img alt="tour.png" src="/IMG_4036.jpeg" width="400" />
+				</div>
 			),
 			target: () => ref1.current,
 		},
 		{
-			title: "toggle all ingredients",
-			description: "Save your changes.",
+			title: "Toggle all ingredients",
+			description:
+				"Quickly select or deselect all. Selecting all will show all posible recipes for your pot size.",
 			target: () => ref2.current,
 		},
 		{
-			title: "select specific ingredients",
-			description: "Click to see other actions.",
+			title: "Select specific ingredients you've unlocked",
+			description:
+				"Click on each ingredient you have unlocked. This can be view when you click 'Main Menu' => 'Notes' => 'Ingredients'",
 			target: () => ref3.current,
 		},
 		{
 			title: "Choose your weekly category",
-			description: "Put your files here.",
-			cover: (
-				<img
-					alt="tour.png"
-					src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-				/>
-			),
+			description:
+				"Each week you will have one of these three chosen at random.",
 			target: () => ref4.current,
 		},
 		{
 			title: "Save",
-			description: "Save your changes.",
+			description:
+				"If you are logged in you may save this data. Next time your pot size, unlocked ingredients, and category will be automatically selected",
 			target: () => ref5.current,
 		},
 		{
 			title: "Recipes",
-			description: "Click to see other actions.",
+			description:
+				"Below are the available recipes. The light ones are cookable with the ingredients and pot size you have unlocked. The darker recipes are available with the ingredients you have unlocked, but will need a larger pot size. If there are no recipes showing up, try selecting more ingredients as they might need to unlock more for the recipes.",
 			target: () => ref6.current,
 		},
 	];
