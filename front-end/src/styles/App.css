@@ -3,10 +3,9 @@
 	text-align: center;
 }
 
-html {
+/* html {
 	overflow-y: scroll;
-	width: 100%;
-}
+} */
 main {
 	position: relative;
 	top: 100px;
@@ -102,6 +101,7 @@ h2 {
 .content {
 	max-width: 1600px;
 	margin: auto;
+	padding-left: calc(100vw - 100%);
 }
 /* 
 .header *, .workouts-page * {
