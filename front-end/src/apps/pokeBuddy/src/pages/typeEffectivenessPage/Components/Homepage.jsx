@@ -72,6 +72,12 @@ export function Homepage() {
 	}); // use [] because you only want to add the listener once at the beginning
 
 	const handleAllKeysArray = (event) => {
+		if (event.code === "Space") {
+			// document.activeElement.blur();
+			// document.activeElement.removeClass("active");
+			refReset.focus();
+			// refReset.click();
+		}
 		if (keys.includes(event.code)) {
 			// checks if code is in array
 			let index = keys.findIndex((key) => key === event.code); // returns index in keys array
@@ -81,10 +87,18 @@ export function Homepage() {
 
 	useEffect(() => {
 		document.addEventListener("keydown", handleAllKeysArray);
+		document.addEventListener("click", () =>
+			document.getElementById("resetButton").focus()
+		);
 		return () => {
 			document.removeEventListener("keydown", handleAllKeysArray);
+			document.removeEventListener("click", () =>
+				document.getElementById("resetButton").focus()
+			);
 		};
 	});
+
+	const refReset = React.useRef();
 
 	return (
 		<div>
@@ -98,7 +112,12 @@ export function Homepage() {
 					<div className="two-types">
 						<TypeIndicator type={type1} placeholder={"Type 1"} />
 						<TypeIndicator type={type2} placeholder={"Type 2"} />
-						<button className="reset-button" onClick={clearButtons}>
+						<button
+							className="reset-button"
+							onClick={clearButtons}
+							ref={refReset}
+							id="resetButton"
+						>
 							RESET
 						</button>
 						<div className="settings-bar">
