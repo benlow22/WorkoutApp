@@ -3,7 +3,7 @@
 	margin: auto;
 } */
 .recipe-page {
-	background-color: rgb(238, 231, 193);
+	background-color: rgb(203, 197, 168);
 	width: fit-content;
 	margin: 20px auto;
 	padding: 20px 20px;
@@ -40,10 +40,10 @@
 
 .save-and-filter {
 	display: flex;
-	width: 250px;
+	width: auto;
 	margin-top: 10px;
-	justify-content: space-between;
-	margin: auto;
+	justify-content: center;
+	/* margin: auto; */
 }
 
 .ingredient-button-icon {

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import sprigatito from "../../../../../images/sprigatito.jpg";
 import "../../styles/style.css";
@@ -15,6 +15,7 @@ import {
 	Space,
 	Switch,
 	Tooltip,
+	Tour,
 	message,
 } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
@@ -23,6 +24,9 @@ import recipesJSON from "../../../public/pokemonSleepRecipes.json";
 import { varFromDomainsJSON, varFromJSON } from "../../../../../utils/utils";
 import { Recipe, TRecipe } from "../../components/Recipe";
 import { Helmet } from "react-helmet";
+import { QuestionCircleOutlined } from "@ant-design/icons";
+import { FloatButton } from "antd";
+import type { TourProps } from "antd";
 import {
 	ArrowDownOutlined,
 	ArrowUpOutlined,
@@ -41,6 +45,57 @@ type TIngredient = {
 
 export const PokemonSleep = () => {
 	const { auth, username, supabase, userId } = useContext(AuthContext);
+	const ref1 = useRef(null);
+	const ref2 = useRef(null);
+	const ref3 = useRef(null);
+	const ref4 = useRef(null);
+	const ref5 = useRef(null);
+	const ref6 = useRef(null);
+	const [open, setOpen] = useState<boolean>(false);
+	const steps: TourProps["steps"] = [
+		{
+			title: "Choose Pot Size",
+			description:
+				"Select how many ingredients you can use in your meal. you can find this on the top right when you start cooking.",
+			cover: (
+				<div>
+					<img alt="tour.png" src="/IMG_4036.jpeg" width="400" />
+				</div>
+			),
+			target: () => ref1.current,
+		},
+		{
+			title: "Toggle all ingredients",
+			description:
+				"Quickly select or deselect all. Selecting all will show all posible recipes for your pot size.",
+			target: () => ref2.current,
+		},
+		{
+			title: "Select specific ingredients you've unlocked",
+			description:
+				"Click on each ingredient you have unlocked. This can be view when you click 'Main Menu' => 'Notes' => 'Ingredients'",
+			target: () => ref3.current,
+		},
+		{
+			title: "Choose your weekly category",
+			description:
+				"Each week you will have one of these three chosen at random.",
+			target: () => ref4.current,
+		},
+		{
+			title: "Save",
+			description:
+				"If you are logged in you may save this data. Next time your pot size, unlocked ingredients, and category will be automatically selected",
+			target: () => ref5.current,
+		},
+		{
+			title: "Recipes",
+			description:
+				"Below are the available recipes. The light ones are cookable with the ingredients and pot size you have unlocked. The darker recipes are available with the ingredients you have unlocked, but will need a larger pot size. If there are no recipes showing up, try selecting more ingredients as they might need to unlock more for the recipes.",
+			target: () => ref6.current,
+		},
+	];
+
 
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
@@ -146,7 +201,6 @@ export const PokemonSleep = () => {
 					setSaladLevels(data[0].saladsLevel);
 				}
 				// console.log("ingr data from curr", data);
-
 
 				// setCurriesLevels(JSON.stringify(data.curriesLevel));
 				if (data[0].drinksLevel) {
@@ -282,7 +336,7 @@ export const PokemonSleep = () => {
 		} else {
 			setUnlockedIngredients([]);
 			setPotSize(15);
-			setChosenCategories("");
+			setChosenCategories("Curries and Stews");
 			setCurriesLevels([]);
 			setSaladLevels([]);
 			setDrinksLevels([]);
@@ -391,7 +445,7 @@ export const PokemonSleep = () => {
 							// 	cookableMeal,
 							// 	saladsLevels[i]
 							// );
-
+              
 							return {
 								...cookableMeal,
 								level: level,
@@ -602,37 +656,39 @@ export const PokemonSleep = () => {
 			</div>
 			<Space className="pokemon-sleep-page">
 				<p>Pot Size:</p>
-				<Space.Compact>
-					<Button
-						type="primary"
-						className="pot-size-adjuster decrease"
-						onClick={() => {
-							if (potSize >= 18) {
-								setPotSize(potSize - 3);
-							}
-						}}
-					>
-						-
-					</Button>
+				<div ref={ref1}>
+					<Space.Compact>
+						<Button
+							type="primary"
+							className="pot-size-adjuster decrease"
+							onClick={() => {
+								if (potSize >= 18) {
+									setPotSize(potSize - 3);
+								}
+							}}
+						>
+							-
+						</Button>
 
-					<Input
-						defaultValue={potSize}
-						onChange={(e) => setPotSize(Number(e.target.value))}
-						style={{ margin: "0px" }}
-						value={potSize}
-					/>
-					<Button
-						type="primary"
-						className="pot-size-adjuster increase"
-						onClick={() => {
-							if (potSize < 81) {
-								setPotSize(potSize + 3);
-							}
-						}}
-					>
-						+
-					</Button>
-				</Space.Compact>
+						<Input
+							defaultValue={potSize}
+							onChange={(e) => setPotSize(Number(e.target.value))}
+							style={{ margin: "0px" }}
+							value={potSize}
+						/>
+						<Button
+							type="primary"
+							className="pot-size-adjuster increase"
+							onClick={() => {
+								if (potSize < 81) {
+									setPotSize(potSize + 3);
+								}
+							}}
+						>
+							+
+						</Button>
+					</Space.Compact>
+				</div>
 			</Space>
 			<Switch
 				checkedChildren="Uncheck All"
@@ -641,8 +697,9 @@ export const PokemonSleep = () => {
 					setShowAll(!showAll);
 				}}
 				className="uncheck-all-switch"
+				ref={ref2}
 			/>
-			<div className="ingredient-buttons-container">
+			<div className="ingredient-buttons-container" ref={ref3}>
 				{ingredients.length > 0 &&
 					ingredients.map((ingredient, index: number) => (
 						<Button
@@ -666,6 +723,7 @@ export const PokemonSleep = () => {
 			</div>
 			{chosenCategories && (
 				<Radio.Group
+					ref={ref4}
 					onChange={(e) => {
 						setChosenCategories(e.target.value);
 					}}
@@ -681,11 +739,11 @@ export const PokemonSleep = () => {
 					</Radio.Button>
 				</Radio.Group>
 			)}
-			<div className="save-and-filter">
+			<div className="save-and-filter" ref={ref5}>
 				<Button type="primary" onClick={() => handlesave()}>
 					Save
 				</Button>
-				<Dropdown
+				{/* <Dropdown
 					menu={{ items }}
 					arrow
 					// onClick={(event) => handleFilterClick(event)}
@@ -713,7 +771,7 @@ export const PokemonSleep = () => {
 							<FilterFilled />
 						</Button>
 					</Space.Compact>
-				</Dropdown>
+				</Dropdown> */}
 			</div>
 			{recipes && (
 				<div className="recipes">
@@ -758,6 +816,14 @@ export const PokemonSleep = () => {
 					</div>
 				</div>
 			)}
+			<div ref={ref6}></div>
+			<FloatButton
+				icon={<QuestionCircleOutlined />}
+				type="primary"
+				style={{ right: 50 }}
+				onClick={() => setOpen(true)}
+			/>
+			<Tour open={open} onClose={() => setOpen(false)} steps={steps} />
 		</div>
 	);
 };
