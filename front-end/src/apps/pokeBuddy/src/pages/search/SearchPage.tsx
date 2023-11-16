@@ -3,6 +3,8 @@ import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { AutoComplete, Input } from "antd";
 import pokemonsJSON from "../../../public/pokemon.json";
 import { DefaultOptionType } from "antd/es/select";
+import sprigatito from "../../../../../images/sprigatito.jpg";
+
 type TProps = {};
 
 type TOpponent = {
@@ -61,7 +63,9 @@ export const SearchPage = ({}: TProps) => {
 
 	return (
 		<div className="poke-search-page">
-			<h3 className="page-heading">Search</h3>
+			<h2>Full pokemon search functionality will be coming soon... </h2>
+
+			{/* <h3 className="page-heading">Search</h3> */}
 			{/* <Input style={{ width: "400px" }} /> */}
 			<AutoComplete
 				style={{ width: 200 }}
@@ -89,6 +93,11 @@ export const SearchPage = ({}: TProps) => {
 					<p>{pokemon.speciesName}</p>
 				</div>
 			)}
+			<img
+				src={sprigatito}
+				style={{ maxWidth: "400px" }}
+				alt="sprigatito"
+			/>
 		</div>
 	);
 };
