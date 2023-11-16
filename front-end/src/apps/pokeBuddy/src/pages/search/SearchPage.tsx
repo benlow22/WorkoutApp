@@ -67,27 +67,29 @@ export const SearchPage = ({}: TProps) => {
 
 			{/* <h3 className="page-heading">Search</h3> */}
 			{/* <Input style={{ width: "400px" }} /> */}
-			<AutoComplete
-				style={{ width: 200 }}
-				options={pokemonsOptions}
-				placeholder="choose a pokemon"
-				allowClear
-				filterOption={(inputValue, option) =>
-					option!
-						.value!.toUpperCase()
-						.indexOf(inputValue.toUpperCase()) !== -1 &&
-					inputValue.length > 1
-				}
-				onSelect={(value) => {
-					if (pokemons) {
-						const chosen = pokemons.filter(
-							(pokemon: TPokemonData) =>
-								pokemon.speciesName === value
-						);
-						setPokemon(chosen[0]);
+			<div>
+				<AutoComplete
+					style={{ width: 200 }}
+					options={pokemonsOptions}
+					placeholder="choose a pokemon"
+					allowClear
+					filterOption={(inputValue, option) =>
+						option!
+							.value!.toUpperCase()
+							.indexOf(inputValue.toUpperCase()) !== -1 &&
+						inputValue.length > 1
 					}
-				}}
-			/>
+					onSelect={(value) => {
+						if (pokemons) {
+							const chosen = pokemons.filter(
+								(pokemon: TPokemonData) =>
+									pokemon.speciesName === value
+							);
+							setPokemon(chosen[0]);
+						}
+					}}
+				/>
+			</div>
 			{pokemon && (
 				<div>
 					<p>{pokemon.speciesName}</p>
