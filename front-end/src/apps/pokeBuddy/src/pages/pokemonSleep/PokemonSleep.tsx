@@ -92,10 +92,10 @@ export const PokemonSleep = () => {
 			title: "Recipes",
 			description:
 				"Below are the available recipes. The light ones are cookable with the ingredients and pot size you have unlocked. The darker recipes are available with the ingredients you have unlocked, but will need a larger pot size. If there are no recipes showing up, try selecting more ingredients as they might need to unlock more for the recipes.",
+			placement: "top",
 			target: () => ref6.current,
 		},
 	];
-
 
 	const [potSize, setPotSize] = useState<number>(15);
 	const [allRecipes, setAllRecipes] = useState();
@@ -445,7 +445,7 @@ export const PokemonSleep = () => {
 							// 	cookableMeal,
 							// 	saladsLevels[i]
 							// );
-              
+
 							return {
 								...cookableMeal,
 								level: level,
@@ -773,57 +773,65 @@ export const PokemonSleep = () => {
 					</Space.Compact>
 				</Dropdown> */}
 			</div>
-			{recipes && (
-				<div className="recipes">
-					{/* <div className="cookable-recipes">
+			{/* {recipes && ( */}
+			<div className="recipes">
+				{/* <div className="cookable-recipes">
 						{recipes &&
 							recipes.map((recipe: TRecipe) => (
 								<Recipe recipe={recipe} />
 							))}
 					</div> */}
-					{cookableRecipes.length > 0 && (
-						<div className="cookable-recipes">
-							<h3 className="cookable-recipes-header">
-								Cookable Recipes
-							</h3>
-							{cookableRecipes.map(
-								(recipe: TRecipe, index: number) => (
-									<Recipe
-										key={index}
-										recipe={recipe}
-										ingredients={ingredients}
-										setNewRecipeLevel={setNewRecipeLevel}
-										disable={isLoading}
-									/>
-								)
-							)}
+				<div className="cookable-recipes" ref={ref6}>
+					<h3 className="cookable-recipes-header">
+						Cookable Recipes
+					</h3>
+					{cookableRecipes.length > 0 ? (
+						cookableRecipes.map(
+							(recipe: TRecipe, index: number) => (
+								<Recipe
+									key={index}
+									recipe={recipe}
+									ingredients={ingredients}
+									setNewRecipeLevel={setNewRecipeLevel}
+									disable={isLoading}
+								/>
+							)
+						)
+					) : (
+						<div className="no-recipe-placeholder">
+							<p> Please select more ingredients</p>
 						</div>
 					)}
-					<div className="uncookable-recipes">
-						{uncookableRecipes &&
-							uncookableRecipes.map(
-								(recipe: TRecipe, index: number) => (
-									// <Tooltip
-									<Recipe
-										key={index}
-										recipe={recipe}
-										ingredients={ingredients}
-										setNewRecipeLevel={setNewRecipeLevel}
-										disable={isLoading}
-									/>
-								)
-							)}
-					</div>
 				</div>
-			)}
-			<div ref={ref6}></div>
+				<div className="uncookable-recipes">
+					{uncookableRecipes &&
+						uncookableRecipes.map(
+							(recipe: TRecipe, index: number) => (
+								// <Tooltip
+								<Recipe
+									key={index}
+									recipe={recipe}
+									ingredients={ingredients}
+									setNewRecipeLevel={setNewRecipeLevel}
+									disable={isLoading}
+								/>
+							)
+						)}
+				</div>
+			</div>
+			{/* )} */}
 			<FloatButton
 				icon={<QuestionCircleOutlined />}
 				type="primary"
 				style={{ right: 50 }}
 				onClick={() => setOpen(true)}
 			/>
-			<Tour open={open} onClose={() => setOpen(false)} steps={steps} />
+			<Tour
+				open={open}
+				onClose={() => setOpen(false)}
+				steps={steps}
+				scrollIntoViewOptions={false}
+			/>
 		</div>
 	);
 };

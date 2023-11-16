@@ -91,7 +91,8 @@
 	border-radius: 10px;
 }
 
-.recipe-list {
+.recipe-list,
+.no-recipe-placeholder {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -183,6 +184,89 @@
 	opacity: 0.5;
 }
 
+/* homepage */
+.pokebuddy-homepage {
+	max-width: 1000px;
+	margin: auto;
+}
+
+.type-preview-section,
+.sleep-preview-section {
+	display: flex;
+	width: 1000px;
+	text-align: justify;
+	vertical-align: middle;
+	border: yellow 2px solid;
+	border-radius: 10px;
+	padding: 10px;
+	justify-content: space-between;
+	margin: 20px;
+}
+/* .type-preview-section-center {
+	height: 240px;
+	line-height: 250px;
+	width: 400px;
+	padding: 0px 50px;
+} */
+.sleep-preview-section-center,
+.type-preview-section-center,
+.coming-soon-section-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	padding: 25px 50px 50px;
+}
+.coming-soon-blurb {
+	margin: 10px;
+}
+
+.coming-soon-blurb li {
+	color: white;
+}
+
+.coming-soon-blurb ul {
+	margin-left: 40px;
+}
+.pokebuddy-homepage h3 {
+	text-align: center;
+}
+
+/* .pokebuddy-homepage Link {
+	co
+} */
+
+h4 {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 18px; /* <-- adjust this */
+	margin: 20px;
+}
+
+p {
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 18px; /* <-- adjust this */
+}
+/* .center {
+	line-height: 200px;
+	height: 700px;
+	border: 3px solid green;
+	text-align: center;
+	padding: auto;
+} */
+/* .center p {
+	line-height: 1.5;
+	display: inline-block;
+	vertical-align: middle;
+	margin: auto;
+} */
+.type-preview {
+	width: 600px;
+}
+
+.sleep-preview {
+	width: 300px;
+}
 @media only screen and (max-width: 600px) {
 	#root {
 		width: 100%;

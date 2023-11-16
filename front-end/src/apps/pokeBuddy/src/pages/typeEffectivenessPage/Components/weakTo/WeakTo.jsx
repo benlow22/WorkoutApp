@@ -16,7 +16,7 @@ export function WeakTo(props) {
 		} else if (attackEffectiveness["weakEffective"].includes(type)) {
 			effectiveness = "weak-effective";
 		}
-		console.log("type:", type, "effect", effectiveness);
+		// console.log("type:", type, "effect", effectiveness);
 		return effectiveness;
 	};
 
@@ -27,7 +27,7 @@ export function WeakTo(props) {
 			<div className="stat-box weak">
 				<h4>Weak to </h4>
 				<p>(Use)</p>
-				<h5>2.56x damage from</h5>
+				<h5>x2.56 damage from</h5>
 				<div className="very-weak-to-types types-box">
 					{effectiveness.veryWeakTo &&
 						effectiveness.veryWeakTo.map((type, index) => {
@@ -44,7 +44,7 @@ export function WeakTo(props) {
 							);
 						})}
 				</div>
-				<h5>1.60x damage from</h5>
+				<h5>x1.60 damage from</h5>
 				<div className="weak-to-types types-box">
 					{effectiveness.weakTo &&
 						effectiveness.weakTo.map((type, index) => {
@@ -68,9 +68,9 @@ export function WeakTo(props) {
 			<div className="stat-box weak">
 				<h4>Weak to </h4>
 				<p>(Use)</p>
-				<h5>2.56x damage from</h5>
+				<h5>x2.56 damage from</h5>
 				<div className="very-weak-to-types types-box"></div>
-				<h5>1.60x damage from</h5>
+				<h5>x1.60 damage from</h5>
 				<div className="weak-to-types types-box"></div>
 			</div>
 		);

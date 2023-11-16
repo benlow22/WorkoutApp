@@ -167,7 +167,7 @@
 .type-effectiveness-page h4 {
 	color: rgb(109, 109, 109);
 	font-size: 35px;
-	margin: 0;
+	margin: 0px 0px 10px;
 }
 
 .type-effectiveness-page .stat-box p {
@@ -267,13 +267,15 @@
 
 .type-effectiveness-page .settings-bar {
 	width: 210px;
-	height: 100px;
+	/* height: 100px; */
 }
 .type-effectiveness-page .ant-switch {
-	height: 42px;
-	text-align: left;
-	margin: 0px;
+	/* height: 42px; */
+	padding: 0px;
+	/* text-align: left; */
+	/* margin: 0px; */
 }
+/* .type-effectiveness-page button */
 /* // 	],
 // 	"notVeryEffective": [
 // 		"Bug",

@@ -3,6 +3,8 @@ import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { AutoComplete, Input } from "antd";
 import pokemonsJSON from "../../../public/pokemon.json";
 import { DefaultOptionType } from "antd/es/select";
+import sprigatito from "../../../../../images/sprigatito.jpg";
+
 type TProps = {};
 
 type TOpponent = {
@@ -61,34 +63,43 @@ export const SearchPage = ({}: TProps) => {
 
 	return (
 		<div className="poke-search-page">
-			<h3 className="page-heading">Search</h3>
+			<h2>Full pokemon search functionality will be coming soon... </h2>
+
+			{/* <h3 className="page-heading">Search</h3> */}
 			{/* <Input style={{ width: "400px" }} /> */}
-			<AutoComplete
-				style={{ width: 200 }}
-				options={pokemonsOptions}
-				placeholder="choose a pokemon"
-				allowClear
-				filterOption={(inputValue, option) =>
-					option!
-						.value!.toUpperCase()
-						.indexOf(inputValue.toUpperCase()) !== -1 &&
-					inputValue.length > 1
-				}
-				onSelect={(value) => {
-					if (pokemons) {
-						const chosen = pokemons.filter(
-							(pokemon: TPokemonData) =>
-								pokemon.speciesName === value
-						);
-						setPokemon(chosen[0]);
+			<div>
+				<AutoComplete
+					style={{ width: 200 }}
+					options={pokemonsOptions}
+					placeholder="choose a pokemon"
+					allowClear
+					filterOption={(inputValue, option) =>
+						option!
+							.value!.toUpperCase()
+							.indexOf(inputValue.toUpperCase()) !== -1 &&
+						inputValue.length > 1
 					}
-				}}
-			/>
+					onSelect={(value) => {
+						if (pokemons) {
+							const chosen = pokemons.filter(
+								(pokemon: TPokemonData) =>
+									pokemon.speciesName === value
+							);
+							setPokemon(chosen[0]);
+						}
+					}}
+				/>
+			</div>
 			{pokemon && (
 				<div>
 					<p>{pokemon.speciesName}</p>
 				</div>
 			)}
+			<img
+				src={sprigatito}
+				style={{ maxWidth: "400px" }}
+				alt="sprigatito"
+			/>
 		</div>
 	);
 };

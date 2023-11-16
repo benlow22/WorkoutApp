@@ -9,13 +9,12 @@ export const Quiz = () => {
 	// if logged in, will show dashboard with home page underneat, if not, just home page
 	return (
 		<div className="page-heading">
-			<h2>Poke Buddy typeEffect</h2>
+			<h2>Type Effectiveness Quiz is Coming Soon...</h2>
 			<img
 				src={sprigatito}
 				style={{ maxWidth: "400px" }}
 				alt="sprigatito"
 			/>
-			<h5>Coming soon...</h5>
 		</div>
 	);
 };
