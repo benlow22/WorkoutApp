@@ -10,6 +10,7 @@ export const BuddySystemDashboard = () => {
 	console.log(summaryData.apps, "DATA");
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const [summaryApps, setSummaryApps] = useState(summaryData.apps);
+
 	return (
 		<div className="page-heading">
 			{/* <h2>Buddy System Dashboard</h2> */}
@@ -31,6 +32,8 @@ export const BuddySystemDashboard = () => {
 							color={app.color}
 							description={app.description}
 							imagePath={app.imagePath}
+							appPath={app.appPath}
+							id={app.appPath}
 						></AppSummary>
 					))}
 			</div>
