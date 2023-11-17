@@ -25,6 +25,7 @@ const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
 			<Route index element={<BuddySystemHomepage />} />
+			<Route path="createUsername" element={<NewUsername />} />
 			<Route path=":domain/login" element={<LoginPage />} />
 			{/* only authenticated users can use these routes  */}
 			<Route path="buddySystem" element={<BuddySystemDashboard />} />
@@ -41,7 +42,6 @@ const router = createBrowserRouter(
 				path="buddySystem/resetpassword"
 				element={<ResetPasswordPage />}
 			/>
-			<Route path="createUsername" element={<NewUsername />} />
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)
