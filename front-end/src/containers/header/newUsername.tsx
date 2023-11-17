@@ -38,7 +38,7 @@ export const NewUsername = () => {
 	};
 
 	return (
-		<>
+		<div className="new-username">
 			<h2 className="page-heading">New Username</h2>
 			<Space.Compact>
 				<Input
@@ -57,6 +57,6 @@ export const NewUsername = () => {
 					Submit
 				</Button>
 			</Space.Compact>
-		</>
+		</div>
 	);
 };
