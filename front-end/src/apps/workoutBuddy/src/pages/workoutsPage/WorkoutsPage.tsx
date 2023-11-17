@@ -21,6 +21,14 @@ export const WorkoutsPage: React.FC<{}> = () => {
 	const [messageApi, contextHolder] = message.useMessage();
 	const location = useLocation();
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+
+	const warning = () => {
+		messageApi.open({
+			type: "warning",
+			content:
+				"Please log in to view workout, or checkout the Logged In preview video below",
+		});
+	};
 	const getAllPublicWorkouts = async () => {
 		let { data: workouts, error } = await supabase
 			.from("workouts")
@@ -45,6 +53,11 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			getAllPublicWorkouts();
 		}
 	}, [auth]);
+
+	const warningPopUp = (event: any) => {
+		warning();
+		event.preventDefault();
+	};
 
 	useEffect(() => {
 		// set workouts from response
@@ -87,7 +100,12 @@ export const WorkoutsPage: React.FC<{}> = () => {
 
 				<h2 className="page-heading">Your Workouts</h2>
 				{workouts.map((workout, index) => (
-					<Link to={`${workout.url}`} key={index} state={workout}>
+					<Link
+						to={`${workout.url}`}
+						key={index}
+						state={workout}
+						onClick={(event) => !auth && warningPopUp(event)}
+					>
 						<WorkoutButton workout={workout} />
 					</Link>
 				))}
