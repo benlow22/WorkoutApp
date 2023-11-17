@@ -91,8 +91,18 @@ export const MyCollection = () => {
 					}
 				}}
 			/>
-
 			<AmiiboInventory myAmiibos={myAmiibos} />
+			{!isLoggedIn && (
+				<h2
+					style={{
+						color: "red",
+						backgroundColor: "yellow",
+						padding: "20px",
+					}}
+				>
+					You need to login to access your inventory
+				</h2>
+			)}
 		</>
 	);
 };

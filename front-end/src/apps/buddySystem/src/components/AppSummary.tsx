@@ -37,6 +37,14 @@ export const AppSummary = ({
 			<div className="description-and-image">
 				<div className="description">
 					<p>{description}</p>
+					{/* <a
+						style={{ zIndex: 10 }}
+						href="/google.ca"
+						target={"_blank"}
+						color="white"
+					>
+						Secret link
+					</a> */}
 				</div>
 				<img
 					alt={`${imagePath}.png`}
