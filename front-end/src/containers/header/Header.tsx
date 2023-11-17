@@ -97,7 +97,7 @@ export const Header: React.FC<{}> = () => {
 							{auth ? (
 								<>
 									<Link
-										to={`/createUsername`}
+										to={`/${currentDomain}/createUsername`}
 										state={{
 											previousPathname: location.pathname,
 										}}
