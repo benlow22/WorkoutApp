@@ -12,9 +12,11 @@ import { HomeOutlined } from "@ant-design/icons";
 import "./styles/theme.css";
 import { changeTheme } from "../../styles/theming/theme";
 import { Helmet } from "react-helmet";
+import { supabase } from "../../supabase/supabaseClient";
 
 export const Header: React.FC<{}> = () => {
-	const { username, auth, contextIsLoading } = useContext(AuthContext);
+	const { username, auth, contextIsLoading, userId } =
+		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
@@ -32,6 +34,15 @@ export const Header: React.FC<{}> = () => {
 		setDomainObj(domains[domain]);
 	}, []);
 
+	const getUsername = async () => {
+		let { data: profiles, error } = await supabase
+			.from("profiles")
+			.select("username")
+			.eq("id", userId)
+			.single();
+		console.log("username", profiles?.username);
+		setDisplayUsername(profiles?.username);
+	};
 	useEffect(() => {
 		const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 		setDomainObj(domains[domain]);
@@ -62,8 +73,10 @@ export const Header: React.FC<{}> = () => {
 	useEffect(() => {
 		if (!contextIsLoading && auth) {
 			if (username) {
-				setDisplayUsername(username);
+				getUsername();
+				// setDisplayUsername(updatedUsername);
 				setIsLoading(false);
+				console.log("display USername", username);
 			}
 			if (domain === "buddySystem" && !username) {
 				setIsLoading(false);
