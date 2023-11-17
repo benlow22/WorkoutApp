@@ -9,7 +9,7 @@ import { supabase } from "../../supabase/supabaseClient";
 
 export const NewUsername = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
-	const { workouts, userId } = useContext(AuthContext);
+	const { workouts, userId, setUsername } = useContext(AuthContext);
 
 	const navigate = useNavigate();
 	console.log("userIDDDD", userId);
@@ -22,9 +22,14 @@ export const NewUsername = () => {
 					.from("profiles")
 					.update({ username: newUsername })
 					.eq("id", userId)
-					.select();
-				if (error) console.log(error);
-				console.log("new username set", data);
+					.select()
+					.single();
+				if (error) {
+					console.log(error);
+				} else {
+					setUsername(data.username);
+					console.log("new username set", data);
+				}
 			}
 			return true;
 		} catch (error) {
