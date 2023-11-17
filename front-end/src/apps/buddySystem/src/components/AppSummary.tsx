@@ -4,6 +4,7 @@ summary of functions / description
  LINK 
  */
 
+import "../styles/style.css";
 type TProps = {
 	appName: string;
 	color: string;
@@ -17,11 +18,17 @@ export const AppSummary = ({
 	imagePath,
 }: TProps) => {
 	return (
-		<div style={{ border: `${color} 5px solid` }}>
+		<div style={{ border: `${color} 5px solid` }} className="summary-blurb">
 			<h2>{appName}</h2>
 			<div className="description-and-image">
-				<p>{description}</p>
-				<img alt={`${imagePath}.png`} src={`/${imagePath}`} />
+				<div className="description">
+					<p>{description}</p>
+				</div>
+				<img
+					alt={`${imagePath}.png`}
+					src={`/${imagePath}`}
+					width={"125px"}
+				/>
 			</div>
 		</div>
 	);

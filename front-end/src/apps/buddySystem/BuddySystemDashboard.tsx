@@ -4,6 +4,8 @@ import domainsJSON from "../../data/domains.json";
 import { varFromDomainsJSON } from "../../utils/utils";
 import { AppSummary } from "./src/components/AppSummary";
 import summaryData from "./summaryData.json";
+import "./src/styles/style.css";
+
 export const BuddySystemDashboard = () => {
 	console.log(summaryData.apps, "DATA");
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
@@ -20,13 +22,8 @@ export const BuddySystemDashboard = () => {
 				They are mostly for personal use. When I come across a problem
 				and need an app to make things easier, I'll make it
 			</p>
-			<AppSummary
-				appName={"test"}
-				color={"red"}
-				description={"testy testy "}
-				imagePath={"none"}
-			></AppSummary>
-			<>
+
+			<div className="summary-blurbs">
 				{summaryApps &&
 					summaryApps.map((app) => (
 						<AppSummary
@@ -36,7 +33,7 @@ export const BuddySystemDashboard = () => {
 							imagePath={app.imagePath}
 						></AppSummary>
 					))}
-			</>
+			</div>
 			<Outlet />
 		</div>
 	);
