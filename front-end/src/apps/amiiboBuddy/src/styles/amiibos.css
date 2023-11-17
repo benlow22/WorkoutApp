@@ -40,7 +40,8 @@
 }
 
 .filter-nav-section {
-	background-color: #0032e5;
+	background-color: #494949;
+	border-radius: 10px;
 	padding: 20px;
 	max-width: 650px;
 	margin: auto;
@@ -71,7 +72,7 @@
 		background-color: rgb(184, 0, 0);
 	}
 
-	.ant-select.ant-select-in-form-item;
+	/* .ant-select.ant-select-in-form-item; */
 }
 /* .amiibo-grid,
 .list-group {
@@ -92,6 +93,9 @@
 	justify-content: space-between;
 }
 
+.amiibo-input-form-image-name h4 {
+	margin: 0px !important;
+}
 .currency-select {
 	width: 150px;
 }
