@@ -9,7 +9,8 @@ import { supabase } from "../../supabase/supabaseClient";
 
 export const NewUsername = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
-	const { workouts, userId, setUsername } = useContext(AuthContext);
+	const { workouts, userId, setUsername, session } = useContext(AuthContext);
+
 	const location = useLocation();
 	const navigate = useNavigate();
 
@@ -26,11 +27,16 @@ export const NewUsername = () => {
 				if (error) {
 					console.log(error);
 				} else {
-					setUsername(data.username);
+					setUsername(newUsername);
 					console.log("new username set", data, location);
 					navigate(location.state.previousPathname);
+					const { data: user, error } =
+						await supabase.auth.admin.updateUserById(userId, {
+							user_metadata: { username: newUsername },
+						});
 				}
 			}
+
 			return true;
 		} catch (error) {
 			console.error("error inserting new workout", error);
