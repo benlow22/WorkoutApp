@@ -19,6 +19,7 @@ import { LorcanaBuddy } from "./apps/lorcanaBuddy/src/App";
 import { PokeBuddy } from "./apps/pokeBuddy/src/App";
 import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
 import { ResetPasswordPage } from "./components/auth/login/ResetPasswordPage";
+import { NewUsername } from "./containers/header/newUsername";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -40,6 +41,7 @@ const router = createBrowserRouter(
 				path="buddySystem/resetpassword"
 				element={<ResetPasswordPage />}
 			/>
+			<Route path="createUsername" element={<NewUsername />} />
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)

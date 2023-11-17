@@ -96,7 +96,7 @@ export const Header: React.FC<{}> = () => {
 						<div className="account">
 							{auth ? (
 								<>
-									<Link to="/createUsername">
+									<Link to={`/createUsername`}>
 										{!username
 											? "Create Username"
 											: displayUsername}

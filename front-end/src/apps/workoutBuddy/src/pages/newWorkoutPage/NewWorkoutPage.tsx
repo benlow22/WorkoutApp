@@ -60,13 +60,13 @@ export const NewWorkoutPage = () => {
 				</Button>
 			</Space.Compact>
 			{/* // can delete */}
-			<div className="new-workout-data test">
+			{/* <div className="new-workout-data test">
 				<p>Submitted New Workout Name: </p>
 				<p>{newWorkoutName}</p>
 				<br></br>
 				<p>new workout url will be: </p>
 				<p>{newWorkoutUrl}</p>
-			</div>
+			</div> */}
 		</>
 	);
 };
