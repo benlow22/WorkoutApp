@@ -1,0 +1,35 @@
+.summary-blurbs {
+	display: flex;
+	width: 1000px;
+	flex-wrap: wrap;
+	margin: auto;
+	justify-content: space-around;
+}
+
+.summary-blurb {
+	width: 450px;
+	height: 300px;
+	margin: 20px;
+	border-radius: 10px;
+	background-color: rgb(36, 36, 36);
+	padding: 20px;
+}
+
+.summary-blurb:hover {
+	background-color: black;
+}
+.poke-buddy-summary-img {
+	width: 100px;
+	margin: auto;
+}
+
+.description {
+	height: fit-content;
+	padding: 20px;
+	text-align: justify;
+}
+.description-and-image {
+	display: flex;
+	align-items: center;
+	height: 220px;
+}

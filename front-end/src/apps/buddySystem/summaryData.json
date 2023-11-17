@@ -1,0 +1,33 @@
+{
+	"apps": [
+		{
+			"color": "yellow",
+			"description": "Assistant for pokemon games, you can quickly discover what types are most effective when battling a pokemon with the 'Type Effectiveness' app. You can also use the 'Sleep' app to discover recipes for your Pokémon",
+			"imagePath": "sleepSummaryPic.png",
+			"appName": "Poke Buddy",
+			"appPath": "pokeBuddy"
+		},
+		{
+			"color": "blue",
+			"description": "create new workouts and keep track of reps, set, weights",
+			"imagePath": "",
+			"appName": "Workout Buddy",
+			"appPath": "workoutBuddy"
+		},
+		{
+			"color": "red",
+			"description": "Quickly catalog all of your collectible Amiibo figurines, with this easy to use app. You can also create wishlists, and input lots of data for amiibos you add to your inventory, like: location, price, condition and even upload images of your amiibos. This app makes it super easy to see which amiibos you have and which you still need.",
+			"imagePath": "amiiboSummary.png",
+			"appName": "Amiibo Buddy",
+			"appPath": "amiiboBuddy"
+		},
+
+		{
+			"color": "purple",
+			"description": "Catalog all your Lorcana trading cards and see if your collection is complete. You can browse all the cards to see which you want to obtain. You can even select and keep track of any special holographic cards you got too",
+			"imagePath": "lorcanaSummary.png",
+			"appName": "Lorcana Buddy",
+			"appPath": "lorcanaBuddy/browse"
+		}
+	]
+}
