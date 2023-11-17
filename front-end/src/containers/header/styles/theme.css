@@ -54,6 +54,13 @@ for domains that stay the same, the previous-header will be the same as the doma
 	background-color: var(--domain-primary-button-hover) !important;
 }
 
+.new-username :where(.css-dev-only-do-not-override-txh9fw).ant-btn-primary {
+	background-color: var(--domain-nav-links);
+}
+.new-username
+	:where(.css-dev-only-do-not-override-txh9fw).ant-btn-primary:hover {
+	background-color: var(--domain-primary-button-hover) !important;
+}
 /* .navbar {
 	background-color: var(--domain-nav-links);
 } */

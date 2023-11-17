@@ -3,16 +3,15 @@ import { Button, Space, Input } from "antd";
 
 // import { postNewWorkout } from "../../api/api";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { supabase } from "../../supabase/supabaseClient";
 // import { changeNameToUrl } from "../../../../../utils/utils";
 
 export const NewUsername = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const { workouts, userId, setUsername } = useContext(AuthContext);
-
+	const location = useLocation();
 	const navigate = useNavigate();
-	console.log("userIDDDD", userId);
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
@@ -28,7 +27,8 @@ export const NewUsername = () => {
 					console.log(error);
 				} else {
 					setUsername(data.username);
-					console.log("new username set", data);
+					console.log("new username set", data, location);
+					navigate(location.state.previousPathname);
 				}
 			}
 			return true;
@@ -38,7 +38,7 @@ export const NewUsername = () => {
 	};
 
 	return (
-		<>
+		<div className="new-username">
 			<h2 className="page-heading">New Username</h2>
 			<Space.Compact>
 				<Input
@@ -57,6 +57,6 @@ export const NewUsername = () => {
 					Submit
 				</Button>
 			</Space.Compact>
-		</>
+		</div>
 	);
 };
