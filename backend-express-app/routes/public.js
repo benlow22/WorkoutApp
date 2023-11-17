@@ -1,7 +1,6 @@
 // create another router for getting 'authorized' resources
 const { createClient } = require("@supabase/supabase-js");
 const { response } = require("express");
-const { response } = require("express");
 const supabase = createClient(
 	process.env.SUPABASE_URL,
 	process.env.SUPABASE_ANON_KEY,
