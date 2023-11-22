@@ -117,56 +117,12 @@ export const ExercisesPage: React.FC<{}> = () => {
 
 	return (
 		<div className="exercise-page">
-			{auth ? (
-				<>
-					<h2 className="page-heading">Exercises </h2>
-					<div className="search-container">
-						<AutoComplete
-							style={{
-								width: 260,
-							}}
-							// notFoundContent={`new exercise: ${searchExercise}`}
-							defaultActiveFirstOption
-							onChange={(value) => setSearchExercise(value)}
-							options={allExercises}
-							children={
-								<Search
-									placeholder="Exercise Search"
-									onSearch={handleSearch} // conditional for add or seach
-									enterButton={
-										isNewExercise ? (
-											<PlusOutlined />
-										) : (
-											<SearchOutlined />
-										)
-									}
-									className="search-bar"
-								/>
-							}
-							// filterOption={(inputValue, option) =>
-							// 	option!.value
-							// 		.toUpperCase()
-							// 		.indexOf(inputValue.toUpperCase()) !== -1
-							// }
-						/>
-						{/* <div className="searched">Searched: {searchExercise}</div> */}
-					</div>
-					<Outlet />
-					{/* {allExercises.map((exercise: any, index) => (
-				<p key={`${index}-${exercise.value}`}>{exercise.value}</p>
-			))}
-
-			<p> is it new? </p>
-			{isNewExercise ? <p>true</p> : <p>false</p>} */}{" "}
-					)
-				</>
-			) : (
-				<div className="page-heading">
-					<h2>Workout Buddy Exercise</h2>
-					<img src={quaxly} style={{ maxWidth: "400px" }} />
-					<h5>Coming soon...</h5>
-				</div>
-			)}
+			<div className="page-heading">
+				<h2>Workout Buddy Exercise</h2>
+				<img src={quaxly} style={{ maxWidth: "400px" }} />
+				<h5>Coming soon...</h5>
+			</div>
+			{/* )} */}
 		</div>
 	);
 };
