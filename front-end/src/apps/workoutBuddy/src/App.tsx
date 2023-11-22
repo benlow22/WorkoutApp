@@ -9,7 +9,7 @@ import { ExplorePage } from "./pages/explorePage/ExplorePage";
 import { TipsPage } from "./pages/tipsPage/TipsPage";
 
 export const WorkoutBuddy = [
-	<Route index element={<WorkoutBuddyHomepage />} key={"WB1"} />,
+	<Route index element={<Navigate to="workouts" />} key={"WB1"} />,
 	<Route path="workouts" element={<WorkoutsPage />} key={"WB2"} />,
 	<Route path="workouts/:workoutUrl" element={<WorkoutPage />} key={"WB3"} />,
 	<Route path="exercises" element={<ExercisesPage />} key={"WB4"} />,
