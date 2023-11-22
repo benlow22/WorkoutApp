@@ -10,6 +10,7 @@ import { supabase } from "../../supabase/supabaseClient";
 export const NewUsername = () => {
 	const [newUsername, setNewUsername] = useState<string>("");
 	const { workouts, userId, setUsername, session } = useContext(AuthContext);
+
 	const location = useLocation();
 	const navigate = useNavigate();
 
