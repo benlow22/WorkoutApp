@@ -35,24 +35,21 @@ export const WorkoutsPage: React.FC<{}> = () => {
 			.from("workouts")
 			.select("id, name, last_performed, url");
 		console.log("dataaa", workouts);
+		if (workouts) {
+			setWorkouts(workouts);
+		}
 		if (error) {
 			console.error(error);
 			return error;
-		} else {
-			let data: IWorkout[] | null = null;
-			data = workouts;
-			data && setWorkouts(data);
-			setIsLoading(false);
-			return data;
 		}
 	};
 	useEffect(() => {
 		// once logged in, make API call //session wil always be true here, if sstatement to bypass error
-		if (session && auth) {
-			getAllUsersWorkoutsRequest(session);
-		} else {
-			getAllPublicWorkouts();
-		}
+		// if (session && auth) {
+		// 	getAllUsersWorkoutsRequest(session);
+		// } else {
+		getAllPublicWorkouts();
+		// }
 	}, [auth]);
 
 	const warningPopUp = (event: any) => {
@@ -67,78 +64,76 @@ export const WorkoutsPage: React.FC<{}> = () => {
 		}
 	}, [getAllUsersWorkoutsResponse]);
 
-	if (!getAllUsersWorkoutsLoading) {
-		return (
-			<div className="workouts-page">
-				{contextHolder}
+	// if (!getAllUsersWorkoutsLoading) {
+	// 	return (
+	// 		<div className="workouts-page">
+	// 			{contextHolder}
 
-				<h2 className="page-heading">Your Workouts</h2>
-				{getAllUsersWorkoutsResponse?.map((workout, index) => (
-					<Link to={`${workout.url}`} key={index} state={workout}>
-						<WorkoutButton workout={workout} />
-					</Link>
-				))}
-				{getAllUsersWorkoutsError && (
-					<div className="error-render">
-						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
-					</div>
-				)}
-				<Link to={`/workoutBuddy/newWorkout`}>
-					<Button
-						type="primary"
-						block
-						className="add-new-workout-button workout-button capitalize"
-					>
-						Add New Workout [+]
-					</Button>
-				</Link>
-			</div>
-		);
-	} else if (!isLoading) {
-		return (
-			<div className="workouts-page">
-				{contextHolder}
+	// 			<h2 className="page-heading">Your Workouts</h2>
+	// 			{getAllUsersWorkoutsResponse?.map((workout, index) => (
+	// 				<Link to={`${workout.url}`} key={index} state={workout}>
+	// 					<WorkoutButton workout={workout} />
+	// 				</Link>
+	// 			))}
+	// 			{getAllUsersWorkoutsError && (
+	// 				<div className="error-render">
+	// 					<h5>Error: {getAllUsersWorkoutsError.message}</h5>
+	// 				</div>
+	// 			)}
+	// 			<Link to={`/workoutBuddy/newWorkout`}>
+	// 				<Button
+	// 					type="primary"
+	// 					block
+	// 					className="add-new-workout-button workout-button capitalize"
+	// 				>
+	// 					Add New Workout [+]
+	// 				</Button>
+	// 			</Link>
+	// 		</div>
+	// 	);
+	// } else if (!isLoading) {
+	return (
+		<div className="workouts-page">
+			{contextHolder}
 
-				<h2 className="page-heading">Your Workouts</h2>
-				{workouts.map((workout, index) => (
-					<Link
-						to={`${workout.url}`}
-						key={index}
-						state={workout}
-						onClick={(event) => !auth && warningPopUp(event)}
-					>
-						<WorkoutButton workout={workout} />
-					</Link>
-				))}
-				{getAllUsersWorkoutsError && (
-					<div className="error-render">
-						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
-					</div>
-				)}
-				<Link to={`/workoutBuddy/newWorkout`} aria-disabled={!auth}>
-					<Button
-						type="primary"
-						block
-						className="add-new-workout-button workout-button capitalize"
-					>
-						Add New Workout [+]
-					</Button>
+			<h2 className="page-heading">Your Workouts</h2>
+			{workouts.map((workout, index) => (
+				<Link
+					to={`${workout.url}`}
+					key={index}
+					state={workout}
+					onClick={(event) => !auth && warningPopUp(event)}
+				>
+					<WorkoutButton workout={workout} />
 				</Link>
-				<div className="vid-container">
-					<video controls>
-						<source src="/workoutBuddyDemo.mov" type="video/mp4" />
-						<p>
-							Your browser doesn't support HTML video. Here is a
-							<a href="/workoutBuddyDemo.mov">
-								link to the video
-							</a>{" "}
-							instead.
-						</p>
-					</video>
+			))}
+			{getAllUsersWorkoutsError && (
+				<div className="error-render">
+					<h5>Error: {getAllUsersWorkoutsError.message}</h5>
 				</div>
+			)}
+			<Link to={`/workoutBuddy/newWorkout`} aria-disabled={!auth}>
+				<Button
+					type="primary"
+					block
+					className="add-new-workout-button workout-button capitalize"
+				>
+					Add New Workout [+]
+				</Button>
+			</Link>
+			<div className="vid-container">
+				<video controls>
+					<source src="/workoutBuddyDemo.mov" type="video/mp4" />
+					<p>
+						Your browser doesn't support HTML video. Here is a
+						<a href="/workoutBuddyDemo.mov">link to the video</a>{" "}
+						instead.
+					</p>
+				</video>
 			</div>
-		);
-	} else {
-		return <SpiningLoadingIcon />;
-	}
+		</div>
+	);
+	// } else {
+	// 	return <SpiningLoadingIcon />;
+	// }
 };
