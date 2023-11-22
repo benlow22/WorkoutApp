@@ -12,7 +12,7 @@
 			"description": "Create new workouts and keep track of your reps, set, weights. Search through exercises, or upload your own with a description, tips and even links to videos or descriptions. Tips and public workouts will be added in future updates",
 			"imagePath": "workoutBuddyPic.png",
 			"appName": "Workout Buddy",
-			"appPath": "workoutBuddy"
+			"appPath": "workoutBuddy/workouts"
 		},
 		{
 			"color": "red",
