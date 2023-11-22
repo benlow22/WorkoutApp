@@ -29,6 +29,13 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				"Please log in to view workout, or checkout the Logged In preview video below",
 		});
 	};
+	const addNewWorkoutWarning = () => {
+		messageApi.open({
+			type: "warning",
+			content: "you must log in first to save settings",
+			duration: 6,
+		});
+	};
 	const getAllPublicWorkouts = async () => {
 		let { data: workouts, error } = await supabase
 			.from("workouts")
@@ -114,7 +121,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
 					</div>
 				)}
-				<Link to={`/workoutBuddy/newWorkout`}>
+				<Link to={`/workoutBuddy/newWorkout`} aria-disabled={!auth}>
 					<Button
 						type="primary"
 						block
