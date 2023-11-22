@@ -24,11 +24,11 @@ import { NewUsername } from "./containers/header/newUsername";
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route path="/" element={<Root />}>
-			<Route index element={<BuddySystemHomepage />} />
+			<Route index element={<BuddySystemDashboard />} />
 			<Route path=":domain/createUsername" element={<NewUsername />} />
 			<Route path=":domain/login" element={<LoginPage />} />
 			{/* only authenticated users can use these routes  */}
-			<Route path="buddySystem" element={<BuddySystemDashboard />} />
+			{/* <Route path="buddySystem" element={<BuddySystemDashboard />} /> */}
 			<Route path="workoutBuddy">{WorkoutBuddy}</Route>
 			<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
 			{/* <Route element={<AuthRoute />}> */}
