@@ -29,13 +29,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				"Please log in to view workout, or checkout the Logged In preview video below",
 		});
 	};
-	const addNewWorkoutWarning = () => {
-		messageApi.open({
-			type: "warning",
-			content: "you must log in first to save settings",
-			duration: 6,
-		});
-	};
+
 	const getAllPublicWorkouts = async () => {
 		let { data: workouts, error } = await supabase
 			.from("workouts")
@@ -130,6 +124,18 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						Add New Workout [+]
 					</Button>
 				</Link>
+				<div className="vid-container">
+					<video controls>
+						<source src="/workoutBuddyDemo.mov" type="video/mp4" />
+						<p>
+							Your browser doesn't support HTML video. Here is a
+							<a href="/workoutBuddyDemo.mov">
+								link to the video
+							</a>{" "}
+							instead.
+						</p>
+					</video>
+				</div>
 			</div>
 		);
 	} else {
