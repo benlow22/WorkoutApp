@@ -8,6 +8,8 @@ import { Input, Space } from "antd";
 import { AutoComplete } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { getAllExercisesAPI } from "../../api/api";
+import { supabase } from "../../../../../supabase/supabaseClient";
+import quaxly from "../../../../../images/quaxly.png";
 
 const { Search } = Input;
 
@@ -16,21 +18,38 @@ interface IExercise {
 }
 
 export const ExercisesPage: React.FC<{}> = () => {
-	const { workouts, setWorkouts, userId, session } = useContext(AuthContext);
+	const { workouts, setWorkouts, auth, userId, session } =
+		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true);
-	const [allExercises, setAllExercises] = useState<IExercise[]>([]); //change to appropriate type
+	const [allExercises, setAllExercises] = useState<any>([]); //change to appropriate type
 	const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 	const [isNewExercise, setIsNewExercise] = useState<boolean>(true);
 	const navigate = useNavigate();
 
+	const pubExercises = async () => {
+		let { data: exercises, error } = await supabase
+			.from("exercise")
+			.select("name");
+		if (error) {
+			console.log(error);
+		} else {
+			// console.log("Ex", exercises);
+			setAllExercises(exercises);
+		}
+	};
 	useEffect(() => {
-		const getAllExercises = async () => {
-			if (session) {
-				const data = await getAllExercisesAPI(session);
-				console.log("data made it to ExercisePage Component", data);
-				return data;
-			}
-		};
+		console.log("hi");
+		if (!auth) {
+			pubExercises();
+		}
+
+		// const getAllExercises = async () => {
+		// 	if (session) {
+		// 		const data = await getAllExercisesAPI(session);
+		// 		console.log("data made it to ExercisePage Component", data);
+		// 		return data;
+		// 	}
+		// };
 
 		// // upon loading, fetch all exercise data to populate dropdown
 		// console.log("exercises fetch", allExercises);
@@ -52,7 +71,7 @@ export const ExercisesPage: React.FC<{}> = () => {
 		// }
 		// fetchExercises();
 		// console.log("exercises fetch2", allExercises);
-		const data = getAllExercises();
+		// const data = getAllExercises();
 	}, []);
 
 	const onSearch = (value: string) => console.log(value);
@@ -98,45 +117,56 @@ export const ExercisesPage: React.FC<{}> = () => {
 
 	return (
 		<div className="exercise-page">
-			<h2 className="page-heading">Exercises </h2>
-			<div className="search-container">
-				<AutoComplete
-					style={{
-						width: 260,
-					}}
-					// notFoundContent={`new exercise: ${searchExercise}`}
-					defaultActiveFirstOption
-					onChange={(value) => setSearchExercise(value)}
-					options={allExercises}
-					children={
-						<Search
-							placeholder="Exercise Search"
-							onSearch={handleSearch} // conditional for add or seach
-							enterButton={
-								isNewExercise ? (
-									<PlusOutlined />
-								) : (
-									<SearchOutlined />
-								)
+			{auth ? (
+				<>
+					<h2 className="page-heading">Exercises </h2>
+					<div className="search-container">
+						<AutoComplete
+							style={{
+								width: 260,
+							}}
+							// notFoundContent={`new exercise: ${searchExercise}`}
+							defaultActiveFirstOption
+							onChange={(value) => setSearchExercise(value)}
+							options={allExercises}
+							children={
+								<Search
+									placeholder="Exercise Search"
+									onSearch={handleSearch} // conditional for add or seach
+									enterButton={
+										isNewExercise ? (
+											<PlusOutlined />
+										) : (
+											<SearchOutlined />
+										)
+									}
+									className="search-bar"
+								/>
 							}
-							className="search-bar"
+							// filterOption={(inputValue, option) =>
+							// 	option!.value
+							// 		.toUpperCase()
+							// 		.indexOf(inputValue.toUpperCase()) !== -1
+							// }
 						/>
-					}
-					// filterOption={(inputValue, option) =>
-					// 	option!.value
-					// 		.toUpperCase()
-					// 		.indexOf(inputValue.toUpperCase()) !== -1
-					// }
-				/>
-				{/* <div className="searched">Searched: {searchExercise}</div> */}
-			</div>
-			<Outlet />
-			{/* {allExercises.map((exercise: any, index) => (
+						{/* <div className="searched">Searched: {searchExercise}</div> */}
+					</div>
+					<Outlet />
+					{/* {allExercises.map((exercise: any, index) => (
 				<p key={`${index}-${exercise.value}`}>{exercise.value}</p>
 			))}
 
 			<p> is it new? </p>
-			{isNewExercise ? <p>true</p> : <p>false</p>} */}
+			{isNewExercise ? <p>true</p> : <p>false</p>} */}{" "}
+					)
+				</>
+			) : (
+				<div className="page-heading">
+					<h2>Workout Buddy Exercise</h2>
+					<img src={quaxly} style={{ maxWidth: "400px" }} />
+					<h5>Coming soon...</h5>
+				</div>
+			)}
 		</div>
 	);
 };

@@ -10,6 +10,7 @@ import {
 } from "../../api/api";
 import { IExercise, TExerciseTemplate } from "../../../../../api/types";
 import { useRequest } from "../../../../../hooks/useRequest";
+import { supabase } from "../../../../../supabase/supabaseClient";
 
 const { Search } = Input;
 
@@ -48,7 +49,7 @@ export const SearchExercises = ({
 }: TProps) =>
 	// addExerciseToAll
 	{
-		const { workouts, setWorkouts, userId, session } =
+		const { workouts, setWorkouts, auth, userId, session } =
 			useContext(AuthContext);
 		const [searchExercise, setSearchExercise] = useState<string>(""); // the live-current input in searchbar
 		const [addNewExerciseBox, setAddNewExerciseBox] =
@@ -84,6 +85,17 @@ export const SearchExercises = ({
 			usersAndPublicExercisesRequest(session!);
 		}, []);
 
+		const pubExercises = async () => {
+			let { data: exercises, error } = await supabase
+				.from("exercise")
+				.select("name");
+			if (error) {
+				console.log(error);
+			} else {
+				return exercises;
+			}
+		};
+
 		useEffect(() => {
 			if (usersExerciseResponse?.usersExercise) {
 				if (usersExerciseResponse.usersExercise?.length > 0) {
@@ -112,9 +124,19 @@ export const SearchExercises = ({
 						value: exercise.name,
 					}));
 				setAllExercisesNames(listOfExerciseNamesAsValues);
+			} else {
+				const listOfExercisesPublic = pubExercises();
+				console.log(listOfExercisesPublic);
 			}
 		}, [usersAndPublicExercisesResponse]);
 
+		useEffect(() => {
+			console.log("hi");
+			if (!auth) {
+				const listOfExercisesPublic = pubExercises();
+				console.log(listOfExercisesPublic);
+			}
+		}, []);
 		useEffect(() => {
 			if (
 				allExercisesNames.some(
@@ -157,7 +179,6 @@ export const SearchExercises = ({
 					if (exercise) {
 						handleAddExistingExercise(exercise);
 						// usersExerciseRequest(exercise.id, session!);
-
 					}
 					setAddExistingExerciseBox(true);
 					// addExerciseToWorkout(workout.id, exercise, userId);

@@ -29,6 +29,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 				"Please log in to view workout, or checkout the Logged In preview video below",
 		});
 	};
+
 	const getAllPublicWorkouts = async () => {
 		let { data: workouts, error } = await supabase
 			.from("workouts")
@@ -114,7 +115,7 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						<h5>Error: {getAllUsersWorkoutsError.message}</h5>
 					</div>
 				)}
-				<Link to={`/workoutBuddy/newWorkout`}>
+				<Link to={`/workoutBuddy/newWorkout`} aria-disabled={!auth}>
 					<Button
 						type="primary"
 						block
@@ -123,6 +124,18 @@ export const WorkoutsPage: React.FC<{}> = () => {
 						Add New Workout [+]
 					</Button>
 				</Link>
+				<div className="vid-container">
+					<video controls>
+						<source src="/workoutBuddyDemo.mov" type="video/mp4" />
+						<p>
+							Your browser doesn't support HTML video. Here is a
+							<a href="/workoutBuddyDemo.mov">
+								link to the video
+							</a>{" "}
+							instead.
+						</p>
+					</video>
+				</div>
 			</div>
 		);
 	} else {
