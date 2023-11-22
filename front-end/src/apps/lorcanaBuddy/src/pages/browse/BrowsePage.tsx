@@ -6,7 +6,7 @@ import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
 import lorcanaData from "./../../public/lorcanaCards.json";
 import { LorcanaCard } from "../../components/LorcanaCard";
 import "./../../styles/index.css";
-import { FloatButton, Tooltip } from "antd";
+import { FloatButton, Tooltip, message } from "antd";
 import { SaveFilled } from "@ant-design/icons";
 import { useRequest } from "../../../../../hooks/useRequest";
 import { getAllLorcanaCardsAPI } from "../../api";
@@ -27,6 +27,7 @@ export const BrowsePage = () => {
 	const [usersUpdatedCardStatuses, setUsersUpdatedCardStatuses] =
 		useState<TCardStatus>({});
 	// const [usersCardStatuses, setUsersCardStatuses] = useState<TCardStatus>({});
+	const [messageApi, contextHolder] = message.useMessage();
 
 	const [
 		getAllLorcanaCardsResponse,
@@ -34,6 +35,14 @@ export const BrowsePage = () => {
 		getAllLorcanaCardsError,
 		getAllLorcanaCardsRequest,
 	] = useRequest(getAllLorcanaCardsAPI);
+
+	const warningMessage = () => {
+		messageApi.open({
+			type: "warning",
+			content: "you must log in first to save cards",
+			duration: 6,
+		});
+	};
 
 	const getUsersCardStatuses = async () => {
 		let { data, error } = await supabase
@@ -70,23 +79,28 @@ export const BrowsePage = () => {
 	}, [lorcanaAllCards]);
 
 	const handleFloatSave = async () => {
-		setIsUploading(true);
-		const { data, error } = await supabase
-			.from("lorb_cards_statuses")
-			.update({ cards_statuses: usersUpdatedCardStatuses })
-			.eq("user_id", userId)
-			.select();
-		if (data) {
-			console.log("upload success", data);
-			setIsUploading(false);
+		if (!auth) {
+			warningMessage();
 		} else {
-			console.log(error);
-			setIsUploading(false);
+			setIsUploading(true);
+			const { data, error } = await supabase
+				.from("lorb_cards_statuses")
+				.update({ cards_statuses: usersUpdatedCardStatuses })
+				.eq("user_id", userId)
+				.select();
+			if (data) {
+				console.log("upload success", data);
+				setIsUploading(false);
+			} else {
+				console.log(error);
+				setIsUploading(false);
+			}
 		}
 	};
 
 	return (
 		<>
+			{contextHolder}
 			<div className="page-heading">
 				<h2>Lorcana Buddy Browse</h2>
 				<div className="card-grid">
@@ -112,13 +126,6 @@ export const BrowsePage = () => {
 						onClick={handleFloatSave}
 					/>
 				</div>
-
-				<img
-					src={lorcanaMickey}
-					style={{ maxWidth: "400px" }}
-					alt="lorcana sorcerer mickey"
-				/>
-				<h5>Coming soon...</h5>
 			</div>
 		</>
 	);
