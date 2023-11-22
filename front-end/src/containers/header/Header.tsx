@@ -143,7 +143,7 @@ export const Header: React.FC<{}> = () => {
 										</Link>
 									)}{" "}
 									<Link
-										to={`/buddySystem`}
+										to={`/`}
 										className="home-button"
 										state={{
 											previousDomain: currentDomain,
