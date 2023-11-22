@@ -74,6 +74,9 @@ TProps) => {
 			// @ts-expect-error
 			console.error(error.cause);
 		}
+		if (!auth) {
+			setCheckedStatus(!checkedStatus);
+		}
 	};
 
 	return (
