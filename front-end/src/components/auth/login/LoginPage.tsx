@@ -69,7 +69,7 @@ export const LoginPage = () => {
 							},
 						},
 					}}
-					providers={["google", "github", "azure"]}
+					providers={["google"]}
 				/>
 			</div>
 		)
