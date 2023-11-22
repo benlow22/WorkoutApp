@@ -129,7 +129,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		return () => {
 			data.subscription.unsubscribe();
 		};
-	}, [isLoggedIn]);
+	}, [isLoggedIn, username]);
 
 	// // when signing out, end session, if error, do not reset context.
 	// useEffect(() => {

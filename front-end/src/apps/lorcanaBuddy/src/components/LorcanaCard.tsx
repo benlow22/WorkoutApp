@@ -145,7 +145,7 @@ export const LorcanaCard = ({
 						src={
 							foilQuantityValue > 0
 								? card["image-urls"].foil
-								: card["image-urls"].small
+								: card["image-urls"].large
 						}
 						placeholder={
 							<Image
@@ -153,7 +153,7 @@ export const LorcanaCard = ({
 								src={
 									foilQuantityValue > 0
 										? card["image-urls"].foil
-										: card["image-urls"].small
+										: card["image-urls"].large
 								}
 								width={200}
 							/>
