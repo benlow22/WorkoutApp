@@ -43,8 +43,7 @@ export const Checklist = () => {
 	const warningMessage = () => {
 		messageApi.open({
 			type: "warning",
-			content:
-				"you must log in first before you can access your inventory",
+			content: "Sorry you must be logged in to use this feature",
 			duration: 6,
 		});
 	};
@@ -63,6 +62,12 @@ export const Checklist = () => {
 		}
 	};
 
+	const messageIfNotAuth = () => {
+		if (!auth) {
+			warningMessage();
+		}
+	};
+
 	useEffect(() => {
 		if (!isUpsertLoading) {
 			getAllAmiibos();
@@ -70,6 +75,8 @@ export const Checklist = () => {
 	}, [isLoggedIn, isUpsertLoading]);
 
 	const handleCheckAll = async () => {
+		messageIfNotAuth();
+
 		setIsUpsertLoading(true);
 		const checkAll = filteredAmiibos.map((amiibo) => ({
 			amiibo_id: amiibo.id,
@@ -92,6 +99,7 @@ export const Checklist = () => {
 	};
 
 	const handleCheckPage = async () => {
+		messageIfNotAuth();
 		setIsUpsertLoading(true);
 		const checkPage = currentFilteredAmiibos.map((amiibo) => ({
 			amiibo_id: amiibo.id,
@@ -113,6 +121,8 @@ export const Checklist = () => {
 		}
 	};
 	const handleUncheckPage = async () => {
+		messageIfNotAuth();
+
 		setIsUpsertLoading(true);
 		const uncheckPage = currentFilteredAmiibos.map((amiibo) => ({
 			amiibo_id: amiibo.id,
@@ -135,6 +145,8 @@ export const Checklist = () => {
 	};
 
 	const handleUncheckAll = async () => {
+		messageIfNotAuth();
+
 		setIsUpsertLoading(true);
 		const uncheckAll = filteredAmiibos.map((amiibo) => ({
 			amiibo_id: amiibo.id,
@@ -157,6 +169,8 @@ export const Checklist = () => {
 	};
 	return (
 		<>
+			{" "}
+			{contextHolder}
 			<h3 className="page-heading">AmiiboChecklist</h3>
 			<div className="filter-nav-section">
 				<AmiiboFilter
