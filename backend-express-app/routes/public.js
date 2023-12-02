@@ -63,6 +63,9 @@ router.get("/cards/:cardName", async (req, res) => {
 	}
 });
 
+//call this to update lorcana card.json
+//http://localhost:8000/api/public/lorcana/cards
+
 router.get("/lorcana/cards", async (req, res) => {
 	console.log("hi");
 	const namesData = fetch(`https://api.lorcana-api.com/lists/names`)
@@ -116,32 +119,11 @@ router.get("/cards/:cardName", async (req, res) => {
 
 router.get("/lorcana/cards", async (req, res) => {
 	console.log("hi");
-	const namesData = fetch(`https://api.lorcana-api.com/lists/names`)
-		.then((lorcanaNamesArr) => {
+	const namesData = fetch(`https://api.lorcana-api.com/lists/names`).then(
+		(lorcanaNamesArr) => {
 			return lorcanaNamesArr.json();
-		})
-		.then((lorcanaArr) => {
-			const allCards = Promise.all(
-				lorcanaArr.map(async (name) => {
-					const data = await fetch(
-						`https://api.lorcana-api.com/strict/${name}`,
-						{
-							method: "GET",
-							headers: {
-								"Content-Type": "application/json",
-								Accept: "text/html",
-							},
-						}
-					);
-					if (data) {
-						const response = await data.json();
-						const item = { cardName: name, ...response };
-						return item;
-					}
-				})
-			);
-			return allCards;
-		});
+		}
+	);
 	let data = await namesData;
 	const sortedData = data.sort((a, b) => a["card-number"] - b["card-number"]);
 	res.send(sortedData).status(200);
@@ -216,5 +198,32 @@ router.get("/lorcana/cards", async (req, res) => {
 // 	console.log("errrror", error);
 // 	console.log("updated workout exercises", data);
 // });
+
+//call this to update lorcana card.json
+//http://localhost:8000/api/public/lorcana/latestCards
+//
+router.get("/lorcana/latestCards", async (req, res) => {
+	const set1 = fetch(`https://api.lorcana-api.com/cards/fetch=Set_Num=1`)
+		.then((lorcanaNamesArr) => {
+			return lorcanaNamesArr.json();
+		})
+		.then((set1) => {
+			const sorted1 = set1.sort((a, b) => a["Card_Num"] - b["Card_Num"]);
+			return sorted1;
+		});
+	const set2 = fetch(`https://api.lorcana-api.com/cards/fetch=Set_Num=2`)
+		.then((lorcanaNamesArr) => {
+			return lorcanaNamesArr.json();
+		})
+		.then((set2) => {
+			const sorted2 = set2.sort((a, b) => a["Card_Num"] - b["Card_Num"]);
+			return sorted2;
+		});
+	const data1 = await set1;
+	const data2 = await set2;
+
+	// const orderedCards = await set1.concat(set2);
+	res.send(data1.concat(data2)).status(200);
+});
 
 module.exports = router;
