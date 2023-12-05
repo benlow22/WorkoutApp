@@ -25,6 +25,17 @@ const enum SetId {
 	TFC,
 	RFB,
 }
+
+const enum ProductTypes {
+	"Booster Pack",
+	"Blister Pack",
+	"Starter Deck",
+	"Gift Set",
+	"Illumineers Trove",
+	"Booster Box",
+	"D100",
+	"Other",
+}
 const enum SetName {
 	Promo,
 	"The First Chapter",
