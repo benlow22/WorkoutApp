@@ -1,0 +1,94 @@
+{
+	"form": {
+		"items": [
+			{
+				"type": "boosterPack or 1",
+				"productCode": "2RM9S0AJ",
+				"character": "Raya",
+				"boosterPack": {
+					"id": 12928621972619273,
+					"cards": [
+						{
+							"cardNumber": "109",
+							"quantity": "1"
+						},
+						{
+							"cardNumber": "12",
+							"quantity": "1"
+						},
+						{
+							"cardNumber": "44",
+							"quantity": "1"
+						}
+					]
+				},
+				"contents": ""
+			},
+			{
+				"type": "trove",
+				"productCode": "2HAKS0UM",
+				"character": "Queen of Hearts + Raya + Beast",
+				"cards": [
+					{
+						"cardNumber": "109",
+						"quantity": "1"
+					},
+					{
+						"cardNumber": "12",
+						"quantity": "1"
+					},
+					{
+						"cardNumber": "44",
+						"quantity": "1"
+					}
+				],
+				"boosterIds": []
+			}
+		]
+	},
+	"database": {
+		"receipt": {
+			"generated receipt_id": 1928372167283,
+			"date": "dec-1",
+			"location": {
+				"city": "lougheed",
+				"store": "gamestop"
+			},
+			"items": [
+				{
+					"generated product_receipt id": 192380293,
+					"type": "trove",
+					"cost": 10.99,
+					"MSRP": 49.99,
+					"guaranteed_cards": [10, 32, 123, 422, 21, 325, 123],
+					"boosterPacks": [
+						{
+							"generated boosterPackId": 1920199191,
+							"cards": [12, 122, 121, 31, 435, 653, 1234, 12, 12],
+							"foil card": 12
+						},
+						{
+							"generated boosterPackId": 2142312341,
+							"cards": [44, 29, 40, 155, 63, 544, 34, 63],
+							"foil card": 41
+						}
+					]
+				},
+				{
+					"generated product_receipt id": 48102993,
+					"type": "boosterpack",
+					"cost": 7.99,
+					"MSRP": 7.99,
+					"guaranteed_cards": [],
+					"boosterPacks": [
+						{
+							"generated boosterPackId": 2309392002,
+							"cards": [12, 39, 4, 1, 25, 654, 7, 45],
+							"foil card": 23
+						}
+					]
+				}
+			]
+		}
+	}
+}

@@ -96,6 +96,7 @@ export const PlacesAutocomplete = ({
 	} = usePlacesAutocomplete();
 
 	const handleSelect = async (address: string) => {
+		console.log("this is the addy", address);
 		setValue(address, false);
 		clearSuggestions();
 		setLocationName(address);
