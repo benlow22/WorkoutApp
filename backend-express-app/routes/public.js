@@ -203,27 +203,21 @@ router.get("/lorcana/cards", async (req, res) => {
 //http://localhost:8000/api/public/lorcana/latestCards
 //
 router.get("/lorcana/latestCards", async (req, res) => {
-	const set1 = fetch(`https://api.lorcana-api.com/cards/fetch=Set_Num=1`)
-		.then((lorcanaNamesArr) => {
+	const set1 = fetch(`https://api.lorcana-api.com/cards/fetch`).then(
+		(lorcanaNamesArr) => {
 			return lorcanaNamesArr.json();
-		})
-		.then((set1) => {
-			const sorted1 = set1.sort((a, b) => a["Card_Num"] - b["Card_Num"]);
-			return sorted1;
-		});
-	const set2 = fetch(`https://api.lorcana-api.com/cards/fetch=Set_Num=2`)
-		.then((lorcanaNamesArr) => {
-			return lorcanaNamesArr.json();
-		})
-		.then((set2) => {
-			const sorted2 = set2.sort((a, b) => a["Card_Num"] - b["Card_Num"]);
-			return sorted2;
-		});
-	const data1 = await set1;
-	const data2 = await set2;
-
+		}
+	);
+	const allCards = await set1;
+	allCards.sort((a, b) => {
+		if (a["Set_Num"] === b["Set_Num"]) {
+			// Price is only important when cities are the same
+			return a["Card_Num"] - b["Card_Num"];
+		}
+		return a["Set_Num"] > b["Set_Num"] ? 1 : -1;
+	});
 	// const orderedCards = await set1.concat(set2);
-	res.send(data1.concat(data2)).status(200);
+	res.send(allCards).status(200);
 });
 
 module.exports = router;
