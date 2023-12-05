@@ -27,7 +27,6 @@ const enum SetId {
 }
 
 export const enum ProductTypes {
-	"Booster Pack",
 	"Blister Pack",
 	"Starter Deck",
 	"Gift Set",

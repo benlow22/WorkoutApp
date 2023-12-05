@@ -12,9 +12,10 @@ type TProps = {
 };
 
 export const ProductCard = ({ type, wave, number }: TProps) => {
-	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>([]);
+	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>();
 	const [numberOfBoosterPacks, setNumberOfBoosterPacks] = useState<number>(0);
 	const [boosterSection, setBoosterSection] = useState<any>();
+
 	useEffect(() => {
 		switch (type) {
 			// booster pack
@@ -62,7 +63,7 @@ export const ProductCard = ({ type, wave, number }: TProps) => {
 	return (
 		<div>
 			<h1>{title}</h1>
-			<h2>Guaranteed Cards: </h2>
+			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
 			<h2>Booster Packs</h2>
 			{boosterSection}
 		</div>

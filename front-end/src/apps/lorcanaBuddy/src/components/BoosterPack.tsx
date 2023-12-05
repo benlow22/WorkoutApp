@@ -10,10 +10,10 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 	const boosterPackId = uuidv4();
 	return (
 		<Form.Item
-			label={`BoosterPack ${number + 1}`}
+			label={`${number + 1}`}
 			name={boosterPackId}
-			style={{ width: "900px", justifyContent: "space-evenly" }}
-			labelCol={{ span: 3 }}
+			style={{ width: "800px", justifyContent: "space-evenly" }}
+			labelCol={{ span: 1 }}
 		>
 			<Space>
 				<Form.Item name="card 1" style={{ textAlign: "center" }}>
@@ -23,6 +23,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 2" style={{ textAlign: "center" }}>
@@ -32,6 +33,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 3" style={{ textAlign: "center" }}>
@@ -41,6 +43,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 4" style={{ textAlign: "center" }}>
@@ -50,6 +53,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 5" style={{ textAlign: "center" }}>
@@ -59,6 +63,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 6" style={{ textAlign: "center" }}>
@@ -68,6 +73,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 7" style={{ textAlign: "center" }}>
@@ -77,6 +83,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 8" style={{ textAlign: "center" }}>
@@ -86,6 +93,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 9" style={{ textAlign: "center" }}>
@@ -95,6 +103,7 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item
@@ -107,18 +116,21 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
-					/>{" "}
+						preview={false}
+					/>
 					<Image
 						src="/lorcanaRarity/superRareIcon.jpeg"
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 					<Image
 						src="/lorcanaRarity/legendaryIcon.jpeg"
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item
@@ -131,18 +143,21 @@ export const BoosterPack = ({ wave, number }: TProps) => {
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 					<Image
 						src="/lorcanaRarity/superRareIcon.jpeg"
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 					<Image
 						src="/lorcanaRarity/legendaryIcon.jpeg"
 						style={{
 							width: "20px",
 						}}
+						preview={false}
 					/>
 				</Form.Item>
 				<Form.Item name="card 12" style={{ textAlign: "center" }}>

@@ -128,7 +128,7 @@ export const AddItems = () => {
 				labelAlign="right"
 				style={{
 					margin: "auto",
-					maxWidth: "700px",
+					maxWidth: "800px",
 					textAlign: "start",
 				}}
 				initialValues={{ products: [{}] }}
@@ -272,13 +272,16 @@ export const AddItems = () => {
 				<Button type="primary" htmlType="submit">
 					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button>
+				{/* <Button type="primary" htmlType="submit">
+					{productsQuantity.length < 1 ? "Next" : "Update"}
+				</Button> */}
+			</Form>
 				{showSecondHalf && (
 					<>
 						<h1>Second Half</h1>
 						{productCardSection}
 					</>
 				)}
-			</Form>
 		</div>
 	);
 };
