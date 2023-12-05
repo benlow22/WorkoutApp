@@ -1,10 +1,11 @@
-import { Button, Form, Input } from "antd";
+import { Button, Card, Form, Input } from "antd";
 import { useEffect, useState } from "react";
 import { TLorcanaCard } from "../../types/lorcana.types";
 import { supabase } from "../../../../../supabase/supabaseClient";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DatePicker, Space } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 
 export const AddItems = () => {
 	// store all the cards as state
@@ -43,6 +44,7 @@ export const AddItems = () => {
 
 	// location
 	const [regionName, setRegionName] = useState<string>("Province");
+	const locationInput = { width: "100px" };
 	// initial form values
 
 	// Submitting function
@@ -53,36 +55,58 @@ export const AddItems = () => {
 	return (
 		<div>
 			<h1>Hello</h1>
-			<Form onFinish={(values: any) => onFinish(values)}>
-				<Form.Item name="date">
+			<Form
+				onFinish={(values: any) => onFinish(values)}
+				labelCol={{ span: 4 }}
+				labelAlign="right"
+				style={{
+					margin: "auto",
+					maxWidth: "700px",
+					textAlign: "start",
+				}}
+			>
+				<Form.Item name="date" label="Date">
 					<DatePicker format={dateFormat} />
 				</Form.Item>
-				<Form.Item
-					name="location"
-					label="Location"
-					style={{ width: "600px", margin: "auto" }}
-				>
-					<Space.Compact>
-						<Form.Item name="store" label="Store">
-							<Input></Input>
-						</Form.Item>
-					</Space.Compact>
-					<Space.Compact>
-						<Form.Item name="city" label="City">
-							<Input></Input>
-						</Form.Item>
-					</Space.Compact>
-					<Space.Compact>
-						<Form.Item name="region" label={regionName}>
-							<Input></Input>
-						</Form.Item>
-					</Space.Compact>
-					<Space.Compact>
-						<Form.Item name="country" label="Country">
-							<Input></Input>
-						</Form.Item>
-					</Space.Compact>
+				<Form.Item label="Location">
+					<Form.List name="location">
+						{(fields) => (
+							<div>
+								<Form.Item noStyle name={["store"]}>
+									<Input
+										placeholder="Store"
+										style={locationInput}
+									/>
+								</Form.Item>
+								<Form.Item noStyle name={["street"]}>
+									<Input
+										placeholder="Street"
+										style={{ width: "150px" }}
+									/>
+								</Form.Item>
+								<Form.Item noStyle name={["city"]}>
+									<Input
+										placeholder="City"
+										style={locationInput}
+									/>
+								</Form.Item>
+								<Form.Item noStyle name={regionName}>
+									<Input
+										placeholder={regionName}
+										style={{ width: "50px" }}
+									/>
+								</Form.Item>
+								<Form.Item noStyle name={"country"}>
+									<Input
+										placeholder="Country"
+										style={locationInput}
+									/>
+								</Form.Item>
+							</div>
+						)}
+					</Form.List>
 				</Form.Item>
+
 				{/* <BoosterPack
 						boosterPackId="12873461239"
 						number={1}
