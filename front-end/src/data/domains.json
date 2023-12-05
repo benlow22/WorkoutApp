@@ -57,7 +57,8 @@
 			"pages": [
 				{ "name": "Browse", "path": "browse" },
 				{ "name": "My Collection", "path": "myCollection" },
-				{ "name": "Wishlist", "path": "wishlist" }
+				{ "name": "Wishlist", "path": "wishlist" },
+				{ "name": "Add to Inventory", "path": "addItems" }
 			],
 			"logo": "lb-logo.png"
 		}
