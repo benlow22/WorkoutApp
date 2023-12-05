@@ -56,11 +56,12 @@ export const ProductCard = ({ type, wave, number }: TProps) => {
 		boosterPackCalculator();
 	}, [numberOfBoosterPacks]);
 
+	// @ts-expect-error A const enum member can only be accessed using a string literal.ts(2476)
+	const title = `${ProductTypes[type]} - ${number}`;
+
 	return (
 		<div>
-			<h1>
-				{ProductTypes[type]} - {number}
-			</h1>
+			<h1>{title}</h1>
 			<h2>Guaranteed Cards: </h2>
 			<h2>Booster Packs</h2>
 			{boosterSection}
