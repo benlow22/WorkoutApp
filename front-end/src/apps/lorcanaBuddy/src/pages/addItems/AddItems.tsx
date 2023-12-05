@@ -1,16 +1,38 @@
-import { Button, Card, Form, Input } from "antd";
+import { Button, Card, Form, Input, InputNumber, Select } from "antd";
 import { useEffect, useState } from "react";
-import { TLorcanaCard } from "../../types/lorcana.types";
+import { ProductTypes, SetName, TLorcanaCard } from "../../types/lorcana.types";
 import { supabase } from "../../../../../supabase/supabaseClient";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DatePicker, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
+import { BoosterPack } from "../../components/BoosterPack";
+import { ProductCard } from "../../components/ProductCard";
 
+const productTypes = [
+	{ value: 0, label: "Booster Pack" },
+	{ value: 1, label: "Blister Pack" },
+	{ value: 2, label: "Starter Deck" },
+	{ value: 3, label: "Gift Set" },
+	{ value: 4, label: "Illumineers Trove" },
+	{ value: 5, label: "Booster Box" },
+	{ value: 6, label: "D100" },
+	{ value: 7, label: "Other" },
+];
+
+type TBoughtProducts = {
+	type: ProductTypes;
+	quantity: number;
+	wave: number;
+};
+const waveNames = [
+	{ value: 1, label: "The First Chapter" },
+	{ value: 2, label: "Rise of the Floodborn" },
+];
 export const AddItems = () => {
 	// store all the cards as state
 	const [allCards, setAllCards] = useState<TLorcanaCard[]>([]);
-
+	const [productCardSection, setProductCardSection] = useState<any>();
 	// get all cards from supabase
 	const getCards = async () => {
 		let { data, error } = await supabase
@@ -47,9 +69,54 @@ export const AddItems = () => {
 	const locationInput = { width: "100px" };
 	// initial form values
 
+	// display booster half (second part)
+	const [showSecondHalf, setShowSecondHalf] = useState<boolean>();
+
+	// display booster packs
+	const [productsQuantity, setProductsQuantity] = useState<TBoughtProducts[]>(
+		[]
+	);
+
+	const createArrayOfProductCards = (productsQuantity: TBoughtProducts[]) => {
+		let productCardArr: JSX.Element[] = new Array();
+		productsQuantity.map((product: TBoughtProducts) => {
+			for (let i = 1; i < product.quantity + 1; i++) {
+				productCardArr.push(
+					<ProductCard
+						type={product.type}
+						wave={product.wave}
+						number={i}
+						key={`${product.type}-i`}
+					/>
+				);
+			}
+		});
+		setProductCardSection(productCardArr);
+	};
+
 	// Submitting function
 	const onFinish = (values: any) => {
-		console.log(values);
+		console.log("PRODUCTS", values.products);
+		setShowSecondHalf(true);
+		setProductsQuantity(values.products);
+	};
+
+	useEffect(() => {
+		createArrayOfProductCards(productsQuantity);
+	}, [productsQuantity]);
+	const productCard = (type: ProductTypes, wave: SetName) => {
+		let card = "";
+		switch (type) {
+			case 0:
+				<BoosterPack wave={wave} number={1} />;
+				break;
+			case 1:
+				// code block
+				break;
+			default:
+			// code block
+		}
+		// console.log(ProductTypes[product.type]);
 	};
 
 	return (
@@ -64,6 +131,7 @@ export const AddItems = () => {
 					maxWidth: "700px",
 					textAlign: "start",
 				}}
+				initialValues={{ products: [{}] }}
 			>
 				<Form.Item name="date" label="Date">
 					<DatePicker format={dateFormat} />
@@ -106,14 +174,110 @@ export const AddItems = () => {
 						)}
 					</Form.List>
 				</Form.Item>
+				<Form.Item name="price" label="Paid Price">
+					<InputNumber
+						placeholder="$$$"
+						style={{ width: "100px" }}
+						min={0}
+					/>
+				</Form.Item>
+				<Form.Item label="Products">
+					<Form.List name={"products"}>
+						{(fields, subOpt) => (
+							<div
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									rowGap: 16,
+								}}
+							>
+								{fields.map((field) => (
+									<Space key={field.key}>
+										<Form.Item
+											wrapperCol={{ span: 8, offset: 4 }}
+											noStyle
+											name={[field.name, "type"]}
+											rules={[
+												{
+													required: true,
+													message: "Input item",
+												},
+											]}
+											id="1"
+										>
+											<Select
+												options={productTypes}
+												style={{ width: "150px" }}
+												placeholder="Booster Pack"
+											/>
+										</Form.Item>
+										<Form.Item
+											rules={[
+												{
+													required: true,
+													message: "Quantity needed",
+												},
+											]}
+											id="2"
+											noStyle
+											name={[field.name, "quantity"]}
+										>
+											<InputNumber
+												placeholder="Quantity"
+												min={0}
+												style={{ width: "80px" }}
+											/>
+										</Form.Item>
+										<Form.Item
+											id="3"
+											rules={[
+												{
+													required: true,
+													message: "Set ",
+												},
+											]}
+											noStyle
+											name={[field.name, "wave"]}
+										>
+											<Select
+												placeholder="Wave"
+												options={waveNames}
+												style={{ width: "200px" }}
+											/>
+										</Form.Item>
+										<CloseOutlined
+											onClick={() => {
+												subOpt.remove(field.name);
+											}}
+											style={{ color: "red" }}
+										/>
+									</Space>
+								))}
+								<Button
+									type="dashed"
+									onClick={() => subOpt.add()}
+									block
+								>
+									+ Add Product
+								</Button>
+							</div>
+						)}
+					</Form.List>
+				</Form.Item>
 
 				{/* <BoosterPack
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
 				<Button type="primary" htmlType="submit">
-					Submit
+					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button>
+				{showSecondHalf && (
+					<>
+						<h1>Second Half</h1>
+						{productCardSection}
+					</>
+				)}
 			</Form>
 		</div>
 	);

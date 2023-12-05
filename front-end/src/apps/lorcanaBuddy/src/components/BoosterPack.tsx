@@ -1,16 +1,18 @@
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space } from "antd";
+import { v4 as uuidv4 } from "uuid";
 
 type TProps = {
-	boosterPackId: string;
+	wave: number;
 	number: number;
 };
-export const BoosterPack = ({ boosterPackId, number }: TProps) => {
+export const BoosterPack = ({ wave, number }: TProps) => {
+	const boosterPackId = uuidv4();
 	return (
 		<Form.Item label={`BoosterPack ${number}`} name={boosterPackId}>
 			<Space>
 				<Form.Item name="card 1">
-					<Input></Input>
+					<Input prefix={<UserOutlined />}></Input>
 				</Form.Item>
 				<Form.Item name="card 2">
 					<Input></Input>

@@ -26,7 +26,7 @@ const enum SetId {
 	RFB,
 }
 
-const enum ProductTypes {
+export const enum ProductTypes {
 	"Booster Pack",
 	"Blister Pack",
 	"Starter Deck",
@@ -36,7 +36,7 @@ const enum ProductTypes {
 	"D100",
 	"Other",
 }
-const enum SetName {
+export const enum SetName {
 	Promo,
 	"The First Chapter",
 	"Rise of the Floodborn",
