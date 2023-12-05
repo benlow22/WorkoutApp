@@ -1,5 +1,5 @@
-import { CloseOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space } from "antd";
+import { CloseOutlined, StarFilled } from "@ant-design/icons";
+import { Button, Form, Image, Input, Space } from "antd";
 import { v4 as uuidv4 } from "uuid";
 
 type TProps = {
@@ -9,34 +9,151 @@ type TProps = {
 export const BoosterPack = ({ wave, number }: TProps) => {
 	const boosterPackId = uuidv4();
 	return (
-		<Form.Item label={`BoosterPack ${number}`} name={boosterPackId}>
+		<Form.Item
+			label={`BoosterPack ${number + 1}`}
+			name={boosterPackId}
+			style={{ width: "900px", justifyContent: "space-evenly" }}
+			labelCol={{ span: 3 }}
+		>
 			<Space>
-				<Form.Item name="card 1">
-					<Input prefix={<UserOutlined />}></Input>
+				<Form.Item name="card 1" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 2">
-					<Input></Input>
+				<Form.Item name="card 2" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 3">
-					<Input></Input>
+				<Form.Item name="card 3" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 4">
-					<Input></Input>
+				<Form.Item name="card 4" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 5">
-					<Input></Input>
+				<Form.Item name="card 5" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 6">
-					<Input></Input>
+				<Form.Item name="card 6" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/commonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 7">
-					<Input></Input>
+				<Form.Item name="card 7" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/uncommonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 8">
-					<Input></Input>
+				<Form.Item name="card 8" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/uncommonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
 				</Form.Item>
-				<Form.Item name="card 9">
+				<Form.Item name="card 9" style={{ textAlign: "center" }}>
+					<Input style={{ width: "50px" }} />
+					<Image
+						src="/lorcanaRarity/uncommonIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+				</Form.Item>
+				<Form.Item
+					name="card 10"
+					style={{ textAlign: "center", width: "75px" }}
+				>
 					<Input></Input>
+					<Image
+						src="/lorcanaRarity/rareIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>{" "}
+					<Image
+						src="/lorcanaRarity/superRareIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+					<Image
+						src="/lorcanaRarity/legendaryIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+				</Form.Item>
+				<Form.Item
+					name="card 11"
+					style={{ textAlign: "center", width: "75px" }}
+				>
+					<Input></Input>
+					<Image
+						src="/lorcanaRarity/rareIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+					<Image
+						src="/lorcanaRarity/superRareIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+					<Image
+						src="/lorcanaRarity/legendaryIcon.jpeg"
+						style={{
+							width: "20px",
+						}}
+					/>
+				</Form.Item>
+				<Form.Item name="card 12" style={{ textAlign: "center" }}>
+					<Input
+						style={{
+							boxSizing: "border-box",
+							border: "4px solid gold",
+							width: "75px",
+						}}
+					></Input>
+					<StarFilled style={{ color: "white" }} />
 				</Form.Item>
 			</Space>
 			{/* <Form.List name={[boosterPackId, "list"]}>
