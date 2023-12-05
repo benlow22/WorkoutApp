@@ -111,5 +111,5 @@ export type TLorcanaCard = {
 	set: number;
 	artist: string;
 	imageUrl: string;
-	set_id: SetId;
+	setId: SetId;
 };
