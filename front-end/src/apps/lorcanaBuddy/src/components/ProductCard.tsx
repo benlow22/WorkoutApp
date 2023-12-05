@@ -4,17 +4,27 @@ import { v4 as uuidv4 } from "uuid";
 import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
 import { useEffect, useState } from "react";
 import { BoosterPack } from "./BoosterPack";
+import { TCardCache } from "../pages/addItems/addItems";
 
 type TProps = {
 	type: ProductTypes;
 	wave: SetName;
 	number: number;
+	advanced: boolean;
+	allCards: TCardCache;
 };
 
-export const ProductCard = ({ type, wave, number }: TProps) => {
+export const ProductCard = ({
+	type,
+	wave,
+	number,
+	advanced,
+	allCards,
+}: TProps) => {
 	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>();
 	const [numberOfBoosterPacks, setNumberOfBoosterPacks] = useState<number>(0);
 	const [boosterSection, setBoosterSection] = useState<any>();
+	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
 
 	useEffect(() => {
 		switch (type) {
@@ -47,6 +57,8 @@ export const ProductCard = ({ type, wave, number }: TProps) => {
 					wave={wave}
 					number={i}
 					key={`${type}-${number}-${i}`}
+					advanced={advanced}
+					allCards={allCards}
 				/>
 			);
 		}
@@ -64,7 +76,7 @@ export const ProductCard = ({ type, wave, number }: TProps) => {
 		<div>
 			<h1>{title}</h1>
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
-			<h2>Booster Packs</h2>
+			{ProductTypes["Booster Pack"] !== type && <h2>Booster Packs</h2>}
 			{boosterSection}
 		</div>
 	);

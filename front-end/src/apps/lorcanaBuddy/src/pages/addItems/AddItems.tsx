@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, InputNumber, Select } from "antd";
+import { Button, Card, Form, Input, InputNumber, Select, Switch } from "antd";
 import { useEffect, useState } from "react";
 import { ProductTypes, SetName, TLorcanaCard } from "../../types/lorcana.types";
 import { supabase } from "../../../../../supabase/supabaseClient";
@@ -8,6 +8,7 @@ import { DatePicker, Space } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 import { BoosterPack } from "../../components/BoosterPack";
 import { ProductCard } from "../../components/ProductCard";
+import { v4 as uuidv4 } from "uuid";
 
 const productTypes = [
 	{ value: 0, label: "Booster Pack" },
@@ -25,14 +26,21 @@ type TBoughtProducts = {
 	quantity: number;
 	wave: number;
 };
+export type TCardCache = {
+	[concatName: string]: TLorcanaCard;
+};
 const waveNames = [
 	{ value: 1, label: "The First Chapter" },
 	{ value: 2, label: "Rise of the Floodborn" },
 ];
 export const AddItems = () => {
 	// store all the cards as state
-	const [allCards, setAllCards] = useState<TLorcanaCard[]>([]);
+	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
+	const [receiptData, setReceiptData] = useState<any>();
+	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
+
+	const receiptId = uuidv4();
 	// get all cards from supabase
 	const getCards = async () => {
 		let { data, error } = await supabase
@@ -41,7 +49,11 @@ export const AddItems = () => {
 				"id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, set, artist, imageUrl: image,setId:set_id "
 			);
 		if (data) {
-			setAllCards(data);
+			const cardCache: TCardCache = {};
+			const cacheById = data.map(
+				(card: TLorcanaCard) => (cardCache[card.id] = card)
+			);
+			setAllCards(cardCache);
 		} else {
 			console.error(error);
 		}
@@ -63,8 +75,10 @@ export const AddItems = () => {
 	//receipt date
 	dayjs.extend(customParseFormat);
 	const dateFormat = "YYYY/MM/DD";
-
-	// location
+	const data = {
+		date: dayjs(new Date()),
+		products: [{}],
+	}; // location
 	const [regionName, setRegionName] = useState<string>("Province");
 	const locationInput = { width: "100px" };
 	// initial form values
@@ -87,6 +101,8 @@ export const AddItems = () => {
 						wave={product.wave}
 						number={i}
 						key={`${product.type}-i`}
+						advanced={advancedInput}
+						allCards={allCards}
 					/>
 				);
 			}
@@ -99,25 +115,14 @@ export const AddItems = () => {
 		console.log("PRODUCTS", values.products);
 		setShowSecondHalf(true);
 		setProductsQuantity(values.products);
+		setReceiptData({
+			id: receiptId,
+		});
 	};
 
 	useEffect(() => {
 		createArrayOfProductCards(productsQuantity);
-	}, [productsQuantity]);
-	const productCard = (type: ProductTypes, wave: SetName) => {
-		let card = "";
-		switch (type) {
-			case 0:
-				<BoosterPack wave={wave} number={1} />;
-				break;
-			case 1:
-				// code block
-				break;
-			default:
-			// code block
-		}
-		// console.log(ProductTypes[product.type]);
-	};
+	}, [productsQuantity, advancedInput]);
 
 	return (
 		<div>
@@ -131,10 +136,16 @@ export const AddItems = () => {
 					maxWidth: "800px",
 					textAlign: "start",
 				}}
-				initialValues={{ products: [{}] }}
+				initialValues={data}
 			>
 				<Form.Item name="date" label="Date">
 					<DatePicker format={dateFormat} />
+				</Form.Item>
+				<Form.Item name="advancedInput" label="Advanced Settings">
+					<Switch
+						onClick={() => setAdvancedInput(!advancedInput)}
+						checked={advancedInput}
+					/>
 				</Form.Item>
 				<Form.Item label="Location">
 					<Form.List name="location">
@@ -276,12 +287,12 @@ export const AddItems = () => {
 					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button> */}
 			</Form>
-				{showSecondHalf && (
-					<>
-						<h1>Second Half</h1>
-						{productCardSection}
-					</>
-				)}
+			{showSecondHalf && (
+				<>
+					<h1>Second Half</h1>
+					{productCardSection}
+				</>
+			)}
 		</div>
 	);
 };
