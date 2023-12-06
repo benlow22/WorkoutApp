@@ -100,7 +100,7 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 															<SingleCardInput rarities={["rare", "superRare", "legendary"]} />
 															<SingleCardInput rarities={["rare", "superRare", "legendary"]} />
 															<SingleCardInput rarities={["foil", "enchanted"]} />
-
+															{/* 
 															<Form.Item
 																name="card 1"
 																style={{ textAlign: "center" }}
@@ -548,7 +548,7 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 																	}}
 																	preview={false}
 																/>
-															</Form.Item>
+															</Form.Item> */}
 															<Form.Item
 																style={{
 																	paddingTop: "45px",

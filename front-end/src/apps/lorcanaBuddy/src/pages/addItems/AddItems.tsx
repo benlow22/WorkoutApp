@@ -33,6 +33,18 @@ const waveNames = [
 	{ value: 1, label: "The First Chapter" },
 	{ value: 2, label: "Rise of the Floodborn" },
 ];
+
+const getAllCards = async () => {
+	let { data, error } = await supabase.from("lorcana_cards").select("id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, set, artist, imageUrl: image,setId:set_id ");
+	if (data) {
+		const cardCache: TCardCache = {};
+		const cacheById = data.map((card: TLorcanaCard) => (cardCache[card.id] = card));
+		return cardCache;
+	} else {
+		console.error(error);
+	}
+};
+
 export const AddItems = () => {
 	// store all the cards as state
 	const [allCards, setAllCards] = useState<TCardCache>({});
@@ -42,23 +54,14 @@ export const AddItems = () => {
 
 	const receiptId = uuidv4();
 	// get all cards from supabase
-	const getCards = async () => {
-		let { data, error } = await supabase
-			.from("lorcana_cards")
-			.select(
-				"id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, set, artist, imageUrl: image,setId:set_id "
-			);
-		if (data) {
-			const cardCache: TCardCache = {};
-			const cacheById = data.map((card: TLorcanaCard) => (cardCache[card.id] = card));
-			setAllCards(cardCache);
-		} else {
-			console.error(error);
-		}
-	};
-
 	useEffect(() => {
-		getCards();
+		async function fetchMyAPI() {
+			let response = getAllCards();
+			const retrievedCards = await response;
+			if (retrievedCards) {
+				setAllCards(retrievedCards);
+			}
+		}
 	}, []);
 	// component for each Type of purchase!!! starting with booster packs
 
@@ -132,11 +135,18 @@ export const AddItems = () => {
 					maxWidth: "800px",
 					textAlign: "start",
 				}}
-				initialValues={data}>
-				<Form.Item name="date" label="Date">
+				initialValues={data}
+			>
+				<Form.Item
+					name="date"
+					label="Date"
+				>
 					<DatePicker format={dateFormat} />
 				</Form.Item>
-				<Form.Item name="advancedInput" label="Advanced Settings">
+				<Form.Item
+					name="advancedInput"
+					label="Advanced Settings"
+				>
 					<Switch
 						onClick={() => setAdvancedInput(!advancedInput)}
 						checked={advancedInput}
@@ -146,27 +156,64 @@ export const AddItems = () => {
 					<Form.List name="location">
 						{(fields) => (
 							<div>
-								<Form.Item noStyle name={["store"]}>
-									<Input placeholder="Store" style={locationInput} />
+								<Form.Item
+									noStyle
+									name={["store"]}
+								>
+									<Input
+										placeholder="Store"
+										style={locationInput}
+									/>
 								</Form.Item>
-								<Form.Item noStyle name={["street"]}>
-									<Input placeholder="Street" style={{ width: "150px" }} />
+								<Form.Item
+									noStyle
+									name={["street"]}
+								>
+									<Input
+										placeholder="Street"
+										style={{ width: "150px" }}
+									/>
 								</Form.Item>
-								<Form.Item noStyle name={["city"]}>
-									<Input placeholder="City" style={locationInput} />
+								<Form.Item
+									noStyle
+									name={["city"]}
+								>
+									<Input
+										placeholder="City"
+										style={locationInput}
+									/>
 								</Form.Item>
-								<Form.Item noStyle name={regionName}>
-									<Input placeholder={regionName} style={{ width: "50px" }} />
+								<Form.Item
+									noStyle
+									name={regionName}
+								>
+									<Input
+										placeholder={regionName}
+										style={{ width: "50px" }}
+									/>
 								</Form.Item>
-								<Form.Item noStyle name={"country"}>
-									<Input placeholder="Country" style={locationInput} />
+								<Form.Item
+									noStyle
+									name={"country"}
+								>
+									<Input
+										placeholder="Country"
+										style={locationInput}
+									/>
 								</Form.Item>
 							</div>
 						)}
 					</Form.List>
 				</Form.Item>
-				<Form.Item name="price" label="Paid Price">
-					<InputNumber placeholder="$$$" style={{ width: "100px" }} min={0} />
+				<Form.Item
+					name="price"
+					label="Paid Price"
+				>
+					<InputNumber
+						placeholder="$$$"
+						style={{ width: "100px" }}
+						min={0}
+					/>
 				</Form.Item>
 				<Form.Item label="Products">
 					<Form.List name={"products"}>
@@ -176,7 +223,8 @@ export const AddItems = () => {
 									display: "flex",
 									flexDirection: "column",
 									rowGap: 16,
-								}}>
+								}}
+							>
 								{fields.map((field) => (
 									<Space key={field.key}>
 										<Form.Item
@@ -189,7 +237,8 @@ export const AddItems = () => {
 													message: "Input item",
 												},
 											]}
-											id="1">
+											id="1"
+										>
 											<Select
 												options={productTypes}
 												style={{ width: "150px" }}
@@ -205,7 +254,8 @@ export const AddItems = () => {
 											]}
 											id="2"
 											noStyle
-											name={[field.name, "quantity"]}>
+											name={[field.name, "quantity"]}
+										>
 											<InputNumber
 												placeholder="Quantity"
 												min={0}
@@ -221,7 +271,8 @@ export const AddItems = () => {
 												},
 											]}
 											noStyle
-											name={[field.name, "wave"]}>
+											name={[field.name, "wave"]}
+										>
 											<Select
 												placeholder="Wave"
 												options={waveNames}
@@ -236,7 +287,11 @@ export const AddItems = () => {
 										/>
 									</Space>
 								))}
-								<Button type="dashed" onClick={() => subOpt.add()} block>
+								<Button
+									type="dashed"
+									onClick={() => subOpt.add()}
+									block
+								>
 									+ Add Product
 								</Button>
 							</div>
@@ -248,7 +303,10 @@ export const AddItems = () => {
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
-				<Button type="primary" htmlType="submit">
+				<Button
+					type="primary"
+					htmlType="submit"
+				>
 					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button>
 				{/* <Button type="primary" htmlType="submit">

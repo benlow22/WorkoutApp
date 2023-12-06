@@ -10,6 +10,7 @@ import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 type TProps = {
 	isFoil?: boolean;
 	rarities: string[];
+	wave?: string;
 };
 
 const getIconUrlsFromRarities = (rarities: string[]) => {
@@ -22,11 +23,14 @@ const getIconUrlsFromRarities = (rarities: string[]) => {
 	});
 };
 
-export const SingleCardInput = ({ rarities }: TProps) => {
+export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 	const [imageUrl, setImageUrl] = useState<string>("");
 
 	const iconUrls = getIconUrlsFromRarities(rarities);
-
+	const getImage = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: string) => {
+		const cardId = `${wave}-${cardNumber}`;
+		setter(allCards[cardId].imageUrl);
+	};
 	return (
 		<Form.Item
 			name="card 2"
