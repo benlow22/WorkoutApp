@@ -83,7 +83,10 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 				</Space>
 				<Form.List name="cards">
 					{(sub) => (
-						<div>
+						<div
+							className="booster-pack-12-cards"
+							style={{ width: "400px" }}
+						>
 							<Form.Item>
 								<Form.List name={["boosterPack"]}>
 									{(card) => (

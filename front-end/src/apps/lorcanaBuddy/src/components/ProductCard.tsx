@@ -14,13 +14,7 @@ type TProps = {
 	allCards: TCardCache;
 };
 
-export const ProductCard = ({
-	type,
-	wave,
-	number,
-	advanced,
-	allCards,
-}: TProps) => {
+export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) => {
 	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>();
 	const [numberOfBoosterPacks, setNumberOfBoosterPacks] = useState<number>(0);
 	const [boosterSection, setBoosterSection] = useState<any>();
@@ -73,7 +67,7 @@ export const ProductCard = ({
 	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]}`;
 
 	return (
-		<div>
+		<div style={{ width: "800px", margin: "auto" }}>
 			<h1>{title}</h1>
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
 			{ProductTypes["Booster Pack"] !== type && <h2>Booster Packs</h2>}
