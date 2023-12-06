@@ -34,7 +34,7 @@ const waveNames = [
 	{ value: 2, label: "Rise of the Floodborn" },
 ];
 
-const getAllCards = async () => {
+export const getAllCards = async () => {
 	let { data, error } = await supabase.from("lorcana_cards").select("id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, set, artist, imageUrl: image,setId:set_id ");
 	if (data) {
 		const cardCache: TCardCache = {};
@@ -55,13 +55,15 @@ export const AddItems = () => {
 	const receiptId = uuidv4();
 	// get all cards from supabase
 	useEffect(() => {
-		async function fetchMyAPI() {
+		async function fetchAllCards() {
 			let response = getAllCards();
 			const retrievedCards = await response;
 			if (retrievedCards) {
 				setAllCards(retrievedCards);
+				console.log("all cards fetched", retrievedCards);
 			}
 		}
+		fetchAllCards();
 	}, []);
 	// component for each Type of purchase!!! starting with booster packs
 

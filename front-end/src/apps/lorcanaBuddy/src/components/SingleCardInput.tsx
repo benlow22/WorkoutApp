@@ -4,13 +4,13 @@ import { v4 as uuidv4 } from "uuid";
 import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
 import { useEffect, useState } from "react";
 import { BoosterPack } from "./BoosterPack";
-import { TCardCache } from "../pages/addItems/addItems";
+import { TCardCache, getAllCards } from "../pages/addItems/addItems";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 
 type TProps = {
 	isFoil?: boolean;
 	rarities: string[];
-	wave?: string;
+	wave?: number;
 };
 
 const getIconUrlsFromRarities = (rarities: string[]) => {
@@ -19,18 +19,43 @@ const getIconUrlsFromRarities = (rarities: string[]) => {
 			// unknown image url TBD
 			return ``;
 		}
+		if (rarity === "foil") {
+			return `/lorcanaRarity/${rarity}Icon.png`;
+		}
 		return `/lorcanaRarity/${rarity}Icon.jpeg`;
 	});
 };
 
 export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 	const [imageUrl, setImageUrl] = useState<string>("");
-
+	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
+	const [cardNumber, setCardNumber] = useState<number>();
 	const iconUrls = getIconUrlsFromRarities(rarities);
-	const getImage = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: string) => {
+
+	const getImageUrlFromCardNumber = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: number) => {
 		const cardId = `${wave}-${cardNumber}`;
-		setter(allCards[cardId].imageUrl);
+		if (cardId in allCardsCache) {
+			setter(allCardsCache[cardId].imageUrl);
+		} else if (cardNumber > 216) {
+			setter(`/lorcanaRarity/lorcana-cardback.jpg`);
+		} else {
+			setter(`/lorcanaRarity/redXIcon.png`);
+		}
 	};
+
+	const style = iconUrls.length > 2 ? { width: "15px" } : { width: "20px" };
+
+	useEffect(() => {
+		async function fetchAllCards() {
+			let response = getAllCards();
+			const retrievedCards = await response;
+			if (retrievedCards) {
+				setAllCardsCache(retrievedCards);
+			}
+		}
+		fetchAllCards();
+	}, []);
+
 	return (
 		<Form.Item
 			name="card 2"
@@ -40,15 +65,15 @@ export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 			<Input
 				style={{ width: "50px" }}
 				onChange={(e) => {
-					getImage(setImageUrl, e.target.value);
+					getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
 				}}
+				maxLength={3}
+				value={cardNumber}
 			/>
 			{iconUrls.map((iconUrl) => (
 				<Image
 					src={iconUrl}
-					style={{
-						width: "20px",
-					}}
+					style={style}
 					preview={false}
 				/>
 			))}

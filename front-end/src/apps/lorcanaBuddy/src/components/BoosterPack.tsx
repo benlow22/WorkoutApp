@@ -88,18 +88,54 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 												{(card) => (
 													<>
 														<Space>
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["common"]} />
-															<SingleCardInput rarities={["uncommon"]} />
-															<SingleCardInput rarities={["uncommon"]} />
-															<SingleCardInput rarities={["uncommon"]} />
-															<SingleCardInput rarities={["rare", "superRare", "legendary"]} />
-															<SingleCardInput rarities={["rare", "superRare", "legendary"]} />
-															<SingleCardInput rarities={["foil", "enchanted"]} />
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["common"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["uncommon"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["uncommon"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["uncommon"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["rare", "superRare", "legendary"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["rare", "superRare", "legendary"]}
+																wave={wave}
+															/>
+															<SingleCardInput
+																rarities={["foil", "enchanted"]}
+																wave={wave}
+															/>
 															{/* 
 															<Form.Item
 																name="card 1"
