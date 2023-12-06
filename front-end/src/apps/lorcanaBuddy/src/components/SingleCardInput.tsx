@@ -35,9 +35,13 @@ export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 	const getImageUrlFromCardNumber = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: number) => {
 		const cardId = `${wave}-${cardNumber}`;
 		if (cardId in allCardsCache) {
-			setter(allCardsCache[cardId].imageUrl);
-		} else if (cardNumber > 216) {
-			setter(`/lorcanaRarity/lorcana-cardback.jpg`);
+			if (isFoil && wave === 1) {
+				const regImageUrl = allCardsCache[cardId].imageUrl;
+				const foilImageUrl = regImageUrl.replace("large", "foil");
+				setter(foilImageUrl);
+			} else {
+				setter(allCardsCache[cardId].imageUrl);
+			}
 		} else {
 			setter(`/lorcanaRarity/redXIcon.png`);
 		}

@@ -17,6 +17,7 @@ export const SmallCardImageAboveInput = ({ imageUrl }: TProps) => {
 				src={imageUrl}
 				style={{
 					width: "50px",
+					borderRadius: "3px",
 				}}
 			/>
 		</div>

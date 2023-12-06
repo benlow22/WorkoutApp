@@ -135,6 +135,7 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 															<SingleCardInput
 																rarities={["foil", "enchanted"]}
 																wave={wave}
+																isFoil={true}
 															/>
 															{/* 
 															<Form.Item
