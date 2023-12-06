@@ -117,8 +117,8 @@ export const AddItems = () => {
 	// Submitting function
 	const onFinish = (values: any) => {
 		console.log("PRODUCTS", values);
-		// setShowSecondHalf(true);
-		// setProductsQuantity(values.products);
+		setShowSecondHalf(true);
+		setProductsQuantity(values.receipt.products);
 		// setReceiptData({
 		// 	id: receiptId,
 		// });
