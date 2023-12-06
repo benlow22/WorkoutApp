@@ -62,25 +62,28 @@ export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 
 	return (
 		<Form.Item
-			name="card 2"
+			name={["card"]}
 			style={{ textAlign: "center" }}
 		>
-			<SmallCardImageAboveInput imageUrl={imageUrl} />
-			<Input
-				style={{ width: "50px" }}
-				onChange={(e) => {
-					getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
-				}}
-				maxLength={3}
-				value={cardNumber}
-			/>
-			{iconUrls.map((iconUrl) => (
-				<Image
-					src={iconUrl}
-					style={style}
-					preview={false}
+			<>
+				<SmallCardImageAboveInput imageUrl={imageUrl} />
+				<Input
+					style={{ width: "50px" }}
+					onChange={(e) => {
+						getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
+					}}
+					maxLength={3}
+					value={cardNumber}
 				/>
-			))}
+				{iconUrls.map((iconUrl, index) => (
+					<Image
+						src={iconUrl}
+						style={style}
+						preview={false}
+						key={index}
+					/>
+				))}
+			</>
 		</Form.Item>
 	);
 };

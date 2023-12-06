@@ -55,89 +55,90 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 				}}
 				labelCol={{ span: 1 }}
 			>
-				<Form.List name="boosterPack">
+				{/* <Form.List name="boosterPack">
 					{(fields) => (
 						<div>
-							<Form.Item
-								name="id"
-								hidden={true}
-							>
-								<Input value={boosterPackId}></Input>
-							</Form.Item>
-							<Form.List name="cards">
-								{(sub) => (
-									<div>
-										<Space>
-											<Form.Item
-												name="character"
-												label="Cover Character"
-												hidden={true}
-											>
-												<Input />
-											</Form.Item>
-											<Form.Item
-												name="booster code"
-												label="Code"
-												hidden={true}
-											>
-												<Input />
-											</Form.Item>
-										</Space>
-										<Form.Item>
-											<Form.List name="Cards">
-												{(card) => (
-													<>
-														<Space>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["common"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["uncommon"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["uncommon"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["uncommon"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["rare", "superRare", "legendary"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["rare", "superRare", "legendary"]}
-																wave={wave}
-															/>
-															<SingleCardInput
-																rarities={["foil", "enchanted"]}
-																wave={wave}
-																isFoil={true}
-															/>
-															{/* 
+							{fields.map((field) => ( */}
+				<Form.Item
+					name={["boosterPack", "cards"]}
+					hidden={true}
+				>
+					<Input value={boosterPackId}></Input>
+				</Form.Item>
+				<Space>
+					<Form.Item
+						name={["boosterPack", "coverCharacter"]}
+						label="Cover Character"
+						hidden={true}
+					>
+						<Input />
+					</Form.Item>
+					<Form.Item
+						name={["boosterPack", "code"]}
+						label="Code"
+						hidden={true}
+					>
+						<Input />
+					</Form.Item>
+				</Space>
+				<Form.List name="cards">
+					{(sub) => (
+						<div>
+							<Form.Item>
+								<Form.List name={["boosterPack"]}>
+									{(card) => (
+										<>
+											<Space>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["common"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["uncommon"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["uncommon"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["uncommon"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["rare", "superRare", "legendary"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["rare", "superRare", "legendary"]}
+													wave={wave}
+												/>
+												<SingleCardInput
+													rarities={["foil", "enchanted"]}
+													wave={wave}
+													isFoil={true}
+												/>
+												{/* 
 															<Form.Item
 																name="card 1"
 																style={{ textAlign: "center" }}
@@ -586,29 +587,29 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 																	preview={false}
 																/>
 															</Form.Item> */}
-															<Form.Item
-																style={{
-																	paddingTop: "45px",
-																}}
-															>
-																<Button
-																	type="primary"
-																	htmlType="submit"
-																>
-																	Submit
-																</Button>
-															</Form.Item>
-														</Space>
-													</>
-												)}
-											</Form.List>
-										</Form.Item>
-									</div>
-								)}
-							</Form.List>
+												<Form.Item
+													style={{
+														paddingTop: "45px",
+													}}
+												>
+													<Button
+														type="primary"
+														htmlType="submit"
+													>
+														Submit
+													</Button>
+												</Form.Item>
+											</Space>
+										</>
+									)}
+								</Form.List>
+							</Form.Item>
 						</div>
 					)}
 				</Form.List>
+				{/* </div>
+					)}
+				</Form.List> */}
 				{/* <Form.List name={[boosterPackId, "list"]}>
 				{(subFields) => (
 					<div

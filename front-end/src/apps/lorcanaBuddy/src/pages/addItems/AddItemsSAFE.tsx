@@ -49,7 +49,7 @@ export const AddItems = () => {
 	// store all the cards as state
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
-	const [receiptData, setReceiptData] = useState<any>(uuidv4());
+	const [receiptData, setReceiptData] = useState<any>();
 	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
 
 	const receiptId = uuidv4();
@@ -60,7 +60,6 @@ export const AddItems = () => {
 			const retrievedCards = await response;
 			if (retrievedCards) {
 				setAllCards(retrievedCards);
-				// console.log("all cards fetched", retrievedCards);
 			}
 		}
 		fetchAllCards();
@@ -79,13 +78,10 @@ export const AddItems = () => {
 	dayjs.extend(customParseFormat);
 	const dateFormat = "YYYY/MM/DD";
 	const data = {
-		receipt: {
-			date: dayjs(new Date()),
-			products: [{}],
-			advancedInput: false,
-		},
+		date: dayjs(new Date()),
+		products: [{}],
 	}; // location
-	const [regionName, setRegionName] = useState<string>("province");
+	const [regionName, setRegionName] = useState<string>("Province");
 	const locationInput = { width: "100px" };
 	// initial form values
 
@@ -116,12 +112,12 @@ export const AddItems = () => {
 
 	// Submitting function
 	const onFinish = (values: any) => {
-		console.log("PRODUCTS", values);
-		// setShowSecondHalf(true);
-		// setProductsQuantity(values.products);
-		// setReceiptData({
-		// 	id: receiptId,
-		// });
+		console.log("PRODUCTS", values.products);
+		setShowSecondHalf(true);
+		setProductsQuantity(values.products);
+		setReceiptData({
+			id: receiptId,
+		});
 	};
 
 	useEffect(() => {
@@ -142,85 +138,76 @@ export const AddItems = () => {
 				}}
 				initialValues={data}
 			>
-				{/* 
-				Create receipt id once everything is done
-				<Form.Item<string>
-					name={["receipt", "id"]}
-					label="Receipt"
-				>
-					<Input
-						placeholder={receiptId}
-						value={receiptId}
-					/>
-				</Form.Item> */}
 				<Form.Item
-					name={["receipt", "date"]}
+					name="date"
 					label="Date"
 				>
 					<DatePicker format={dateFormat} />
 				</Form.Item>
 				<Form.Item
-					name={["receipt", "advancedInput"]}
+					name="advancedInput"
 					label="Advanced Settings"
 				>
 					<Switch
 						onClick={() => setAdvancedInput(!advancedInput)}
-						defaultChecked={false}
 						checked={advancedInput}
 					/>
 				</Form.Item>
 				<Form.Item label="Location">
-					<div>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "store"]}
-						>
-							<Input
-								placeholder="Store"
-								style={locationInput}
-							/>
-						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "street"]}
-						>
-							<Input
-								placeholder="Street"
-								style={{ width: "150px" }}
-							/>
-						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "city"]}
-						>
-							<Input
-								placeholder="City"
-								style={locationInput}
-							/>
-						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", regionName]}
-						>
-							<Input
-								placeholder="state"
-								style={{ width: "50px" }}
-							/>
-						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "country"]}
-						>
-							<Input
-								placeholder="Country"
-								style={locationInput}
-							/>
-						</Form.Item>
-					</div>
+					<Form.List name={"location"}>
+						{(fields) => (
+							<div>
+								<Form.Item
+									noStyle
+									name={["location", "store"]}
+								>
+									<Input
+										placeholder="Store"
+										style={locationInput}
+									/>
+								</Form.Item>
+								<Form.Item
+									noStyle
+									name={["street"]}
+								>
+									<Input
+										placeholder="Street"
+										style={{ width: "150px" }}
+									/>
+								</Form.Item>
+								<Form.Item
+									noStyle
+									name={["city"]}
+								>
+									<Input
+										placeholder="City"
+										style={locationInput}
+									/>
+								</Form.Item>
+								<Form.Item
+									noStyle
+									name={regionName}
+								>
+									<Input
+										placeholder={regionName}
+										style={{ width: "50px" }}
+									/>
+								</Form.Item>
+								<Form.Item
+									noStyle
+									name={"country"}
+								>
+									<Input
+										placeholder="Country"
+										style={locationInput}
+									/>
+								</Form.Item>
+							</div>
+						)}
+					</Form.List>
 				</Form.Item>
-
 				<Form.Item
-					name={["receipt", "price"]}
+					name="price"
 					label="Paid Price"
 				>
 					<InputNumber
@@ -230,7 +217,7 @@ export const AddItems = () => {
 					/>
 				</Form.Item>
 				<Form.Item label="Products">
-					<Form.List name={["receipt", "products"]}>
+					<Form.List name={"products"}>
 						{(fields, subOpt) => (
 							<div
 								style={{
@@ -272,7 +259,7 @@ export const AddItems = () => {
 										>
 											<InputNumber
 												placeholder="Quantity"
-												min={1}
+												min={0}
 												style={{ width: "80px" }}
 											/>
 										</Form.Item>
@@ -317,14 +304,12 @@ export const AddItems = () => {
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
-				<Form.Item>
-					<Button
-						type="primary"
-						htmlType="submit"
-					>
-						{productsQuantity.length < 1 ? "Next" : "Update"}
-					</Button>
-				</Form.Item>
+				<Button
+					type="primary"
+					htmlType="submit"
+				>
+					{productsQuantity.length < 1 ? "Next" : "Update"}
+				</Button>
 				{/* <Button type="primary" htmlType="submit">
 					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button> */}
