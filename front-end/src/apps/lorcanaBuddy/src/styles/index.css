@@ -103,10 +103,13 @@
 	width: fit-content;
 }
 
+.booster-pack-12-cards .ant-form-item {
+	margin-bottom: 0px !important;
+}
 @media only screen and (max-width: 830px) {
-	.booster-pack-12-cards .ant-space {
+	.booster-pack-12-cards.ant-space {
 		flex-wrap: wrap;
-		width: 500px;
+		width: 450px;
 	}
 	.booster-pack-12-cards .ant-form-item-control-input-content {
 		width: 50px;

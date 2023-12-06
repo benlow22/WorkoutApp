@@ -11,6 +11,7 @@ type TProps = {
 	isFoil?: boolean;
 	rarities: string[];
 	wave?: number;
+	index: number;
 };
 
 const getIconUrlsFromRarities = (rarities: string[]) => {
@@ -26,7 +27,7 @@ const getIconUrlsFromRarities = (rarities: string[]) => {
 	});
 };
 
-export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
+export const SingleCardInput = ({ rarities, isFoil, wave, index }: TProps) => {
 	const [imageUrl, setImageUrl] = useState<string>("");
 	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
 	const [cardNumber, setCardNumber] = useState<number>();
@@ -60,30 +61,33 @@ export const SingleCardInput = ({ rarities, isFoil, wave }: TProps) => {
 		fetchAllCards();
 	}, []);
 
+	const handleCardNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
+		setCardNumber(Number(e.target.value));
+	};
 	return (
-		<Form.Item
-			name={["card"]}
-			style={{ textAlign: "center" }}
-		>
-			<>
-				<SmallCardImageAboveInput imageUrl={imageUrl} />
+		<>
+			<SmallCardImageAboveInput imageUrl={imageUrl} />
+			<Form.Item
+				name={["boosterPack", "cards", `${index}`]}
+				style={{ textAlign: "center" }}
+			>
 				<Input
-					style={{ width: "50px" }}
-					onChange={(e) => {
-						getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
-					}}
+					style={{ width: "50px", paddingBottom: "opx" }}
+					onChange={(e) => handleCardNumberInput(e)}
 					maxLength={3}
 					value={cardNumber}
+					className="card-number-input"
 				/>
-				{iconUrls.map((iconUrl, index) => (
-					<Image
-						src={iconUrl}
-						style={style}
-						preview={false}
-						key={index}
-					/>
-				))}
-			</>
-		</Form.Item>
+			</Form.Item>
+			{iconUrls.map((iconUrl, index) => (
+				<Image
+					src={iconUrl}
+					style={style}
+					preview={false}
+					key={index}
+				/>
+			))}
+		</>
 	);
 };
