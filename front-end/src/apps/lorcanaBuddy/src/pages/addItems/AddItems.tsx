@@ -50,9 +50,7 @@ export const AddItems = () => {
 			);
 		if (data) {
 			const cardCache: TCardCache = {};
-			const cacheById = data.map(
-				(card: TLorcanaCard) => (cardCache[card.id] = card)
-			);
+			const cacheById = data.map((card: TLorcanaCard) => (cardCache[card.id] = card));
 			setAllCards(cardCache);
 		} else {
 			console.error(error);
@@ -87,9 +85,7 @@ export const AddItems = () => {
 	const [showSecondHalf, setShowSecondHalf] = useState<boolean>();
 
 	// display booster packs
-	const [productsQuantity, setProductsQuantity] = useState<TBoughtProducts[]>(
-		[]
-	);
+	const [productsQuantity, setProductsQuantity] = useState<TBoughtProducts[]>([]);
 
 	const createArrayOfProductCards = (productsQuantity: TBoughtProducts[]) => {
 		let productCardArr: JSX.Element[] = new Array();
@@ -136,8 +132,7 @@ export const AddItems = () => {
 					maxWidth: "800px",
 					textAlign: "start",
 				}}
-				initialValues={data}
-			>
+				initialValues={data}>
 				<Form.Item name="date" label="Date">
 					<DatePicker format={dateFormat} />
 				</Form.Item>
@@ -152,45 +147,26 @@ export const AddItems = () => {
 						{(fields) => (
 							<div>
 								<Form.Item noStyle name={["store"]}>
-									<Input
-										placeholder="Store"
-										style={locationInput}
-									/>
+									<Input placeholder="Store" style={locationInput} />
 								</Form.Item>
 								<Form.Item noStyle name={["street"]}>
-									<Input
-										placeholder="Street"
-										style={{ width: "150px" }}
-									/>
+									<Input placeholder="Street" style={{ width: "150px" }} />
 								</Form.Item>
 								<Form.Item noStyle name={["city"]}>
-									<Input
-										placeholder="City"
-										style={locationInput}
-									/>
+									<Input placeholder="City" style={locationInput} />
 								</Form.Item>
 								<Form.Item noStyle name={regionName}>
-									<Input
-										placeholder={regionName}
-										style={{ width: "50px" }}
-									/>
+									<Input placeholder={regionName} style={{ width: "50px" }} />
 								</Form.Item>
 								<Form.Item noStyle name={"country"}>
-									<Input
-										placeholder="Country"
-										style={locationInput}
-									/>
+									<Input placeholder="Country" style={locationInput} />
 								</Form.Item>
 							</div>
 						)}
 					</Form.List>
 				</Form.Item>
 				<Form.Item name="price" label="Paid Price">
-					<InputNumber
-						placeholder="$$$"
-						style={{ width: "100px" }}
-						min={0}
-					/>
+					<InputNumber placeholder="$$$" style={{ width: "100px" }} min={0} />
 				</Form.Item>
 				<Form.Item label="Products">
 					<Form.List name={"products"}>
@@ -200,8 +176,7 @@ export const AddItems = () => {
 									display: "flex",
 									flexDirection: "column",
 									rowGap: 16,
-								}}
-							>
+								}}>
 								{fields.map((field) => (
 									<Space key={field.key}>
 										<Form.Item
@@ -214,8 +189,7 @@ export const AddItems = () => {
 													message: "Input item",
 												},
 											]}
-											id="1"
-										>
+											id="1">
 											<Select
 												options={productTypes}
 												style={{ width: "150px" }}
@@ -231,8 +205,7 @@ export const AddItems = () => {
 											]}
 											id="2"
 											noStyle
-											name={[field.name, "quantity"]}
-										>
+											name={[field.name, "quantity"]}>
 											<InputNumber
 												placeholder="Quantity"
 												min={0}
@@ -248,8 +221,7 @@ export const AddItems = () => {
 												},
 											]}
 											noStyle
-											name={[field.name, "wave"]}
-										>
+											name={[field.name, "wave"]}>
 											<Select
 												placeholder="Wave"
 												options={waveNames}
@@ -264,11 +236,7 @@ export const AddItems = () => {
 										/>
 									</Space>
 								))}
-								<Button
-									type="dashed"
-									onClick={() => subOpt.add()}
-									block
-								>
+								<Button type="dashed" onClick={() => subOpt.add()} block>
 									+ Add Product
 								</Button>
 							</div>
@@ -289,7 +257,7 @@ export const AddItems = () => {
 			</Form>
 			{showSecondHalf && (
 				<>
-					<h1>Second Half</h1>
+					{/* <h1>Second Half</h1> */}
 					{productCardSection}
 				</>
 			)}

@@ -70,7 +70,7 @@ export const ProductCard = ({
 	}, [numberOfBoosterPacks]);
 
 	// @ts-expect-error A const enum member can only be accessed using a string literal.ts(2476)
-	const title = `${ProductTypes[type]} - ${number}`;
+	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]}`;
 
 	return (
 		<div>
