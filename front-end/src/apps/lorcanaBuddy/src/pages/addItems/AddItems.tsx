@@ -5,10 +5,11 @@ import { supabase } from "../../../../../supabase/supabaseClient";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DatePicker, Space } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { BoosterPack } from "../../components/BoosterPack";
 import { ProductCard } from "../../components/ProductCard";
 import { v4 as uuidv4 } from "uuid";
+import { DeckInput } from "../../components/DeckInput";
 
 const productTypes = [
 	{ value: 0, label: "Booster Pack" },
@@ -43,6 +44,23 @@ export const getAllCards = async () => {
 	} else {
 		console.error(error);
 	}
+};
+const formItemLayout = {
+	labelCol: {
+		xs: { span: 24 },
+		sm: { span: 4 },
+	},
+	wrapperCol: {
+		xs: { span: 24 },
+		sm: { span: 20 },
+	},
+};
+
+const formItemLayoutWithOutLabel = {
+	wrapperCol: {
+		xs: { span: 24, offset: 0 },
+		sm: { span: 20, offset: 4 },
+	},
 };
 
 export const AddItems = () => {
@@ -335,6 +353,8 @@ export const AddItems = () => {
 					{productCardSection}
 				</>
 			)}
+
+			<DeckInput wave={1} />
 		</div>
 	);
 };

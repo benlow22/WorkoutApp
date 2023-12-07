@@ -38,6 +38,8 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 			case 3:
 				setNumberOfBoosterPacks(4);
 				break;
+			case 7:
+				setNumberOfBoosterPacks(0);
 			default:
 			// code block
 		}
@@ -72,6 +74,9 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
 			{ProductTypes["Booster Pack"] !== type && <h2>Booster Packs</h2>}
 			{boosterSection}
+			<div className="just-cards">
+				
+			</div>
 		</div>
 	);
 };
