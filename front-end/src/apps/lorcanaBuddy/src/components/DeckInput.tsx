@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Space } from "antd";
+import { Button, Form, Input, Space } from "antd";
 import { useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
 
@@ -70,7 +70,7 @@ export const DeckInput = ({ wave }: TProps) => {
 				style={{ maxWidth: "800px", margin: "auto" }}
 				id="deckForm"
 			>
-				<Form.List name="cards">
+				<Form.List name={"Cards"}>
 					{(fields, { add, remove }, { errors }) => (
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>

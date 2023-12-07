@@ -31,13 +31,13 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 				setAllCardsCache(retrievedCards);
 			}
 		}
-		console.log("THE INDEX", index);
 		fetchAllCards();
 	}, []);
 
 	useEffect(() => {
 		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
-		console.log("card input:", cardInput);
+		// console.log("card input:", cardInput);
+		console.log("WAVE", wave);
 	}, [cardInput, isFoil]);
 
 	// focus on input when component is made
@@ -61,42 +61,52 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 			className="deck-card"
 			name={field.key}
 		>
-			{imageUrl && (
+			<>
 				<SmallCardImageAboveInput
 					imageUrl={imageUrl}
 					imageWidth="100px"
 				/>
-			)}
-			<div style={{ padding: "0px" }}>
-				<Form.Item
-					validateTrigger={["onChange", "onBlur"]}
-					noStyle
-					name={[field.key, "card number"]}
-				>
-					<Input
-						key={index}
-						placeholder="Card #"
-						ref={inputRef}
+
+				<div style={{ padding: "0px" }}>
+					<Form.Item
+						validateTrigger={["onChange", "onBlur"]}
+						noStyle
+						name={[field.key, "card number"]}
+					>
+						<Input
+							key={index}
+							placeholder="Card #"
+							ref={inputRef}
+							style={{ width: "100px", marginBottom: "0px" }}
+							onFocus={() => {
+								setCurrentCardIndex(index);
+							}}
+							maxLength={3}
+							onChange={(e) => setCardInput(e.target.value)}
+							value={cardInput}
+						/>
+					</Form.Item>
+					<Form.Item
 						style={{ width: "100px", marginBottom: "0px" }}
-						onFocus={() => {
-							setCurrentCardIndex(index);
-						}}
-						maxLength={3}
-						onChange={(e) => setCardInput(e.target.value)}
-						value={cardInput}
-					/>
-				</Form.Item>
-				<Form.Item
-					style={{ width: "100px", marginBottom: "0px" }}
-					name={[field.key, "isFoil"]}
-				>
-					<Switch
-						checkedChildren="foil"
-						unCheckedChildren="non-foil"
-						onClick={() => setIsFoil(!isFoil)}
-					/>
-				</Form.Item>
-			</div>
+						name={[field.key, "isFoil"]}
+						initialValue={false}
+					>
+						<Switch
+							checkedChildren="foil"
+							unCheckedChildren="non-foil"
+							onClick={() => setIsFoil(!isFoil)}
+						/>
+					</Form.Item>
+
+					<Form.Item
+						hidden={true}
+						name={[field.key, "wave"]}
+						initialValue={wave}
+					>
+						<Input />
+					</Form.Item>
+				</div>
+			</>
 		</Form.Item>
 	);
 };
