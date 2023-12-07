@@ -19,7 +19,8 @@ const productTypes = [
 	{ value: 4, label: "Illumineers Trove" },
 	{ value: 5, label: "Booster Box" },
 	{ value: 6, label: "D100" },
-	{ value: 7, label: "Other" },
+	{ value: 7, label: "Custom Deck" },
+	{ value: 8, label: "Other" },
 ];
 
 type TBoughtProducts = {
@@ -354,7 +355,7 @@ export const AddItems = () => {
 				</>
 			)}
 
-			<DeckInput wave={1} />
+			{/* <DeckInput wave={1} /> */}
 		</div>
 	);
 };

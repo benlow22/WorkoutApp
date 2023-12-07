@@ -103,6 +103,10 @@
 	width: fit-content;
 }
 
+/* .deck-card .ant-row .ant-col {
+	margin-left: 0px !important;
+} */
+
 .booster-pack-12-cards .ant-form-item {
 	margin-bottom: 0px !important;
 }

@@ -62,7 +62,7 @@ export const DeckInput = ({ wave }: TProps) => {
 
 	return (
 		<div>
-			<h1>Set {wave}</h1>
+			{/* <h1>Set {wave}</h1> */}
 			<Form
 				name="dynamic_form_item"
 				{...formItemLayoutWithOutLabel}
@@ -79,7 +79,7 @@ export const DeckInput = ({ wave }: TProps) => {
 										<div key={index}>
 											<DeckCardInput
 												wave={wave}
-												// field={field}
+												field={field}
 												index={index}
 												remove={remove}
 												setCurrentCardIndex={setCurrentCardIndex}

@@ -5,6 +5,7 @@ import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
 import { useEffect, useState } from "react";
 import { BoosterPack } from "./BoosterPack";
 import { TCardCache } from "../pages/addItems/addItems";
+import { DeckInput } from "./DeckInput";
 
 type TProps = {
 	type: ProductTypes;
@@ -47,6 +48,9 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 
 	const boosterPackCalculator = () => {
 		var boosterPackArr = [];
+		if (type.valueOf() === 7) {
+			console.log("type", type.valueOf());
+		}
 		for (let i = 0; i < numberOfBoosterPacks; i++) {
 			boosterPackArr.push(
 				<BoosterPack
@@ -72,11 +76,9 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 		<div style={{ width: "800px", margin: "auto" }}>
 			<h1>{title}</h1>
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
-			{ProductTypes["Booster Pack"] !== type && <h2>Booster Packs</h2>}
+			{ProductTypes["Booster Pack"] !== type ? ProductTypes["Custom Deck"] !== type ? <h2>Booster Packs</h2> : <DeckInput wave={wave} /> : ""}
 			{boosterSection}
-			<div className="just-cards">
-				
-			</div>
+			<div className="just-cards"></div>
 		</div>
 	);
 };

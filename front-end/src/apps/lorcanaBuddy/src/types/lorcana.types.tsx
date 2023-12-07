@@ -34,6 +34,7 @@ export const enum ProductTypes {
 	"Illumineers Trove",
 	"Booster Box",
 	"D100",
+	"Custom Deck",
 	"Other",
 }
 export const enum SetName {
