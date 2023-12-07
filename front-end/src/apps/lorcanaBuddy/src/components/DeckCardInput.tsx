@@ -65,6 +65,7 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 				<Form.Item
 					validateTrigger={["onChange", "onBlur"]}
 					noStyle
+					rules={[{ required: true, message: "Please input your card!" }]}
 				>
 					<Input
 						placeholder="Card #"
@@ -73,12 +74,14 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 						onFocus={() => {
 							setCurrentCardIndex(index);
 						}}
+						maxLength={3}
 						onChange={(e) => setCardInput(e.target.value)}
 					/>
 				</Form.Item>
 				<MinusCircleOutlined
 					className="dynamic-delete-button"
 					style={{ color: "white", paddingLeft: "10px" }}
+					// onClick={() => remove}
 				/>
 			</>
 		</Form.Item>

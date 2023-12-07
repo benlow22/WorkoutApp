@@ -34,12 +34,12 @@ export const DeckInput = ({ wave }: TProps) => {
 
 	useEffect(() => {
 		document.addEventListener("keydown", spaceDownHandler);
-
 		return () => document.removeEventListener("keydown", spaceDownHandler);
 	}, []);
 
 	useEffect(() => {
-		if (isSpaceClicked) {
+		const deckForm = document.getElementById("deckForm");
+		if (deckForm?.contains(document.activeElement) && isSpaceClicked) {
 			setIsSpaceClicked(false);
 			setCurrentCardIndex(currentCardIndex + 1);
 		}
@@ -68,6 +68,7 @@ export const DeckInput = ({ wave }: TProps) => {
 				{...formItemLayoutWithOutLabel}
 				onFinish={onFinish}
 				style={{ maxWidth: "800px", margin: "auto" }}
+				id="deckForm"
 			>
 				<Form.List
 					name="names"
@@ -87,6 +88,7 @@ export const DeckInput = ({ wave }: TProps) => {
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
 										<DeckCardInput
+											key={index}
 											wave={wave}
 											field={field}
 											index={index}
