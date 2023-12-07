@@ -2,6 +2,8 @@ import { MinusCircleOutlined } from "@ant-design/icons";
 import { Form, FormListFieldData, Input, InputRef } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
+import { getImageUrlFromCardNumber } from "./SingleCardInput";
+import { TCardCache, getAllCards } from "../pages/addItems/addItems";
 
 type TProps = {
 	field: FormListFieldData;
@@ -9,16 +11,30 @@ type TProps = {
 	remove: (index: number) => void;
 	setCurrentCardIndex: (index: number) => void;
 	currentCardIndex: number;
+	wave: number;
 };
 
-export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardIndex }: TProps) => {
+export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
 	const [imageUrl, setImageUrl] = useState<string>("");
 	const [cardInput, setCardInput] = useState<string>("");
 	const [isFoil, setIsFoil] = useState<boolean>(false);
+	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
 
 	const inputRef = useRef<InputRef>(null);
 
 	useEffect(() => {
+		async function fetchAllCards() {
+			let response = getAllCards();
+			const retrievedCards = await response;
+			if (retrievedCards) {
+				setAllCardsCache(retrievedCards);
+			}
+		}
+		fetchAllCards();
+	}, []);
+
+	useEffect(() => {
+		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		console.log("card input:", cardInput);
 	}, [cardInput]);
 
@@ -37,27 +53,34 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 	}, [currentCardIndex, inputRef]);
 
 	return (
-		<Form.Item required={false}>
-			<SmallCardImageAboveInput imageUrl={imageUrl} />
-
-			<Form.Item
-				validateTrigger={["onChange", "onBlur"]}
-				noStyle
-			>
-				<Input
-					placeholder="Card #"
-					ref={inputRef}
-					style={{ width: "100px" }}
-					onFocus={() => {
-						setCurrentCardIndex(index);
-					}}
-					onChange={(e) => setCardInput(e.target.value)}
-				/>
-			</Form.Item>
-			<MinusCircleOutlined
-				className="dynamic-delete-button"
-				style={{ color: "white", paddingLeft: "10px" }}
+		<Form.Item
+			required={false}
+			style={{ display: "flex", justifyContent: "center" }}
+		>
+			<SmallCardImageAboveInput
+				imageUrl={imageUrl}
+				imageWidth="100px"
 			/>
+			<>
+				<Form.Item
+					validateTrigger={["onChange", "onBlur"]}
+					noStyle
+				>
+					<Input
+						placeholder="Card #"
+						ref={inputRef}
+						style={{ width: "100px" }}
+						onFocus={() => {
+							setCurrentCardIndex(index);
+						}}
+						onChange={(e) => setCardInput(e.target.value)}
+					/>
+				</Form.Item>
+				<MinusCircleOutlined
+					className="dynamic-delete-button"
+					style={{ color: "white", paddingLeft: "10px" }}
+				/>
+			</>
 		</Form.Item>
 	);
 };

@@ -14,6 +14,7 @@ export const DeckInput = ({ wave }: TProps) => {
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
+	const [cardImageUrl, setCardImageUrl] = useState<string>("");
 
 	const onFinish = (values: any) => {
 		console.log("Deck Input onFINISH:", values);
@@ -47,8 +48,8 @@ export const DeckInput = ({ wave }: TProps) => {
 	useEffect(() => {
 		console.log("currentCardIndex: ", currentCardIndex);
 		if (currentCardIndex >= numberOfCards) {
-			const buttty = document.getElementById("theAddButton");
-			buttty?.click();
+			const addButtonElement = document.getElementById("theAddButton");
+			addButtonElement?.click();
 		}
 	}, [currentCardIndex]);
 
@@ -66,7 +67,7 @@ export const DeckInput = ({ wave }: TProps) => {
 				name="dynamic_form_item"
 				{...formItemLayoutWithOutLabel}
 				onFinish={onFinish}
-				style={{ maxWidth: 600 }}
+				style={{ maxWidth: "800px", margin: "auto" }}
 			>
 				<Form.List
 					name="names"
@@ -82,10 +83,11 @@ export const DeckInput = ({ wave }: TProps) => {
 				>
 					{(fields, { add, remove }, { errors }) => (
 						<>
-							<Space style={{ width: "600px", flexWrap: "wrap" }}>
+							<Space style={{ width: "800px", flexWrap: "wrap" }}>
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
 										<DeckCardInput
+											wave={wave}
 											field={field}
 											index={index}
 											remove={remove}

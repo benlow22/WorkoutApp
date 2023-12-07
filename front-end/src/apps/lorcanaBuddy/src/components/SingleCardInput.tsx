@@ -26,6 +26,20 @@ const getIconUrlsFromRarities = (rarities: string[]) => {
 		return `/lorcanaRarity/${rarity}Icon.jpeg`;
 	});
 };
+export const getImageUrlFromCardNumber = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: number, wave: number, allCardsCache: TCardCache, isFoil: boolean) => {
+	const cardId = `${wave}-${cardNumber}`;
+	if (cardId in allCardsCache) {
+		if (isFoil && wave === 1) {
+			const regImageUrl = allCardsCache[cardId].imageUrl;
+			const foilImageUrl = regImageUrl.replace("large", "foil");
+			setter(foilImageUrl);
+		} else {
+			setter(allCardsCache[cardId].imageUrl);
+		}
+	} else {
+		setter(`/lorcanaRarity/lorcana-cardback.jpg`);
+	}
+};
 
 export const SingleCardInput = ({ rarities, isFoil, wave, index }: TProps) => {
 	const [imageUrl, setImageUrl] = useState<string>("");
@@ -33,7 +47,7 @@ export const SingleCardInput = ({ rarities, isFoil, wave, index }: TProps) => {
 	const [cardNumber, setCardNumber] = useState<number>();
 	const iconUrls = getIconUrlsFromRarities(rarities);
 
-	const getImageUrlFromCardNumber = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: number) => {
+	const getImageUrlFromCardNumber = (setter: React.Dispatch<React.SetStateAction<string>>, cardNumber: number, wave: number, allCardsCache: TCardCache) => {
 		const cardId = `${wave}-${cardNumber}`;
 		if (cardId in allCardsCache) {
 			if (isFoil && wave === 1) {
@@ -62,18 +76,21 @@ export const SingleCardInput = ({ rarities, isFoil, wave, index }: TProps) => {
 	}, []);
 
 	const handleCardNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		getImageUrlFromCardNumber(setImageUrl, Number(e.target.value));
+		wave && getImageUrlFromCardNumber(setImageUrl, Number(e.target.value), wave, allCardsCache);
 		setCardNumber(Number(e.target.value));
 	};
 	return (
 		<>
-			<SmallCardImageAboveInput imageUrl={imageUrl} />
+			<SmallCardImageAboveInput
+				imageUrl={imageUrl}
+				imageWidth="50px"
+			/>
 			<Form.Item
 				name={["boosterPack", "cards", `${index}`]}
 				style={{ textAlign: "center" }}
 			>
 				<Input
-					style={{ width: "50px", paddingBottom: "opx" }}
+					style={{ width: "50px", paddingBottom: "0px" }}
 					onChange={(e) => handleCardNumberInput(e)}
 					maxLength={3}
 					value={cardNumber}

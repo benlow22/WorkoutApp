@@ -8,15 +8,16 @@ import { TCardCache } from "../pages/addItems/addItems";
 
 type TProps = {
 	imageUrl: string;
+	imageWidth: string;
 };
 
-export const SmallCardImageAboveInput = ({ imageUrl }: TProps) => {
+export const SmallCardImageAboveInput = ({ imageUrl, imageWidth }: TProps) => {
 	return (
-		<div style={{ height: "70px" }}>
+		<div style={{ minHeight: "70px" }}>
 			<Image
 				src={imageUrl}
 				style={{
-					width: "50px",
+					width: imageWidth,
 					borderRadius: "3px",
 				}}
 			/>
