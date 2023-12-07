@@ -1,14 +1,7 @@
-import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Image, Input, Space } from "antd";
-import { v4 as uuidv4 } from "uuid";
-import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
-import { ButtonHTMLAttributes, useEffect, useRef, useState } from "react";
-import { BoosterPack } from "./BoosterPack";
-import { TCardCache, getAllCards } from "../pages/addItems/addItems";
-import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
+import { PlusOutlined } from "@ant-design/icons";
+import { Button, Form } from "antd";
+import { useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
-import { ButtonHTMLType, ButtonType } from "antd/es/button";
-import { FieldData } from "rc-field-form/lib/interface";
 
 type TProps = {
 	isFoil?: boolean;
@@ -22,58 +15,12 @@ export const DeckInput = ({ wave }: TProps) => {
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 	const [arrOfInputs, setArrOfInputs] = useState<number[]>([]);
-	const addButton = useRef<any>(null);
+
 	const onFinish = (values: any) => {
 		console.log("Deck Input onFINISH:", values);
 	};
-	// const handleSpacePress = (e: any, addFn: () => void, movefn: (from: number, to: number) => void, x: number, y: number, index: number) => {
-	// 	document.addEventListener("keyup", (event) => {
-	// 		if (event.code === "Space" || event.code === "KeyV") {
-	// 			addFn();
-	// 			console.log(index);
-	// 			let current = e;
-	// 			console.log(current);
-	// 			// event.preventDefault();
-	// 			var lastCard = e.target.id.split("_").pop();
-	// 			// document.getElementById(`deckInput_deck_card_${lastCard}`).focus();
-	// 			// console.log("Current", lastCard);
-	// 			// console.log("space has been pressed");
-	// 		}
-	// 	});
 
-	// };
-	// const handleChange = (e: any, addFn: () => void) => {
-	// 	e.preventDefault();
-	// 	const { value, name } = e.target;
-	// 	const cardIndex = Number(name);
-	// 	//press space
-	// 	console.log("CArdout", cardIndex, numberOfCards, name);
-	// 	document.addEventListener("keyup", (event) => {
-	// 		if (event.code === "Space" || event.code === "KeyV") {
-	// 			//if last card add new card
-	// 			console.log("CArdin", cardIndex, numberOfCards, name);
-	// 			if (cardIndex === numberOfCards) {
-	// 				addFn();
-	// 				setNumberOfCards(numberOfCards + 1);
-	// 				setCurrentCardIndex(cardIndex + 1);
-	// 			}
-	// 		}
-	// 	});
-	// 	document.removeEventListener("keyup", (event) => {
-	// 		if (event.code === "Space" || event.code === "KeyV") {
-	// 			//if last card add new card
-	// 			console.log("CArdin", cardIndex, numberOfCards, name);
-	// 			if (cardIndex === numberOfCards) {
-	// 				addFn();
-	// 				setNumberOfCards(numberOfCards + 1);
-	// 				setCurrentCardIndex(cardIndex + 1);
-	// 			}
-	// 		}
-	// 	});
-	// 	console.log("numberOfCards", numberOfCards);
-	// };
-
-	const spaceUpHandler = (event: KeyboardEvent) => {
+	const spaceDownHandler = (event: KeyboardEvent) => {
 		console.log("before space clicked");
 		if (event.code === "Space" || event.code === "KeyV") {
 			event.preventDefault();
@@ -81,28 +28,18 @@ export const DeckInput = ({ wave }: TProps) => {
 		}
 	};
 
-	const clickAdd = (fn: () => void) => {};
 	useEffect(() => {
 		console.log("# of cards", numberOfCards);
 	}, [numberOfCards]);
 
 	useEffect(() => {
-		document.addEventListener("keydown", spaceUpHandler);
+		document.addEventListener("keydown", spaceDownHandler);
 
-		return () => document.removeEventListener("keydown", spaceUpHandler);
+		return () => document.removeEventListener("keydown", spaceDownHandler);
 	}, []);
 
 	useEffect(() => {
 		if (isSpaceClicked) {
-			console.log("Curremt and #", currentCardIndex, numberOfCards);
-			console.log('field"', myFields);
-			if (currentCardIndex + 1 === numberOfCards) {
-				console.log("this is the last element", addButton.current);
-			}
-			// check if last index
-			// if last = add new input
-			// focus on next input
-			console.log("SPACE HAS BEEN CLICKED", currentCardIndex);
 			setIsSpaceClicked(false);
 			setCurrentCardIndex(currentCardIndex + 1);
 		}
@@ -110,18 +47,11 @@ export const DeckInput = ({ wave }: TProps) => {
 
 	useEffect(() => {
 		console.log("currentCardIndex: ", currentCardIndex);
+		if (currentCardIndex >= numberOfCards) {
+			const buttty = document.getElementById("theAddButton");
+			buttty?.click();
+		}
 	}, [currentCardIndex]);
-
-	const formItemLayout = {
-		labelCol: {
-			xs: { span: 24 },
-			sm: { span: 4 },
-		},
-		wrapperCol: {
-			xs: { span: 24 },
-			sm: { span: 20 },
-		},
-	};
 
 	const formItemLayoutWithOutLabel = {
 		wrapperCol: {
@@ -137,7 +67,6 @@ export const DeckInput = ({ wave }: TProps) => {
 				name="dynamic_form_item"
 				{...formItemLayoutWithOutLabel}
 				onFinish={onFinish}
-				fields={myFields}
 				style={{ maxWidth: 600 }}
 			>
 				<Form.List
@@ -165,12 +94,11 @@ export const DeckInput = ({ wave }: TProps) => {
 							))}
 							<Form.Item>
 								<Button
-									ref={addButton}
+									id="theAddButton"
 									type="dashed"
 									onClick={() => {
 										add();
 										setNumberOfCards(numberOfCards + 1);
-										setArrOfInputs(arrOfInputs.concat([currentCardIndex + 1]));
 									}}
 									style={{ width: "60%" }}
 									icon={<PlusOutlined />}

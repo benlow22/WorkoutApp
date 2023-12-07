@@ -10,7 +10,7 @@ type TProps = {
 	currentCardIndex: number;
 };
 
-export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex }: TProps) => {
+export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardIndex }: TProps) => {
 	const inputRef = useRef<InputRef>(null);
 
 	const formItemLayout = {
@@ -47,10 +47,8 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 			{...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
 			label={index === 0 ? "Passengers" : ""}
 			required={false}
-			key={field.key}
 		>
 			<Form.Item
-				{...field}
 				validateTrigger={["onChange", "onBlur"]}
 				rules={[
 					{
@@ -72,7 +70,6 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 			</Form.Item>
 			<MinusCircleOutlined
 				className="dynamic-delete-button"
-				onClick={() => remove(field.name)}
 				style={{ color: "white" }}
 			/>
 		</Form.Item>
