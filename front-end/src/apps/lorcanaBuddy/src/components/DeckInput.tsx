@@ -1,4 +1,4 @@
-import { PlusOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
 import { useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
@@ -70,32 +70,28 @@ export const DeckInput = ({ wave }: TProps) => {
 				style={{ maxWidth: "800px", margin: "auto" }}
 				id="deckForm"
 			>
-				<Form.List
-					name="names"
-					// rules={[
-					// 	{
-					// 		validator: async (_, names) => {
-					// 			if (!names || names.length < 2) {
-					// 				return Promise.reject(new Error("At least 2 passengers"));
-					// 			}
-					// 		},
-					// 	},
-					// ]}
-				>
+				<Form.List name="cards">
 					{(fields, { add, remove }, { errors }) => (
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
-										<DeckCardInput
-											key={index}
-											wave={wave}
-											field={field}
-											index={index}
-											remove={remove}
-											setCurrentCardIndex={setCurrentCardIndex}
-											currentCardIndex={currentCardIndex}
-										/>
+										<div key={index}>
+											<DeckCardInput
+												wave={wave}
+												field={field}
+												index={index}
+												remove={remove}
+												setCurrentCardIndex={setCurrentCardIndex}
+												currentCardIndex={currentCardIndex}
+											/>
+
+											<MinusCircleOutlined
+												className="dynamic-delete-button"
+												style={{ color: "white", paddingLeft: "10px" }}
+												onClick={() => remove(field.name)}
+											/>
+										</div>
 									))}
 							</Space>
 							<Form.Item>

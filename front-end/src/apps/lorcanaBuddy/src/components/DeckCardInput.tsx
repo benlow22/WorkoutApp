@@ -30,13 +30,14 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 				setAllCardsCache(retrievedCards);
 			}
 		}
+		console.log("THE INDEX", index);
 		fetchAllCards();
 	}, []);
 
 	useEffect(() => {
 		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		console.log("card input:", cardInput);
-	}, [cardInput]);
+	}, [cardInput, index]);
 
 	// focus on input when component is made
 	useEffect(() => {
@@ -65,9 +66,10 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 				<Form.Item
 					validateTrigger={["onChange", "onBlur"]}
 					noStyle
-					rules={[{ required: true, message: "Please input your card!" }]}
+					name={index}
 				>
 					<Input
+						key={index}
 						placeholder="Card #"
 						ref={inputRef}
 						style={{ width: "100px" }}
@@ -76,13 +78,9 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 						}}
 						maxLength={3}
 						onChange={(e) => setCardInput(e.target.value)}
+						value={cardInput}
 					/>
 				</Form.Item>
-				<MinusCircleOutlined
-					className="dynamic-delete-button"
-					style={{ color: "white", paddingLeft: "10px" }}
-					// onClick={() => remove}
-				/>
 			</>
 		</Form.Item>
 	);
