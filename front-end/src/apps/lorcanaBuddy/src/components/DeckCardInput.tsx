@@ -1,6 +1,7 @@
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Form, FormListFieldData, Input, InputRef } from "antd";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 
 type TProps = {
 	field: FormListFieldData;
@@ -11,31 +12,24 @@ type TProps = {
 };
 
 export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardIndex }: TProps) => {
+	const [imageUrl, setImageUrl] = useState<string>("");
+	const [cardInput, setCardInput] = useState<string>("");
+	const [isFoil, setIsFoil] = useState<boolean>(false);
+
 	const inputRef = useRef<InputRef>(null);
 
-	const formItemLayout = {
-		labelCol: {
-			xs: { span: 24 },
-			sm: { span: 4 },
-		},
-		wrapperCol: {
-			xs: { span: 24 },
-			sm: { span: 20 },
-		},
-	};
+	useEffect(() => {
+		console.log("card input:", cardInput);
+	}, [cardInput]);
 
-	const formItemLayoutWithOutLabel = {
-		wrapperCol: {
-			xs: { span: 24, offset: 0 },
-			sm: { span: 20, offset: 4 },
-		},
-	};
+	// focus on input when component is made
 	useEffect(() => {
 		if (inputRef?.current) {
 			inputRef.current.focus();
 		}
 	}, [inputRef]);
 
+	// used when space is pressed to dynamically change focus to next input
 	useEffect(() => {
 		if (currentCardIndex === index) {
 			inputRef.current?.focus();
@@ -43,34 +37,26 @@ export const DeckCardInput = ({ index, remove, setCurrentCardIndex, currentCardI
 	}, [currentCardIndex, inputRef]);
 
 	return (
-		<Form.Item
-			{...(index === 0 ? formItemLayout : formItemLayoutWithOutLabel)}
-			label={index === 0 ? "Passengers" : ""}
-			required={false}
-		>
+		<Form.Item required={false}>
+			<SmallCardImageAboveInput imageUrl={imageUrl} />
+
 			<Form.Item
 				validateTrigger={["onChange", "onBlur"]}
-				rules={[
-					{
-						required: true,
-						whitespace: true,
-						message: "Please input passenger's name or delete this field.",
-					},
-				]}
 				noStyle
 			>
 				<Input
-					placeholder="passenger name"
+					placeholder="Card #"
 					ref={inputRef}
-					style={{ width: "60%" }}
+					style={{ width: "100px" }}
 					onFocus={() => {
 						setCurrentCardIndex(index);
 					}}
+					onChange={(e) => setCardInput(e.target.value)}
 				/>
 			</Form.Item>
 			<MinusCircleOutlined
 				className="dynamic-delete-button"
-				style={{ color: "white" }}
+				style={{ color: "white", paddingLeft: "10px" }}
 			/>
 		</Form.Item>
 	);

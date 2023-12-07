@@ -1,5 +1,5 @@
 import { PlusOutlined } from "@ant-design/icons";
-import { Button, Form } from "antd";
+import { Button, Form, Space } from "antd";
 import { useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
 
@@ -14,7 +14,6 @@ export const DeckInput = ({ wave }: TProps) => {
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
-	const [arrOfInputs, setArrOfInputs] = useState<number[]>([]);
 
 	const onFinish = (values: any) => {
 		console.log("Deck Input onFINISH:", values);
@@ -71,27 +70,30 @@ export const DeckInput = ({ wave }: TProps) => {
 			>
 				<Form.List
 					name="names"
-					rules={[
-						{
-							validator: async (_, names) => {
-								if (!names || names.length < 2) {
-									return Promise.reject(new Error("At least 2 passengers"));
-								}
-							},
-						},
-					]}
+					// rules={[
+					// 	{
+					// 		validator: async (_, names) => {
+					// 			if (!names || names.length < 2) {
+					// 				return Promise.reject(new Error("At least 2 passengers"));
+					// 			}
+					// 		},
+					// 	},
+					// ]}
 				>
 					{(fields, { add, remove }, { errors }) => (
 						<>
-							{fields.map((field, index) => (
-								<DeckCardInput
-									field={field}
-									index={index}
-									remove={remove}
-									setCurrentCardIndex={setCurrentCardIndex}
-									currentCardIndex={currentCardIndex}
-								/>
-							))}
+							<Space style={{ width: "600px", flexWrap: "wrap" }}>
+								{numberOfCards > 0 &&
+									fields.map((field, index) => (
+										<DeckCardInput
+											field={field}
+											index={index}
+											remove={remove}
+											setCurrentCardIndex={setCurrentCardIndex}
+											currentCardIndex={currentCardIndex}
+										/>
+									))}
+							</Space>
 							<Form.Item>
 								<Button
 									id="theAddButton"
