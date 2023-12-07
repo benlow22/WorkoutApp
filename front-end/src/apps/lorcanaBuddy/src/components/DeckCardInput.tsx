@@ -6,7 +6,7 @@ import { getImageUrlFromCardNumber } from "./SingleCardInput";
 import { TCardCache, getAllCards } from "../pages/addItems/addItems";
 
 type TProps = {
-	field: FormListFieldData;
+	// field: FormListFieldData;
 	index: number;
 	remove: (index: number) => void;
 	setCurrentCardIndex: (index: number) => void;

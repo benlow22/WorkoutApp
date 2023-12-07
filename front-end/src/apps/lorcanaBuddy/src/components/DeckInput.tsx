@@ -79,7 +79,7 @@ export const DeckInput = ({ wave }: TProps) => {
 										<div key={index}>
 											<DeckCardInput
 												wave={wave}
-												field={field}
+												// field={field}
 												index={index}
 												remove={remove}
 												setCurrentCardIndex={setCurrentCardIndex}
@@ -89,7 +89,10 @@ export const DeckInput = ({ wave }: TProps) => {
 											<MinusCircleOutlined
 												className="dynamic-delete-button"
 												style={{ color: "white", paddingLeft: "10px" }}
-												onClick={() => remove(field.name)}
+												onClick={() => {
+													remove(field.name);
+													setNumberOfCards(numberOfCards - 1);
+												}}
 											/>
 										</div>
 									))}
