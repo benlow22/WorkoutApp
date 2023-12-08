@@ -120,7 +120,7 @@ export type TLorcanaCard = {
 	bodyText: string;
 	flavourText: string;
 	setName: SetName;
-	set: number;
+	wave: number;
 	artist: string;
 	imageUrl: string;
 	setId: SetId;
