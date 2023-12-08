@@ -1,14 +1,15 @@
 import { Button, Card, Form, Input, InputNumber, Select, Switch } from "antd";
 import { useEffect, useState } from "react";
-import { ProductTypes, SetName, TLorcanaCard } from "../../types/lorcana.types";
+import { ProductTypes, TLorcanaCard } from "../../types/lorcana.types";
 import { supabase } from "../../../../../supabase/supabaseClient";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { DatePicker, Space } from "antd";
-import { CloseOutlined } from "@ant-design/icons";
+import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { BoosterPack } from "../../components/BoosterPack";
 import { ProductCard } from "../../components/ProductCard";
 import { v4 as uuidv4 } from "uuid";
+import { DeckInput } from "../../components/DeckInput";
 
 const productTypes = [
 	{ value: 0, label: "Booster Pack" },
@@ -18,7 +19,8 @@ const productTypes = [
 	{ value: 4, label: "Illumineers Trove" },
 	{ value: 5, label: "Booster Box" },
 	{ value: 6, label: "D100" },
-	{ value: 7, label: "Other" },
+	{ value: 7, label: "Custom Deck" },
+	{ value: 8, label: "Other" },
 ];
 
 type TBoughtProducts = {
@@ -44,13 +46,29 @@ export const getAllCards = async () => {
 		console.error(error);
 	}
 };
+const formItemLayout = {
+	labelCol: {
+		xs: { span: 24 },
+		sm: { span: 4 },
+	},
+	wrapperCol: {
+		xs: { span: 24 },
+		sm: { span: 20 },
+	},
+};
 
-export const AddItemsSAFE = () => {
+const formItemLayoutWithOutLabel = {
+	wrapperCol: {
+		xs: { span: 24, offset: 0 },
+		sm: { span: 20, offset: 4 },
+	},
+};
 
+export const AddItems = () => {
 	// store all the cards as state
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
-	const [receiptData, setReceiptData] = useState<any>();
+	const [receiptData, setReceiptData] = useState<any>(uuidv4());
 	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
 
 	const receiptId = uuidv4();
@@ -61,6 +79,7 @@ export const AddItemsSAFE = () => {
 			const retrievedCards = await response;
 			if (retrievedCards) {
 				setAllCards(retrievedCards);
+				// console.log("all cards fetched", retrievedCards);
 			}
 		}
 		fetchAllCards();
@@ -79,10 +98,13 @@ export const AddItemsSAFE = () => {
 	dayjs.extend(customParseFormat);
 	const dateFormat = "YYYY/MM/DD";
 	const data = {
-		date: dayjs(new Date()),
-		products: [{}],
+		receipt: {
+			date: dayjs(new Date()),
+			products: [{}],
+			advancedInput: false,
+		},
 	}; // location
-	const [regionName, setRegionName] = useState<string>("Province");
+	const [regionName, setRegionName] = useState<string>("province");
 	const locationInput = { width: "100px" };
 	// initial form values
 
@@ -113,12 +135,12 @@ export const AddItemsSAFE = () => {
 
 	// Submitting function
 	const onFinish = (values: any) => {
-		console.log("PRODUCTS", values.products);
+		console.log("PRODUCTS", values);
 		setShowSecondHalf(true);
-		setProductsQuantity(values.products);
-		setReceiptData({
-			id: receiptId,
-		});
+		setProductsQuantity(values.receipt.products);
+		// setReceiptData({
+		// 	id: receiptId,
+		// });
 	};
 
 	useEffect(() => {
@@ -139,76 +161,85 @@ export const AddItemsSAFE = () => {
 				}}
 				initialValues={data}
 			>
+				{/* 
+				Create receipt id once everything is done
+				<Form.Item<string>
+					name={["receipt", "id"]}
+					label="Receipt"
+				>
+					<Input
+						placeholder={receiptId}
+						value={receiptId}
+					/>
+				</Form.Item> */}
 				<Form.Item
-					name="date"
+					name={["receipt", "date"]}
 					label="Date"
 				>
 					<DatePicker format={dateFormat} />
 				</Form.Item>
 				<Form.Item
-					name="advancedInput"
+					name={["receipt", "advancedInput"]}
 					label="Advanced Settings"
 				>
 					<Switch
 						onClick={() => setAdvancedInput(!advancedInput)}
+						defaultChecked={false}
 						checked={advancedInput}
 					/>
 				</Form.Item>
 				<Form.Item label="Location">
-					<Form.List name={"location"}>
-						{(fields) => (
-							<div>
-								<Form.Item
-									noStyle
-									name={["location", "store"]}
-								>
-									<Input
-										placeholder="Store"
-										style={locationInput}
-									/>
-								</Form.Item>
-								<Form.Item
-									noStyle
-									name={["street"]}
-								>
-									<Input
-										placeholder="Street"
-										style={{ width: "150px" }}
-									/>
-								</Form.Item>
-								<Form.Item
-									noStyle
-									name={["city"]}
-								>
-									<Input
-										placeholder="City"
-										style={locationInput}
-									/>
-								</Form.Item>
-								<Form.Item
-									noStyle
-									name={regionName}
-								>
-									<Input
-										placeholder={regionName}
-										style={{ width: "50px" }}
-									/>
-								</Form.Item>
-								<Form.Item
-									noStyle
-									name={"country"}
-								>
-									<Input
-										placeholder="Country"
-										style={locationInput}
-									/>
-								</Form.Item>
-							</div>
-						)}
-					</Form.List>
+					<div>
+						<Form.Item
+							noStyle
+							name={["receipt", "location", "store"]}
+						>
+							<Input
+								placeholder="Store"
+								style={locationInput}
+							/>
+						</Form.Item>
+						<Form.Item
+							noStyle
+							name={["receipt", "location", "street"]}
+						>
+							<Input
+								placeholder="Street"
+								style={{ width: "150px" }}
+							/>
+						</Form.Item>
+						<Form.Item
+							noStyle
+							name={["receipt", "location", "city"]}
+						>
+							<Input
+								placeholder="City"
+								style={locationInput}
+							/>
+						</Form.Item>
+						<Form.Item
+							noStyle
+							name={["receipt", "location", regionName]}
+						>
+							<Input
+								placeholder="state"
+								style={{ width: "50px" }}
+							/>
+						</Form.Item>
+						<Form.Item
+							noStyle
+							name={["receipt", "location", "country"]}
+						>
+							<Input
+								placeholder="Country"
+								style={locationInput}
+							/>
+						</Form.Item>
+					</div>
 				</Form.Item>
+
 				<Form.Item
-					name="price"
+					name={["receipt", "price"]}
 					label="Paid Price"
 				>
 					<InputNumber
@@ -218,7 +249,7 @@ export const AddItemsSAFE = () => {
 					/>
 				</Form.Item>
 				<Form.Item label="Products">
-					<Form.List name={"products"}>
+					<Form.List name={["receipt", "products"]}>
 						{(fields, subOpt) => (
 							<div
 								style={{
@@ -260,7 +291,7 @@ export const AddItemsSAFE = () => {
 										>
 											<InputNumber
 												placeholder="Quantity"
-												min={0}
+												min={1}
 												style={{ width: "80px" }}
 											/>
 										</Form.Item>
@@ -305,12 +336,14 @@ export const AddItemsSAFE = () => {
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
-				<Button
-					type="primary"
-					htmlType="submit"
-				>
-					{productsQuantity.length < 1 ? "Next" : "Update"}
-				</Button>
+				<Form.Item>
+					<Button
+						type="primary"
+						htmlType="submit"
+					>
+						{productsQuantity.length < 1 ? "Next" : "Update"}
+					</Button>
+				</Form.Item>
 				{/* <Button type="primary" htmlType="submit">
 					{productsQuantity.length < 1 ? "Next" : "Update"}
 				</Button> */}
@@ -321,6 +354,8 @@ export const AddItemsSAFE = () => {
 					{productCardSection}
 				</>
 			)}
+
+			{/* <DeckInput wave={1} /> */}
 		</div>
 	);
 };
