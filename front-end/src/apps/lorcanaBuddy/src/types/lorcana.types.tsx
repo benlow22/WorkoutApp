@@ -1,7 +1,3 @@
-enum CardSet {
-	"The First Chapter",
-}
-
 enum CardColor {
 	Amber,
 	Amethyst,
@@ -11,6 +7,41 @@ enum CardColor {
 	Steel,
 }
 
+enum Rarity {
+	Uncommon,
+	Common,
+	Rare,
+	"Super Rare",
+	Legendary,
+	Enchanted,
+}
+
+const enum Type {
+	Character,
+}
+
+const enum SetId {
+	Promo,
+	TFC,
+	RFB,
+}
+
+export const enum ProductTypes {
+	"Booster Pack",
+	"Blister Pack",
+	"Starter Deck",
+	"Gift Set",
+	"Illumineers Trove",
+	"Booster Box",
+	"D100",
+	"Custom Deck",
+	"Other",
+}
+export const enum SetName {
+	Promo,
+	"The First Chapter",
+	"Rise of the Floodborn",
+}
 enum CardType {
 	"Action",
 	"Action - Song",
@@ -43,7 +74,7 @@ enum CardType {
 export type TLorcanaCardData = {
 	cardName: string;
 	traits: string[];
-	set: CardSet;
+	set: SetName;
 	"lore-value": number;
 	"card-number": number;
 	color: CardColor;
@@ -70,4 +101,27 @@ export type TLorcanaCardData = {
 	name: string;
 	"flavor-text": string;
 	"ink-cost": number;
+};
+
+export type TLorcanaCard = {
+	id: string;
+	cardNumber: number;
+	colour: CardColor;
+	inkable: boolean;
+	rarity: Rarity;
+	type: Type;
+	name: string;
+	classification: string;
+	cost: number;
+	strength: number;
+	willpower: number;
+	lore: number;
+	abilities: string;
+	bodyText: string;
+	flavourText: string;
+	setName: SetName;
+	set: number;
+	artist: string;
+	imageUrl: string;
+	setId: SetId;
 };

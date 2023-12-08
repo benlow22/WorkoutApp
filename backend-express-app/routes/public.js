@@ -63,6 +63,9 @@ router.get("/cards/:cardName", async (req, res) => {
 	}
 });
 
+//call this to update lorcana card.json
+//http://localhost:8000/api/public/lorcana/cards
+
 router.get("/lorcana/cards", async (req, res) => {
 	console.log("hi");
 	const namesData = fetch(`https://api.lorcana-api.com/lists/names`)
@@ -116,32 +119,11 @@ router.get("/cards/:cardName", async (req, res) => {
 
 router.get("/lorcana/cards", async (req, res) => {
 	console.log("hi");
-	const namesData = fetch(`https://api.lorcana-api.com/lists/names`)
-		.then((lorcanaNamesArr) => {
+	const namesData = fetch(`https://api.lorcana-api.com/lists/names`).then(
+		(lorcanaNamesArr) => {
 			return lorcanaNamesArr.json();
-		})
-		.then((lorcanaArr) => {
-			const allCards = Promise.all(
-				lorcanaArr.map(async (name) => {
-					const data = await fetch(
-						`https://api.lorcana-api.com/strict/${name}`,
-						{
-							method: "GET",
-							headers: {
-								"Content-Type": "application/json",
-								Accept: "text/html",
-							},
-						}
-					);
-					if (data) {
-						const response = await data.json();
-						const item = { cardName: name, ...response };
-						return item;
-					}
-				})
-			);
-			return allCards;
-		});
+		}
+	);
 	let data = await namesData;
 	const sortedData = data.sort((a, b) => a["card-number"] - b["card-number"]);
 	res.send(sortedData).status(200);
@@ -216,5 +198,26 @@ router.get("/lorcana/cards", async (req, res) => {
 // 	console.log("errrror", error);
 // 	console.log("updated workout exercises", data);
 // });
+
+//call this to update lorcana card.json
+//http://localhost:8000/api/public/lorcana/latestCards
+//
+router.get("/lorcana/latestCards", async (req, res) => {
+	const set1 = fetch(`https://api.lorcana-api.com/cards/fetch`).then(
+		(lorcanaNamesArr) => {
+			return lorcanaNamesArr.json();
+		}
+	);
+	const allCards = await set1;
+	allCards.sort((a, b) => {
+		if (a["Set_Num"] === b["Set_Num"]) {
+			// Price is only important when cities are the same
+			return a["Card_Num"] - b["Card_Num"];
+		}
+		return a["Set_Num"] > b["Set_Num"] ? 1 : -1;
+	});
+	// const orderedCards = await set1.concat(set2);
+	res.send(allCards).status(200);
+});
 
 module.exports = router;
