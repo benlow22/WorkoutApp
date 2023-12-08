@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { BoosterPack } from "./BoosterPack";
 import { TCardCache } from "../pages/addItems/AddItems";
 
+
 type TProps = {
 	imageUrl: string;
 	imageWidth: string;
