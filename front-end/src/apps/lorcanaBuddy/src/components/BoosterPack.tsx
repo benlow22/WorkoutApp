@@ -13,9 +13,9 @@ type TProps = {
 	number: number;
 	advanced: boolean;
 	allCards: TCardCache;
-	productId: string;
+	receiptProductId: string;
 };
-export const BoosterPack = ({ wave, number, advanced, allCards, productId }: TProps) => {
+export const BoosterPack = ({ wave, number, advanced, allCards, receiptProductId }: TProps) => {
 	const [boosterPackFormDisabled, setBoosterPackFormDisabled] = useState<boolean>(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const success = () => {

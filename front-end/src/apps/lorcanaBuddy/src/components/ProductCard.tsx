@@ -14,10 +14,10 @@ type TProps = {
 	number: number;
 	advanced: boolean;
 	allCards: TCardCache;
-	productId: string;
+	receiptProductId: string;
 };
 
-export const ProductCard = ({ type, wave, number, advanced, allCards, productId }: TProps) => {
+export const ProductCard = ({ type, wave, number, advanced, allCards, receiptProductId }: TProps) => {
 	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>();
 	const [numberOfBoosterPacks, setNumberOfBoosterPacks] = useState<number>(0);
 	const [boosterSection, setBoosterSection] = useState<any>();
@@ -54,7 +54,7 @@ export const ProductCard = ({ type, wave, number, advanced, allCards, productId 
 			console.log("type", type.valueOf());
 		}
 		for (let i = 0; i < numberOfBoosterPacks; i++) {
-			boosterPackArr.push(<BoosterPack wave={wave} number={i} key={`${type}-${number}-${i}`} productId={productId} advanced={advanced} allCards={allCards} />);
+			boosterPackArr.push(<BoosterPack wave={wave} number={i} key={`${type}-${number}-${i}`} receiptProductId={receiptProductId} advanced={advanced} allCards={allCards} />);
 		}
 		setBoosterSection(boosterPackArr);
 	};
@@ -64,7 +64,7 @@ export const ProductCard = ({ type, wave, number, advanced, allCards, productId 
 	}, [numberOfBoosterPacks]);
 
 	// @ts-expect-error A const enum member can only be accessed using a string literal.ts(2476)
-	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]} ${productId}`;
+	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]} ${receiptProductId}`;
 
 	return (
 		<div style={{ width: "800px", margin: "auto" }}>
