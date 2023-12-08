@@ -3,7 +3,7 @@ import { Form, FormListFieldData, Input, InputRef, Switch } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
-import { TCardCache, getAllCards } from "./AddItems";
+import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
 
 type TProps = {
 	field: FormListFieldData;

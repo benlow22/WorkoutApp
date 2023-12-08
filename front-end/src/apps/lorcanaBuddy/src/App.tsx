@@ -3,7 +3,7 @@ import { LorcanaBuddyDashboard } from "../dashboard";
 import { MyCollection } from "./pages/myCollection/MyCollection";
 import { Wishlist } from "./pages/wishlist/Wishlist";
 import { BrowsePage } from "./pages/browse/BrowsePage";
-import { AddItems } from "./components/AddItems";
+import { AddItems } from "./pages/addItems/AddItems";
 
 export const LorcanaBuddy = [
 	<Route
