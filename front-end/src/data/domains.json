@@ -59,7 +59,7 @@
 				{ "name": "My Collection", "path": "myCollection" },
 				{ "name": "Wishlist", "path": "wishlist" },
 				{ "name": "Add to Inventory", "path": "addItems" },
-				{ "inventory": "Inventory", "path": "inventory" }
+				{ "name": "Inventory", "path": "inventory" }
 			],
 			"logo": "lb-logo.png"
 		}
