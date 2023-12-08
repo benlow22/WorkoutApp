@@ -5,7 +5,6 @@ import { Wishlist } from "./pages/wishlist/Wishlist";
 import { BrowsePage } from "./pages/browse/BrowsePage";
 import { AddItems } from "./pages/addItems/AddItems";
 
-
 export const LorcanaBuddy = [
 	<Route
 		index

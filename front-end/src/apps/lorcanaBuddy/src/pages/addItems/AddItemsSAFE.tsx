@@ -46,7 +46,6 @@ export const getAllCards = async () => {
 };
 
 export const AddItemsSAFE = () => {
-
 	// store all the cards as state
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
