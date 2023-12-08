@@ -3,7 +3,7 @@ import { Button, Form, Image, Input, Space, message } from "antd";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { TLorcanaCard } from "../types/lorcana.types";
-import { TCardCache } from "./AddItems";
+import { TCardCache } from "../pages/addItems/AddItems";
 
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { SingleCardInput } from "./SingleCardInput";
