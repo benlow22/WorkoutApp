@@ -1,6 +1,6 @@
 import { Button, Card, Form, Input, InputNumber, Select, Switch } from "antd";
 import { useEffect, useState } from "react";
-import { ProductTypes, SetName, TLorcanaCard } from "../../types/lorcana.types";
+import { ProductTypes, TLorcanaCard } from "../../types/lorcana.types";
 import { supabase } from "../../../../../supabase/supabaseClient";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
