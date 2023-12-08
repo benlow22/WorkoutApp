@@ -4,7 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
 import { useEffect, useState } from "react";
 import { BoosterPack } from "./BoosterPack";
-import { TCardCache } from "../pages/addItems/AddItems";
+import { TCardCache } from "./AddItems";
+
 
 type TProps = {
 	imageUrl: string;
