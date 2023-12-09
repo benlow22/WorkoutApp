@@ -287,6 +287,7 @@ export const AddItems = () => {
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
+
 				<Form.Item>
 					<Button type="primary" htmlType="submit">
 						{productsQuantity.length < 1 ? "Next" : "Update"}

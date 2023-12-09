@@ -11,17 +11,45 @@ import { SaveFilled } from "@ant-design/icons";
 import { useRequest } from "../../../../../hooks/useRequest";
 import { getAllLorcanaCardsAPI } from "../../api";
 
-// export type TCardStatus = {
-// 	[cardname: string]: {
-// 		quantity: number;
-// 		"foil-quanity": number;
-// 		wishlist: boolean;
-// 		"foil-wishlist": boolean;
-// 	};
-// };
+export type TCardRef = {
+	cardNumber: number;
+	isFoil: boolean;
+	wave: number;
+	userId: string;
+	quantity: number;
+};
 
 export const Inventory = () => {
 	const { auth, userId, session, supabase } = useContext(AuthContext);
+	const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
+	const getAllUsersCards = async () => {
+		let { data, error } = await supabase.from("lorcana_users_cards_and_quantity").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) ");
+		if (data) {
+			console.log(data);
+			setUsersCards(data);
+		} else {
+			console.error(error);
+		}
+		// let { data, error } = await supabase.from("lorcana_user_cards").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id", { count: "exact" });
+		// if (data) {
+		// 	console.log(data);
+		// 	setUsersCards(data);
+		// } else {
+		// 	console.error(error);
+		// }
+	};
 
-	return <></>;
+	useEffect(() => {
+		getAllUsersCards();
+	}, []);
+	return (
+		<>
+			<h1>cards</h1>
+			{usersCards.map((card) => (
+				<h2>
+					{card.cardNumber} x {card.quantity}
+				</h2>
+			))}
+		</>
+	);
 };
