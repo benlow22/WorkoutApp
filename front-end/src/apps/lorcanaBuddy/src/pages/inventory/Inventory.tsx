@@ -24,19 +24,14 @@ export const Inventory = () => {
 	const getAllUsersCards = async () => {
 		let { data, error } = await supabase.from("lorcana_users_cards_and_quantity").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) ");
 		if (data) {
-			console.log(data);
+			console.log("users cards", data);
+			// let usersCardCache = {};
+			// for (let i = 0; i < data.length; i++) {
+			// 	const cardId = data[i]["id"];
+			// 	usersCardCache[cardId][] = ;
+			// }
 			// @ts-expect-error does not get type for the join
 			setUsersCards(data);
-		} else {
-			console.error(error);
-		}
-	};
-
-	const getAllCards = async () => {
-		let { data, error } = await supabase.from("lorcana_cards").select("id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, wave, artist, imageUrl: image,setId:set_id ");
-		if (data) {
-			console.log("all cards", data);
-			setAllCardsArr(data);
 		} else {
 			console.error(error);
 		}
@@ -51,7 +46,6 @@ export const Inventory = () => {
 
 	useEffect(() => {
 		getAllUsersCards();
-		getAllCards();
 	}, []);
 
 	useEffect(() => {}, [, usersCards]);
@@ -59,8 +53,8 @@ export const Inventory = () => {
 	return (
 		<>
 			<h1>cards</h1>
-			{viewType === "grid" && <GridCardDisplay allCards={allCardArr} usersCards={usersCards} />}
 			<Select defaultValue="icons" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
+			{viewType === "grid" && <GridCardDisplay />}
 			{viewType === "icons" && usersCards.map((card) => <InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />)}
 		</>
 	);
