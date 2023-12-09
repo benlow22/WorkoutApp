@@ -54,7 +54,7 @@ export const Inventory = () => {
 		<>
 			<h1>cards</h1>
 			<Select defaultValue="icons" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
-			{viewType === "grid" && <GridCardDisplay />}
+			{viewType === "grid" && <GridCardDisplay usersCards={usersCards} />}
 			{viewType === "icons" && usersCards.map((card) => <InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />)}
 		</>
 	);
