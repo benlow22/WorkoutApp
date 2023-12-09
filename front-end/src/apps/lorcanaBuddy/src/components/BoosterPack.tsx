@@ -13,8 +13,9 @@ type TProps = {
 	number: number;
 	advanced: boolean;
 	allCards: TCardCache;
+	receiptProductId: string;
 };
-export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
+export const BoosterPack = ({ wave, number, advanced, allCards, receiptProductId }: TProps) => {
 	const [boosterPackFormDisabled, setBoosterPackFormDisabled] = useState<boolean>(false);
 	const [messageApi, contextHolder] = message.useMessage();
 	const success = () => {
@@ -51,10 +52,7 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 		}
 	};
 	return (
-		<Form
-			onFinish={(values) => onFinish(values)}
-			disabled={boosterPackFormDisabled}
-		>
+		<Form onFinish={(values) => onFinish(values)} disabled={boosterPackFormDisabled}>
 			{contextHolder}
 
 			<Form.Item
@@ -68,100 +66,37 @@ export const BoosterPack = ({ wave, number, advanced, allCards }: TProps) => {
 				}}
 				labelCol={{ span: 1 }}
 			>
-				<Form.Item
-					name={["boosterPack", "id"]}
-					hidden={true}
-				>
+				<Form.Item name={["boosterPack", "id"]} hidden={true}>
 					<Input value={"1234134321341"}></Input>
 				</Form.Item>
 				<Space>
-					<Form.Item
-						name={["boosterPack", "coverCharacter"]}
-						label="Cover Character"
-						hidden={true}
-					>
+					<Form.Item name={["boosterPack", "coverCharacter"]} label="Cover Character" hidden={true}>
 						<Input />
 					</Form.Item>
-					<Form.Item
-						name={["boosterPack", "code"]}
-						label="Code"
-						hidden={true}
-					>
+					<Form.Item name={["boosterPack", "code"]} label="Code" hidden={true}>
 						<Input />
 					</Form.Item>
 				</Space>
 
 				<Space className="booster-pack-12-cards">
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={1}
-					/>
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={2}
-					/>
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={3}
-					/>
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={4}
-					/>
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={5}
-					/>
-					<SingleCardInput
-						rarities={["common"]}
-						wave={wave}
-						index={6}
-					/>
-					<SingleCardInput
-						rarities={["uncommon"]}
-						wave={wave}
-						index={7}
-					/>
-					<SingleCardInput
-						rarities={["uncommon"]}
-						wave={wave}
-						index={8}
-					/>
-					<SingleCardInput
-						rarities={["uncommon"]}
-						wave={wave}
-						index={9}
-					/>
-					<SingleCardInput
-						rarities={["rare", "superRare", "legendary"]}
-						wave={wave}
-						index={10}
-					/>
-					<SingleCardInput
-						rarities={["rare", "superRare", "legendary"]}
-						wave={wave}
-						index={11}
-					/>
-					<SingleCardInput
-						rarities={["foil", "enchanted"]}
-						wave={wave}
-						isFoil={true}
-						index={12}
-					/>
+					<SingleCardInput rarities={["common"]} wave={wave} index={1} />
+					<SingleCardInput rarities={["common"]} wave={wave} index={2} />
+					<SingleCardInput rarities={["common"]} wave={wave} index={3} />
+					<SingleCardInput rarities={["common"]} wave={wave} index={4} />
+					<SingleCardInput rarities={["common"]} wave={wave} index={5} />
+					<SingleCardInput rarities={["common"]} wave={wave} index={6} />
+					<SingleCardInput rarities={["uncommon"]} wave={wave} index={7} />
+					<SingleCardInput rarities={["uncommon"]} wave={wave} index={8} />
+					<SingleCardInput rarities={["uncommon"]} wave={wave} index={9} />
+					<SingleCardInput rarities={["rare", "superRare", "legendary"]} wave={wave} index={10} />
+					<SingleCardInput rarities={["rare", "superRare", "legendary"]} wave={wave} index={11} />
+					<SingleCardInput rarities={["foil", "enchanted"]} wave={wave} isFoil={true} index={12} />
 					<Form.Item
 						style={{
 							paddingTop: "45px",
 						}}
 					>
-						<Button
-							type="primary"
-							htmlType="submit"
-						>
+						<Button type="primary" htmlType="submit">
 							Submit
 						</Button>
 					</Form.Item>

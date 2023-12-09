@@ -14,9 +14,10 @@ type TProps = {
 	number: number;
 	advanced: boolean;
 	allCards: TCardCache;
+	receiptProductId: string;
 };
 
-export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) => {
+export const ProductCard = ({ type, wave, number, advanced, allCards, receiptProductId }: TProps) => {
 	const [guaranteedCards, setGuaranteedCards] = useState<TLorcanaCard[]>();
 	const [numberOfBoosterPacks, setNumberOfBoosterPacks] = useState<number>(0);
 	const [boosterSection, setBoosterSection] = useState<any>();
@@ -53,15 +54,7 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 			console.log("type", type.valueOf());
 		}
 		for (let i = 0; i < numberOfBoosterPacks; i++) {
-			boosterPackArr.push(
-				<BoosterPack
-					wave={wave}
-					number={i}
-					key={`${type}-${number}-${i}`}
-					advanced={advanced}
-					allCards={allCards}
-				/>
-			);
+			boosterPackArr.push(<BoosterPack wave={wave} number={i} key={`${type}-${number}-${i}`} receiptProductId={receiptProductId} advanced={advanced} allCards={allCards} />);
 		}
 		setBoosterSection(boosterPackArr);
 	};
@@ -71,13 +64,13 @@ export const ProductCard = ({ type, wave, number, advanced, allCards }: TProps) 
 	}, [numberOfBoosterPacks]);
 
 	// @ts-expect-error A const enum member can only be accessed using a string literal.ts(2476)
-	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]}`;
+	const title = `${ProductTypes[type]} #${number} : ${SetName[wave]} ${receiptProductId}`;
 
 	return (
 		<div style={{ width: "800px", margin: "auto" }}>
 			<h1>{title}</h1>
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
-			{ProductTypes["Booster Pack"] !== type ? ProductTypes["Custom Deck"] !== type ? <h2>Booster Packs</h2> : <DeckInput wave={wave} /> : ""}
+			{ProductTypes["Booster Pack"] !== type ? ProductTypes["Custom Deck"] !== type ? <h2>Booster Packs</h2> : <DeckInput wave={wave} receiptProductId={receiptProductId} /> : ""}
 			{boosterSection}
 			<div className="just-cards"></div>
 		</div>

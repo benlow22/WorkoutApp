@@ -1,9 +1,10 @@
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Form, FormListFieldData, Input, InputRef, Switch } from "antd";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
 import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
+import { AuthContext } from "../../../../contexts/AuthProvider";
 
 type TProps = {
 	field: FormListFieldData;
@@ -15,6 +16,8 @@ type TProps = {
 };
 
 export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
+	const { auth, userId } = useContext(AuthContext);
+
 	const [imageUrl, setImageUrl] = useState<string>("");
 	const [cardInput, setCardInput] = useState<string>("");
 
@@ -55,24 +58,12 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	}, [currentCardIndex, inputRef]);
 
 	return (
-		<Form.Item
-			required={false}
-			style={{ display: "flex", justifyContent: "center", marginBottom: "0px", marginTop: "10px", width: "125px" }}
-			className="deck-card"
-			name={field.key}
-		>
+		<Form.Item required={false} style={{ display: "flex", justifyContent: "center", marginBottom: "0px", marginTop: "10px", width: "125px" }} className="deck-card" name={field.key}>
 			<>
-				<SmallCardImageAboveInput
-					imageUrl={imageUrl}
-					imageWidth="100px"
-				/>
+				<SmallCardImageAboveInput imageUrl={imageUrl} imageWidth="100px" />
 
 				<div style={{ padding: "0px" }}>
-					<Form.Item
-						validateTrigger={["onChange", "onBlur"]}
-						noStyle
-						name={[field.key, "card number"]}
-					>
+					<Form.Item validateTrigger={["onChange", "onBlur"]} noStyle name={[field.key, "cardNumber"]}>
 						<Input
 							key={index}
 							placeholder="Card #"
@@ -86,25 +77,18 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 							value={cardInput}
 						/>
 					</Form.Item>
-					<Form.Item
-						style={{ width: "100px", marginBottom: "0px" }}
-						name={[field.key, "isFoil"]}
-						initialValue={false}
-					>
-						<Switch
-							checkedChildren="foil"
-							unCheckedChildren="non-foil"
-							onClick={() => setIsFoil(!isFoil)}
-						/>
+					<Form.Item style={{ width: "100px", marginBottom: "0px" }} name={[field.key, "isFoil"]} initialValue={false}>
+						<Switch checkedChildren="foil" unCheckedChildren="non-foil" onClick={() => setIsFoil(!isFoil)} />
 					</Form.Item>
 
-					<Form.Item
-						hidden={true}
-						name={[field.key, "wave"]}
-						initialValue={wave}
-					>
+					<Form.Item hidden={true} name={[field.key, "wave"]} initialValue={wave}>
 						<Input />
 					</Form.Item>
+					{auth && (
+						<Form.Item hidden={true} name={[field.key, "user_id"]} initialValue={userId}>
+							<Input />
+						</Form.Item>
+					)}
 				</div>
 			</>
 		</Form.Item>

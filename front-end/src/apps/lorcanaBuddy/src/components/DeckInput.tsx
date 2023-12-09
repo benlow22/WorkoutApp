@@ -1,22 +1,45 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Space } from "antd";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
+import { AuthContext } from "../../../../contexts/AuthProvider";
+import { supabase } from "../../../../supabase/supabaseClient";
 
 type TProps = {
 	isFoil?: boolean;
 	rarities?: string[];
 	wave: number;
 	index?: number;
+	receiptProductId: string;
 };
 
-export const DeckInput = ({ wave }: TProps) => {
+export const DeckInput = ({ wave, receiptProductId }: TProps) => {
+	const { auth, userId } = useContext(AuthContext);
+
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 	const [cardImageUrl, setCardImageUrl] = useState<string>("");
 
 	const onFinish = (values: any) => {
+		if (auth) {
+			values.cards.map((card: any) => {
+				const uploadCardToSupabase = async () => {
+					const { data, error } = await supabase
+						.from("lorcana_user_cards")
+						.insert([{ user_id: userId, is_foil: card.isFoil, card_number: card.cardNumber, wave: wave, card_id: `${wave}-${card.cardNumber}` }])
+						.select();
+					if (error) {
+						console.error(error);
+					} else {
+						console.log("datamade it uploaded", data);
+					}
+				};
+				uploadCardToSupabase();
+			});
+		}
+		values.receipt_product_id = receiptProductId;
+
 		console.log("Deck Input onFINISH:", values);
 	};
 
@@ -63,28 +86,15 @@ export const DeckInput = ({ wave }: TProps) => {
 	return (
 		<div>
 			{/* <h1>Set {wave}</h1> */}
-			<Form
-				name="dynamic_form_item"
-				{...formItemLayoutWithOutLabel}
-				onFinish={onFinish}
-				style={{ maxWidth: "800px", margin: "auto" }}
-				id="deckForm"
-			>
-				<Form.List name={"Cards"}>
+			<Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} style={{ maxWidth: "800px", margin: "auto" }} id="deckForm">
+				<Form.List name={"cards"}>
 					{(fields, { add, remove }, { errors }) => (
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
 										<div key={index}>
-											<DeckCardInput
-												wave={wave}
-												field={field}
-												index={index}
-												remove={remove}
-												setCurrentCardIndex={setCurrentCardIndex}
-												currentCardIndex={currentCardIndex}
-											/>
+											<DeckCardInput wave={wave} field={field} index={index} remove={remove} setCurrentCardIndex={setCurrentCardIndex} currentCardIndex={currentCardIndex} />
 
 											<MinusCircleOutlined
 												className="dynamic-delete-button"
@@ -117,10 +127,7 @@ export const DeckInput = ({ wave }: TProps) => {
 					)}
 				</Form.List>
 				<Form.Item>
-					<Button
-						type="primary"
-						htmlType="submit"
-					>
+					<Button type="primary" htmlType="submit">
 						Submit
 					</Button>
 				</Form.Item>

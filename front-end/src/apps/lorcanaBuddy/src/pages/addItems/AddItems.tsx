@@ -64,14 +64,18 @@ const formItemLayoutWithOutLabel = {
 	},
 };
 
+type TReceiptProduct = { receipt_product_id: string; receipt_id: string; wave: number; product_id: number };
+
 export const AddItems = () => {
 	// store all the cards as state
+	const [products, setProducts] = useState<TReceiptProduct[]>([]);
+	const [productIds, setProductIds] = useState<number[]>([]);
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
-	const [receiptData, setReceiptData] = useState<any>(uuidv4());
+	const [receiptId, setReceiptId] = useState<any>(uuidv4());
 	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
-
-	const receiptId = uuidv4();
+	const [paidBy, setPaidBy] = useState<boolean>(true);
+	// const receiptId = uuidv4();
 	// get all cards from supabase
 	useEffect(() => {
 		async function fetchAllCards() {
@@ -84,6 +88,7 @@ export const AddItems = () => {
 		}
 		fetchAllCards();
 	}, []);
+
 	// component for each Type of purchase!!! starting with booster packs
 
 	/* Form
@@ -102,6 +107,8 @@ export const AddItems = () => {
 			date: dayjs(new Date()),
 			products: [{}],
 			advancedInput: false,
+			paid_off: true,
+			currency: "CAD",
 		},
 	}; // location
 	const [regionName, setRegionName] = useState<string>("province");
@@ -113,34 +120,37 @@ export const AddItems = () => {
 
 	// display booster packs
 	const [productsQuantity, setProductsQuantity] = useState<TBoughtProducts[]>([]);
-
+	const productsInputToProductArr = (prodArr: number[]) => {
+		// prodArr example = [{type:1, quantity:2, wave:1}]
+		const productArray = prodArr.map((product) => {});
+	};
 	const createArrayOfProductCards = (productsQuantity: TBoughtProducts[]) => {
 		let productCardArr: JSX.Element[] = new Array();
+		let productObjectArr: TReceiptProduct[] = [];
+		let productIdArr: number[] = [];
 		productsQuantity.map((product: TBoughtProducts) => {
 			for (let i = 1; i < product.quantity + 1; i++) {
-				productCardArr.push(
-					<ProductCard
-						type={product.type}
-						wave={product.wave}
-						number={i}
-						key={`${product.type}-${i}`}
-						advanced={advancedInput}
-						allCards={allCards}
-					/>
-				);
+				productIdArr.push(product.type);
+				const receiptProductId: string = uuidv4();
+				productCardArr.push(<ProductCard type={product.type} wave={product.wave} number={i} key={`${product.type}-${i}`} advanced={advancedInput} allCards={allCards} receiptProductId={receiptProductId} />);
+				const productObject = { receipt_product_id: receiptProductId, receipt_id: receiptId, wave: product.wave, product_id: product.type };
+				productObjectArr.push(productObject);
 			}
 		});
+		setProductIds(productIdArr);
 		setProductCardSection(productCardArr);
+		setProducts(productObjectArr);
+		console.log("PRODUCTS ARR", productObjectArr);
 	};
 
 	// Submitting function
 	const onFinish = (values: any) => {
+		values.productIds = productIds;
+		values.products = products;
+		values.receipt.id = receiptId;
 		console.log("PRODUCTS", values);
 		setShowSecondHalf(true);
 		setProductsQuantity(values.receipt.products);
-		// setReceiptData({
-		// 	id: receiptId,
-		// });
 	};
 
 	useEffect(() => {
@@ -161,92 +171,50 @@ export const AddItems = () => {
 				}}
 				initialValues={data}
 			>
-				{/* 
-				Create receipt id once everything is done
-				<Form.Item<string>
-					name={["receipt", "id"]}
-					label="Receipt"
-				>
-					<Input
-						placeholder={receiptId}
-						value={receiptId}
-					/>
-				</Form.Item> */}
-				<Form.Item
-					name={["receipt", "date"]}
-					label="Date"
-				>
+				<Form.Item name={["receipt", "date"]} label="Date">
 					<DatePicker format={dateFormat} />
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "advancedInput"]}
-					label="Advanced Settings"
-				>
-					<Switch
-						onClick={() => setAdvancedInput(!advancedInput)}
-						defaultChecked={false}
-						checked={advancedInput}
-					/>
+				<Form.Item name={["receipt", "advancedInput"]} label="Advanced Settings">
+					<Switch onClick={() => setAdvancedInput(!advancedInput)} defaultChecked={false} checked={advancedInput} />
 				</Form.Item>
 				<Form.Item label="Location">
 					<div>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "store"]}
-						>
-							<Input
-								placeholder="Store"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "store"]}>
+							<Input placeholder="Store" style={locationInput} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "street"]}
-						>
-							<Input
-								placeholder="Street"
-								style={{ width: "150px" }}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "street"]}>
+							<Input placeholder="Street" style={{ width: "150px" }} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "city"]}
-						>
-							<Input
-								placeholder="City"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "city"]}>
+							<Input placeholder="City" style={locationInput} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", regionName]}
-						>
-							<Input
-								placeholder="state"
-								style={{ width: "50px" }}
-							/>
+						<Form.Item noStyle name={["receipt", "location", regionName]}>
+							<Input placeholder="state" style={{ width: "50px" }} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "country"]}
-						>
-							<Input
-								placeholder="Country"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "country"]}>
+							<Input placeholder="Country" style={locationInput} />
 						</Form.Item>
 					</div>
 				</Form.Item>
-
-				<Form.Item
-					name={["receipt", "price"]}
-					label="Paid Price"
-				>
-					<InputNumber
-						placeholder="$$$"
+				<Form.Item name={["receipt", "price"]} label="Paid Price">
+					<InputNumber placeholder="$$$" style={{ width: "100px" }} min={0} />
+				</Form.Item>
+				<Form.Item name={["receipt", "currency"]} label="Currency">
+					<Select
+						placeholder="CAD"
 						style={{ width: "100px" }}
-						min={0}
+						options={[
+							{ value: "CAD", label: "CAD" },
+							{ value: "USD", label: "USD" },
+							{ value: "JPY", label: "JPY" },
+						]}
 					/>
+				</Form.Item>
+				<Form.Item name={["receipt", "paid_by"]} label="Paid By">
+					<Input placeholder="who" style={{ width: "100px" }} min={0} />
+				</Form.Item>
+				<Form.Item name={["receipt", "paid_off"]} label="Paid Off">
+					<Switch checkedChildren="Paid" defaultChecked unCheckedChildren="Unpaid" style={{ width: "100px" }} />
 				</Form.Item>
 				<Form.Item label="Products">
 					<Form.List name={["receipt", "products"]}>
@@ -272,11 +240,7 @@ export const AddItems = () => {
 											]}
 											id="1"
 										>
-											<Select
-												options={productTypes}
-												style={{ width: "150px" }}
-												placeholder="Booster Pack"
-											/>
+											<Select options={productTypes} style={{ width: "150px" }} placeholder="Booster Pack" />
 										</Form.Item>
 										<Form.Item
 											rules={[
@@ -289,11 +253,7 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "quantity"]}
 										>
-											<InputNumber
-												placeholder="Quantity"
-												min={1}
-												style={{ width: "80px" }}
-											/>
+											<InputNumber placeholder="Quantity" min={1} style={{ width: "80px" }} />
 										</Form.Item>
 										<Form.Item
 											id="3"
@@ -306,11 +266,7 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "wave"]}
 										>
-											<Select
-												placeholder="Wave"
-												options={waveNames}
-												style={{ width: "200px" }}
-											/>
+											<Select placeholder="Wave" options={waveNames} style={{ width: "200px" }} />
 										</Form.Item>
 										<CloseOutlined
 											onClick={() => {
@@ -320,27 +276,20 @@ export const AddItems = () => {
 										/>
 									</Space>
 								))}
-								<Button
-									type="dashed"
-									onClick={() => subOpt.add()}
-									block
-								>
+								<Button type="dashed" onClick={() => subOpt.add()} block>
 									+ Add Product
 								</Button>
 							</div>
 						)}
 					</Form.List>
 				</Form.Item>
-
 				{/* <BoosterPack
 						boosterPackId="12873461239"
 						number={1}
 					></BoosterPack> */}
+
 				<Form.Item>
-					<Button
-						type="primary"
-						htmlType="submit"
-					>
+					<Button type="primary" htmlType="submit">
 						{productsQuantity.length < 1 ? "Next" : "Update"}
 					</Button>
 				</Form.Item>
