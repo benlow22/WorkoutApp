@@ -72,10 +72,10 @@ export const AddItems = () => {
 	const [productIds, setProductIds] = useState<string[]>([]);
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
-	const [receiptData, setReceiptData] = useState<any>(uuidv4());
+	const [receiptId, setReceiptId] = useState<any>(uuidv4());
 	const [advancedInput, setAdvancedInput] = useState<boolean>(false);
 	const [paidBy, setPaidBy] = useState<boolean>(true);
-	const receiptId = uuidv4();
+	// const receiptId = uuidv4();
 	// get all cards from supabase
 	useEffect(() => {
 		async function fetchAllCards() {
@@ -143,12 +143,10 @@ export const AddItems = () => {
 	// Submitting function
 	const onFinish = (values: any) => {
 		values.products = products;
+		values.receipt.id = receiptId;
 		console.log("PRODUCTS", values);
 		setShowSecondHalf(true);
 		setProductsQuantity(values.receipt.products);
-		setReceiptData({
-			id: receiptId,
-		});
 	};
 
 	useEffect(() => {

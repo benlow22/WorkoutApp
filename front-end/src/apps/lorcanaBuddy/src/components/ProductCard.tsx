@@ -70,7 +70,7 @@ export const ProductCard = ({ type, wave, number, advanced, allCards, receiptPro
 		<div style={{ width: "800px", margin: "auto" }}>
 			<h1>{title}</h1>
 			{guaranteedCards && <h2>Guaranteed Cards: </h2>}
-			{ProductTypes["Booster Pack"] !== type ? ProductTypes["Custom Deck"] !== type ? <h2>Booster Packs</h2> : <DeckInput wave={wave} /> : ""}
+			{ProductTypes["Booster Pack"] !== type ? ProductTypes["Custom Deck"] !== type ? <h2>Booster Packs</h2> : <DeckInput wave={wave} receiptProductId={receiptProductId} /> : ""}
 			{boosterSection}
 			<div className="just-cards"></div>
 		</div>

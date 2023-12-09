@@ -8,15 +8,18 @@ type TProps = {
 	rarities?: string[];
 	wave: number;
 	index?: number;
+	receiptProductId: string;
 };
 
-export const DeckInput = ({ wave }: TProps) => {
+export const DeckInput = ({ wave, receiptProductId }: TProps) => {
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 	const [cardImageUrl, setCardImageUrl] = useState<string>("");
 
 	const onFinish = (values: any) => {
+		values.receipt_product_id = receiptProductId;
+
 		console.log("Deck Input onFINISH:", values);
 	};
 
@@ -63,13 +66,7 @@ export const DeckInput = ({ wave }: TProps) => {
 	return (
 		<div>
 			{/* <h1>Set {wave}</h1> */}
-			<Form
-				name="dynamic_form_item"
-				{...formItemLayoutWithOutLabel}
-				onFinish={onFinish}
-				style={{ maxWidth: "800px", margin: "auto" }}
-				id="deckForm"
-			>
+			<Form name="dynamic_form_item" {...formItemLayoutWithOutLabel} onFinish={onFinish} style={{ maxWidth: "800px", margin: "auto" }} id="deckForm">
 				<Form.List name={"Cards"}>
 					{(fields, { add, remove }, { errors }) => (
 						<>
@@ -77,14 +74,7 @@ export const DeckInput = ({ wave }: TProps) => {
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
 										<div key={index}>
-											<DeckCardInput
-												wave={wave}
-												field={field}
-												index={index}
-												remove={remove}
-												setCurrentCardIndex={setCurrentCardIndex}
-												currentCardIndex={currentCardIndex}
-											/>
+											<DeckCardInput wave={wave} field={field} index={index} remove={remove} setCurrentCardIndex={setCurrentCardIndex} currentCardIndex={currentCardIndex} />
 
 											<MinusCircleOutlined
 												className="dynamic-delete-button"
@@ -117,10 +107,7 @@ export const DeckInput = ({ wave }: TProps) => {
 					)}
 				</Form.List>
 				<Form.Item>
-					<Button
-						type="primary"
-						htmlType="submit"
-					>
+					<Button type="primary" htmlType="submit">
 						Submit
 					</Button>
 				</Form.Item>
