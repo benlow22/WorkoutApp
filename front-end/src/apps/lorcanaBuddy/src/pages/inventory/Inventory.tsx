@@ -6,6 +6,7 @@ import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
 import { TLorcanaCard } from "../../types/lorcana.types";
 import "./../../styles/index.css";
 
+
 export type TCardRef = {
 	cardNumber: number;
 	isFoil: boolean;
@@ -30,11 +31,19 @@ export const Inventory = () => {
 			// 	const cardId = data[i]["id"];
 			// 	usersCardCache[cardId][] = ;
 			// }
+
 			// @ts-expect-error does not get type for the join
 			setUsersCards(data);
 		} else {
 			console.error(error);
 		}
+		// let { data, error } = await supabase.from("lorcana_user_cards").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id", { count: "exact" });
+		// if (data) {
+		// 	console.log(data);
+		// 	setUsersCards(data);
+		// } else {
+		// 	console.error(error);
+		// }
 	};
 
 	const viewTypeOptions = [
@@ -56,6 +65,7 @@ export const Inventory = () => {
 			<Select defaultValue="icons" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
 			{viewType === "grid" && <GridCardDisplay usersCards={usersCards} />}
 			{viewType === "icons" && usersCards.map((card) => <InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />)}
+
 		</>
 	);
 };

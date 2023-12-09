@@ -1,3 +1,4 @@
+
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 
 type TProps = {
