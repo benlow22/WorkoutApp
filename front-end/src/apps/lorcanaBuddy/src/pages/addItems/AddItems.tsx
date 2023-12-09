@@ -1,15 +1,12 @@
-import { Button, Card, Form, Input, InputNumber, Select, Switch } from "antd";
-import { useEffect, useState } from "react";
-import { ProductTypes, TLorcanaCard } from "../../types/lorcana.types";
-import { supabase } from "../../../../../supabase/supabaseClient";
+import { CloseOutlined } from "@ant-design/icons";
+import { Button, DatePicker, Form, Input, InputNumber, Select, Space, Switch } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DatePicker, Space } from "antd";
-import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { BoosterPack } from "../../components/BoosterPack";
-import { ProductCard } from "../../components/ProductCard";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { DeckInput } from "../../components/DeckInput";
+import { supabase } from "../../../../../supabase/supabaseClient";
+import { ProductCard } from "../../components/ProductCard";
+import { ProductTypes, TLorcanaCard } from "../../types/lorcana.types";
 
 const productTypes = [
 	{ value: 0, label: "Booster Pack" },

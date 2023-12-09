@@ -122,6 +122,22 @@
 	width: 100%;
 	justify-content: space-between;
 }
+
+.grid-card-display {
+	display: flex;
+	max-width: 1000px;
+	flex-wrap: wrap;
+	margin: auto;
+}
+.grid-card-item {
+	width: 100px;
+	margin: 10px;
+}
+
+.do-not-own {
+	opacity: 0.2;
+}
+
 @media only screen and (max-width: 830px) {
 	.booster-pack-12-cards.ant-space {
 		flex-wrap: wrap;

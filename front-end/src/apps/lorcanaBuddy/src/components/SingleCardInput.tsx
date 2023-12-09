@@ -1,9 +1,5 @@
-import { CloseOutlined } from "@ant-design/icons";
-import { Button, Form, Image, Input, Space } from "antd";
-import { v4 as uuidv4 } from "uuid";
-import { ProductTypes, SetName, TLorcanaCard } from "../types/lorcana.types";
+import { Form, Image, Input } from "antd";
 import { useEffect, useState } from "react";
-import { BoosterPack } from "./BoosterPack";
 import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
 
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
@@ -82,29 +78,12 @@ export const SingleCardInput = ({ rarities, isFoil, wave, index }: TProps) => {
 	};
 	return (
 		<>
-			<SmallCardImageAboveInput
-				imageUrl={imageUrl}
-				imageWidth="50px"
-			/>
-			<Form.Item
-				name={["boosterPack", "cards", `${index}`]}
-				style={{ textAlign: "center" }}
-			>
-				<Input
-					style={{ width: "50px", paddingBottom: "0px" }}
-					onChange={(e) => handleCardNumberInput(e)}
-					maxLength={3}
-					value={cardNumber}
-					className="card-number-input"
-				/>
+			<SmallCardImageAboveInput imageUrl={imageUrl} imageWidth="50px" />
+			<Form.Item name={["boosterPack", "cards", `${index}`]} style={{ textAlign: "center" }}>
+				<Input style={{ width: "50px", paddingBottom: "0px" }} onChange={(e) => handleCardNumberInput(e)} maxLength={3} value={cardNumber} className="card-number-input" />
 			</Form.Item>
 			{iconUrls.map((iconUrl, index) => (
-				<Image
-					src={iconUrl}
-					style={style}
-					preview={false}
-					key={index}
-				/>
+				<Image src={iconUrl} style={style} preview={false} key={index} />
 			))}
 		</>
 	);

@@ -1,16 +1,11 @@
-import { Outlet } from "react-router-dom";
-import React, { useContext, useEffect, useState } from "react";
+import { Select } from "antd";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
-import lorcanaMickey from "../../../../../images/lorcanaMickey.avif";
-import { getLorcanaCards } from "../../../../workoutBuddy/src/api/api";
-import lorcanaData from "./../../public/lorcanaCards.json";
-import { LorcanaCard } from "../../components/LorcanaCard";
-import "./../../styles/index.css";
-import { FloatButton, Tooltip, message } from "antd";
-import { SaveFilled } from "@ant-design/icons";
-import { useRequest } from "../../../../../hooks/useRequest";
-import { getAllLorcanaCardsAPI } from "../../api";
+import { GridCardDisplay } from "../../components/GridCardDisplay";
 import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
+import { TLorcanaCard } from "../../types/lorcana.types";
+import "./../../styles/index.css";
+
 
 export type TCardRef = {
 	cardNumber: number;
@@ -23,11 +18,20 @@ export type TCardRef = {
 
 export const Inventory = () => {
 	const { auth, userId, session, supabase } = useContext(AuthContext);
+	const [viewType, setViewType] = useState<string>("icons");
 	const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
+	const [allCardArr, setAllCardsArr] = useState<TLorcanaCard[]>([]);
+
 	const getAllUsersCards = async () => {
 		let { data, error } = await supabase.from("lorcana_users_cards_and_quantity").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) ");
 		if (data) {
-			console.log(data);
+			console.log("users cards", data);
+			// let usersCardCache = {};
+			// for (let i = 0; i < data.length; i++) {
+			// 	const cardId = data[i]["id"];
+			// 	usersCardCache[cardId][] = ;
+			// }
+
 			// @ts-expect-error does not get type for the join
 			setUsersCards(data);
 		} else {
@@ -42,15 +46,26 @@ export const Inventory = () => {
 		// }
 	};
 
+	const viewTypeOptions = [
+		{ value: "icons", label: "Icons" },
+		{ value: "list", label: "List" },
+		{ value: "grid", label: "Grid" },
+		{ value: "card", label: "Card", disabled: true },
+	];
+
 	useEffect(() => {
 		getAllUsersCards();
 	}, []);
+
+	useEffect(() => {}, [, usersCards]);
+
 	return (
 		<>
 			<h1>cards</h1>
-			{usersCards.map((card) => (
-				<InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />
-			))}
+			<Select defaultValue="icons" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
+			{viewType === "grid" && <GridCardDisplay usersCards={usersCards} />}
+			{viewType === "icons" && usersCards.map((card) => <InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />)}
+
 		</>
 	);
 };
