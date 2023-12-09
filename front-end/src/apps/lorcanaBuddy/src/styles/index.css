@@ -136,6 +136,10 @@
 .own-card {
 	opacity: 0.8;
 }
+
+.do-not-own {
+	opacity: 0.2;
+}
 @media only screen and (max-width: 830px) {
 	.booster-pack-12-cards.ant-space {
 		flex-wrap: wrap;

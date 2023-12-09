@@ -59,6 +59,7 @@ export const GridItem = ({ card, usersCards }: TProps) => {
 	}, [usersCards]);
 
 	useEffect(() => {
+		console.log("OWWWN", owned);
 		// if (cardsStats) {
 		// 	setOwned(true);
 		// 	const foilIndex = cardsStats.findIndex((stat) => stat.isFoil);
@@ -66,10 +67,10 @@ export const GridItem = ({ card, usersCards }: TProps) => {
 		// 	const nonFoilIndex = cardsStats.findIndex((stat) => stat.isFoil);
 		// 	setNonFoil(cardsStats[nonFoilIndex].quantity);
 		// }
-	}, [cardsStats]);
+	}, [nonFoil, foil]);
 
 	return (
-		<div className={`${owned ? "own-card" : "do-not-own"} grid-card-item `}>
+		<div className={`${owned ? "own-card" : "do-not-own"} grid-card-item`}>
 			<SmallCardImageAboveInput imageUrl={card.wave === 1 ? card.imageUrl.replace("large", "small") : card.imageUrl} imageWidth="100px" opacity={cardsStats ? "1" : "0.2"} />
 			<Space style={{ display: "flex", justifyContent: "space-between" }}>
 				<p style={{ fontSize: "10px" }}>#{card.cardNumber}</p>
