@@ -69,7 +69,7 @@ type TReceiptProduct = { receipt_product_id: string; receipt_id: string; wave: n
 export const AddItems = () => {
 	// store all the cards as state
 	const [products, setProducts] = useState<TReceiptProduct[]>([]);
-	const [productIds, setProductIds] = useState<string[]>([]);
+	const [productIds, setProductIds] = useState<number[]>([]);
 	const [allCards, setAllCards] = useState<TCardCache>({});
 	const [productCardSection, setProductCardSection] = useState<any>();
 	const [receiptId, setReceiptId] = useState<any>(uuidv4());
@@ -127,14 +127,17 @@ export const AddItems = () => {
 	const createArrayOfProductCards = (productsQuantity: TBoughtProducts[]) => {
 		let productCardArr: JSX.Element[] = new Array();
 		let productObjectArr: TReceiptProduct[] = [];
+		let productIdArr: number[] = [];
 		productsQuantity.map((product: TBoughtProducts) => {
 			for (let i = 1; i < product.quantity + 1; i++) {
+				productIdArr.push(product.type);
 				const receiptProductId: string = uuidv4();
 				productCardArr.push(<ProductCard type={product.type} wave={product.wave} number={i} key={`${product.type}-${i}`} advanced={advancedInput} allCards={allCards} receiptProductId={receiptProductId} />);
 				const productObject = { receipt_product_id: receiptProductId, receipt_id: receiptId, wave: product.wave, product_id: product.type };
 				productObjectArr.push(productObject);
 			}
 		});
+		setProductIds(productIdArr);
 		setProductCardSection(productCardArr);
 		setProducts(productObjectArr);
 		console.log("PRODUCTS ARR", productObjectArr);
@@ -142,6 +145,7 @@ export const AddItems = () => {
 
 	// Submitting function
 	const onFinish = (values: any) => {
+		values.productIds = productIds;
 		values.products = products;
 		values.receipt.id = receiptId;
 		console.log("PRODUCTS", values);
