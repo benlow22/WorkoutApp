@@ -33,10 +33,9 @@ export const Inventory = () => {
 	};
 
 	const getAllCards = async () => {
-		let { data, error } = await supabase.from("lorcana_cards").select("*");
+		let { data, error } = await supabase.from("lorcana_cards").select("id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, wave, artist, imageUrl: image,setId:set_id ");
 		if (data) {
 			console.log("all cards", data);
-			// @ts-expect-error does not get type for the join
 			setAllCardsArr(data);
 		} else {
 			console.error(error);

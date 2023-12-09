@@ -9,8 +9,7 @@ export const GridItem = ({ card }: TProps) => {
 	return (
 		<div className="grid-card-item">
 			<h1>grid CARD Item</h1>
-			<SmallCardImageAboveInput imageUrl={card.image} imageWidth="100px" />
-			<h3>{card.imageUrl}</h3>
+			<SmallCardImageAboveInput imageUrl={card.imageUrl} imageWidth="100px" />
 		</div>
 	);
 };
