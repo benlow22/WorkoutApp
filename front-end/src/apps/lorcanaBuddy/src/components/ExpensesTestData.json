@@ -1,0 +1,45 @@
+{
+	"Expenses": [
+		{
+			"location": {
+				"store": "gamestop",
+				"street": "12431 ",
+				"city": "surrey",
+				"state": "BC",
+				"Country": "Canada"
+			},
+			"price": 17.9,
+			"products": [
+				{
+					"type": "booster pack",
+					"id": "12933-123-141414",
+					"price": 7.99,
+					"character": "Raya",
+					"wave": 2
+				},
+				{
+					"type": "sleeves",
+					"id": "16366-123-15132132",
+					"price": 7.99,
+					"character": "Sisu",
+					"wave": 2
+				}
+			],
+			"date": "12-05-23"
+		}
+	],
+	"Sales": {
+		"location": "Ebay",
+		"Product(s)": [
+			{
+				"type": "booster pack",
+				"id": "12933-123-141414",
+				"price": 7.99,
+				"character": "Raya",
+				"wave": 2
+			}
+		],
+		"Sold price": 12.0,
+		"date": "01-06-24"
+	}
+}
