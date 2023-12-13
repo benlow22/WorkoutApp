@@ -6,7 +6,6 @@ import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
 import { TLorcanaCard } from "../../types/lorcana.types";
 import "./../../styles/index.css";
 
-
 export type TCardRef = {
 	cardNumber: number;
 	isFoil: boolean;
@@ -23,7 +22,13 @@ export const Inventory = () => {
 	const [allCardArr, setAllCardsArr] = useState<TLorcanaCard[]>([]);
 
 	const getAllUsersCards = async () => {
-		let { data, error } = await supabase.from("lorcana_users_cards_and_quantity").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) ");
+		let { data, error } = await supabase
+			.from("lorcana_users_cards_and_quantity")
+			.select(
+				"cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) "
+			)
+			.eq("user_id", userId);
+		console.log("userID", userId);
 		if (data) {
 			console.log("users cards", data);
 			// let usersCardCache = {};
@@ -62,10 +67,23 @@ export const Inventory = () => {
 	return (
 		<>
 			<h1>cards</h1>
-			<Select defaultValue="icons" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
+			<Select
+				defaultValue="icons"
+				style={{ width: 120 }}
+				onSelect={(value) => setViewType(value)}
+				options={viewTypeOptions}
+			/>
 			{viewType === "grid" && <GridCardDisplay usersCards={usersCards} />}
-			{viewType === "icons" && usersCards.map((card) => <InventoryCardDisplay quantity={card.quantity} imageUrl={card.image} cardNumber={card.cardNumber} isFoil={card.isFoil} wave={card.wave} />)}
-
+			{viewType === "icons" &&
+				usersCards.map((card) => (
+					<InventoryCardDisplay
+						quantity={card.quantity}
+						imageUrl={card.image}
+						cardNumber={card.cardNumber}
+						isFoil={card.isFoil}
+						wave={card.wave}
+					/>
+				))}
 		</>
 	);
 };
