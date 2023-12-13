@@ -58,7 +58,9 @@ export const GridCardDisplay = ({ usersCards }: TProps) => {
 	return (
 		<div className="grid-card-display">
 			{allCardAndUserCardInfo &&
-				allCardAndUserCardInfo.map((card) => <GridItem card={card} />)}
+				allCardAndUserCardInfo.map((card) => (
+					<GridItem card={card} key={`gridItem-${card.id}`} />
+				))}
 			<h1>hi</h1>
 		</div>
 	);
