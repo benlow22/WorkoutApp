@@ -1,23 +1,18 @@
-
+import { TCardRef } from "../pages/inventory/Inventory";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 
-type TProps = {
-	quantity: number;
-	imageUrl: string;
-	cardNumber: number;
-	isFoil: boolean;
-	wave: number;
-};
-
-export const InventoryCardDisplay = ({ cardNumber, quantity, imageUrl, isFoil, wave }: TProps) => {
-	const updatedUrl = isFoil && wave === 1 ? imageUrl.replace("large", "foil") : imageUrl.replace("large", "small");
+export const InventoryCardDisplay = ({ cardNumber, nonfoil, image, foil, wave }: TCardRef) => {
+	const updatedUrl =
+		foil && wave === 1 ? image.replace("large", "foil") : image.replace("large", "small");
+	const totalCards = foil + nonfoil;
 	return (
 		<div className="inventory-card-display">
 			<SmallCardImageAboveInput imageUrl={updatedUrl} imageWidth="75px" />
 			<div className="card-info">
 				<h4>Card Number : {cardNumber}</h4>
-				<h5>Quantity = {quantity}</h5>
-				{quantity > 4 && <h5>Extra = {quantity - 4}</h5>}
+				<h5>foil = {foil}</h5>
+				<h5>nonfoil = {nonfoil}</h5>
+				{totalCards > 4 && <h5>Extra = {totalCards - 4}</h5>}
 			</div>
 		</div>
 	);

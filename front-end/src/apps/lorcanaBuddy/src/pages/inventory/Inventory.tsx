@@ -8,10 +8,10 @@ import "./../../styles/index.css";
 
 export type TCardRef = {
 	cardNumber: number;
-	isFoil: boolean;
+	foil: number;
+	nonfoil: number;
 	wave: number;
-	userId: string;
-	quantity: number;
+	userId?: string;
 	image: string;
 };
 
@@ -29,12 +29,6 @@ export const Inventory = () => {
 		console.log("userID", userId);
 		if (data) {
 			console.log("users cards", data);
-			// let usersCardCache = {};
-			// for (let i = 0; i < data.length; i++) {
-			// 	const cardId = data[i]["id"];
-			// 	usersCardCache[cardId][] = ;
-			// }
-
 			// @ts-expect-error does not get type for the join
 			setUsersCards(data);
 		} else {
@@ -75,10 +69,10 @@ export const Inventory = () => {
 			{viewType === "icons" &&
 				usersCards.map((card) => (
 					<InventoryCardDisplay
-						quantity={card.quantity}
-						imageUrl={card.image}
+						nonfoil={card.nonfoil}
+						image={card.image}
 						cardNumber={card.cardNumber}
-						isFoil={card.isFoil}
+						foil={card.foil}
 						wave={card.wave}
 					/>
 				))}
