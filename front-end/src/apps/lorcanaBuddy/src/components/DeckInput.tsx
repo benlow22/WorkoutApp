@@ -41,7 +41,7 @@ export const DeckInput = ({ wave, receiptProductId }: TProps) => {
 						console.error(error);
 					} else {
 						console.log("datamade it uploaded", data);
-						alert("UPLOAD SUCCESS REFRESH PAGE");
+						confirm("UPLOAD SUCCESS REFRESH PAGE");
 					}
 				};
 				uploadCardToSupabase();

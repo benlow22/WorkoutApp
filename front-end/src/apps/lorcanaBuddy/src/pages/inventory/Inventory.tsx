@@ -9,7 +9,7 @@ import "./../../styles/index.css";
 export type TCardRef = {
 	cardNumber: number;
 	foil: number;
-	nonfoil: number;
+	nonFoil: number;
 	wave: number;
 	userId?: string;
 	image: string;
@@ -24,7 +24,7 @@ export const Inventory = () => {
 	const getAllUsersCards = async () => {
 		let { data, error } = await supabase
 			.from("lorcana_get_users_cards_with_foil_count")
-			.select("nonfoil, foil, wave, userId: user_id, ...card_id(*) ")
+			.select("nonFoil: nonfoil , foil, wave, userId: user_id, ...card_id(*) ")
 			.eq("user_id", userId);
 		console.log("userID", userId);
 		if (data) {
@@ -69,7 +69,7 @@ export const Inventory = () => {
 			{viewType === "icons" &&
 				usersCards.map((card) => (
 					<InventoryCardDisplay
-						nonfoil={card.nonfoil}
+						nonFoil={card.nonFoil}
 						image={card.image}
 						cardNumber={card.cardNumber}
 						foil={card.foil}
