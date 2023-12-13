@@ -1,9 +1,20 @@
 import { TCardRef } from "../pages/inventory/Inventory";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 
-export const InventoryCardDisplay = ({ cardNumber, nonFoil, image, foil, wave }: TCardRef) => {
+export const InventoryCardDisplay = ({
+	cardNumber,
+	nonFoil,
+	image,
+	foil,
+	wave,
+	cardId,
+}: TCardRef) => {
 	const updatedUrl =
-		foil && wave === 1 ? image.replace("large", "foil") : image.replace("large", "small");
+		wave === 1
+			? foil
+				? image.replace("large", "foil")
+				: image.replace("large", "small")
+			: image;
 	const totalCards = foil + nonFoil;
 	return (
 		<div className="inventory-card-display">

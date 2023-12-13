@@ -13,6 +13,7 @@ export type TCardRef = {
 	wave: number;
 	userId?: string;
 	image: string;
+	cardId: string;
 };
 
 export const Inventory = () => {
@@ -20,11 +21,16 @@ export const Inventory = () => {
 	const [viewType, setViewType] = useState<string>("icons");
 	const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
 	const [allCardArr, setAllCardsArr] = useState<TLorcanaCard[]>([]);
-
+	const [cardQuantities, setCardQuantities] = useState<{ foil: number; nonfoil: number }>({
+		foil: 0,
+		nonfoil: 0,
+	});
 	const getAllUsersCards = async () => {
 		let { data, error } = await supabase
 			.from("lorcana_get_users_cards_with_foil_count")
-			.select("nonFoil: nonfoil , foil, wave, userId: user_id, ...card_id(*) ")
+			.select(
+				"nonFoil: nonfoil , foil, wave, userId: user_id, ...card_id(*, cardNumber: card_number) "
+			)
 			.eq("user_id", userId);
 		console.log("userID", userId);
 		if (data) {
@@ -43,6 +49,25 @@ export const Inventory = () => {
 		// }
 	};
 
+	const getQuantityOfCards = async () => {
+		let { data, error } = await supabase
+			// @ts-expect-error does not get type for the join
+			.rpc("get_card_quantities")
+			.single();
+		if (data) {
+			console.log("quantity", data);
+			setCardQuantities(data);
+		} else {
+			console.error(error);
+		}
+		// let { data, error } = await supabase.from("lorcana_user_cards").select("cardNumber: card_number, isFoil: is_foil, wave, userId: user_id", { count: "exact" });
+		// if (data) {
+		// 	console.log(data);
+		// 	setUsersCards(data);
+		// } else {
+		// 	console.error(error);
+		// }
+	};
 	const viewTypeOptions = [
 		{ value: "icons", label: "Icons" },
 		{ value: "list", label: "List" },
@@ -52,13 +77,20 @@ export const Inventory = () => {
 
 	useEffect(() => {
 		getAllUsersCards();
-	}, []);
+		getQuantityOfCards();
+	}, [userId]);
 
 	useEffect(() => {}, [, usersCards]);
 
 	return (
 		<>
 			<h1>cards</h1>
+			<h3>total foils: {cardQuantities.foil}</h3>
+			<h3>total non-foild: {cardQuantities.nonfoil} </h3>
+			<h3>
+				total cards:
+				{cardQuantities.foil + cardQuantities.nonfoil}
+			</h3>
 			<Select
 				defaultValue="icons"
 				style={{ width: 120 }}
@@ -74,6 +106,8 @@ export const Inventory = () => {
 						cardNumber={card.cardNumber}
 						foil={card.foil}
 						wave={card.wave}
+						key={card.cardId}
+						cardId={card.cardId}
 					/>
 				))}
 		</>
