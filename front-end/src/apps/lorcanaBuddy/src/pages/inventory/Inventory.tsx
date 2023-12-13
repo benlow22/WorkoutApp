@@ -43,6 +43,20 @@ export const Inventory = () => {
 		// }
 	};
 
+	const getAllCardsAndUsersCards = async () => {
+		let { data, error } = await supabase
+			// @ts-expect-error does not get type for the join
+			.rpc("get_all_cards_plus_user_data")
+			.order("wave")
+			.order("card_number");
+
+		if (data) {
+			console.log("get all cards", data);
+			setUsersCards(data);
+		} else {
+			console.error(error);
+		}
+	};
 	const viewTypeOptions = [
 		{ value: "icons", label: "Icons" },
 		{ value: "list", label: "List" },
@@ -58,7 +72,7 @@ export const Inventory = () => {
 
 	return (
 		<>
-			<h1>cards</h1>
+			{/* <h1>cards</h1>
 			<Select
 				defaultValue="icons"
 				style={{ width: 120 }}
@@ -75,7 +89,7 @@ export const Inventory = () => {
 						foil={card.foil}
 						wave={card.wave}
 					/>
-				))}
+				))} */}
 		</>
 	);
 };
