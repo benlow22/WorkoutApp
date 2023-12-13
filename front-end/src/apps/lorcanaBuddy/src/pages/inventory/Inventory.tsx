@@ -23,10 +23,8 @@ export const Inventory = () => {
 
 	const getAllUsersCards = async () => {
 		let { data, error } = await supabase
-			.from("lorcana_users_cards_and_quantity")
-			.select(
-				"cardNumber: card_number, isFoil: is_foil, wave, userId: user_id, quantity, ...card_id(*) "
-			)
+			.from("lorcana_get_users_cards_with_foil_count")
+			.select("nonfoil, foil, wave, userId: user_id, ...card_id(*) ")
 			.eq("user_id", userId);
 		console.log("userID", userId);
 		if (data) {
