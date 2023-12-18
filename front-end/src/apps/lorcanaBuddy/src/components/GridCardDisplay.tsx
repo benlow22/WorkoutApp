@@ -7,8 +7,8 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 
 export interface ICardAndUserInfo extends TLorcanaCard {
-	foil: number;
-	nonFoil: number;
+	foil?: number;
+	nonFoil?: number;
 }
 
 type TProps = {
