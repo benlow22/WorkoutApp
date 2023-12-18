@@ -15,7 +15,14 @@ type TProps = {
 	wave: number;
 };
 
-export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
+export const DeckCardInput = ({
+	field,
+	index,
+	remove,
+	setCurrentCardIndex,
+	currentCardIndex,
+	wave,
+}: TProps) => {
 	const { auth, userId } = useContext(AuthContext);
 
 	const [imageUrl, setImageUrl] = useState<string>("");
@@ -40,7 +47,7 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	useEffect(() => {
 		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		// console.log("card input:", cardInput);
-		console.log("WAVE", wave);
+		// console.log("WAVE", wave);
 	}, [cardInput, isFoil]);
 
 	// focus on input when component is made
@@ -58,12 +65,27 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	}, [currentCardIndex, inputRef]);
 
 	return (
-		<Form.Item required={false} style={{ display: "flex", justifyContent: "center", marginBottom: "0px", marginTop: "10px", width: "125px" }} className="deck-card" name={field.key}>
+		<Form.Item
+			required={false}
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				marginBottom: "0px",
+				marginTop: "10px",
+				width: "125px",
+			}}
+			className="deck-card"
+			name={field.key}
+		>
 			<>
 				<SmallCardImageAboveInput imageUrl={imageUrl} imageWidth="100px" />
 
 				<div style={{ padding: "0px" }}>
-					<Form.Item validateTrigger={["onChange", "onBlur"]} noStyle name={[field.key, "cardNumber"]}>
+					<Form.Item
+						validateTrigger={["onChange", "onBlur"]}
+						noStyle
+						name={[field.key, "cardNumber"]}
+					>
 						<Input
 							key={index}
 							placeholder="Card #"
@@ -77,15 +99,27 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 							value={cardInput}
 						/>
 					</Form.Item>
-					<Form.Item style={{ width: "100px", marginBottom: "0px" }} name={[field.key, "isFoil"]} initialValue={false}>
-						<Switch checkedChildren="foil" unCheckedChildren="non-foil" onClick={() => setIsFoil(!isFoil)} />
+					<Form.Item
+						style={{ width: "100px", marginBottom: "0px" }}
+						name={[field.key, "isFoil"]}
+						initialValue={false}
+					>
+						<Switch
+							checkedChildren="foil"
+							unCheckedChildren="non-foil"
+							onClick={() => setIsFoil(!isFoil)}
+						/>
 					</Form.Item>
 
 					<Form.Item hidden={true} name={[field.key, "wave"]} initialValue={wave}>
 						<Input />
 					</Form.Item>
 					{auth && (
-						<Form.Item hidden={true} name={[field.key, "user_id"]} initialValue={userId}>
+						<Form.Item
+							hidden={true}
+							name={[field.key, "user_id"]}
+							initialValue={userId}
+						>
 							<Input />
 						</Form.Item>
 					)}

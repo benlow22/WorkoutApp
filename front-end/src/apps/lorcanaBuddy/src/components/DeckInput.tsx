@@ -22,6 +22,7 @@ export const DeckInput = ({ wave, receiptProductId }: TProps) => {
 	const [cardImageUrl, setCardImageUrl] = useState<string>("");
 
 	const onFinish = (values: any) => {
+		console.log("userIDDD", userId);
 		if (auth) {
 			values.cards.map((card: any) => {
 				const uploadCardToSupabase = async () => {
@@ -52,7 +53,7 @@ export const DeckInput = ({ wave, receiptProductId }: TProps) => {
 	};
 
 	const spaceDownHandler = (event: KeyboardEvent) => {
-		console.log("before space clicked");
+		// console.log("before space clicked");
 		if (event.code === "Space" || event.code === "KeyV") {
 			event.preventDefault();
 			setIsSpaceClicked(true);
@@ -60,7 +61,7 @@ export const DeckInput = ({ wave, receiptProductId }: TProps) => {
 	};
 
 	useEffect(() => {
-		console.log("# of cards", numberOfCards);
+		// console.log("# of cards", numberOfCards);
 	}, [numberOfCards]);
 
 	useEffect(() => {
