@@ -27,6 +27,8 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 					(card) => !card.foil && !card.nonFoil
 				);
 				break;
+			default:
+				break;
 		}
 		setFilteredCards(filteredCards);
 	}, [cardPossesionFilters]);

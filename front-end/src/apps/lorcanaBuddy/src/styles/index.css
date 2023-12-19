@@ -142,9 +142,19 @@
 	opacity: 0.2;
 }
 
+.inventory-page {
+	width: 100%;
+}
+
 .card-filter-menu {
 	width: 100%;
 	background-color: rgb(68, 124, 124);
+}
+
+.icon-display {
+	display: flex;
+	max-width: 100%;
+	flex-wrap: wrap;
 }
 @media only screen and (max-width: 830px) {
 	.booster-pack-12-cards.ant-space {
