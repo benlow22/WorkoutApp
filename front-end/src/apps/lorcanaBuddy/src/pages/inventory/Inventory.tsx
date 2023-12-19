@@ -82,6 +82,7 @@ export const Inventory = () => {
 				total cards:
 				{cardQuantities.foil + cardQuantities.nonfoil}
 			</h3>
+			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>}
 			<Select
 				defaultValue="icons"
 				style={{ width: 120 }}
