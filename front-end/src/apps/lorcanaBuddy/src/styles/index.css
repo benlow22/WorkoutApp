@@ -115,15 +115,9 @@
 	margin-bottom: 0px !important;
 }
 
-.inventory-card-display {
-	display: flex;
-	width: 400px;
-	margin: auto;
-}
-
 .card-info {
 	display: flex;
-	width: 100%;
+	/* width: 100%; */
 	justify-content: space-between;
 }
 
@@ -156,6 +150,17 @@
 	max-width: 100%;
 	flex-wrap: wrap;
 }
+.inventory-card-display {
+	display: flex;
+	width: 500px;
+	margin: auto;
+}
+
+.inventory-card-display h4,
+.inventory-card-display h5 {
+	width: 100px;
+}
+
 @media only screen and (max-width: 830px) {
 	.booster-pack-12-cards.ant-space {
 		flex-wrap: wrap;
