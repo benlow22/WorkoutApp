@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ICardAndUserInfo } from "../GridCardDisplay";
 import { Button, Checkbox, Radio } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
-import { ClearOutlined } from "@ant-design/icons";
+import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
 
 // returns a list of cards that are filtered
 type TProps = {
@@ -13,9 +13,9 @@ type TProps = {
 };
 
 export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
-	const [showOnlySettings, setShowOnlySettings] = useState<number>();
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
+	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
 
 	useEffect(() => {
 		console.log("CARDTYPEFILTERS", cardTypeFilters);
@@ -55,6 +55,12 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		}
 		if (cardTypeFilters.includes(3)) {
 			if (card.cardNumber > 204) {
+				return true;
+			}
+		}
+		if (cardTypeFilters.includes(4)) {
+			let quantity = card.foil + card.nonFoil;
+			if (quantity > 3) {
 				return true;
 			}
 		}
@@ -99,8 +105,26 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 				value={cardTypeFilters}
 			/>
 			<h4></h4>
-
+			<Button
+				type="text"
+				onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
+				icon={<SettingOutlined />}
+			>
+				Advanced Settings
+			</Button>
 			<Button type="primary" icon={<ClearOutlined />} onClick={handleClearFilters} />
+			{showAdvancedSettings && (
+				<>
+					<h1>Advanced Settings</h1>
+					<h1>Ink Color</h1>
+					<h1>Set</h1>
+					<h1>Type</h1>
+					<h1>Classification</h1>
+					<h1>Keyword</h1>
+					<h1>Inkable</h1>
+					<h1>Rarity</h1>
+				</>
+			)}
 		</div>
 	);
 };
