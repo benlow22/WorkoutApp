@@ -15,7 +15,7 @@ export const InventoryCardDisplay = ({
 				? image.replace("large", "foil")
 				: image.replace("large", "small")
 			: image;
-	const totalCards = foil + nonFoil;
+	const totalCards = (foil ? foil : 0) + (nonFoil ? nonFoil : 0);
 	return (
 		<div className="inventory-card-display">
 			<SmallCardImageAboveInput imageUrl={updatedUrl} imageWidth="75px" />
