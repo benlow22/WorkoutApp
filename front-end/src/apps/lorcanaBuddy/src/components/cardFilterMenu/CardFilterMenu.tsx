@@ -15,6 +15,7 @@ type TProps = {
 export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
+	const [cardInkFilters, setCardInkFilters] = useState<CheckboxValueType[]>([]);
 	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([]);
 
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
@@ -40,8 +41,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		if (cardSetFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardSetFilterFn(card));
 		}
+		if (cardInkFilters.length > 0) {
+			filteredCards = filteredCards?.filter((card) => cardInkFilterFn(card));
+		}
 		setFilteredCards(filteredCards);
-	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters]);
+	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
 
@@ -64,7 +68,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			}
 		}
 		if (cardTypeFilters.includes(4)) {
-			let quantity = card.foil + card.nonFoil;
+			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
 			if (quantity > 3) {
 				return true;
 			}
@@ -73,10 +77,43 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 	};
 
 	const cardSetFilterFn = (card: ICardAndUserInfo) => {
-		console.log("CARDSETID", card.wave);
 		if (cardSetFilters.includes(card.wave)) {
 			return true;
 		} else return false;
+	};
+
+	const cardInkFilterFn = (card: ICardAndUserInfo) => {
+		if (cardInkFilters.includes(0)) {
+			if (card.colour === "Amber") {
+				return true;
+			}
+		}
+		if (cardInkFilters.includes(1)) {
+			if (card.colour === "Amethyst") {
+				return true;
+			}
+		}
+		if (cardInkFilters.includes(2)) {
+			if (card.colour === "Emerald") {
+				return true;
+			}
+		}
+		if (cardInkFilters.includes(3)) {
+			if (card.colour === "Ruby") {
+				return true;
+			}
+		}
+		if (cardInkFilters.includes(4)) {
+			if (card.colour === "Saphire") {
+				return true;
+			}
+		}
+		if (cardInkFilters.includes(5)) {
+			if (card.colour === "Steel") {
+				return true;
+			}
+		}
+		return false;
 	};
 
 	const cardPossesionFiltersOptions = [
@@ -99,9 +136,19 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Into The Inklands", value: 3 },
 		{ label: "Promo", value: 4 },
 	];
+	const cardInkFilterOptions = [
+		{ label: "Amber", value: 0 },
+		{ label: "Amethyst", value: 1 },
+		{ label: "Emerald", value: 2 },
+		{ label: "Ruby", value: 3 },
+		{ label: "Saphire", value: 4 },
+		{ label: "Steel", value: 5 },
+	];
 
 	const handleClearFilters = () => {
 		setCardTypeFilters([]);
+		setCardSetFilters([]);
+		setCardInkFilters([]);
 		setCardPossessionFilters(0);
 	};
 
@@ -136,6 +183,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 				<>
 					<h1>Advanced Settings</h1>
 					<h1>Ink Color</h1>
+					<Checkbox.Group
+						options={cardInkFilterOptions}
+						onChange={(values) => setCardInkFilters(values)}
+						value={cardInkFilters}
+					/>
 					<h1>Set</h1>
 					<Checkbox.Group
 						options={cardSetFilterOptions}
