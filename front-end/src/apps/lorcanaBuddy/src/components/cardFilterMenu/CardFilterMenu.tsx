@@ -15,6 +15,8 @@ type TProps = {
 export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
+	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([]);
+
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
 
 	useEffect(() => {
@@ -35,8 +37,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		if (cardTypeFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardTypeFilterFn(card));
 		}
+		if (cardSetFilters.length > 0) {
+			filteredCards = filteredCards?.filter((card) => cardSetFilterFn(card));
+		}
 		setFilteredCards(filteredCards);
-	}, [cardPossesionFilters, cardTypeFilters]);
+	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
 
@@ -67,6 +72,13 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		return false;
 	};
 
+	const cardSetFilterFn = (card: ICardAndUserInfo) => {
+		console.log("CARDSETID", card.wave);
+		if (cardSetFilters.includes(card.wave)) {
+			return true;
+		} else return false;
+	};
+
 	const cardPossesionFiltersOptions = [
 		{ label: "All", value: 0 },
 		{ label: "Owned", value: 1 },
@@ -79,6 +91,13 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Non Foil", value: 2 },
 		{ label: "Enchanted", value: 3 },
 		{ label: "more than 8", value: 4 },
+	];
+	const cardSetFilterOptions = [
+		{ label: "All", value: 0 },
+		{ label: "The First Chapter", value: 1 },
+		{ label: "Rise of the Floodborn", value: 2 },
+		{ label: "Into The Inklands", value: 3 },
+		{ label: "Promo", value: 4 },
 	];
 
 	const handleClearFilters = () => {
@@ -118,6 +137,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 					<h1>Advanced Settings</h1>
 					<h1>Ink Color</h1>
 					<h1>Set</h1>
+					<Checkbox.Group
+						options={cardSetFilterOptions}
+						onChange={(values) => setCardSetFilters(values)}
+						value={cardSetFilters}
+					/>
 					<h1>Type</h1>
 					<h1>Classification</h1>
 					<h1>Keyword</h1>
