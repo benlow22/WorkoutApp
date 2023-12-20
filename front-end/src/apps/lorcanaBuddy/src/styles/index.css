@@ -39,8 +39,12 @@
 		background-color: rgba(132, 104, 3, 0.837);
 		color: rgb(246, 255, 0);
 	}
-	.add-to-wishlist-button.add-to-wishlist.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover,
-	.add-foil-to-wishlist-button.add-to-foil-wishlist.ant-btn-primary:not(:disabled):not(.ant-btn-disabled):hover {
+	.add-to-wishlist-button.add-to-wishlist.ant-btn-primary:not(:disabled):not(
+			.ant-btn-disabled
+		):hover,
+	.add-foil-to-wishlist-button.add-to-foil-wishlist.ant-btn-primary:not(:disabled):not(
+			.ant-btn-disabled
+		):hover {
 		background-color: rgba(178, 145, 24, 0.837);
 		color: rgb(246, 255, 0);
 	}
@@ -111,15 +115,9 @@
 	margin-bottom: 0px !important;
 }
 
-.inventory-card-display {
-	display: flex;
-	width: 400px;
-	margin: auto;
-}
-
 .card-info {
 	display: flex;
-	width: 100%;
+	/* width: 100%; */
 	justify-content: space-between;
 }
 
@@ -136,6 +134,31 @@
 
 .do-not-own {
 	opacity: 0.2;
+}
+
+.inventory-page {
+	width: 100%;
+}
+
+.card-filter-menu {
+	width: 100%;
+	background-color: rgb(68, 124, 124);
+}
+
+.icon-display {
+	display: flex;
+	max-width: 100%;
+	flex-wrap: wrap;
+}
+.inventory-card-display {
+	display: flex;
+	width: 500px;
+	margin: auto;
+}
+
+.inventory-card-display h4,
+.inventory-card-display h5 {
+	width: 100px;
 }
 
 @media only screen and (max-width: 830px) {

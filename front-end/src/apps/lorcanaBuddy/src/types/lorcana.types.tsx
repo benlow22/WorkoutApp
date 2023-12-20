@@ -1,11 +1,11 @@
-enum CardColor {
-	Amber,
-	Amethyst,
-	Emerald,
-	Ruby,
-	Saphire,
-	Steel,
-}
+// enum CardColor {
+// 	Amber,
+// 	Amethyst,
+// 	Emerald,
+// 	Ruby,
+// 	Saphire,
+// 	Steel,
+// }
 
 enum Rarity {
 	Uncommon,
@@ -77,7 +77,7 @@ export type TLorcanaCardData = {
 	set: SetName;
 	"lore-value": number;
 	"card-number": number;
-	color: CardColor;
+	color: string;
 	strength: number;
 	artist: string;
 	willpower: number;
@@ -106,7 +106,7 @@ export type TLorcanaCardData = {
 export type TLorcanaCard = {
 	id: string;
 	cardNumber: number;
-	colour: CardColor;
+	colour: string;
 	inkable: boolean;
 	rarity: Rarity;
 	type: Type;

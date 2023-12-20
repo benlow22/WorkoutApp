@@ -34,7 +34,11 @@ const waveNames = [
 ];
 
 export const getAllCards = async () => {
-	let { data, error } = await supabase.from("lorcana_cards").select("id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, wave, artist, imageUrl: image,setId:set_id ");
+	let { data, error } = await supabase
+		.from("lorcana_cards")
+		.select(
+			"id, cardNumber: card_number, colour, inkable, rarity, type, name, classification, cost, strength, willpower, lore, abilities, bodyText:body_text, flavourText:flavour_text, setName:set_name, wave, artist, imageUrl: image,setId:set_id "
+		);
 	if (data) {
 		const cardCache: TCardCache = {};
 		const cacheById = data.map((card: TLorcanaCard) => (cardCache[card.id] = card));
@@ -61,7 +65,12 @@ const formItemLayoutWithOutLabel = {
 	},
 };
 
-type TReceiptProduct = { receipt_product_id: string; receipt_id: string; wave: number; product_id: number };
+type TReceiptProduct = {
+	receipt_product_id: string;
+	receipt_id: string;
+	wave: number;
+	product_id: number;
+};
 
 export const AddItems = () => {
 	// store all the cards as state
@@ -129,8 +138,23 @@ export const AddItems = () => {
 			for (let i = 1; i < product.quantity + 1; i++) {
 				productIdArr.push(product.type);
 				const receiptProductId: string = uuidv4();
-				productCardArr.push(<ProductCard type={product.type} wave={product.wave} number={i} key={`${product.type}-${i}`} advanced={advancedInput} allCards={allCards} receiptProductId={receiptProductId} />);
-				const productObject = { receipt_product_id: receiptProductId, receipt_id: receiptId, wave: product.wave, product_id: product.type };
+				productCardArr.push(
+					<ProductCard
+						type={product.type}
+						wave={product.wave}
+						number={i}
+						key={`${product.type}-${i}`}
+						advanced={advancedInput}
+						allCards={allCards}
+						receiptProductId={receiptProductId}
+					/>
+				);
+				const productObject = {
+					receipt_product_id: receiptProductId,
+					receipt_id: receiptId,
+					wave: product.wave,
+					product_id: product.type,
+				};
 				productObjectArr.push(productObject);
 			}
 		});
@@ -172,7 +196,11 @@ export const AddItems = () => {
 					<DatePicker format={dateFormat} />
 				</Form.Item>
 				<Form.Item name={["receipt", "advancedInput"]} label="Advanced Settings">
-					<Switch onClick={() => setAdvancedInput(!advancedInput)} defaultChecked={false} checked={advancedInput} />
+					<Switch
+						onClick={() => setAdvancedInput(!advancedInput)}
+						defaultChecked={false}
+						checked={advancedInput}
+					/>
 				</Form.Item>
 				<Form.Item label="Location">
 					<div>
@@ -211,7 +239,12 @@ export const AddItems = () => {
 					<Input placeholder="who" style={{ width: "100px" }} min={0} />
 				</Form.Item>
 				<Form.Item name={["receipt", "paid_off"]} label="Paid Off">
-					<Switch checkedChildren="Paid" defaultChecked unCheckedChildren="Unpaid" style={{ width: "100px" }} />
+					<Switch
+						checkedChildren="Paid"
+						defaultChecked
+						unCheckedChildren="Unpaid"
+						style={{ width: "100px" }}
+					/>
 				</Form.Item>
 				<Form.Item label="Products">
 					<Form.List name={["receipt", "products"]}>
@@ -237,7 +270,11 @@ export const AddItems = () => {
 											]}
 											id="1"
 										>
-											<Select options={productTypes} style={{ width: "150px" }} placeholder="Booster Pack" />
+											<Select
+												options={productTypes}
+												style={{ width: "150px" }}
+												placeholder="Booster Pack"
+											/>
 										</Form.Item>
 										<Form.Item
 											rules={[
@@ -250,7 +287,11 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "quantity"]}
 										>
-											<InputNumber placeholder="Quantity" min={1} style={{ width: "80px" }} />
+											<InputNumber
+												placeholder="Quantity"
+												min={1}
+												style={{ width: "80px" }}
+											/>
 										</Form.Item>
 										<Form.Item
 											id="3"
@@ -263,7 +304,11 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "wave"]}
 										>
-											<Select placeholder="Wave" options={waveNames} style={{ width: "200px" }} />
+											<Select
+												placeholder="Wave"
+												options={waveNames}
+												style={{ width: "200px" }}
+											/>
 										</Form.Item>
 										<CloseOutlined
 											onClick={() => {
