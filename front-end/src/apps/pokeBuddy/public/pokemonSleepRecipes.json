@@ -294,19 +294,19 @@
 				"ingredients": [
 					{
 						"name": "Honey",
-						"quantity": "14"
+						"quantity": 14
 					},
 					{
 						"name": "Warming Ginger",
-						"quantity": "12"
+						"quantity": 12
 					},
 					{
 						"name": "Soothing Cacao",
-						"quantity": "5"
+						"quantity": 5
 					},
 					{
 						"name": "Fancy Egg",
-						"quantity": "4"
+						"quantity": 4
 					}
 				],
 				"minimumPotSize": 35,
@@ -570,7 +570,7 @@
 				"ingredients": [
 					{
 						"name": "Fancy Apple",
-						"quantity": "8"
+						"quantity": 8
 					}
 				],
 				"minimumPotSize": 8,
@@ -834,7 +834,7 @@
 				"ingredients": [
 					{
 						"name": "Honey",
-						"quantity": "9"
+						"quantity": 9
 					}
 				],
 				"minimumPotSize": 9,
@@ -1098,11 +1098,11 @@
 				"ingredients": [
 					{
 						"name": "Warming Ginger",
-						"quantity": "9"
+						"quantity": 9
 					},
 					{
 						"name": "Fancy Apple",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 16,
@@ -1366,19 +1366,19 @@
 				"ingredients": [
 					{
 						"name": "Honey",
-						"quantity": "20"
+						"quantity": 20
 					},
 					{
 						"name": "Fancy Egg",
-						"quantity": "15"
+						"quantity": 15
 					},
 					{
 						"name": "Moomoo Milk",
-						"quantity": "10"
+						"quantity": 10
 					},
 					{
 						"name": "Fancy Apple",
-						"quantity": "10"
+						"quantity": 10
 					}
 				],
 				"minimumPotSize": 55,
@@ -1642,19 +1642,19 @@
 				"ingredients": [
 					{
 						"name": "Fancy Apple",
-						"quantity": "11"
+						"quantity": 11
 					},
 					{
 						"name": "Moomoo Milk",
-						"quantity": "9"
+						"quantity": 9
 					},
 					{
 						"name": "Honey",
-						"quantity": "7"
+						"quantity": 7
 					},
 					{
 						"name": "Soothing Cacao",
-						"quantity": "8"
+						"quantity": 8
 					}
 				],
 				"minimumPotSize": 35,
@@ -1918,11 +1918,11 @@
 				"ingredients": [
 					{
 						"name": "Fancy Apple",
-						"quantity": "12"
+						"quantity": 12
 					},
 					{
 						"name": "Moomoo Milk",
-						"quantity": "4"
+						"quantity": 4
 					}
 				],
 				"minimumPotSize": 16,
@@ -2186,15 +2186,15 @@
 				"ingredients": [
 					{
 						"name": "Warming Ginger",
-						"quantity": "11"
+						"quantity": 11
 					},
 					{
 						"name": "Fancy Apple",
-						"quantity": "15"
+						"quantity": 15
 					},
 					{
 						"name": "Tasty Mushroom",
-						"quantity": "9"
+						"quantity": 9
 					}
 				],
 				"minimumPotSize": 35,
@@ -2458,15 +2458,15 @@
 				"ingredients": [
 					{
 						"name": "Honey",
-						"quantity": "9"
+						"quantity": 9
 					},
 					{
 						"name": "Soothing Cacao",
-						"quantity": "8"
+						"quantity": 8
 					},
 					{
 						"name": "Moomoo Milk",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 24,
@@ -2730,7 +2730,7 @@
 				"ingredients": [
 					{
 						"name": "Moomoo Milk",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 7,
@@ -2994,11 +2994,11 @@
 				"ingredients": [
 					{
 						"name": "Fancy Egg",
-						"quantity": "8"
+						"quantity": 8
 					},
 					{
 						"name": "Greengrass Soybeans",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 15,
@@ -3262,11 +3262,11 @@
 				"ingredients": [
 					{
 						"name": "Greengrass Soybeans",
-						"quantity": "15"
+						"quantity": 15
 					},
 					{
 						"name": "Soothing Cacao",
-						"quantity": "8"
+						"quantity": 8
 					}
 				],
 				"minimumPotSize": 23,
@@ -3530,11 +3530,11 @@
 				"ingredients": [
 					{
 						"name": "Snoozy Tomato",
-						"quantity": "9"
+						"quantity": 9
 					},
 					{
 						"name": "Fancy Apple",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 16,
@@ -3798,15 +3798,15 @@
 				"ingredients": [
 					{
 						"name": "Pure Oil",
-						"quantity": "10"
+						"quantity": 10
 					},
 					{
 						"name": "Moomoo Milk",
-						"quantity": "7"
+						"quantity": 7
 					},
 					{
 						"name": "Honey",
-						"quantity": "6"
+						"quantity": 6
 					}
 				],
 				"minimumPotSize": 23,
@@ -4070,15 +4070,15 @@
 				"ingredients": [
 					{
 						"name": "Pure Oil",
-						"quantity": "9"
+						"quantity": 9
 					},
 					{
 						"name": "Greengrass Soybeans",
-						"quantity": "6"
+						"quantity": 6
 					},
 					{
 						"name": "Soothing Cacao",
-						"quantity": "7"
+						"quantity": 7
 					}
 				],
 				"minimumPotSize": 22,
@@ -4556,8 +4556,63 @@
 					},
 					"40": {
 						"experience": 568918,
-						"expNeeded": 0,
+						"expNeeded": 40255,
 						"value": 1309
+					},
+					"41": {
+						"experience": 611541,
+						"expNeeded": 42623,
+						"value": 1336
+					},
+					"42": {
+						"experience": 656646,
+						"expNeeded": 45105,
+						"value": 1363
+					},
+					"43": {
+						"experience": 704344,
+						"expNeeded": 47698,
+						"value": 1389
+					},
+					"44": {
+						"experience": 754748,
+						"expNeeded": 50404,
+						"value": 1423
+					},
+					"45": {
+						"experience": 807184,
+						"expNeeded": 52436,
+						"value": 1450
+					},
+					"46": {
+						"experience": 862205,
+						"expNeeded": 55021,
+						"value": 1483
+					},
+					"47": {
+						"experience": 920936,
+						"expNeeded": 58731,
+						"value": 1516
+					},
+					"48": {
+						"experience": 983590,
+						"expNeeded": 62654,
+						"value": 1550
+					},
+					"49": {
+						"experience": 1050391,
+						"expNeeded": 66801,
+						"value": 1583
+					},
+					"50": {
+						"experience": 1121582,
+						"expNeeded": 71191,
+						"value": 1617
+					},
+					"51": {
+						"experience": 1196687,
+						"expNeeded": 75105,
+						"value": 1657
 					}
 				}
 			},
@@ -5612,6 +5667,63 @@
 						"experience": "568,918",
 						"value": 14667,
 						"expNeeded": "0"
+					},
+
+					"41": {
+						"experience": 611541,
+						"expNeeded": 42623,
+						"value": 14966
+					},
+
+					"42": {
+						"experience": 656646,
+						"expNeeded": 45105,
+						"value": 15265
+					},
+					"43": {
+						"experience": 704344,
+						"expNeeded": 47698,
+						"value": 15565
+					},
+					"44": {
+						"experience": 754748,
+						"expNeeded": 50404,
+						"value": 15939
+					},
+					"45": {
+						"experience": 807184,
+						"expNeeded": 52436,
+						"value": 16238
+					},
+					"46": {
+						"experience": 862205,
+						"expNeeded": 55021,
+						"value": 16612
+					},
+					"47": {
+						"experience": 920936,
+						"expNeeded": 58731,
+						"value": 16986
+					},
+					"48": {
+						"experience": 983590,
+						"expNeeded": 62654,
+						"value": 17361
+					},
+					"49": {
+						"experience": 1050391,
+						"expNeeded": 66801,
+						"value": 17735
+					},
+					"50": {
+						"experience": 1121582,
+						"expNeeded": 71191,
+						"value": 18109
+					},
+					"51": {
+						"experience": 1196687,
+						"expNeeded": 75105,
+						"value": 18558
 					}
 				}
 			},
@@ -7539,7 +7651,7 @@
 					{ "name": "Fiery Herb", "quantity": 4 },
 					{ "name": "Fancy Egg", "quantity": 4 }
 				],
-				"minimumPotSize": 37,
+				"minimumPotSize": 27,
 				"imageUrl": "bulkupbeancurry.png",
 				"levels": {
 					"1": {
@@ -7768,6 +7880,8 @@
 				"imageUrl": "slowpoketailpeppersalad.png",
 				"name": "Slowpoke Tail Pepper Salad",
 				"description": "The mouth-tinglingly spicy pepper highlights the sweetness of the tail.",
+				"minimumPotSize": 35,
+
 				"ingredients": [
 					{
 						"name": "Slowpoke Tail",
@@ -8039,6 +8153,8 @@
 				"imageUrl": "sporemushroomsalad.png",
 				"name": "Spore Mushroom Salad",
 				"description": "A salad rich in minerals that improve the quality of sleep.",
+				"minimumPotSize": 33,
+
 				"ingredients": [
 					{
 						"name": "Tasty Mushroom",
@@ -8320,6 +8436,8 @@
 						"quantity": 6
 					}
 				],
+				"minimumPotSize": 16,
+
 				"levels": {
 					"1": {
 						"experience": "0",
@@ -8596,6 +8714,8 @@
 						"quantity": 6
 					}
 				],
+				"minimumPotSize": 36,
+
 				"levels": {
 					"1": {
 						"experience": "0",
@@ -8864,6 +8984,8 @@
 						"quantity": 6
 					}
 				],
+				"minimumPotSize": 16,
+
 				"levels": {
 					"1": {
 						"experience": "0",
@@ -11516,7 +11638,7 @@
 						"quantity": 11
 					}
 				],
-				"minimumPotSize": 43,
+				"minimumPotSize": 53,
 				"levels": {
 					"1": {
 						"experience": "0",
