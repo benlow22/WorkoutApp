@@ -4825,6 +4825,62 @@
 						"experience": "568,918",
 						"value": 3808,
 						"expNeeded": "0"
+					},
+
+					"41": {
+						"experience": 611541,
+						"expNeeded": 42623,
+						"value": 3886
+					},
+					"42": {
+						"experience": 656646,
+						"expNeeded": 45105,
+						"value": 3964
+					},
+					"43": {
+						"experience": 704344,
+						"expNeeded": 47698,
+						"value": 4041
+					},
+					"44": {
+						"experience": 754748,
+						"expNeeded": 50404,
+						"value": 4139
+					},
+					"45": {
+						"experience": 807184,
+						"expNeeded": 52436,
+						"value": 4216
+					},
+					"46": {
+						"experience": 862205,
+						"expNeeded": 55021,
+						"value": 4313
+					},
+					"47": {
+						"experience": 920936,
+						"expNeeded": 58731,
+						"value": 4411
+					},
+					"48": {
+						"experience": 983590,
+						"expNeeded": 62654,
+						"value": 4508
+					},
+					"49": {
+						"experience": 1050391,
+						"expNeeded": 66801,
+						"value": 4605
+					},
+					"50": {
+						"experience": 1121582,
+						"expNeeded": 71191,
+						"value": 4702
+					},
+					"51": {
+						"experience": 1196687,
+						"expNeeded": 75105,
+						"value": 4819
 					}
 				}
 			},
@@ -5033,7 +5089,63 @@
 					"40": {
 						"experience": "568,918",
 						"value": 1497,
-						"expNeeded": "0"
+						"expNeeded": "40255"
+					},
+
+					"41": {
+						"experience": 611541,
+						"expNeeded": 1528,
+						"value": 1528
+					},
+					"42": {
+						"experience": 656646,
+						"expNeeded": 45105,
+						"value": 1559
+					},
+					"43": {
+						"experience": 704344,
+						"expNeeded": 47698,
+						"value": 1589
+					},
+					"44": {
+						"experience": 754748,
+						"expNeeded": 50404,
+						"value": 1627
+					},
+					"45": {
+						"experience": 807184,
+						"expNeeded": 52436,
+						"value": 1658
+					},
+					"46": {
+						"experience": 862205,
+						"expNeeded": 55021,
+						"value": 1696
+					},
+					"47": {
+						"experience": 920936,
+						"expNeeded": 58731,
+						"value": 1734
+					},
+					"48": {
+						"experience": 983590,
+						"expNeeded": 62654,
+						"value": 1772
+					},
+					"49": {
+						"experience": 1050391,
+						"expNeeded": 66801,
+						"value": 1811
+					},
+					"50": {
+						"experience": 1121582,
+						"expNeeded": 71191,
+						"value": 1849
+					},
+					"51": {
+						"experience": 1196687,
+						"expNeeded": 75105,
+						"value": 1895
 					}
 				}
 			},

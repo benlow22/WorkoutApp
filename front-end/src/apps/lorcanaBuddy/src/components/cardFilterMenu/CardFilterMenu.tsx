@@ -69,7 +69,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		}
 		if (cardTypeFilters.includes(4)) {
 			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
-			if (quantity > 3) {
+			if (quantity > 4) {
 				return true;
 			}
 		}
