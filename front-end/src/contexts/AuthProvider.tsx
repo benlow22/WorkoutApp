@@ -4,6 +4,7 @@ import App from "../App";
 import { IWorkout } from "../api/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../database.types";
+import { ICardAndUserInfo } from "../apps/lorcanaBuddy/src/components/GridCardDisplay";
 
 type IAuthContext = {
 	supabase: SupabaseClient<Database>;
@@ -21,6 +22,8 @@ type IAuthContext = {
 	setInitialUrl: (url: string) => void;
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
+	usersLorcanaCards: ICardAndUserInfo[];
+	setUsersLorcanaCards: (usersCards: ICardAndUserInfo[]) => void;
 };
 
 export interface ISession {
@@ -46,6 +49,8 @@ export const AuthContext = React.createContext<IAuthContext>({
 	contextIsLoading: true,
 	setInitialUrl: () => {},
 	supabase: supabase,
+	usersLorcanaCards: [],
+	setUsersLorcanaCards: () => {},
 });
 
 type IChildren = {
@@ -63,6 +68,24 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [auth, setAuth] = useState<boolean | undefined>(undefined);
 	const [initialUrl, setInitialUrl] = useState<string>("");
 
+	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
+
+	const getAllCardsAndUsersCards = async () => {
+		let { data, error } = await supabase
+			// @ts-expect-error does not get type for the join
+			.rpc("get_all_cards_plus_user_data")
+			.select(
+				"id, abilities, cardNumber: card_number , colour , inkable , rarity , type , name , classification , cost , strength, willpower , lore , bodyText: body_text , flavourText: flavour_text , setName: set_name , wave , artist , imageUrl: image ,setId: set_id ,foil , nonFoil: nonfoil "
+			)
+			.order("wave")
+			.order("card_number");
+		if (data) {
+			console.log("get all cards", data);
+			setUsersLorcanaCards(data);
+		} else {
+			console.error(error);
+		}
+	};
 	// when going to APP, get session, set if logged in
 	useEffect(() => {
 		const getSessionData = async () => {
@@ -74,6 +97,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 					setUsername(session.user.user_metadata.username);
 					setIsLoggedIn(true); // late can be removed and replaced with auth
 					setUser(session.user);
+					getAllCardsAndUsersCards();
 				} else {
 					setAuth(false);
 				}
@@ -88,43 +112,42 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 
 	// changes Context and cookies when logged in changes
 	useEffect(() => {
-		const { data } = supabase.auth.onAuthStateChange(
-			async (event, session) => {
-				if (event == "PASSWORD_RECOVERY") {
-					setAuth(false);
-				} else if (event === "SIGNED_IN") {
-					// everytime there is a sign in event, context states will be triggered
-					if (session) {
-						const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
-						document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
-						document.cookie = `my_refresh_token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=None; Secure `;
-						document.cookie = `my_user_id=${session.user.id}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
-						setSession(session);
-						console.log("Auth Provider : init AuthContext"); // log whenever auth changes and is called
-						setAuth(true);
-						setUserId(session.user.id);
-						setUsername(session.user.user_metadata.username);
-						// setIsLoggedIn(true); // later can be removed and replaced with auth
-						setUser(session.user);
-					}
-				} else if (event === "SIGNED_OUT") {
-					console.log("Auth Provider:  signed OUT");
-					setUserId("");
-					setUsername("");
-					setWorkouts([]);
-					setSession(null);
-					setAuth(false);
-					setUser(null);
-					// setIsLoggedIn(false);
-
-					// remove cookies, when signed out
-					const expires = new Date(0).toUTCString();
-					document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
-					document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
-					document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
+		const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
+			if (event == "PASSWORD_RECOVERY") {
+				setAuth(false);
+			} else if (event === "SIGNED_IN") {
+				// everytime there is a sign in event, context states will be triggered
+				if (session) {
+					const maxAge = 100 * 365 * 24 * 60 * 60; // 100 years, never expires
+					document.cookie = `my_access_token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
+					document.cookie = `my_refresh_token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=None; Secure `;
+					document.cookie = `my_user_id=${session.user.id}; path=/; max-age=${maxAge}; SameSite=None; Secure`;
+					setSession(session);
+					console.log("Auth Provider : init AuthContext"); // log whenever auth changes and is called
+					setAuth(true);
+					setUserId(session.user.id);
+					setUsername(session.user.user_metadata.username);
+					// setIsLoggedIn(true); // later can be removed and replaced with auth
+					setUser(session.user);
 				}
+			} else if (event === "SIGNED_OUT") {
+				console.log("Auth Provider:  signed OUT");
+				setUserId("");
+				setUsername("");
+				setWorkouts([]);
+				setSession(null);
+				setAuth(false);
+				setUser(null);
+				// setIsLoggedIn(false);
+				setUsersLorcanaCards([]);
+
+				// remove cookies, when signed out
+				const expires = new Date(0).toUTCString();
+				document.cookie = `my_access_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
+				document.cookie = `my_refresh_token=; path=/; max-age=${expires}; SameSite=Lax; secure`;
+				document.cookie = `my_user_id=; path=/; max-age=${expires}; SameSite=Lax; secure `;
 			}
-		);
+		});
 		setIsLoading(false);
 		return () => {
 			data.subscription.unsubscribe();
@@ -178,6 +201,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				contextIsLoading: isLoading,
 				setInitialUrl,
 				supabase,
+				setUsersLorcanaCards,
+				usersLorcanaCards,
 			}}
 		>
 			{!isLoading && children}

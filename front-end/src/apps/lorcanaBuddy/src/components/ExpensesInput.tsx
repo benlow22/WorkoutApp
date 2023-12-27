@@ -1,3 +1,5 @@
+import { SingleCardInput } from "./SingleCardInput";
+
 export const ExpensesInput = () => {
 	return (
 		<div>
