@@ -60,9 +60,7 @@ Tprops) => {
 	const [recipeLevel, setRecipeLevel] = useState<number>(1);
 
 	const [recipeBaseValue, setRecipeBaseValue] = useState<number>(0);
-	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>(
-		[]
-	);
+	const [ingredientsNeeded, setIngredientsNeeded] = useState<TIngredient[]>([]);
 
 	useEffect(() => {
 		if (ingredients) {
@@ -74,8 +72,15 @@ Tprops) => {
 				imageArr[ingredient.name] = ingredient.imageUrl;
 			});
 			// imageArr.Any = "anyIngredient.png";
-
-			// console.log("ingARr", imageArr);
+			let quantt = 0;
+			for (let i = 0; i < recipe.ingredients.length; i++) {
+				quantt += recipe.ingredients[i].quantity;
+			}
+			if (quantt !== recipe.minimumPotSize) {
+				console.log("# of ing", recipe.name, recipe.minimumPotSize, quantt);
+			} else {
+				console.log("all good");
+			}
 			setImageUrls(imageArr);
 		}
 	}, [ingredients]);
@@ -120,9 +125,7 @@ Tprops) => {
 						recipe.ingredients.map((ingredient, index: number) => (
 							<div className="ingr" key={index}>
 								<img
-									src={`/pokemonSleepIngredients/${
-										imageUrls[ingredient.name]
-									}`}
+									src={`/pokemonSleepIngredients/${imageUrls[ingredient.name]}`}
 									className="ingredient-icon-in-recipe"
 								/>
 								<p>
@@ -152,14 +155,9 @@ Tprops) => {
 						</Button>
 					</div>
 					<div className="recipe-image-and-base-value">
-						<Image
-							src={`/recipes/${recipe.imageUrl}`}
-							className="recipe-image"
-						/>
+						<Image src={`/recipes/${recipe.imageUrl}`} className="recipe-image" />
 						<Tooltip title="base value of recipe">
-							<p className="base-value">
-								{recipeBaseValue ? recipeBaseValue : "0"}
-							</p>
+							<p className="base-value">{recipeBaseValue ? recipeBaseValue : "0"}</p>
 						</Tooltip>
 					</div>
 				</div>

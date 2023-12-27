@@ -27,12 +27,7 @@ import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
 import type { TourProps } from "antd";
-import {
-	ArrowDownOutlined,
-	ArrowUpOutlined,
-	FilterFilled,
-	UserOutlined,
-} from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, FilterFilled, UserOutlined } from "@ant-design/icons";
 
 type TIngredient = {
 	id: number;
@@ -78,8 +73,7 @@ export const PokemonSleep = () => {
 		},
 		{
 			title: "Choose your weekly category",
-			description:
-				"Each week you will have one of these three chosen at random.",
+			description: "Each week you will have one of these three chosen at random.",
 			target: () => ref4.current,
 		},
 		{
@@ -111,24 +105,16 @@ export const PokemonSleep = () => {
 	const [chosenCategories, setChosenCategories] = useState<string>("");
 	const [recipes, setRecipes] = useState<TRecipe[]>([]);
 	const [ingredients, setIngredients] = useState<TIngredient[]>([]);
-	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>(
-		[]
-	);
+	const [unlockedIngredients, setUnlockedIngredients] = useState<string[]>([]);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [filterName, setFilterName] = useState<any>("Sort by");
 	const [filterKey, setFilterKey] = useState<number>();
 	const [showAll, setShowAll] = useState<boolean>(false);
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
 	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
-	const [saladsLevels, setSaladLevels] = useState<
-		{ name: string; level: number }[]
-	>([]);
-	const [curriesLevels, setCurriesLevels] = useState<
-		{ name: string; level: number }[]
-	>([]);
-	const [drinksLevels, setDrinksLevels] = useState<
-		{ name: string; level: number }[]
-	>([]);
+	const [saladsLevels, setSaladLevels] = useState<{ name: string; level: number }[]>([]);
+	const [curriesLevels, setCurriesLevels] = useState<{ name: string; level: number }[]>([]);
+	const [drinksLevels, setDrinksLevels] = useState<{ name: string; level: number }[]>([]);
 
 	const [messageApi, contextHolder] = message.useMessage();
 
@@ -154,9 +140,7 @@ export const PokemonSleep = () => {
 		const newIngredientArray = new Array(...unlockedIngredients);
 		// remove if clicked ing is in list
 		if (newIngredientArray.includes(ingredient.name)) {
-			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(
-				ingredient.name
-			);
+			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(ingredient.name);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
 			// console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
@@ -452,10 +436,7 @@ export const PokemonSleep = () => {
 							};
 						}
 					}
-				} else if (
-					chosenCategories === "Drinks and Desserts" &&
-					drinksLevels
-				) {
+				} else if (chosenCategories === "Drinks and Desserts" && drinksLevels) {
 					for (let i = 0; i < drinksLevels.length; i++) {
 						// console.log("CLPASD", curriesLevels[i]);
 						if (cookableMeal.name === drinksLevels[i].name) {
@@ -499,10 +480,7 @@ export const PokemonSleep = () => {
 							};
 						}
 					}
-				} else if (
-					chosenCategories === "Drinks and Desserts" &&
-					drinksLevels
-				) {
+				} else if (chosenCategories === "Drinks and Desserts" && drinksLevels) {
 					for (let i = 0; i < drinksLevels.length; i++) {
 						// console.log("CLPASD", curriesLevels[i]);
 						if (cookableMeal.name === drinksLevels[i].name) {
@@ -529,13 +507,7 @@ export const PokemonSleep = () => {
 				setUncookableRecipes(uncookableMeals);
 			}
 		}
-	}, [
-		recipes,
-		potSize,
-		unlockedIngredients,
-		curriesLevels,
-		chosenCategories,
-	]);
+	}, [recipes, potSize, unlockedIngredients, curriesLevels, chosenCategories]);
 
 	// useEffect(() => {
 	// 	if (categories && chosenCategories) {
@@ -730,13 +702,9 @@ export const PokemonSleep = () => {
 					style={{ marginTop: 16 }}
 					defaultValue={chosenCategories}
 				>
-					<Radio.Button value="Curries and Stews">
-						Curries and Stews
-					</Radio.Button>
+					<Radio.Button value="Curries and Stews">Curries and Stews</Radio.Button>
 					<Radio.Button value="Salads">Salads</Radio.Button>
-					<Radio.Button value="Drinks and Desserts">
-						Desserts and Drink
-					</Radio.Button>
+					<Radio.Button value="Drinks and Desserts">Desserts and Drink</Radio.Button>
 				</Radio.Group>
 			)}
 			<div className="save-and-filter" ref={ref5}>
@@ -782,21 +750,17 @@ export const PokemonSleep = () => {
 							))}
 					</div> */}
 				<div className="cookable-recipes" ref={ref6}>
-					<h3 className="cookable-recipes-header">
-						Cookable Recipes
-					</h3>
+					<h3 className="cookable-recipes-header">Cookable Recipes</h3>
 					{cookableRecipes.length > 0 ? (
-						cookableRecipes.map(
-							(recipe: TRecipe, index: number) => (
-								<Recipe
-									key={index}
-									recipe={recipe}
-									ingredients={ingredients}
-									setNewRecipeLevel={setNewRecipeLevel}
-									disable={isLoading}
-								/>
-							)
-						)
+						cookableRecipes.map((recipe: TRecipe, index: number) => (
+							<Recipe
+								key={index}
+								recipe={recipe}
+								ingredients={ingredients}
+								setNewRecipeLevel={setNewRecipeLevel}
+								disable={isLoading}
+							/>
+						))
 					) : (
 						<div className="no-recipe-placeholder">
 							<p> Please select more ingredients</p>
@@ -805,18 +769,16 @@ export const PokemonSleep = () => {
 				</div>
 				<div className="uncookable-recipes">
 					{uncookableRecipes &&
-						uncookableRecipes.map(
-							(recipe: TRecipe, index: number) => (
-								// <Tooltip
-								<Recipe
-									key={index}
-									recipe={recipe}
-									ingredients={ingredients}
-									setNewRecipeLevel={setNewRecipeLevel}
-									disable={isLoading}
-								/>
-							)
-						)}
+						uncookableRecipes.map((recipe: TRecipe, index: number) => (
+							// <Tooltip
+							<Recipe
+								key={index}
+								recipe={recipe}
+								ingredients={ingredients}
+								setNewRecipeLevel={setNewRecipeLevel}
+								disable={isLoading}
+							/>
+						))}
 				</div>
 			</div>
 			{/* )} */}
