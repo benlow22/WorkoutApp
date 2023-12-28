@@ -99,7 +99,6 @@ h2 {
 	align-items: center;
 }
 .content {
-	max-width: 1600px;
 	margin: auto;
 	padding-left: calc(100vw - 100%);
 }
@@ -205,9 +204,7 @@ input[value].new-workout-input,
 .input-field-large {
 	width: 350px;
 }
-:where(.css-dev-only-do-not-override-htwhyh).ant-form-item
-	.ant-form-item-label
-	> label {
+:where(.css-dev-only-do-not-override-htwhyh).ant-form-item .ant-form-item-label > label {
 	color: white;
 }
 /* 
