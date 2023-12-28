@@ -20,6 +20,8 @@ export const InputCards = ({ wave }: TProps) => {
 
 	const onFinish = (values: any) => {
 		console.log("userIDDD", userId);
+		let uploadedCards: any[] = [];
+		let failedToUploadCards: any[] = [];
 		if (auth) {
 			values.cards.map((card: any) => {
 				const uploadCardToSupabase = async () => {
@@ -38,15 +40,17 @@ export const InputCards = ({ wave }: TProps) => {
 					if (error) {
 						console.error(error);
 						console.error("card ERROR NEED TO RETRY", card.cardNumber);
+						failedToUploadCards.push(card.number);
 					} else {
-						console.log("datamade it uploaded", data);
+						uploadedCards.push(data);
 					}
 				};
 				uploadCardToSupabase();
 			});
 		}
-		form.resetFields();
-		console.log("Deck Input onFINISH:", values);
+		console.log("Deck Input on Finish:");
+		console.log("Uploaded Cards", uploadedCards.length, uploadedCards);
+		console.log("Failed Cards", failedToUploadCards);
 	};
 
 	const spaceDownHandler = (event: KeyboardEvent) => {

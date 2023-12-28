@@ -96,16 +96,18 @@ export const GridItem = ({ card }: TProps) => {
 				imageWidth="100px"
 				opacity={card.foil || card.nonFoil ? "1" : "0.2"}
 			/>
-			<Space style={{ display: "flex", justifyContent: "space-between" }}>
-				<p style={{ fontSize: "10px" }}>#{card.cardNumber}</p>
-				<Space style={{ display: "flex", width: "70px", flexWrap: "wrap" }}>
-					<p style={{ fontSize: "10px", width: "70px" }}>
-						{card.nonFoil && card.nonFoil > -1 && `non-foil x${card.nonFoil}`}
-					</p>
-					<p style={{ fontSize: "10px", width: "70px" }}>
-						{card.foil && card.foil > -1 && `foil x${card.foil}`}
-					</p>
-				</Space>
+			<Space
+				style={{
+					display: "flex",
+				}}
+			>
+				<p style={{ fontSize: "10px" }}>#{card.cardNumber}.</p>
+				<p style={{ fontSize: "10px", width: "30px" }}>
+					Reg {card.nonFoil && card.nonFoil > -1 && `${card.nonFoil}`}
+				</p>
+				<p style={{ fontSize: "10px", width: "30px" }}>
+					Foil {card.foil && card.foil > -1 && ` x${card.foil}`}
+				</p>
 			</Space>
 		</div>
 	);

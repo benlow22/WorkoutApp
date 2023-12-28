@@ -69,7 +69,12 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		}
 		if (cardTypeFilters.includes(4)) {
 			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
-			if (quantity > 4) {
+			if (quantity < 4) {
+				return true;
+			}
+		}
+		if (cardTypeFilters.includes(5)) {
+			if (!card.foil) {
 				return true;
 			}
 		}
@@ -128,6 +133,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Non Foil", value: 2 },
 		{ label: "Enchanted", value: 3 },
 		{ label: "more than 8", value: 4 },
+		{ label: "missing foil", value: 5 },
 	];
 	const cardSetFilterOptions = [
 		{ label: "All", value: 0 },
