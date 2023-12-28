@@ -18,8 +18,8 @@ export type TCardRef = {
 };
 
 export const Inventory = () => {
-	const { auth, userId, session, supabase } = useContext(AuthContext);
-	const [viewType, setViewType] = useState<string>("icons");
+	const { auth, userId, session, supabase, usersLorcanaCards } = useContext(AuthContext);
+	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	// const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
@@ -60,9 +60,9 @@ export const Inventory = () => {
 	};
 
 	const viewTypeOptions = [
-		{ value: "icons", label: "Icons" },
-		{ value: "list", label: "List" },
 		{ value: "grid", label: "Grid" },
+		{ value: "list", label: "List" },
+		{ value: "icons", label: "Icons" },
 		{ value: "card", label: "Card", disabled: true },
 	];
 
@@ -84,7 +84,7 @@ export const Inventory = () => {
 			</h3>
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>}
 			<Select
-				defaultValue="icons"
+				defaultValue="grid"
 				style={{ width: 120 }}
 				onSelect={(value) => setViewType(value)}
 				options={viewTypeOptions}

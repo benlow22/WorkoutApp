@@ -5,7 +5,7 @@ import { Wishlist } from "./pages/wishlist/Wishlist";
 import { BrowsePage } from "./pages/browse/BrowsePage";
 import { AddItems } from "./pages/addItems/AddItems";
 import { Inventory } from "./pages/inventory/Inventory";
-import { ExpensesPage } from "./pages/expenses/Expenses";
+import { TradeOrAddPage } from "./pages/tradeOrAddPage/TradeOrAddPage";
 
 export const LorcanaBuddy = [
 	<Route index element={<LorcanaBuddyDashboard />} key={"LB1"} />,
@@ -14,7 +14,7 @@ export const LorcanaBuddy = [
 	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,
 	<Route path="addItems" element={<AddItems />} key={"LB4"} />,
 	<Route path="inventory" element={<Inventory />} key={"LB6"} />,
-	<Route path="expenses" element={<ExpensesPage />} key={"LB6"} />,
+	<Route path="tradeOrAdd" element={<TradeOrAddPage />} key={"LB6"} />,
 
 	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
 ];

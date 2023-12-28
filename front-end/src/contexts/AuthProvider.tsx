@@ -24,6 +24,8 @@ type IAuthContext = {
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
 	usersLorcanaCards: ICardAndUserInfo[];
 	setUsersLorcanaCards: (usersCards: ICardAndUserInfo[]) => void;
+	refreshLorcanaCardImage: boolean;
+	setRefreshLorcanaCardImage: (triggerRefresh: boolean) => void;
 };
 
 export interface ISession {
@@ -51,6 +53,8 @@ export const AuthContext = React.createContext<IAuthContext>({
 	supabase: supabase,
 	usersLorcanaCards: [],
 	setUsersLorcanaCards: () => {},
+	refreshLorcanaCardImage: false,
+	setRefreshLorcanaCardImage: () => {},
 });
 
 type IChildren = {
@@ -67,6 +71,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [user, setUser] = useState<any>(null);
 	const [auth, setAuth] = useState<boolean | undefined>(undefined);
 	const [initialUrl, setInitialUrl] = useState<string>("");
+	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] = useState<boolean>(false);
 
 	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
 
@@ -203,6 +208,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				supabase,
 				setUsersLorcanaCards,
 				usersLorcanaCards,
+				refreshLorcanaCardImage,
+				setRefreshLorcanaCardImage,
 			}}
 		>
 			{!isLoading && children}
