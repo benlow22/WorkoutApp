@@ -4,6 +4,7 @@ import { ExpensesInput } from "../../components/ExpensesInput";
 import { InputCards } from "../../components/InputCards";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
+import { TradeCards } from "../../components/TradeCards";
 
 export const TradeOrAddPage = () => {
 	const { auth, setRefreshLorcanaCardImage, refreshLorcanaCardImage } = useContext(AuthContext);
@@ -27,7 +28,7 @@ export const TradeOrAddPage = () => {
 				]}
 			/>
 			<h1>Wave {wave}</h1>
-			<InputCards wave={wave} />
+			<TradeCards wave={wave} />
 		</div>
 	);
 };

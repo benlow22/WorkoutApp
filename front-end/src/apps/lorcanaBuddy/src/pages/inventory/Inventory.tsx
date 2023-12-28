@@ -30,7 +30,7 @@ export const Inventory = () => {
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
-			.rpc("get_all_cards_plus_user_data")
+			.rpc("get_all_cards_plus_user_data3")
 			.select(
 				"id, abilities, cardNumber: card_number , colour , inkable , rarity , type , name , classification , cost , strength, willpower , lore , bodyText: body_text , flavourText: flavour_text , setName: set_name , wave , artist , imageUrl: image ,setId: set_id ,foil , nonFoil: nonfoil "
 			)
@@ -50,6 +50,7 @@ export const Inventory = () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
 			.rpc("get_card_quantities")
+			.eq("user_id", userId)
 			.single();
 		if (data) {
 			console.log("quantity", data);
