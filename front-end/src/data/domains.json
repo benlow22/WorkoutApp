@@ -60,7 +60,7 @@
 				{ "name": "Wishlist", "path": "wishlist" },
 				{ "name": "Add to Inventory", "path": "addItems" },
 				{ "name": "Inventory", "path": "inventory" },
-				{ "name": "Expenses", "path": "expenses" }
+				{ "name": "Trade or Add", "path": "tradeOrAdd" }
 			],
 			"logo": "lb-logo.png"
 		}

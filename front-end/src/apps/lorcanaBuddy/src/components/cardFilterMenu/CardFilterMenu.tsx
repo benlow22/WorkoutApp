@@ -5,6 +5,7 @@ import { ICardAndUserInfo } from "../GridCardDisplay";
 import { Button, Checkbox, Radio } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
+import { Rarity } from "../../types/lorcana.types";
 
 // returns a list of cards that are filtered
 type TProps = {
@@ -16,7 +17,9 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
 	const [cardInkFilters, setCardInkFilters] = useState<CheckboxValueType[]>([]);
+	const [cardRarityFilters, setCardRarityFilters] = useState<CheckboxValueType[]>([]);
 	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([]);
+	const [showRARE, setShowRARE] = useState<boolean>(false);
 
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
 
@@ -44,11 +47,15 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		if (cardInkFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardInkFilterFn(card));
 		}
+		if (cardRarityFilters.length > 0) {
+			filteredCards = filteredCards?.filter((card) => cardRarityFilterFn(card));
+		}
 		setFilteredCards(filteredCards);
-	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters]);
+	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters, cardRarityFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
 
+	const rare = ["Rare", "Super Rare"];
 	// enchanted, foil, non-foil.
 	//[0],[0,1],[1],[1,2]
 	const cardTypeFilterFn = (card: ICardAndUserInfo) => {
@@ -71,6 +78,19 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
 			if (quantity > 4) {
 				return true;
+			}
+		}
+		if (cardTypeFilters.includes(5)) {
+			if (!card.foil) {
+				return true;
+			}
+		}
+		if (cardTypeFilters.includes(6)) {
+			if (card.cardNumber < 205) {
+				let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
+				if (quantity > 3) {
+					return rare.includes(card.rarity);
+				}
 			}
 		}
 		return false;
@@ -116,6 +136,9 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		return false;
 	};
 
+	const cardRarityFilterFn = (card: ICardAndUserInfo) => {
+		return cardRarityFilters.includes(card.rarity);
+	};
 	const cardPossesionFiltersOptions = [
 		{ label: "All", value: 0 },
 		{ label: "Owned", value: 1 },
@@ -128,6 +151,17 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Non Foil", value: 2 },
 		{ label: "Enchanted", value: 3 },
 		{ label: "more than 8", value: 4 },
+		{ label: "missing foil", value: 5 },
+		{ label: "rare", value: 6 },
+	];
+
+	const cardRarityFilterOptions = [
+		{ label: "Common", value: "Common" },
+		{ label: "Uncommon", value: "Uncommon" },
+		{ label: "Rare", value: "Rare" },
+		{ label: "Super Rare", value: "Super Rare" },
+		{ label: "Legendary", value: "Legendary" },
+		{ label: "Enchanted", value: "Enchanted" },
 	];
 	const cardSetFilterOptions = [
 		{ label: "All", value: 0 },
@@ -199,6 +233,12 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 					<h1>Keyword</h1>
 					<h1>Inkable</h1>
 					<h1>Rarity</h1>
+					<h1>Set</h1>
+					<Checkbox.Group
+						options={cardRarityFilterOptions}
+						onChange={(values) => setCardRarityFilters(values)}
+						value={cardRarityFilters}
+					/>
 				</>
 			)}
 		</div>

@@ -7,7 +7,7 @@
 // 	Steel,
 // }
 
-enum Rarity {
+export enum Rarity {
 	Uncommon,
 	Common,
 	Rare,
@@ -108,7 +108,7 @@ export type TLorcanaCard = {
 	cardNumber: number;
 	colour: string;
 	inkable: boolean;
-	rarity: Rarity;
+	rarity: string;
 	type: Type;
 	name: string;
 	classification: string;

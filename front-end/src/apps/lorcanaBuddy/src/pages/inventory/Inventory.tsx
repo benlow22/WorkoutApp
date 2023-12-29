@@ -18,8 +18,8 @@ export type TCardRef = {
 };
 
 export const Inventory = () => {
-	const { auth, userId, session, supabase } = useContext(AuthContext);
-	const [viewType, setViewType] = useState<string>("icons");
+	const { auth, userId, session, supabase, usersLorcanaCards } = useContext(AuthContext);
+	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	// const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
@@ -30,7 +30,7 @@ export const Inventory = () => {
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
-			.rpc("get_all_cards_plus_user_data")
+			.rpc("get_all_cards_plus_user_data3")
 			.select(
 				"id, abilities, cardNumber: card_number , colour , inkable , rarity , type , name , classification , cost , strength, willpower , lore , bodyText: body_text , flavourText: flavour_text , setName: set_name , wave , artist , imageUrl: image ,setId: set_id ,foil , nonFoil: nonfoil "
 			)
@@ -50,6 +50,7 @@ export const Inventory = () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
 			.rpc("get_card_quantities")
+			.eq("user_id", userId)
 			.single();
 		if (data) {
 			console.log("quantity", data);
@@ -60,9 +61,9 @@ export const Inventory = () => {
 	};
 
 	const viewTypeOptions = [
-		{ value: "icons", label: "Icons" },
-		{ value: "list", label: "List" },
 		{ value: "grid", label: "Grid" },
+		{ value: "list", label: "List" },
+		{ value: "icons", label: "Icons" },
 		{ value: "card", label: "Card", disabled: true },
 	];
 
@@ -84,7 +85,7 @@ export const Inventory = () => {
 			</h3>
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>}
 			<Select
-				defaultValue="icons"
+				defaultValue="grid"
 				style={{ width: 120 }}
 				onSelect={(value) => setViewType(value)}
 				options={viewTypeOptions}

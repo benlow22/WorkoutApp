@@ -1,5 +1,5 @@
 import { MinusCircleOutlined } from "@ant-design/icons";
-import { Form, FormListFieldData, Input, InputRef, Switch } from "antd";
+import { Form, FormListFieldData, Input, InputNumber, InputRef, Switch } from "antd";
 import { useContext, useEffect, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
@@ -23,10 +23,10 @@ export const DeckCardInput = ({
 	currentCardIndex,
 	wave,
 }: TProps) => {
-	const { auth, userId } = useContext(AuthContext);
+	const { auth, userId, refreshLorcanaCardImage } = useContext(AuthContext);
 
 	const [imageUrl, setImageUrl] = useState<string>("");
-	const [cardInput, setCardInput] = useState<string>("");
+	const [cardInput, setCardInput] = useState<number | null>();
 
 	const [isFoil, setIsFoil] = useState<boolean>(false);
 	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
@@ -48,7 +48,7 @@ export const DeckCardInput = ({
 		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
-	}, [cardInput, isFoil]);
+	}, [cardInput, isFoil, refreshLorcanaCardImage]);
 
 	// focus on input when component is made
 	useEffect(() => {
@@ -64,9 +64,20 @@ export const DeckCardInput = ({
 		}
 	}, [currentCardIndex, inputRef]);
 
+	const handleCardNumberInput = (value: number | null) => {
+		if (value && value > 216) {
+			setCardInput(0);
+		} else {
+			setCardInput(value);
+		}
+	};
+
+	const validateMessage = {
+		required: "card # between 1 and 216 required",
+	};
 	return (
 		<Form.Item
-			required={false}
+			required
 			style={{
 				display: "flex",
 				justifyContent: "center",
@@ -84,19 +95,21 @@ export const DeckCardInput = ({
 					<Form.Item
 						validateTrigger={["onChange", "onBlur"]}
 						noStyle
+						required
 						name={[field.key, "cardNumber"]}
 					>
 						<Input
+							ref={inputRef}
 							key={index}
 							placeholder="Card #"
-							ref={inputRef}
 							style={{ width: "100px", marginBottom: "0px" }}
 							onFocus={() => {
 								setCurrentCardIndex(index);
 							}}
+							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
-							onChange={(e) => setCardInput(e.target.value)}
-							value={cardInput}
+							onChange={(value) => handleCardNumberInput(Number(value))}
+							max={217}
 						/>
 					</Form.Item>
 					<Form.Item
