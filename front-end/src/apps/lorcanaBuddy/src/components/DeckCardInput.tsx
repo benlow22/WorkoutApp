@@ -98,7 +98,7 @@ export const DeckCardInput = ({
 						required
 						name={[field.key, "cardNumber"]}
 					>
-						<Input
+						<InputNumber
 							ref={inputRef}
 							key={index}
 							placeholder="Card #"
@@ -108,7 +108,7 @@ export const DeckCardInput = ({
 							}}
 							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
-							onChange={(value) => handleCardNumberInput(Number(value))}
+							onChange={(value) => handleCardNumberInput(value)}
 							max={217}
 						/>
 					</Form.Item>
