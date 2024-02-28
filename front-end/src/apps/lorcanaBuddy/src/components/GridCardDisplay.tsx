@@ -16,8 +16,11 @@ type TProps = {
 	allCardsAndUsersCards: ICardAndUserInfo[] | undefined;
 };
 export const GridCardDisplay = ({ allCardsAndUsersCards }: TProps) => {
-	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
-	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>([]);
+	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
+		useState<ICardAndUserInfo[]>();
+	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>(
+		[]
+	);
 	const { userId, supabase } = useContext(AuthContext);
 
 	// const getAllCardsAndUsersCards = async () => {
@@ -50,7 +53,10 @@ export const GridCardDisplay = ({ allCardsAndUsersCards }: TProps) => {
 			/> */}
 			{allCardsAndUsersCards &&
 				allCardsAndUsersCards.map((card) => (
-					<GridItem card={card} key={`gridItem-${card.id}`} />
+					<GridItem
+						card={card}
+						key={`gridItem-${card.id}`}
+					/>
 				))}
 		</div>
 	);

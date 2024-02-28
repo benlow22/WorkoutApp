@@ -7,6 +7,7 @@ import { TLorcanaCard } from "../../types/lorcana.types";
 import "./../../styles/index.css";
 import immmmm from "./invImg/3-202-35-en-alice.png";
 import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
+import { getImageUrl } from "../../utils/image-util";
 export type TCardRef = {
 	cardNumber: number;
 	foil?: number;
@@ -16,8 +17,8 @@ export type TCardRef = {
 	image: string;
 	cardId: string;
 };
-
 export const Inventory = () => {
+	// const images = require.context('../')
 	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } =
 		useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
@@ -57,9 +58,9 @@ export const Inventory = () => {
 
 		if (data) {
 			console.log("get all cards", data);
-
+			const lastWaveDELETE = data.filter((item) => item.wave === 3);
 			setAllCardAndUserCardInfo(data);
-			setFilteredCards(data);
+			setFilteredCards(lastWaveDELETE);
 		} else {
 			console.error(error);
 		}
@@ -85,7 +86,7 @@ export const Inventory = () => {
 		{ value: "icons", label: "Icons" },
 		{ value: "card", label: "Card", disabled: true },
 	];
-
+	const cats = "3-1_en_baloo.jpg";
 	useEffect(() => {
 		getAllCardsAndUsersCards();
 		getQuantityOfCards();
@@ -110,16 +111,15 @@ export const Inventory = () => {
 			setRarityCardQuantities({ foil: foil, nonfoil: nonfoil });
 		}
 	}, [allCardAndUserCardInfo]);
-
 	return (
 		<div className="inventory-page">
 			{/* {lorcanaCardImages.map((card) => (
 				<Image src={card.src} />
 			))} */}
-			{/* <Image
-				src={lorcanaCardImages[1].src}
+			<Image
+				src={getImageUrl(cats)}
 				style={{ width: "90px" }}
-			/> */}
+			/>
 
 			<h1>cards</h1>
 			<h3>total foils: {cardQuantities.foil}</h3>
@@ -151,7 +151,11 @@ export const Inventory = () => {
 					{filteredCards.map((card) => (
 						<InventoryCardDisplay
 							nonFoil={card.nonFoil}
-							image={card.imageUrl}
+							image={
+								card.wave === 3
+									? `3-${card.cardNumber}_en_${card.name}.jpg`
+									: card.imageUrl
+							}
 							cardNumber={card.cardNumber}
 							foil={card.foil}
 							wave={card.wave}
