@@ -40,6 +40,7 @@ export type TCardCache = {
 const waveNames = [
 	{ value: 1, label: "The First Chapter" },
 	{ value: 2, label: "Rise of the Floodborn" },
+	{ value: 3, label: "Into the Inklands" },
 ];
 
 export const getAllCards = async () => {
