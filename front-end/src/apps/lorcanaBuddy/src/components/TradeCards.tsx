@@ -59,6 +59,7 @@ export const TradeCards = ({ wave }: TProps) => {
 		console.log("Uploaded Cards", uploadedCards.length, uploadedCards);
 		console.log("Failed Cards", failedToUploadCards);
 	};
+
 	const onFinish = (values: any) => {
 		console.log("userIDDD", userId);
 		let uploadedCards: any[] = [];
@@ -128,6 +129,7 @@ export const TradeCards = ({ wave }: TProps) => {
 	// 	setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
 	// }, [currentCardIndex]);
 
+
 	const formItemLayoutWithOutLabel = {
 		wrapperCol: {
 			xs: { span: 24, offset: 0 },
@@ -147,6 +149,7 @@ export const TradeCards = ({ wave }: TProps) => {
 				id="deckForm"
 			>
 				{/* <Form.List name={"cards"}>
+
 					{(fields, { add, remove }, { errors }) => (
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>
@@ -168,6 +171,7 @@ export const TradeCards = ({ wave }: TProps) => {
 													color: "white",
 													paddingLeft: "10px",
 												}}
+
 												onClick={() => {
 													remove(field.name);
 													setNumberOfCards(numberOfCards - 1);
@@ -209,6 +213,7 @@ export const TradeCards = ({ wave }: TProps) => {
 					onChange={(e) => handleExcelInput(e.target.value)}
 				/>
 				<Button onClick={() => handleSubmit()}>Submit</Button>
+
 			</Form>
 		</div>
 	);

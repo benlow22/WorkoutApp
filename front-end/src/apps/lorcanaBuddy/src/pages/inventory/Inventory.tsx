@@ -23,6 +23,7 @@ export const Inventory = () => {
 	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
 		useState<ICardAndUserInfo[]>();
+
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	// const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
 	const [cardQuantities, setCardQuantities] = useState<{
