@@ -13,9 +13,10 @@ import "./styles/theme.css";
 import { changeTheme } from "../../styles/theming/theme";
 import { Helmet } from "react-helmet";
 import { supabase } from "../../supabase/supabaseClient";
+import { Image } from "antd";
 
 export const Header: React.FC<{}> = () => {
-	const { username, auth, contextIsLoading, userId } =
+	const { username, auth, contextIsLoading, userId, lorcanaCardImages } =
 		useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
 	const [displayUsername, setDisplayUsername] = useState<string>("");
@@ -31,6 +32,7 @@ export const Header: React.FC<{}> = () => {
 
 	useEffect(() => {
 		// console.log("DOMAIN", domains[domain]);
+		console.log("DOMAIN", lorcanaCardImages);
 		setDomainObj(domains[domain]);
 	}, []);
 
@@ -89,7 +91,10 @@ export const Header: React.FC<{}> = () => {
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
-		<div className="header" key={domain}>
+		<div
+			className="header"
+			key={domain}
+		>
 			<div className="site-banner white-font">
 				{domainObj && (
 					<>
@@ -101,10 +106,11 @@ export const Header: React.FC<{}> = () => {
 							/>
 							<title>{domains[domain].name}</title>
 						</Helmet>
-						<Link to={`/${domains[domain].path}`} key={domain}>
-							{domain && (
-								<h1 key={domain}>{domains[domain].name}</h1>
-							)}
+						<Link
+							to={`/${domains[domain].path}`}
+							key={domain}
+						>
+							{domain && <h1 key={domain}>{domains[domain].name}</h1>}
 						</Link>
 						<div className="account">
 							{auth ? (
@@ -115,9 +121,7 @@ export const Header: React.FC<{}> = () => {
 											previousPathname: location.pathname,
 										}}
 									>
-										{!username
-											? "Create Username"
-											: displayUsername}
+										{!username ? "Create Username" : displayUsername}
 									</Link>
 									<LogoutButton />
 									<Link
@@ -156,6 +160,15 @@ export const Header: React.FC<{}> = () => {
 						</div>
 					</>
 				)}
+			</div>
+			<div hidden={true}>
+				<h3>asd {lorcanaCardImages.length}</h3>
+				{lorcanaCardImages.map((card) => (
+					<Image
+						src={card.src}
+						sizes="small"
+					/>
+				))}
 			</div>
 			<Navbar />
 		</div>

@@ -18,7 +18,7 @@ export type TCardRef = {
 };
 
 export const Inventory = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards } =
+	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } =
 		useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
@@ -40,6 +40,11 @@ export const Inventory = () => {
 		foil: 0,
 		nonfoil: 0,
 	});
+	useEffect(() => {
+		if (lorcanaCardImages.length > 0) {
+			console.log("SHOW CONTEXT IN ", lorcanaCardImages);
+		}
+	}, [lorcanaCardImages]);
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
@@ -108,10 +113,13 @@ export const Inventory = () => {
 
 	return (
 		<div className="inventory-page">
-			<Image
-				src={immmmm}
+			{/* {lorcanaCardImages.map((card) => (
+				<Image src={card.src} />
+			))} */}
+			{/* <Image
+				src={lorcanaCardImages[1].src}
 				style={{ width: "90px" }}
-			/>
+			/> */}
 
 			<h1>cards</h1>
 			<h3>total foils: {cardQuantities.foil}</h3>
