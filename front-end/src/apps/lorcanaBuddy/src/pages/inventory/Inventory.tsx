@@ -1,12 +1,12 @@
-import { Select } from "antd";
+import { Image, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { GridCardDisplay, ICardAndUserInfo } from "../../components/GridCardDisplay";
 import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
 import { TLorcanaCard } from "../../types/lorcana.types";
 import "./../../styles/index.css";
+import immmmm from "./invImg/3-202-35-en-alice.png";
 import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
-
 export type TCardRef = {
 	cardNumber: number;
 	foil?: number;
@@ -18,12 +18,25 @@ export type TCardRef = {
 };
 
 export const Inventory = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards } = useContext(AuthContext);
+	const { auth, userId, session, supabase, usersLorcanaCards } =
+		useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
-	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
+	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
+		useState<ICardAndUserInfo[]>();
+
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	// const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
-	const [cardQuantities, setCardQuantities] = useState<{ foil: number; nonfoil: number }>({
+	const [cardQuantities, setCardQuantities] = useState<{
+		foil: number;
+		nonfoil: number;
+	}>({
+		foil: 0,
+		nonfoil: 0,
+	});
+	const [rarityCardQuantities, setRarityCardQuantities] = useState<{
+		foil: number;
+		nonfoil: number;
+	}>({
 		foil: 0,
 		nonfoil: 0,
 	});
@@ -39,6 +52,7 @@ export const Inventory = () => {
 
 		if (data) {
 			console.log("get all cards", data);
+
 			setAllCardAndUserCardInfo(data);
 			setFilteredCards(data);
 		} else {
@@ -72,10 +86,33 @@ export const Inventory = () => {
 		getQuantityOfCards();
 	}, [userId]);
 
-	// useEffect(() => {}, [filt]);
+	useEffect(() => {
+		if (allCardAndUserCardInfo) {
+			let foil = 0;
+			let nonfoil = 0;
+			allCardAndUserCardInfo.forEach((cardData) => {
+				if (cardData.wave === 2) {
+					if (
+						cardData.rarity === "Rare" ||
+						cardData.rarity === "Super Rare" ||
+						cardData.rarity === "Legendary"
+					) {
+						foil = foil + (cardData.foil || 0);
+						nonfoil = nonfoil + (cardData.nonFoil || 0);
+					}
+				}
+			});
+			setRarityCardQuantities({ foil: foil, nonfoil: nonfoil });
+		}
+	}, [allCardAndUserCardInfo]);
 
 	return (
 		<div className="inventory-page">
+			<Image
+				src={immmmm}
+				style={{ width: "90px" }}
+			/>
+
 			<h1>cards</h1>
 			<h3>total foils: {cardQuantities.foil}</h3>
 			<h3>total non-foild: {cardQuantities.nonfoil} </h3>
@@ -83,6 +120,9 @@ export const Inventory = () => {
 				total cards:
 				{cardQuantities.foil + cardQuantities.nonfoil}
 			</h3>
+
+			<h3>total shown cards: {rarityCardQuantities.nonfoil}</h3>
+
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>}
 			<Select
 				defaultValue="grid"

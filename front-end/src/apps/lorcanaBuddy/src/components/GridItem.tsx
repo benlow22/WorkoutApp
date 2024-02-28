@@ -94,7 +94,7 @@ export const GridItem = ({ card }: TProps) => {
 						: card.imageUrl
 				}
 				imageWidth="100px"
-				opacity={card.foil || card.nonFoil ? "1" : "0.2"}
+				opacity={card.foil || card.nonFoil ? "1" : "0.5"}
 			/>
 			<Space
 				style={{

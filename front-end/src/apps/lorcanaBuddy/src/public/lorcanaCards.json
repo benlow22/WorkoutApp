@@ -189,6 +189,22 @@
 		"rarity": "Rare"
 	},
 	{
+		"Artist": "Agnes Christianson",
+		"Set_Name": "Into the Inklands",
+		"Set_Num": 3,
+		"Color": "Amber",
+		"Image": "https://lorcana-api.com/images/99_puppies/99_puppies-large.png",
+		"Cost": 5,
+		"Inkable": false,
+		"Name": "99 Puppies",
+		"Type": "Action",
+		"Rarity": "Uncommon",
+		"Flavor_Text": "\"Two, four, six, plus three is nine, plus two is 11 . . .\"\n-Roger",
+		"Card_Num": 24,
+		"Body_Text": "Whenever one of your characters quests this turn, gain 1 lore.",
+		"Set_ID": "INK"
+	},
+	{
 		"cardName": "heihei-boat_snack",
 		"traits": ["Support"],
 		"set": "The First Chapter",
@@ -3380,9 +3396,7 @@
 	},
 	{
 		"cardName": "mickey_mouse-brave_little_tailor",
-		"traits": [
-			"Evasive (Only characters with Evasive can challenge this characer.)"
-		],
+		"traits": ["Evasive (Only characters with Evasive can challenge this characer.)"],
 		"set": "The First Chapter",
 		"lore-value": 4,
 		"card-number": 115,

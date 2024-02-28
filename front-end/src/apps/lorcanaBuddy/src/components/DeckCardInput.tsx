@@ -45,7 +45,13 @@ export const DeckCardInput = ({
 	}, []);
 
 	useEffect(() => {
-		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
+		getImageUrlFromCardNumber(
+			setImageUrl,
+			Number(cardInput),
+			wave,
+			allCardsCache,
+			isFoil
+		);
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
 	}, [cardInput, isFoil, refreshLorcanaCardImage]);
@@ -89,7 +95,10 @@ export const DeckCardInput = ({
 			name={field.key}
 		>
 			<>
-				<SmallCardImageAboveInput imageUrl={imageUrl} imageWidth="100px" />
+				<SmallCardImageAboveInput
+					imageUrl={imageUrl}
+					imageWidth="100px"
+				/>
 
 				<div style={{ padding: "0px" }}>
 					<Form.Item
@@ -98,17 +107,19 @@ export const DeckCardInput = ({
 						required
 						name={[field.key, "cardNumber"]}
 					>
-						<Input
-							ref={inputRef}
+						<InputNumber
+							// ref={inputRef}
 							key={index}
 							placeholder="Card #"
 							style={{ width: "100px", marginBottom: "0px" }}
 							onFocus={() => {
 								setCurrentCardIndex(index);
 							}}
-							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
+							status={
+								cardInput ? (cardInput > 216 ? "error" : "") : "warning"
+							}
 							maxLength={3}
-							onChange={(value) => handleCardNumberInput(Number(value))}
+							onChange={(value) => handleCardNumberInput(value)}
 							max={217}
 						/>
 					</Form.Item>
@@ -124,7 +135,11 @@ export const DeckCardInput = ({
 						/>
 					</Form.Item>
 
-					<Form.Item hidden={true} name={[field.key, "wave"]} initialValue={wave}>
+					<Form.Item
+						hidden={true}
+						name={[field.key, "wave"]}
+						initialValue={wave}
+					>
 						<Input />
 					</Form.Item>
 					{auth && (
