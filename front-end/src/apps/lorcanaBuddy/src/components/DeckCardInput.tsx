@@ -98,6 +98,7 @@ export const DeckCardInput = ({
 				<SmallCardImageAboveInput
 					imageUrl={imageUrl}
 					imageWidth="100px"
+					wave={wave}
 				/>
 
 				<div style={{ padding: "0px" }}>

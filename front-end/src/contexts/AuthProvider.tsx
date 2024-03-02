@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, ReactNode, useContext, useEffect, useState } from "react";
 import { supabase } from "../supabase/supabaseClient";
 import App from "../App";
 import { IWorkout } from "../api/types";
@@ -16,6 +16,7 @@ type IAuthContext = {
 	initialUrl: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
+	lorcanaCardImages: HTMLImageElement[];
 	contextIsLoading: boolean;
 	setUserId: (userId: string) => void;
 	setUsername: (newName: string) => void;
@@ -24,6 +25,8 @@ type IAuthContext = {
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
 	usersLorcanaCards: ICardAndUserInfo[];
 	setUsersLorcanaCards: (usersCards: ICardAndUserInfo[]) => void;
+	setLorcanaCardImages: (cards: HTMLImageElement[]) => void;
+
 	refreshLorcanaCardImage: boolean;
 	setRefreshLorcanaCardImage: (triggerRefresh: boolean) => void;
 };
@@ -51,9 +54,11 @@ export const AuthContext = React.createContext<IAuthContext>({
 	contextIsLoading: true,
 	setInitialUrl: () => {},
 	supabase: supabase,
+	lorcanaCardImages: [],
 	usersLorcanaCards: [],
 	setUsersLorcanaCards: () => {},
 	refreshLorcanaCardImage: false,
+	setLorcanaCardImages: () => {},
 	setRefreshLorcanaCardImage: () => {},
 });
 
@@ -71,9 +76,11 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [user, setUser] = useState<any>(null);
 	const [auth, setAuth] = useState<boolean | undefined>(undefined);
 	const [initialUrl, setInitialUrl] = useState<string>("");
-	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] = useState<boolean>(false);
+	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] =
+		useState<boolean>(false);
 
 	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
+	const [lorcanaCardImages, setLorcanaCardImages] = useState<HTMLImageElement[]>([]);
 
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
@@ -86,11 +93,25 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			.order("card_number");
 		if (data) {
 			console.log("get all cards", data);
+			const allCardImages = data.map((card) => {
+				const img = new Image();
+				img.src = card.imageUrl;
+				return img;
+				console.log("allIMAGEvide", card.imageUrl);
+			});
+			setLorcanaCardImages(allCardImages);
 			setUsersLorcanaCards(data);
 		} else {
 			console.error(error);
 		}
 	};
+
+	useEffect(() => {
+		if (lorcanaCardImages) {
+			console.log("allCardImages in PRovide", lorcanaCardImages);
+		}
+	}, [lorcanaCardImages]);
+
 	// when going to APP, get session, set if logged in
 	useEffect(() => {
 		const getSessionData = async () => {
@@ -210,6 +231,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				usersLorcanaCards,
 				refreshLorcanaCardImage,
 				setRefreshLorcanaCardImage,
+				lorcanaCardImages,
+				setLorcanaCardImages,
 			}}
 		>
 			{!isLoading && children}

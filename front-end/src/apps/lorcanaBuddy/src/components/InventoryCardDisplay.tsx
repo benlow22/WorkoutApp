@@ -16,10 +16,15 @@ export const InventoryCardDisplay = ({
 				: image.replace("large", "small")
 			: image;
 	const totalCards = (foil ? foil : 0) + (nonFoil ? nonFoil : 0);
+	console.log("WAAAVE:", wave);
 	return (
 		<div className="inventory-card-display">
 			<h4>card # {cardNumber}</h4>
-			<SmallCardImageAboveInput imageUrl={updatedUrl} imageWidth="75px" />
+			<SmallCardImageAboveInput
+				imageUrl={updatedUrl}
+				imageWidth="75px"
+				wave={wave}
+			/>
 			<div className="card-info">
 				<h5>foil = {foil}</h5>
 				<h5>nonfoil = {nonFoil}</h5>
