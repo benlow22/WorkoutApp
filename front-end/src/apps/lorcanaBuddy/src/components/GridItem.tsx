@@ -90,22 +90,24 @@ export const GridItem = ({ card }: TProps) => {
 		.replace(/\ /g, "_")
 		.replace(".", "")
 		.replace("!", "")
+		.replace("?", "")
+
 		.replace("'", "");
 
 	const newImageUrl =
 		card.wave + "-" + card.cardNumber + "_en_" + cardNameAbrv + ".jpg";
+	const quantity = (card.nonFoil ? card.nonFoil : 0) + (card.foil ? 1 : 0);
+	const color = quantity > 3 ? "green" : "red";
 	const imageURL =
-		card.wave === 3
-			? newImageUrl
-			: card.wave === 1
+		card.wave === 1
 			? card.foil
 				? card.imageUrl.replace("large", "foil")
-				: card.imageUrl.replace("large", "small")
-			: card.imageUrl;
+				: newImageUrl
+			: newImageUrl;
 	return (
 		<div className={`grid-card-item`}>
 			<SmallCardImageAboveInput
-				imageUrl={imageURL}
+				imageUrl={newImageUrl}
 				imageWidth="100px"
 				opacity={card.foil || card.nonFoil ? "1" : "0.5"}
 				wave={card.wave}
@@ -115,14 +117,14 @@ export const GridItem = ({ card }: TProps) => {
 					display: "flex",
 				}}
 			>
-				<p style={{ fontSize: "10px" }}>{card.cardNumber}</p>
-				{/* <p style={{ fontSize: "10px" }}>#{newImageUrl}.</p>
+				{/* <p style={{ fontSize: "10px" }}>{newImageUrl}</p> */}
+				<p style={{ fontSize: "10px", color: color }}>#{card.cardNumber}.</p>
 				<p style={{ fontSize: "10px", width: "30px" }}>
 					Reg {card.nonFoil && card.nonFoil > -1 && `${card.nonFoil}`}
 				</p>
 				<p style={{ fontSize: "10px", width: "30px" }}>
 					Foil {card.foil && card.foil > -1 && ` x${card.foil}`}
-				</p> */}
+				</p>
 			</Space>
 		</div>
 	);

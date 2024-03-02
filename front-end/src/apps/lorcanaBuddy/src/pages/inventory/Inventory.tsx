@@ -58,9 +58,9 @@ export const Inventory = () => {
 
 		if (data) {
 			console.log("get all cards", data);
-			const lastWaveDELETE = data.filter((item) => item.wave === 3);
+			// const lastWaveDELETE = data.filter((item) => item.wave === 3);
 			setAllCardAndUserCardInfo(data);
-			setFilteredCards(lastWaveDELETE);
+			setFilteredCards(data);
 		} else {
 			console.error(error);
 		}

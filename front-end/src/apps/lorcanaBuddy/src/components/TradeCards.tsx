@@ -1,5 +1,5 @@
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Switch } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
@@ -19,6 +19,7 @@ export const TradeCards = ({ wave }: TProps) => {
 	const [cardImageUrl, setCardImageUrl] = useState<string>("");
 	const [form] = Form.useForm();
 	const [newCards, setNewCards] = useState<string[]>([]);
+	const [isFoil, setIsFoil] = useState<boolean>(false);
 
 	const handleExcelInput = (input: string) => {
 		const values = input.split("\n");
@@ -37,7 +38,7 @@ export const TradeCards = ({ wave }: TProps) => {
 						.insert([
 							{
 								user_id: userId,
-								is_foil: true,
+								is_foil: isFoil,
 								card_number: Number(card),
 								wave: 3,
 								card_id: `3-${card}`,
@@ -95,6 +96,41 @@ export const TradeCards = ({ wave }: TProps) => {
 		console.log("Failed Cards", failedToUploadCards);
 	};
 
+	const onRemove = (values: string[]) => {
+		console.log("userIDDD", userId, values);
+		let uploadedCards: any[] = [];
+		let failedToUploadCards: any[] = [];
+		if (auth) {
+			values.map((card: any) => {
+				const uploadCardToSupabase = async () => {
+					const { data, error } = await supabase
+						.from("lorcana_user_cards_trade_away")
+						.insert([
+							{
+								user_id: userId,
+								is_foil: isFoil,
+								card_number: Number(card),
+								wave: 3,
+								card_id: `${3}-${card}`,
+							},
+						])
+						.select();
+					if (error) {
+						console.error(error);
+						console.error("card ERROR NEED TO RETRY", card.cardNumber);
+						failedToUploadCards.push(card.number);
+					} else {
+						uploadedCards.push(data);
+					}
+				};
+				uploadCardToSupabase();
+			});
+		}
+		console.log("Deck Input on Finish:");
+		console.log("Uploaded Cards", uploadedCards.length, uploadedCards);
+		console.log("Failed Cards", failedToUploadCards);
+	};
+
 	// const spaceDownHandler = (event: KeyboardEvent) => {
 	// 	// console.log("before space clicked");
 	// 	if (event.code === "Space" || event.code === "KeyV") {
@@ -128,7 +164,6 @@ export const TradeCards = ({ wave }: TProps) => {
 	// 	}
 	// 	setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
 	// }, [currentCardIndex]);
-
 
 	const formItemLayoutWithOutLabel = {
 		wrapperCol: {
@@ -207,13 +242,18 @@ export const TradeCards = ({ wave }: TProps) => {
 						Submit
 					</Button>
 				</Form.Item> */}
-
+				<Switch
+					checkedChildren="foil"
+					unCheckedChildren="non-foil"
+					onChange={() => setIsFoil(!isFoil)}
+				/>
+				<h1>foiled: {isFoil ? "true" : "false"}</h1>
 				<TextArea
 					placeholder="excel input"
 					onChange={(e) => handleExcelInput(e.target.value)}
 				/>
-				<Button onClick={() => handleSubmit()}>Submit</Button>
-
+				<Button onClick={() => handleSubmit()}>Add Cards</Button>
+				<Button onClick={() => onRemove(newCards)}>Remove Cards</Button>
 			</Form>
 		</div>
 	);

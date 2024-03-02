@@ -18,7 +18,7 @@ export const SmallCardImageAboveInput = ({
 	return (
 		<div style={{ minHeight: "70px" }}>
 			<Image
-				src={wave === 3 ? getImageUrl(imageUrl) : imageUrl}
+				src={getImageUrl(imageUrl)}
 				style={{
 					width: imageWidth,
 					borderRadius: "3px",

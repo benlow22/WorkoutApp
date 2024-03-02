@@ -8,7 +8,6 @@ import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
 import { Rarity } from "../../types/lorcana.types";
 import axios from "axios";
 
-
 // returns a list of cards that are filtered
 type TProps = {
 	allCardsAndUsersCards: ICardAndUserInfo[] | undefined;
@@ -78,7 +77,6 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		cardRarityFilters,
 	]);
 
-
 	//creates a check for an array of filters, check if a card passes any of the filters
 
 	const rare = ["Rare", "Super Rare"];
@@ -114,9 +112,10 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		}
 		if (cardTypeFilters.includes(6)) {
 			if (card.cardNumber < 205) {
-				let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
-				if (quantity > 3) {
-					return rare.includes(card.rarity);
+				let quantity = (card.foil ? 1 : 0) + (card.nonFoil ? card.nonFoil : 0);
+
+				if (quantity < 4) {
+					return true;
 				}
 			}
 		}
@@ -167,7 +166,6 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		if (cardRarityFilters.includes(card.rarity)) {
 			return true;
 		}
-
 	};
 	const cardPossesionFiltersOptions = [
 		{ label: "All", value: 0 },
@@ -274,7 +272,6 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 						value={cardRarityFilters}
 					/>
 					<Button onClick={() => apiCall()}>CLICKY</Button>
-
 				</>
 			)}
 		</div>
