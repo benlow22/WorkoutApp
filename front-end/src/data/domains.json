@@ -16,12 +16,7 @@
 			"name": "Workout Buddy",
 			"path": "workoutBuddy",
 			"class": "workout-buddy",
-			"pages": [
-				{ "name": "Workouts", "path": "workouts" },
-				{ "name": "Exercises", "path": "exercises" },
-				{ "name": "Explore", "path": "explore" },
-				{ "name": "Tips", "path": "tips" }
-			],
+			"pages": [{ "name": "Workouts", "path": "workouts" }],
 			"logo": "wb-logo.png"
 		},
 		"amiiboBuddy": {
@@ -31,9 +26,7 @@
 			"pages": [
 				{ "name": "Browse", "path": "browse" },
 				{ "name": "My Collection", "path": "myCollection" },
-				{ "name": "Wishlist", "path": "wishlist" },
 				{ "name": "Checklist", "path": "checklist" },
-				{ "name": "Returns", "path": "returns" },
 				{ "name": "Add Amiibo", "path": "addAmiibo" }
 			],
 			"logo": "ab-logo.png"
@@ -44,8 +37,6 @@
 			"class": "poke-buddy",
 			"pages": [
 				{ "name": "Type Effectiveness", "path": "typeEffectiveness" },
-				{ "name": "Quiz", "path": "quiz" },
-				{ "name": "Search", "path": "search" },
 				{ "name": "Sleep", "path": "pokemonSleep" }
 			],
 			"logo": "pb-logo.png"
@@ -55,11 +46,8 @@
 			"path": "lorcanaBuddy",
 			"class": "lorcana-buddy",
 			"pages": [
-				{ "name": "Browse", "path": "browse" },
-				{ "name": "My Collection", "path": "myCollection" },
-				{ "name": "Wishlist", "path": "wishlist" },
-				{ "name": "Add to Inventory", "path": "addItems" },
 				{ "name": "Inventory", "path": "inventory" },
+				{ "name": "Add to Inventory", "path": "addItems" },
 				{ "name": "Trade or Add", "path": "tradeOrAdd" }
 			],
 			"logo": "lb-logo.png"
