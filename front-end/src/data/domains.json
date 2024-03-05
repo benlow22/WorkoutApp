@@ -55,11 +55,8 @@
 			"path": "lorcanaBuddy",
 			"class": "lorcana-buddy",
 			"pages": [
-				{ "name": "Browse", "path": "browse" },
-				{ "name": "My Collection", "path": "myCollection" },
-				{ "name": "Wishlist", "path": "wishlist" },
-				{ "name": "Add to Inventory", "path": "addItems" },
 				{ "name": "Inventory", "path": "inventory" },
+				{ "name": "Add to Inventory", "path": "addItems" },
 				{ "name": "Trade or Add", "path": "tradeOrAdd" }
 			],
 			"logo": "lb-logo.png"
