@@ -40,8 +40,8 @@ export const TradeCards = ({ wave }: TProps) => {
 								user_id: userId,
 								is_foil: isFoil,
 								card_number: Number(card),
-								wave: 3,
-								card_id: `3-${card}`,
+								wave: wave,
+								card_id: `${wave}-${card}`,
 							},
 						])
 						.select();
