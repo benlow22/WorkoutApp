@@ -218,8 +218,6 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 
 	return (
 		<div className="card-filter-menu">
-			<h4>Filter</h4>
-			<h4>Sort By</h4>
 			<h4>Possesion</h4>
 			<Radio.Group
 				options={cardPossesionFiltersOptions}
@@ -249,31 +247,26 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			/>
 			{showAdvancedSettings && (
 				<>
-					<h1>Advanced Settings</h1>
-					<h1>Ink Color</h1>
+					<h3>Ink Color</h3>
 					<Checkbox.Group
 						options={cardInkFilterOptions}
 						onChange={(values) => setCardInkFilters(values)}
 						value={cardInkFilters}
 					/>
-					<h1>Set</h1>
+					<h3>Set</h3>
 					<Checkbox.Group
 						options={cardSetFilterOptions}
 						onChange={(values) => setCardSetFilters(values)}
 						value={cardSetFilters}
 					/>
-					<h1>Type</h1>
-					<h1>Classification</h1>
-					<h1>Keyword</h1>
-					<h1>Inkable</h1>
-					<h1>Rarity</h1>
-					<h1>Set</h1>
+
+					<h3>Set</h3>
 					<Checkbox.Group
 						options={cardRarityFilterOptions}
 						onChange={(values) => setCardRarityFilters(values)}
 						value={cardRarityFilters}
 					/>
-					<Button onClick={() => apiCall()}>CLICKY</Button>
+					{/* <Button onClick={() => apiCall()}>CLICKY</Button> */}
 				</>
 			)}
 		</div>

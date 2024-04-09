@@ -86,7 +86,6 @@ export const Inventory = () => {
 		{ value: "icons", label: "Icons" },
 		{ value: "card", label: "Card", disabled: true },
 	];
-	const cats = "3-1_en_baloo.jpg";
 	useEffect(() => {
 		getAllCardsAndUsersCards();
 		getQuantityOfCards();
@@ -113,14 +112,6 @@ export const Inventory = () => {
 	}, [allCardAndUserCardInfo]);
 	return (
 		<div className="inventory-page">
-			{/* {lorcanaCardImages.map((card) => (
-				<Image src={card.src} />
-			))} */}
-			<Image
-				src={getImageUrl(cats)}
-				style={{ width: "90px" }}
-			/>
-
 			<h1>cards</h1>
 			<h3>total foils: {cardQuantities.foil}</h3>
 			<h3>total non-foild: {cardQuantities.nonfoil} </h3>
@@ -128,10 +119,10 @@ export const Inventory = () => {
 				total cards:
 				{cardQuantities.foil + cardQuantities.nonfoil}
 			</h3>
-
+			{/* 
 			<h3>total shown cards: {rarityCardQuantities.nonfoil}</h3>
 
-			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>}
+			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
 			<Select
 				defaultValue="grid"
 				style={{ width: 120 }}
