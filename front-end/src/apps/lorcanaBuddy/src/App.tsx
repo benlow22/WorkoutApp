@@ -8,15 +8,47 @@ import { Inventory } from "./pages/inventory/Inventory";
 import { TradeOrAddPage } from "./pages/tradeOrAddPage/TradeOrAddPage";
 
 export const LorcanaBuddy = [
-	<Route index element={<LorcanaBuddyDashboard />} key={"LB1"} />,
-	<Route path="myCollection" element={<MyCollection />} key={"LB2"} />,
-	<Route path="browse" element={<BrowsePage />} key={"LB3"} />,
-	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,
-	<Route path="addItems" element={<AddItems />} key={"LB4"} />,
-	<Route path="inventory" element={<Inventory />} key={"LB6"} />,
-	<Route path="tradeOrAdd" element={<TradeOrAddPage />} key={"LB6"} />,
+	// <Route
+	// 	index
+	// 	element={<Inventory />}
+	// 	key={"LB1"}
+	// />,
+	<Route
+		path="myCollection"
+		element={<MyCollection />}
+		key={"LB2"}
+	/>,
+	<Route
+		path="browse"
+		element={<Inventory />}
+		key={"LB3"}
+	/>,
+	<Route
+		path="wishlist"
+		element={<Wishlist />}
+		key={"LB4"}
+	/>,
+	<Route
+		path="addItems"
+		element={<AddItems />}
+		key={"LB4"}
+	/>,
+	<Route
+		path="inventory"
+		element={<Inventory />}
+		key={"LB6"}
+	/>,
+	<Route
+		path="tradeOrAdd"
+		element={<TradeOrAddPage />}
+		key={"LB6"}
+	/>,
 
-	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
+	<Route
+		path="*"
+		element={<Navigate to="" />}
+		key={"LB5"}
+	/>,
 ];
 
 // export const WorkoutBuddy = [
