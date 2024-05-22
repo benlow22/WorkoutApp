@@ -15,14 +15,7 @@ type TProps = {
 	wave: number;
 };
 
-export const DeckCardInput = ({
-	field,
-	index,
-	remove,
-	setCurrentCardIndex,
-	currentCardIndex,
-	wave,
-}: TProps) => {
+export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
 	const { auth, userId, refreshLorcanaCardImage } = useContext(AuthContext);
 
 	const [imageUrl, setImageUrl] = useState<string>("");
@@ -45,13 +38,7 @@ export const DeckCardInput = ({
 	}, []);
 
 	useEffect(() => {
-		getImageUrlFromCardNumber(
-			setImageUrl,
-			Number(cardInput),
-			wave,
-			allCardsCache,
-			isFoil
-		);
+		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
 	}, [cardInput, isFoil, refreshLorcanaCardImage]);
@@ -67,6 +54,9 @@ export const DeckCardInput = ({
 	useEffect(() => {
 		if (currentCardIndex === index) {
 			inputRef.current?.focus();
+			inputRef.current!.focus({
+				preventScroll: true,
+			});
 		}
 	}, [currentCardIndex, inputRef]);
 
@@ -95,60 +85,36 @@ export const DeckCardInput = ({
 			name={field.key}
 		>
 			<>
-				<SmallCardImageAboveInput
-					imageUrl={imageUrl}
-					imageWidth="100px"
-					wave={wave}
-				/>
+				<SmallCardImageAboveInput imageUrl={imageUrl} imageWidth="100px" wave={wave} />
 
 				<div style={{ padding: "0px" }}>
-					<Form.Item
-						validateTrigger={["onChange", "onBlur"]}
-						noStyle
-						required
-						name={[field.key, "cardNumber"]}
-					>
-						<InputNumber
-							// ref={inputRef}
+					<Form.Item validateTrigger={["onChange", "onBlur"]} noStyle required name={[field.key, "cardNumber"]}>
+						<Input
+							ref={inputRef}
 							key={index}
 							placeholder="Card #"
 							style={{ width: "100px", marginBottom: "0px" }}
 							onFocus={() => {
-								setCurrentCardIndex(index);
+								setCurrentCardIndex(index),
+									inputRef.current!.focus({
+										cursor: "all",
+									});
 							}}
-							status={
-								cardInput ? (cardInput > 216 ? "error" : "") : "warning"
-							}
+							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
-							onChange={(value) => handleCardNumberInput(value)}
+							onChange={(value) => handleCardNumberInput(Number(value))}
 							max={217}
 						/>
 					</Form.Item>
-					<Form.Item
-						style={{ width: "100px", marginBottom: "0px" }}
-						name={[field.key, "isFoil"]}
-						initialValue={false}
-					>
-						<Switch
-							checkedChildren="foil"
-							unCheckedChildren="non-foil"
-							onClick={() => setIsFoil(!isFoil)}
-						/>
+					<Form.Item style={{ width: "100px", marginBottom: "0px" }} name={[field.key, "isFoil"]} initialValue={false}>
+						<Switch checkedChildren="foil" unCheckedChildren="non-foil" onClick={() => setIsFoil(!isFoil)} />
 					</Form.Item>
 
-					<Form.Item
-						hidden={true}
-						name={[field.key, "wave"]}
-						initialValue={wave}
-					>
+					<Form.Item hidden={true} name={[field.key, "wave"]} initialValue={wave}>
 						<Input />
 					</Form.Item>
 					{auth && (
-						<Form.Item
-							hidden={true}
-							name={[field.key, "user_id"]}
-							initialValue={userId}
-						>
+						<Form.Item hidden={true} name={[field.key, "user_id"]} initialValue={userId}>
 							<Input />
 						</Form.Item>
 					)}
