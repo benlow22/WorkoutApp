@@ -5,7 +5,7 @@ import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
 import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
 import { AuthContext } from "../../../../contexts/AuthProvider";
-
+import set4cards from "./wave4.json";
 type TProps = {
 	field: FormListFieldData;
 	index: number;
@@ -18,7 +18,7 @@ type TProps = {
 export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
 	const { auth, userId, refreshLorcanaCardImage } = useContext(AuthContext);
 
-	const [imageUrl, setImageUrl] = useState<string>("");
+	const [imageUrl, setImageUrl] = useState<string | undefined>("");
 	const [cardInput, setCardInput] = useState<number | null>();
 
 	const [isFoil, setIsFoil] = useState<boolean>(false);
@@ -38,9 +38,14 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	}, []);
 
 	useEffect(() => {
-		getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
-		// console.log("card input:", cardInput);
-		// console.log("WAVE", wave);
+		// getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
+		console.log("card input:", cardInput);
+		console.log("WAVE", wave);
+		if (cardInput && cardInput > 0 && cardInput < 216) {
+			const newTestImage = set4cards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
+			console.log("NEW test image:", newTestImage[0].Image);
+			cardInput ? setImageUrl(newTestImage[0].Image) : setImageUrl("");
+		}
 	}, [cardInput, isFoil, refreshLorcanaCardImage]);
 
 	// focus on input when component is made
@@ -61,6 +66,7 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	}, [currentCardIndex, inputRef]);
 
 	const handleCardNumberInput = (value: number | null) => {
+		console.log("ASDF, ", value);
 		if (value && value > 216) {
 			setCardInput(0);
 		} else {
@@ -102,7 +108,7 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 							}}
 							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
-							onChange={(value) => handleCardNumberInput(Number(value))}
+							onChange={(e) => handleCardNumberInput(Number(e.target.value))}
 							max={217}
 						/>
 					</Form.Item>

@@ -19,11 +19,9 @@ export type TCardRef = {
 };
 export const Inventory = () => {
 	// const images = require.context('../')
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } =
-		useContext(AuthContext);
+	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
-	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
-		useState<ICardAndUserInfo[]>();
+	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
 
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	// const [usersCards, setUsersCards] = useState<TCardRef[]>([]);
@@ -97,11 +95,7 @@ export const Inventory = () => {
 			let nonfoil = 0;
 			allCardAndUserCardInfo.forEach((cardData) => {
 				if (cardData.wave === 2) {
-					if (
-						cardData.rarity === "Rare" ||
-						cardData.rarity === "Super Rare" ||
-						cardData.rarity === "Legendary"
-					) {
+					if (cardData.rarity === "Rare" || cardData.rarity === "Super Rare" || cardData.rarity === "Legendary") {
 						foil = foil + (cardData.foil || 0);
 						nonfoil = nonfoil + (cardData.nonFoil || 0);
 					}
@@ -123,30 +117,16 @@ export const Inventory = () => {
 			<h3>total shown cards: {rarityCardQuantities.nonfoil}</h3>
 
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
-			<Select
-				defaultValue="grid"
-				style={{ width: 120 }}
-				onSelect={(value) => setViewType(value)}
-				options={viewTypeOptions}
-			/>
-			<CardFilterMenu
-				allCardsAndUsersCards={allCardAndUserCardInfo}
-				setFilteredCards={setFilteredCards}
-			/>
-			{viewType === "grid" && allCardAndUserCardInfo && (
-				<GridCardDisplay allCardsAndUsersCards={filteredCards} />
-			)}
+			<Select defaultValue="grid" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
+			<CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} />
+			{viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />}
 
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">
 					{filteredCards.map((card) => (
 						<InventoryCardDisplay
 							nonFoil={card.nonFoil}
-							image={
-								card.wave === 3
-									? `3-${card.cardNumber}_en_${card.name}.jpg`
-									: card.imageUrl
-							}
+							image={card.wave === 3 ? `3-${card.cardNumber}_en_${card.name}.jpg` : card.imageUrl}
 							cardNumber={card.cardNumber}
 							foil={card.foil}
 							wave={card.wave}

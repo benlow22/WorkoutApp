@@ -31,27 +31,24 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			return Promise.reject();
 		}
 	};
+
 	const apiCall = async () => {
 		console.log("double Clicky");
-		let url =
-			"https://lorcana-api.com/images/goofy/knight_for_a_day/goofy-knight_for_a_day-large.png";
+		let url = "https://lorcana-api.com/images/goofy/knight_for_a_day/goofy-knight_for_a_day-large.png";
 		await callIt(url).then((data: any) => {
 			console.log("got data", data);
 		});
 	};
+
 	useEffect(() => {
 		console.log("CARDTYPEFILTERS", cardTypeFilters);
 		let filteredCards = allCardsAndUsersCards;
 		switch (cardPossesionFilters) {
 			case 1: // owned
-				filteredCards = allCardsAndUsersCards?.filter(
-					(card) => card.foil || card.nonFoil
-				);
+				filteredCards = allCardsAndUsersCards?.filter((card) => card.foil || card.nonFoil);
 				break;
 			case 2: // not Owned
-				filteredCards = allCardsAndUsersCards?.filter(
-					(card) => !card.foil && !card.nonFoil
-				);
+				filteredCards = allCardsAndUsersCards?.filter((card) => !card.foil && !card.nonFoil);
 				break;
 			default:
 				break;
@@ -69,13 +66,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			filteredCards = filteredCards?.filter((card) => cardRarityFilterFn(card));
 		}
 		setFilteredCards(filteredCards);
-	}, [
-		cardPossesionFilters,
-		cardTypeFilters,
-		cardSetFilters,
-		cardInkFilters,
-		cardRarityFilters,
-	]);
+	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters, cardRarityFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
 
@@ -99,8 +90,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			}
 		}
 		if (cardTypeFilters.includes(4)) {
-			let quantity =
-				(card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
+			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
 			if (quantity > 8) {
 				return true;
 			}
@@ -118,6 +108,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 				if (quantity < 4) {
 					return true;
 				}
+			}
+		}
+		if (cardTypeFilters.includes(7)) {
+			if (!card.foil) {
+				return true;
 			}
 		}
 		return false;
@@ -181,7 +176,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Enchanted", value: 3 },
 		{ label: "more than 8", value: 4 },
 		{ label: "more than 8 nonfoil", value: 5 },
-		// { label: "missing foil", value: 5 },
+		{ label: "missing foil", value: 7 },
 		{ label: "rare", value: 6 },
 	];
 
@@ -227,45 +222,21 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			/>
 			<h4>card typey</h4>
 
-			<Checkbox.Group
-				options={cardTypeFilterOptions}
-				onChange={(values) => setCardTypeFilters(values)}
-				value={cardTypeFilters}
-			/>
+			<Checkbox.Group options={cardTypeFilterOptions} onChange={(values) => setCardTypeFilters(values)} value={cardTypeFilters} />
 			<h4></h4>
-			<Button
-				type="text"
-				onClick={() => setShowAdvancedSettings(!showAdvancedSettings)}
-				icon={<SettingOutlined />}
-			>
+			<Button type="text" onClick={() => setShowAdvancedSettings(!showAdvancedSettings)} icon={<SettingOutlined />}>
 				Advanced Settings
 			</Button>
-			<Button
-				type="primary"
-				icon={<ClearOutlined />}
-				onClick={handleClearFilters}
-			/>
+			<Button type="primary" icon={<ClearOutlined />} onClick={handleClearFilters} />
 			{showAdvancedSettings && (
 				<>
 					<h3>Ink Color</h3>
-					<Checkbox.Group
-						options={cardInkFilterOptions}
-						onChange={(values) => setCardInkFilters(values)}
-						value={cardInkFilters}
-					/>
+					<Checkbox.Group options={cardInkFilterOptions} onChange={(values) => setCardInkFilters(values)} value={cardInkFilters} />
 					<h3>Set</h3>
-					<Checkbox.Group
-						options={cardSetFilterOptions}
-						onChange={(values) => setCardSetFilters(values)}
-						value={cardSetFilters}
-					/>
+					<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
 
 					<h3>Set</h3>
-					<Checkbox.Group
-						options={cardRarityFilterOptions}
-						onChange={(values) => setCardRarityFilters(values)}
-						value={cardRarityFilters}
-					/>
+					<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
 					{/* <Button onClick={() => apiCall()}>CLICKY</Button> */}
 				</>
 			)}

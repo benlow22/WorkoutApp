@@ -1,14 +1,5 @@
 import { CloseOutlined } from "@ant-design/icons";
-import {
-	Button,
-	DatePicker,
-	Form,
-	Input,
-	InputNumber,
-	Select,
-	Space,
-	Switch,
-} from "antd";
+import { Button, DatePicker, Form, Input, InputNumber, Select, Space, Switch } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useEffect, useState } from "react";
@@ -41,6 +32,7 @@ const waveNames = [
 	{ value: 1, label: "The First Chapter" },
 	{ value: 2, label: "Rise of the Floodborn" },
 	{ value: 3, label: "Into the Inklands" },
+	{ value: 4, label: "Ursula's Return" },
 ];
 
 export const getAllCards = async () => {
@@ -202,85 +194,35 @@ export const AddItems = () => {
 				}}
 				initialValues={data}
 			>
-				<Form.Item
-					name={["receipt", "date"]}
-					label="Date"
-				>
+				<Form.Item name={["receipt", "date"]} label="Date">
 					<DatePicker format={dateFormat} />
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "advancedInput"]}
-					label="Advanced Settings"
-				>
-					<Switch
-						onClick={() => setAdvancedInput(!advancedInput)}
-						defaultChecked={false}
-						checked={advancedInput}
-					/>
+				<Form.Item name={["receipt", "advancedInput"]} label="Advanced Settings">
+					<Switch onClick={() => setAdvancedInput(!advancedInput)} defaultChecked={false} checked={advancedInput} />
 				</Form.Item>
 				<Form.Item label="Location">
 					<div>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "store"]}
-						>
-							<Input
-								placeholder="Store"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "store"]}>
+							<Input placeholder="Store" style={locationInput} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "street"]}
-						>
-							<Input
-								placeholder="Street"
-								style={{ width: "150px" }}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "street"]}>
+							<Input placeholder="Street" style={{ width: "150px" }} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "city"]}
-						>
-							<Input
-								placeholder="City"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "city"]}>
+							<Input placeholder="City" style={locationInput} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", regionName]}
-						>
-							<Input
-								placeholder="state"
-								style={{ width: "50px" }}
-							/>
+						<Form.Item noStyle name={["receipt", "location", regionName]}>
+							<Input placeholder="state" style={{ width: "50px" }} />
 						</Form.Item>
-						<Form.Item
-							noStyle
-							name={["receipt", "location", "country"]}
-						>
-							<Input
-								placeholder="Country"
-								style={locationInput}
-							/>
+						<Form.Item noStyle name={["receipt", "location", "country"]}>
+							<Input placeholder="Country" style={locationInput} />
 						</Form.Item>
 					</div>
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "price"]}
-					label="Paid Price"
-				>
-					<InputNumber
-						placeholder="$$$"
-						style={{ width: "100px" }}
-						min={0}
-					/>
+				<Form.Item name={["receipt", "price"]} label="Paid Price">
+					<InputNumber placeholder="$$$" style={{ width: "100px" }} min={0} />
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "currency"]}
-					label="Currency"
-				>
+				<Form.Item name={["receipt", "currency"]} label="Currency">
 					<Select
 						placeholder="CAD"
 						style={{ width: "100px" }}
@@ -291,26 +233,11 @@ export const AddItems = () => {
 						]}
 					/>
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "paid_by"]}
-					label="Paid By"
-				>
-					<Input
-						placeholder="who"
-						style={{ width: "100px" }}
-						min={0}
-					/>
+				<Form.Item name={["receipt", "paid_by"]} label="Paid By">
+					<Input placeholder="who" style={{ width: "100px" }} min={0} />
 				</Form.Item>
-				<Form.Item
-					name={["receipt", "paid_off"]}
-					label="Paid Off"
-				>
-					<Switch
-						checkedChildren="Paid"
-						defaultChecked
-						unCheckedChildren="Unpaid"
-						style={{ width: "100px" }}
-					/>
+				<Form.Item name={["receipt", "paid_off"]} label="Paid Off">
+					<Switch checkedChildren="Paid" defaultChecked unCheckedChildren="Unpaid" style={{ width: "100px" }} />
 				</Form.Item>
 				<Form.Item label="Products">
 					<Form.List name={["receipt", "products"]}>
@@ -336,11 +263,7 @@ export const AddItems = () => {
 											]}
 											id="1"
 										>
-											<Select
-												options={productTypes}
-												style={{ width: "150px" }}
-												placeholder="Booster Pack"
-											/>
+											<Select options={productTypes} style={{ width: "150px" }} placeholder="Booster Pack" />
 										</Form.Item>
 										<Form.Item
 											rules={[
@@ -353,11 +276,7 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "quantity"]}
 										>
-											<InputNumber
-												placeholder="Quantity"
-												min={1}
-												style={{ width: "80px" }}
-											/>
+											<InputNumber placeholder="Quantity" min={1} style={{ width: "80px" }} />
 										</Form.Item>
 										<Form.Item
 											id="3"
@@ -370,11 +289,7 @@ export const AddItems = () => {
 											noStyle
 											name={[field.name, "wave"]}
 										>
-											<Select
-												placeholder="Wave"
-												options={waveNames}
-												style={{ width: "200px" }}
-											/>
+											<Select placeholder="Wave" options={waveNames} style={{ width: "200px" }} />
 										</Form.Item>
 										<CloseOutlined
 											onClick={() => {
@@ -384,11 +299,7 @@ export const AddItems = () => {
 										/>
 									</Space>
 								))}
-								<Button
-									type="dashed"
-									onClick={() => subOpt.add()}
-									block
-								>
+								<Button type="dashed" onClick={() => subOpt.add()} block>
 									+ Add Product
 								</Button>
 							</div>
@@ -401,10 +312,7 @@ export const AddItems = () => {
 					></BoosterPack> */}
 
 				<Form.Item>
-					<Button
-						type="primary"
-						htmlType="submit"
-					>
+					<Button type="primary" htmlType="submit">
 						{productsQuantity.length < 1 ? "Next" : "Update"}
 					</Button>
 				</Form.Item>
