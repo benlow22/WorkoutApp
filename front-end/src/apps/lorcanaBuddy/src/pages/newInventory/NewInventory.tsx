@@ -39,10 +39,17 @@ export type TNewCard = {
 
 export const NewInventory = () => {
 	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
-	const [allCards, setAllCards] = useState();
+	const [allCards, setAllCards] = useState<TNewCard[] | null>();
 	const getAllCards = async () => {
-		let { data, error } = await supabase.from("new_cards").select("*").order("Set_Num").order("Card_Num");
+		let { data, error } = await supabase
+			.from("new_cards")
+			.select(
+				"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
+			)
+			.order("Set_Num")
+			.order("Card_Num");
 		if (data) {
+			setAllCards(data);
 			console.log("get all cards", data);
 		} else {
 			console.error(error);
