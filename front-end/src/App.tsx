@@ -18,28 +18,25 @@ import { ChecklistPage } from "./pages/buddySystemHomepage/ChecklistPage";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
-		<Route path="/" element={<ChecklistPage />}></Route>
-		// <Route path="/" element={<Root />}>
-		// 	<Route index element={<BuddySystemDashboard />} />
-		// 	<Route path=":domain/createUsername" element={<NewUsername />} />
-		// 	<Route path=":domain/login" element={<LoginPage />} />
-		// 	{/* only authenticated users can use these routes  */}
-		// 	{/* <Route path="buddySystem" element={<BuddySystemDashboard />} /> */}
-		// 	<Route path="workoutBuddy">{WorkoutBuddy}</Route>
-		// 	<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
-		// 	{/* <Route element={<AuthRoute />}> */}
-		// 	<Route path="pokeBuddy">{PokeBuddy}</Route>
-		// 	<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
-		// 	{/* <Route path="account">
-		// 		<Route path="createUsername" element={<CreateUsernamePage />} />
-		// 		</Route> */}
-		// 	{/* </Route> */}
-		// 	<Route
-		// 		path="buddySystem/resetpassword"
-		// 		element={<ResetPasswordPage />}
-		// 	/>
-		// 	<Route path="*" element={<Navigate to="" />} />,
-		// </Route>
+		// <Route path="/" element={<ChecklistPage />}></Route>
+		<Route path="/" element={<Root />}>
+			<Route index element={<BuddySystemDashboard />} />
+			<Route path=":domain/createUsername" element={<NewUsername />} />
+			<Route path=":domain/login" element={<LoginPage />} />
+			{/* only authenticated users can use these routes  */}
+			{/* <Route path="buddySystem" element={<BuddySystemDashboard />} /> */}
+			<Route path="workoutBuddy">{WorkoutBuddy}</Route>
+			<Route path="amiiboBuddy">{AmiiboBuddy}</Route>
+			{/* <Route element={<AuthRoute />}> */}
+			<Route path="pokeBuddy">{PokeBuddy}</Route>
+			<Route path="lorcanaBuddy">{LorcanaBuddy}</Route>
+			{/* <Route path="account">
+				<Route path="createUsername" element={<CreateUsernamePage />} />
+				</Route> */}
+			{/* </Route> */}
+			<Route path="buddySystem/resetpassword" element={<ResetPasswordPage />} />
+			<Route path="*" element={<Navigate to="" />} />,
+		</Route>
 	)
 );
 
