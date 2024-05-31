@@ -45,6 +45,8 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 			const newTestImage = set4cards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
 			// console.log("NEW test image:", newTestImage[0].Image);
 			cardInput ? setImageUrl(newTestImage[0].Image) : setImageUrl("");
+		} else {
+			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
 		}
 	}, [cardInput, isFoil, refreshLorcanaCardImage]);
 
