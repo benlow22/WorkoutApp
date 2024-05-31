@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 export default function Root() {
 	return (
 		<>
-			{/* <Header />  */}
+			<Header />
 			<main>
 				<div className="content">
 					<Outlet />

@@ -63,7 +63,35 @@ export const NewInventory = () => {
 			.order("Set_Num")
 			.order("Card_Num");
 		if (data) {
-			let wave = data.filter((card) => card.Set_Num === 2);
+			//PUPPIES
+			// let wave3 = data.filter((card) => card.Set_Num === 3);
+			// const sortedData = wave3.sort((a, b) => {
+			// 	return a.Card_Num - b.Card_Num;
+			// });
+			// const notPuppies = wave3.filter((card) => {
+			// 	if (card.ID !== "3-4a" && card.ID !== "3-4b" && card.ID !== "3-4c" && card.ID !== "3-4d" && card.ID !== "3-4e") {
+			// 		return card;
+			// 	}
+			// });
+			// const puppies = wave3.filter((card) => {
+			// 	if (card.ID === "3-4a" || card.ID === "3-4b" || card.ID === "3-4c" || card.ID === "3-4d" || card.ID === "3-4e") {
+			// 		return card;
+			// 	}
+			// });
+			// const sortedNonPup = notPuppies.sort((a, b) => (Number(a.Card_Num) < Number(b.Card_Num) ? -1 : 1));
+			// // let wave3 = sortedData.filter((card) => card.Set_Num === 3);
+			// sortedNonPup.splice(3, 1, ...puppies);
+			// setAllCards(sortedNonPup);
+
+			//NONPUPPIES
+			// let wave = data.filter((card) => card.Set_Num === 1);
+			// const sortedData = wave.sort((a, b) => {
+			// 	return a.Card_Num - b.Card_Num;
+			// });
+			// setAllCards(sortedData);
+
+			//Green and Red
+			let wave = data.filter((card) => card.Set_Num === 2 && card.Card_Num > 136);
 			const sortedData = wave.sort((a, b) => {
 				return a.Card_Num - b.Card_Num;
 			});
@@ -80,7 +108,7 @@ export const NewInventory = () => {
 			// 	return card.Image;
 			// });
 			// setAllCardImages(cardImages);
-			setTestSmallBatch(sortedData.slice(0, 50));
+			// setTestSmallBatch(sortedData.slice(0, 50));
 			// console.log("get all cards", cardImages);
 		} else {
 			console.error(error);
@@ -120,10 +148,26 @@ export const NewInventory = () => {
 	// const batch4 = allCards?.slice(61, 68);
 
 	return (
-		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap" }}>
-			<div className="3x3" style={{}}>
+		<div className="inventory-page" style={{ backgroundColor: "white", display: "flex", flexWrap: "wrap", marginLeft: "20px", width: "700px" }}>
+			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{testSmallBatch && testSmallBatch.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{batch1 && batch1?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+				</div>
+			</div>
+			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
+				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+					{batch2 && batch2?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+				</div>
+			</div>
+			<p style={{ width: "100%", borderRight: "none" }}></p>
+			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
+				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+					{batch3 && batch3?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+				</div>
+			</div>
+			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black", marginBottom: "5px" }}>
+				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+					{batch4 && batch4?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
 				</div>
 			</div>
 		</div>
