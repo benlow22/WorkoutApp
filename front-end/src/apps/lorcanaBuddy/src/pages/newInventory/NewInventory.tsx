@@ -41,7 +41,7 @@ export type TNewCard = {
 /// when adding new cards,
 // change wave and uncomment
 export const NewInventory = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
+	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, setLorcanaCards } = useContext(AuthContext);
 	const [allCards, setAllCards] = useState<TNewCard[] | null>();
 	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 
@@ -63,16 +63,20 @@ export const NewInventory = () => {
 			.order("Set_Num")
 			.order("Card_Num");
 		if (data) {
-			let wave = data.filter((card) => card.Set_Num === 2);
-			const sortedData = wave.sort((a, b) => {
-				return a.Card_Num - b.Card_Num;
+			const sortedData = data.sort((a, b) => {
+				return a.Set_Num - b.Set_Num || a.Card_Num - b.Card_Num;
 			});
+			setLorcanaCards(sortedData);
+			let wave = data.filter((card) => card.Set_Num === 2);
+			// const sortedData = wave.sort((a, b) => {
+			// 	return a.Card_Num - b.Card_Num;
+			// });
 			setAllCards(sortedData);
 
-			console.log(
-				"PUPPIES FOUND : ",
-				sortedData.map((card) => card.Card_Num)
-			);
+			// console.log(
+			// 	"PUPPIES FOUND : ",
+			// 	sortedData.map((card) => card.Card_Num)
+			// );
 			// setAllCards(sortedData.filter((card) => card.Set_Num === 3 && card.Card_Num === "7"));
 			// setFirstCard(sortedData[0]);
 			// const cardImages = data.map((card) => {

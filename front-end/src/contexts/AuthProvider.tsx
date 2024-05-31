@@ -5,6 +5,7 @@ import { IWorkout } from "../api/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../database.types";
 import { ICardAndUserInfo } from "../apps/lorcanaBuddy/src/components/GridCardDisplay";
+import { TNewCard } from "../apps/lorcanaBuddy/src/pages/newInventory/NewInventory";
 
 type IAuthContext = {
 	supabase: SupabaseClient<Database>;
@@ -16,6 +17,7 @@ type IAuthContext = {
 	initialUrl: string;
 	isLoggedIn: boolean;
 	workouts: IWorkout[];
+	lorcanaCards: TNewCard[];
 	lorcanaCardImages: HTMLImageElement[];
 	contextIsLoading: boolean;
 	setUserId: (userId: string) => void;
@@ -26,7 +28,7 @@ type IAuthContext = {
 	usersLorcanaCards: ICardAndUserInfo[];
 	setUsersLorcanaCards: (usersCards: ICardAndUserInfo[]) => void;
 	setLorcanaCardImages: (cards: HTMLImageElement[]) => void;
-
+	setLorcanaCards: (cards: TNewCard[]) => void;
 	refreshLorcanaCardImage: boolean;
 	setRefreshLorcanaCardImage: (triggerRefresh: boolean) => void;
 };
@@ -39,6 +41,8 @@ export interface ISession {
 }
 
 export const AuthContext = React.createContext<IAuthContext>({
+	lorcanaCards: [],
+	setLorcanaCards: () => {},
 	userId: "",
 	username: "",
 	isLoggedIn: false,
@@ -76,9 +80,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [user, setUser] = useState<any>(null);
 	const [auth, setAuth] = useState<boolean | undefined>(undefined);
 	const [initialUrl, setInitialUrl] = useState<string>("");
-	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] =
-		useState<boolean>(false);
-
+	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] = useState<boolean>(false);
+	const [lorcanaCards, setLorcanaCards] = useState<TNewCard[]>([]);
 	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
 	const [lorcanaCardImages, setLorcanaCardImages] = useState<HTMLImageElement[]>([]);
 
@@ -233,6 +236,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				setRefreshLorcanaCardImage,
 				lorcanaCardImages,
 				setLorcanaCardImages,
+				setLorcanaCards,
+				lorcanaCards,
 			}}
 		>
 			{!isLoading && children}

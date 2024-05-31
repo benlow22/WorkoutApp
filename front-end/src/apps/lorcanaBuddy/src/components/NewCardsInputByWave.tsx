@@ -5,6 +5,7 @@ import { DeckCardInput } from "./DeckCardInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { supabase } from "../../../../supabase/supabaseClient";
 import { v4 as uuidv4 } from "uuid";
+import { NewDeckCardInput } from "./NewDeckCardInput";
 
 type TProps = {
 	wave: number;
@@ -89,7 +90,10 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 
 	const spaceDownHandler = (event: KeyboardEvent) => {
 		// console.log("before space clicked");
-		if (event.code === "Space" || event.code === "KeyV") {
+		if (
+			event.code === "Space"
+			//  || event.code === "KeyV"
+		) {
 			event.preventDefault();
 			setIsSpaceClicked(true);
 		}
@@ -145,7 +149,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 								{numberOfCards > 0 &&
 									fields.map((field, index) => (
 										<div key={index}>
-											<DeckCardInput
+											<NewDeckCardInput
 												wave={wave}
 												field={field}
 												index={index}
