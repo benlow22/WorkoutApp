@@ -39,11 +39,11 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 
 	useEffect(() => {
 		// getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
-		console.log("card input:", cardInput);
-		console.log("WAVE", wave);
+		// console.log("card input:", cardInput);
+		// console.log("WAVE", wave);
 		if (cardInput && cardInput > 0 && cardInput < 216) {
 			const newTestImage = set4cards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
-			console.log("NEW test image:", newTestImage[0].Image);
+			// console.log("NEW test image:", newTestImage[0].Image);
 			cardInput ? setImageUrl(newTestImage[0].Image) : setImageUrl("");
 		}
 	}, [cardInput, isFoil, refreshLorcanaCardImage]);
@@ -66,7 +66,7 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 	}, [currentCardIndex, inputRef]);
 
 	const handleCardNumberInput = (value: number | null) => {
-		console.log("ASDF, ", value);
+		// console.log("ASDF, ", value);
 		if (value && value > 216) {
 			setCardInput(0);
 		} else {

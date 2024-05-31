@@ -8,6 +8,7 @@ import { Inventory } from "./pages/inventory/Inventory";
 import { TradeOrAddPage } from "./pages/tradeOrAddPage/TradeOrAddPage";
 import { Checklist } from "./pages/checklist/Checkllist";
 import { NewInventory } from "./pages/newInventory/NewInventory";
+import { NewInput } from "./pages/newInput/NewInput";
 
 export const LorcanaBuddy = [
 	// <Route
@@ -23,6 +24,7 @@ export const LorcanaBuddy = [
 	<Route path="tradeOrAdd" element={<TradeOrAddPage />} key={"LB6"} />,
 	<Route path="checklist" element={<Checklist />} key={"LB6"} />,
 	<Route path="newInventory" element={<NewInventory />} key={"LB6"} />,
+	<Route path="newInput" element={<NewInput />} key={"LB6"} />,
 
 	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
 ];
