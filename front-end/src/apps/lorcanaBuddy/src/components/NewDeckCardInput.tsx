@@ -16,7 +16,7 @@ type TProps = {
 };
 
 export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage } = useContext(AuthContext);
+	const { auth, userId, refreshLorcanaCardImage, lorcanaCards } = useContext(AuthContext);
 
 	const [imageUrl, setImageUrl] = useState<string | undefined>("");
 	const [cardInput, setCardInput] = useState<number | "4a" | "4b" | "4c" | "4d" | "4e" | null>();
@@ -42,7 +42,7 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
 		if (cardInput) {
-			const newTestImage = set4cards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
+			const newTestImage = lorcanaCards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
 			setImageUrl(newTestImage[0].Image);
 		} else {
 			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
