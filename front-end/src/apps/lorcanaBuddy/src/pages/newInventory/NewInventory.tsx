@@ -41,59 +41,59 @@ export type TNewCard = {
 /// when adding new cards,
 // change wave and uncomment
 export const NewInventory = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, setLorcanaCards } = useContext(AuthContext);
+	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, setLorcanaCards, lorcanaCards } = useContext(AuthContext);
 	const [allCards, setAllCards] = useState<TNewCard[] | null>();
 	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 
 	//Test Variables
 	const [firstCard, setFirstCard] = useState<TNewCard>();
-	const [testSmallBatch, setTestSmallBatch] = useState<TNewCard[]>();
+	const [testSmallBatch, setTestSmallBatch] = useState<TNewCard[]>(lorcanaCards.slice(0, 59));
 
 	const preloadImage = (url: string) => {
 		var img = new Image();
 		img.src = url;
 	};
 
-	const getAllCards = async () => {
-		let { data, error } = await supabase
-			.from("new_cards")
-			.select(
-				"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
-			)
-			.order("Set_Num")
-			.order("Card_Num");
-		if (data) {
-			const sortedData = data.sort((a, b) => {
-				return a.Set_Num - b.Set_Num || a.Card_Num - b.Card_Num;
-			});
-			setLorcanaCards(sortedData);
-			let wave = data.filter((card) => card.Set_Num === 2);
-			// const sortedData = wave.sort((a, b) => {
-			// 	return a.Card_Num - b.Card_Num;
-			// });
-			setAllCards(sortedData);
+	// const getAllCards = async () => {
+	// 	let { data, error } = await supabase
+	// 		.from("new_cards")
+	// 		.select(
+	// 			"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
+	// 		)
+	// 		.order("Set_Num")
+	// 		.order("Card_Num");
+	// 	if (data) {
+	// 		const sortedData = data.sort((a, b) => {
+	// 			return a.Set_Num - b.Set_Num || a.Card_Num - b.Card_Num;
+	// 		});
+	// 		setLorcanaCards(sortedData);
+	// 		let wave = data.filter((card) => card.Set_Num === 2);
+	// 		// const sortedData = wave.sort((a, b) => {
+	// 		// 	return a.Card_Num - b.Card_Num;
+	// 		// });
+	// 		setAllCards(sortedData);
 
-			// console.log(
-			// 	"PUPPIES FOUND : ",
-			// 	sortedData.map((card) => card.Card_Num)
-			// );
-			// setAllCards(sortedData.filter((card) => card.Set_Num === 3 && card.Card_Num === "7"));
-			// setFirstCard(sortedData[0]);
-			// const cardImages = data.map((card) => {
-			// 	preloadImage(card.Image);
-			// 	return card.Image;
-			// });
-			// setAllCardImages(cardImages);
-			setTestSmallBatch(sortedData.slice(0, 50));
-			// console.log("get all cards", cardImages);
-		} else {
-			console.error(error);
-		}
-	};
+	// console.log(
+	// 	"PUPPIES FOUND : ",
+	// 	sortedData.map((card) => card.Card_Num)
+	// );
+	// setAllCards(sortedData.filter((card) => card.Set_Num === 3 && card.Card_Num === "7"));
+	// setFirstCard(sortedData[0]);
+	// const cardImages = data.map((card) => {
+	// 	preloadImage(card.Image);
+	// 	return card.Image;
+	// });
+	// 		// setAllCardImages(cardImages);
+	// 		setTestSmallBatch(sortedData.slice(0, 50));
+	// 		// console.log("get all cards", cardImages);
+	// 	} else {
+	// 		console.error(error);
+	// 	}
+	// };
 
-	useEffect(() => {
-		getAllCards();
-	}, []);
+	// useEffect(() => {
+	// 	getAllCards();
+	// }, []);
 
 	// Page 1
 	const batch1 = allCards?.slice(0, 9);

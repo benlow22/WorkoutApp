@@ -109,9 +109,25 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		}
 	};
 
+	const getAllCards = async () => {
+		let { data, error } = await supabase
+			.from("new_cards")
+			.select(
+				"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
+			)
+			.order("Set_Num")
+			.order("Card_Num");
+		if (data) {
+			const sortedData = data.sort((a, b) => {
+				return a.Set_Num - b.Set_Num || a.Card_Num - b.Card_Num;
+			});
+			setLorcanaCards(sortedData);
+		}
+	};
+	getAllCards();
 	useEffect(() => {
 		if (lorcanaCardImages) {
-			console.log("allCardImages in PRovide", lorcanaCardImages);
+			// console.log("allCardImages in PRovide", lorcanaCardImages);
 		}
 	}, [lorcanaCardImages]);
 
