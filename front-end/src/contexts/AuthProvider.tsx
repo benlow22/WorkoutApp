@@ -95,7 +95,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			.order("wave")
 			.order("card_number");
 		if (data) {
-			console.log("get all cards", data);
+			// console.log("get all cards", data);
 			const allCardImages = data.map((card) => {
 				const img = new Image();
 				img.src = card.imageUrl;
@@ -124,12 +124,13 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			setLorcanaCards(sortedData);
 		}
 	};
-	getAllCards();
 	useEffect(() => {
+		getAllCards();
 		if (lorcanaCardImages) {
 			// console.log("allCardImages in PRovide", lorcanaCardImages);
 		}
-	}, [lorcanaCardImages]);
+		// }, [lorcanaCardImages]);
+	}, []);
 
 	// when going to APP, get session, set if logged in
 	useEffect(() => {

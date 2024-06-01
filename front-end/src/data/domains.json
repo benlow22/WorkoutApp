@@ -46,9 +46,9 @@
 			"path": "lorcanaBuddy",
 			"class": "lorcana-buddy",
 			"pages": [
-				{ "name": "Inventory", "path": "inventory" },
+				{ "name": "Inventory", "path": "newInventory" },
 				{ "name": "Add to Inventory", "path": "addItems" },
-				{ "name": "Trade or Add", "path": "tradeOrAdd" }
+				{ "name": "Trade or Add", "path": "newInput" }
 			],
 			"logo": "lb-logo.png"
 		}

@@ -21,7 +21,7 @@ export const LorcanaBuddy = [
 	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,
 	<Route path="addItems" element={<AddItems />} key={"LB4"} />,
 	<Route path="inventory" element={<Inventory />} key={"LB6"} />,
-	<Route path="tradeOrAdd" element={<NewInput />} key={"LB6"} />,
+	<Route path="tradeOrAdd" element={<TradeOrAddPage />} key={"LB6"} />,
 	<Route path="checklist" element={<Checklist />} key={"LB6"} />,
 	<Route path="newInventory" element={<NewInventory />} key={"LB6"} />,
 	<Route path="newInput" element={<NewInput />} key={"LB6"} />,

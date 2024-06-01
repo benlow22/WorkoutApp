@@ -1,22 +1,26 @@
-import { TNewCard } from "../pages/newInventory/NewInventory";
+import { TNewCard, TNewCardAndUserData } from "../pages/newInventory/NewInventory";
 
 type TProps = {
-	card: TNewCard;
+	card: TNewCardAndUserData;
 };
 
 import { Image } from "antd";
 
 export const NewInventoryCard = ({ card }: TProps) => {
 	return (
-		<div style={{ backgroundColor: "", margin: "1px", display: "flex", flexWrap: "wrap", width: "100px" }}>
-			<Image width={100} style={{ borderRadius: "5px" }} src={card.image} fallback={"/public/lorcanaRarity/lorcana-cardback.jpg"} />
+		<div style={{ backgroundColor: "", margin: "3px", display: "flex", flexWrap: "wrap", width: "100px" }}>
+			<Image width={100} style={{ borderRadius: "5px" }} src={card.image} fallback={"/lorcanaRarity/lorcana-cardback.jpg"} />
 			<div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
 				<div>
-					<p style={{ color: "white" }}>{card.card_num}</p>
+					<p style={{ color: "white", padding: " 5px", fontSize: "10px" }}>{card.card_num}</p>
 				</div>
-				<div style={{ display: "flex" }}>
-					<p style={{ fontSize: "10px" }}>foils:</p>
-					<p style={{ fontSize: "10px" }}>non-foils:</p>
+				<div style={{ display: "flex", width: "70px", justifyContent: "space-between" }}>
+					<div style={{ padding: "2px 3px", width: "30px" }}>
+						<p style={{ fontSize: "10px" }}>f: {card.foil}</p>
+					</div>
+					<div style={{ padding: "2px 5px", width: "30px" }}>
+						<p style={{ fontSize: "10px" }}>nf: {card.nonfoil}</p>
+					</div>
 				</div>
 			</div>
 		</div>

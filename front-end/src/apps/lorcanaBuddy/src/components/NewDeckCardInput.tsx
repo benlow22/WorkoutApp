@@ -48,7 +48,7 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 			// console.log(newTestImage);
 			setImageUrl(newTestImage[0].image);
 		} else {
-			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
+			setImageUrl("/lorcanaRarity/lorcana-cardback.jpg");
 		}
 	}, [cardInput, isFoil]);
 
