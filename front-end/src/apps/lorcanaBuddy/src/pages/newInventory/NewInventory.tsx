@@ -13,29 +13,29 @@ export type TCardRef = {
 };
 
 export type TNewCard = {
-	Abilities: string;
-	Artist: string;
-	Body_Text: string;
-	Card_Num: string;
-	Card_Variants: string | null;
-	Classifications: string;
-	Color: string;
-	Cost: number;
-	Franchise: string | null;
-	ID: string;
-	Image: string;
-	Inkable: boolean;
-	Lore: number;
-	Move_Cost: number | null;
-	Name: string;
-	Rarity: string;
-	Set_ID: string;
-	Set_Name: string;
-	Set_Num: number;
-	Strength: string;
-	Type: string;
-	Unique_ID: string;
-	Willpower: number;
+	abilities: string;
+	artist: string;
+	body_text: string;
+	card_num: string;
+	card_variants: string | null;
+	classifications: string;
+	color: string;
+	cost: number;
+	franchise: string | null;
+	id: string;
+	image: string;
+	inkable: boolean;
+	lore: number;
+	move_cost: number | null;
+	name: string;
+	rarity: string;
+	set_id: string;
+	set_name: string;
+	set_num: number;
+	strength: number;
+	type: string;
+	unique_id: string;
+	willpower: number;
 };
 
 /// when adding new cards,
@@ -53,7 +53,7 @@ export const NewInventory = () => {
 		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap" }}>
 			<div className="3x3" style={{}}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{allLorcanaCards && allLorcanaCards.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{allLorcanaCards && allLorcanaCards.map((card) => <NewInventoryCard card={card} key={card.id} />)}
 				</div>
 			</div>
 		</div>

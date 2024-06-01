@@ -113,16 +113,25 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 		if (deckForm?.contains(document.activeElement) && isSpaceClicked) {
 			setIsSpaceClicked(false);
 			setCurrentCardIndex(currentCardIndex + 1);
+			////
+			// if (currentCardIndex === numberOfCards) {
+			// 	const addButtonElement = document.getElementById("theAddButton");
+			// 	addButtonElement?.click();
+			// 	setNumberOfCards(numberOfCards + 1);
+			// }
 		}
 	}, [isSpaceClicked]);
 
 	useEffect(() => {
 		console.log("currentCardIndex: ", currentCardIndex);
-		if (currentCardIndex >= numberOfCards) {
+		if (currentCardIndex <= numberOfCards) {
 			const addButtonElement = document.getElementById("theAddButton");
 			addButtonElement?.click();
+			setNumberOfCards(numberOfCards + 1);
 		}
-		setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
+		console.log("CurrentCardIndex when space is pressed", currentCardIndex);
+		console.log("current Cards", numberOfCards);
+		// setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
 	}, [currentCardIndex]);
 
 	const formItemLayoutWithOutLabel = {
@@ -147,8 +156,8 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>
 								{numberOfCards > 0 &&
-									fields.map((field, index) => (
-										<div key={index}>
+									fields.map((field, index, name) => (
+										<div key={index} name->
 											<NewDeckCardInput
 												wave={wave}
 												field={field}
@@ -163,7 +172,8 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 												style={{ color: "white", paddingLeft: "10px" }}
 												onClick={() => {
 													remove(field.name);
-													setNumberOfCards(numberOfCards - 1);
+													setNumberOfCards(currentCardIndex - 1);
+													setCurrentCardIndex(1);
 												}}
 											/>
 										</div>

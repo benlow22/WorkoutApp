@@ -25,7 +25,7 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
 
 	const inputRef = useRef<InputRef>(null);
-	const lorcanaCardsByWave = useMemo(() => lorcanaCards.filter((card) => card.Set_Num === wave), [lorcanaCards, wave]);
+	const lorcanaCardsByWave = useMemo(() => lorcanaCards.filter((card) => card.set_num === wave), [lorcanaCards, wave]);
 
 	// useEffect(() => {
 	// 	async function fetchAllCards() {
@@ -43,14 +43,14 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
 		if (cardInput) {
-			console.log("CARD INPUT", cardInput);
-			const newTestImage = lorcanaCardsByWave.filter((card) => card.Card_Num == cardInput);
-			console.log(newTestImage);
-			setImageUrl(newTestImage[0].Image);
+			// console.log("CARD INPUT", cardInput);
+			const newTestImage = lorcanaCardsByWave.filter((card) => card.card_num == cardInput);
+			// console.log(newTestImage);
+			setImageUrl(newTestImage[0].image);
 		} else {
 			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
 		}
-	}, [cardInput, isFoil, refreshLorcanaCardImage]);
+	}, [cardInput, isFoil]);
 
 	// focus on input when component is made
 	useEffect(() => {

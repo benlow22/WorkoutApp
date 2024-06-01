@@ -113,13 +113,13 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 		let { data, error } = await supabase
 			.from("new_cards")
 			.select(
-				"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
+				"abilities, artist, body_text, card_num, card_variants, classifications, color, cost, franchise, id, image, inkable, lore, move_cost, name, rarity, set_id, set_name, set_num, strength, type, unique_id, willpower"
 			)
-			.order("Set_Num")
-			.order("Card_Num");
+			.order("set_num")
+			.order("card_num");
 		if (data) {
 			const sortedData = data.sort((a, b) => {
-				return a.Set_Num - b.Set_Num || a.Card_Num - b.Card_Num;
+				return a.set_num - b.set_num || a.card_num - b.card_num;
 			});
 			setLorcanaCards(sortedData);
 		}
