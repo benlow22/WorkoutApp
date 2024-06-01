@@ -46,15 +46,34 @@ export type TNewCardAndUserData = TNewCard & {
 /// when adding new cards,
 // change wave and uncomment
 export const NewInventory = () => {
-	const { lorcanaCards, supabase } = useContext(AuthContext);
+	const { lorcanaCards, supabase, userId } = useContext(AuthContext);
 	const [allCardsAndUserData, setAllCardsAndUserData] = useState<TNewCardAndUserData[]>();
-
+	const [cardQuantities, setCardQuantities] = useState<{
+		foil: number;
+		nonfoil: number;
+	}>({
+		foil: 0,
+		nonfoil: 0,
+	});
 	//Test Variables
 	const [firstCard, setFirstCard] = useState<TNewCard>();
 	const [testSmallBatch, setTestSmallBatch] = useState<TNewCard[]>(lorcanaCards.slice(0, 59));
 
 	const allLorcanaCards = useMemo(() => lorcanaCards, [lorcanaCards]);
 
+	const getQuantityOfCards = async () => {
+		let { data, error } = await supabase
+			// @ts-expect-error does not get type for the join
+			.rpc("new_get_card_quantities")
+			.eq("user_id", userId)
+			.single();
+		if (data) {
+			console.log("quantity", data);
+			setCardQuantities(data);
+		} else {
+			console.error(error);
+		}
+	};
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
@@ -74,11 +93,15 @@ export const NewInventory = () => {
 
 	useEffect(() => {
 		getAllCardsAndUsersCards();
+		getQuantityOfCards();
 	}, []);
 
 	return (
 		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", maxWidth: "1000px", margin: "auto" }}>
 			<div className="3x3" style={{}}>
+				<h3>Total Cards : {cardQuantities.foil + cardQuantities.nonfoil}</h3>
+				<h4>Foil Cards : {cardQuantities.foil}</h4>
+				<h4>Nonfoil Cards : {cardQuantities.nonfoil}</h4>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
 					{allCardsAndUserData && allCardsAndUserData.map((card) => <NewInventoryCard card={card} key={card.id} />)}
 				</div>
