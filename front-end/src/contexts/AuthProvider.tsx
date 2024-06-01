@@ -217,17 +217,17 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	// 	// onAuthStateChange code below
 	// }, []);
 
-	// useEffect(() => {
-	// 	setIsLoading(true);
-	// 	const getUser = async () => {
-	// 		const { data } = await supabase.auth.getUser();
-	// 		const { user: currentUser } = data;
-	// 		setUser(currentUser ?? null);
-	// 		setIsLoading(false);
-	// 	};
-	// 	getUser();
-	// 	// onAuthStateChange code below
-	// }, []);
+	useEffect(() => {
+		setIsLoading(true);
+		const getUser = async () => {
+			const { data } = await supabase.auth.getUser();
+			const { user: currentUser } = data;
+			setUser(currentUser ?? null);
+			setIsLoading(false);
+		};
+		getUser();
+		// onAuthStateChange code below
+	}, []);
 
 	return (
 		<AuthContext.Provider

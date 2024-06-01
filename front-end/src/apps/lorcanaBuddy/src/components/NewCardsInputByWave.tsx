@@ -3,58 +3,91 @@ import { Button, Form, Input, Space } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
-import { supabase } from "../../../../supabase/supabaseClient";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4, v4 } from "uuid";
 import { NewDeckCardInput } from "./NewDeckCardInput";
 
 type TProps = {
 	wave: number;
 };
 
-export const createTransaction = (transactionType: string, numberOfCards: number) => {
-	return { transaction_type: transactionType, number_of_cards: numberOfCards, transaction_id: uuidv4() };
+type TCardsToUpload = {
+	user_id: string;
+	is_foil: boolean;
+	card_number: string;
+	set_num: number;
+	card_id: string;
+	transaction_id: string;
+};
+export const createTransaction = (transactionType: string, numberOfCards: number, userId: string) => {
+	return { transaction_type: transactionType, number_of_cards: numberOfCards, user_id: userId };
 };
 
 export const NewCardsInputByWave = ({ wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage, setRefreshLorcanaCardImage } = useContext(AuthContext);
+	const { auth, userId, refreshLorcanaCardImage, supabase } = useContext(AuthContext);
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 	const [form] = Form.useForm();
 
 	const onFinish = (values: any) => {
-		const cardsToUpload = values.cards.map((card: any) => ({
-			user_id: userId,
-			is_foil: card.isFoil,
-			card_number: card.cardNumber,
-			wave: wave,
-			card_id: `${wave}-${card.cardNumber}`,
-		}));
-		const transaction = createTransaction("addCards", numberOfCards);
+		let validCardCounter = 0;
+		const transactionId = uuidv4();
+		const cardsToUpload = values.cards
+			.filter((card: any) => card.cardNumber)
+			.map((card: any) => {
+				if (card.cardNumber) {
+					validCardCounter += 1;
+					return {
+						user_id: userId,
+						is_foil: card.isFoil,
+						card_number: card.cardNumber,
+						set_num: wave,
+						card_id: `${wave}-${card.cardNumber}`,
+						transaction_id: transactionId,
+					};
+				}
+			});
+		// const transaction = createTransaction("addCards", numberOfCards, userId);
 		console.log("cards to upload", cardsToUpload);
 		// let uploadedCards: any[] = [];
 		// let failedToUploadCards: any[] = [];
-
-		const uploadTransaction = async () => {
+		const uploadCards = async (cards: TCardsToUpload[]) => {
 			try {
-				const { data } = await supabase.from("new_transactions").insert([transaction]).select();
+				const { data, error } = await supabase.from("new_user_cards").insert(cards).select();
 				if (data) {
-					console.log("Transaction uploaded ", data);
+					console.log("Cards made it through:", data);
+				} else {
+					console.log("CARD UPLOAD", error);
 				}
 			} catch (err) {
 				console.log(err);
 			}
 		};
+		const uploadTransaction = async () => {
+			if (auth) {
+				try {
+					const { data, error } = await supabase
+						.from("new_transactions")
+						.insert([{ transaction_type: "addCards", number_of_cards: validCardCounter, user_id: userId, id: transactionId }])
+						.select();
+					if (data) {
+						console.log("Transaction uploaded ", data);
+						const transactionId = data[0].id;
 
-		const uploadCards = async () => {
-			try {
-				const { data, error } = await supabase.from("new_user_cards").insert([cardsToUpload]).select();
-				console.log("Cards made it through:", data);
-			} catch (err) {
-				console.log(err);
+						uploadCards(cardsToUpload);
+					} else {
+						console.log("ERRRROR", error);
+					}
+				} catch (err) {
+					console.log(err);
+					console.log("asdfadsdfasdf");
+				}
 			}
 		};
+
 		uploadTransaction();
+
+		// uploadCards();
 		// async function uploadTransaction( ) {}
 		// if (auth) {
 		// 	values.cards.map((card: any) => {
