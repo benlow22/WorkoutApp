@@ -190,7 +190,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 				</Form.List>
 				<Form.Item>
 					<Button type="primary" htmlType="submit">
-						Submit {numberOfCards}
+						Submit ---- {numberOfCards} Cards
 					</Button>
 				</Form.Item>
 			</Form>

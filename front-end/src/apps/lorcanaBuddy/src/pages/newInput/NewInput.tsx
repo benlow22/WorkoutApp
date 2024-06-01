@@ -11,22 +11,6 @@ export const NewInput = () => {
 	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 	const [waveFilter, setWaveFilter] = useState<number>(0);
 
-	const filteredByWaveCards = useMemo(
-		() =>
-			lorcanaCards?.filter((card) => {
-				card.Set_Num === waveFilter;
-			}),
-		[waveFilter]
-	);
-	//Test Variables
-	const [firstCard, setFirstCard] = useState<TNewCard>();
-	const [testSmallBatch, setTestSmallBatch] = useState<TNewCard[]>();
-
-	const preloadImage = (url: string) => {
-		var img = new Image();
-		img.src = url;
-	};
-
 	return (
 		<div className="input-page" style={{}}>
 			<h3>Select Wave:</h3>

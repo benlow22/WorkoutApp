@@ -1,6 +1,6 @@
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Form, FormListFieldData, Input, InputNumber, InputRef, Switch } from "antd";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
 import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
@@ -25,24 +25,27 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
 
 	const inputRef = useRef<InputRef>(null);
+	const lorcanaCardsByWave = useMemo(() => lorcanaCards.filter((card) => card.Set_Num === wave), [lorcanaCards, wave]);
 
-	useEffect(() => {
-		async function fetchAllCards() {
-			let response = getAllCards();
-			const retrievedCards = await response;
-			if (retrievedCards) {
-				setAllCardsCache(retrievedCards);
-			}
-		}
-		fetchAllCards();
-	}, []);
+	// useEffect(() => {
+	// 	async function fetchAllCards() {
+	// 		let response = getAllCards();
+	// 		const retrievedCards = await response;
+	// 		if (retrievedCards) {
+	// 			setAllCardsCache(retrievedCards);
+	// 		}
+	// 	}
+	// 	fetchAllCards();
+	// }, []);
 
 	useEffect(() => {
 		// getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
 		if (cardInput) {
-			const newTestImage = lorcanaCards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
+			console.log("CARD INPUT", cardInput);
+			const newTestImage = lorcanaCardsByWave.filter((card) => card.Card_Num == cardInput);
+			console.log(newTestImage);
 			setImageUrl(newTestImage[0].Image);
 		} else {
 			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
@@ -79,6 +82,7 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 	const validateMessage = {
 		required: "card # between 1 and 216 required",
 	};
+
 	return (
 		<Form.Item
 			required
