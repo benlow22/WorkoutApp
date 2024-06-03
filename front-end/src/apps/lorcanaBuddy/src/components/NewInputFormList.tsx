@@ -1,6 +1,6 @@
 import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Card, Form, Input, Space, Switch, Typography } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DeckCardInput } from "./DeckCardInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { v4 as uuidv4, v4 } from "uuid";
@@ -27,8 +27,17 @@ export const NewInputFormList = ({ wave }: TProps) => {
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
+
+	const addButtonHtml = document.getElementById("addButton");
+	const inputReference = useRef(null);
+
+	useEffect(() => {
+		if (addButtonHtml) addButtonHtml.click();
+	}, [addButtonHtml]);
+
 	const [form] = Form.useForm();
 	const transactionId = v4();
+
 	const onFinish = (values: any) => {
 		let validCardCounter = 0;
 		// const transactionId = uuidv4();
@@ -99,10 +108,6 @@ export const NewInputFormList = ({ wave }: TProps) => {
 		}
 	};
 
-	// useEffect(() => {
-	// 	// console.log("# of cards", numberOfCards);
-	// }, [numberOfCards]);
-
 	useEffect(() => {
 		document.addEventListener("keydown", spaceDownHandler);
 		return () => document.removeEventListener("keydown", spaceDownHandler);
@@ -120,19 +125,23 @@ export const NewInputFormList = ({ wave }: TProps) => {
 			// 	setNumberOfCards(numberOfCards + 1);
 			// }
 		}
+		const nextInputToFocus = document.getElementById(`card${currentCardIndex}`);
+		if (nextInputToFocus) {
+			nextInputToFocus.focus();
+		}
 	}, [isSpaceClicked]);
 
-	useEffect(() => {
-		console.log("currentCardIndex: ", currentCardIndex);
-		if (currentCardIndex >= numberOfCards) {
-			const addButtonElement = document.getElementById("theAddButton");
-			addButtonElement?.click();
-			setNumberOfCards(numberOfCards + 1);
-		}
-		console.log("CurrentCardIndex when space is pressed", currentCardIndex);
-		console.log("current Cards", numberOfCards);
-		// setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
-	}, [currentCardIndex]);
+	// useEffect(() => {
+	// 	// console.log("currentCardIndex: ", currentCardIndex);
+	// 	if (currentCardIndex >= numberOfCards) {
+	// 		const addButtonElement = document.getElementById("theAddButton");
+	// 		addButtonElement?.click();
+	// 		// setNumberOfCards(numberOfCards + 1);
+	// 	}
+	// 	// console.log("CurrentCardIndex when space is pressed", currentCardIndex);
+	// 	// console.log("current Cards", numberOfCards);
+	// 	// setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
+	// }, [currentCardIndex]);
 
 	const formItemLayoutWithOutLabel = {
 		wrapperCol: {
@@ -150,7 +159,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				onFinish={onFinish}
 				style={{ maxWidth: "800px", margin: "auto", color: "black" }}
 				id="deckForm"
-				initialValues={{ transaction_id: transactionId, wave: wave, deck_list: [], user_id: userId }}
+				initialValues={{ transaction_id: transactionId, wave: wave, deck_list: [], user_id: userId, deck_input: [{}] }}
 			>
 				<Form.Item name="user_id"></Form.Item>
 				<Form.Item name="transaction_id"></Form.Item>
@@ -158,10 +167,25 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				<Form.List name="deck_input">
 					{(fields, { add, remove }) => (
 						<div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-							{fields.map((field) => (
+							{fields.map((field, index) => (
 								<Space key={field.key}>
-									<Form.Item noStyle name={[field.name, "card_number"]} initialValue={0}>
-										<Input placeholder="first" />
+									<>{index}</>
+									<Form.Item noStyle name={[field.name, "card_number"]}>
+										<Input
+											placeholder="Card #"
+											id={`card${index}`}
+											onFocus={() => {
+												console.log(
+													"this card is focus #",
+													index,
+													"# of card",
+													numberOfCards,
+													"currentCardIndex",
+													currentCardIndex
+												),
+													setCurrentCardIndex(index);
+											}}
+										/>
 									</Form.Item>
 									<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
 										<Switch checkedChildren="foil" unCheckedChildren="non-foil"></Switch>
@@ -173,7 +197,14 @@ export const NewInputFormList = ({ wave }: TProps) => {
 									/>
 								</Space>
 							))}
-							<Button type="dashed" onClick={() => add()} block>
+							<Button
+								id="addButton"
+								type="dashed"
+								onClick={() => {
+									add(), setNumberOfCards(numberOfCards + 1);
+								}}
+								block
+							>
 								+ Add Card
 							</Button>
 						</div>
