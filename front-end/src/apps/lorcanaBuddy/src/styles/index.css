@@ -117,6 +117,9 @@
 	justify-content: space-between;
 }
 
+/* .form-list #text {
+	color: black!;
+} */
 .grid-card-display {
 	display: flex;
 	max-width: 1000px;

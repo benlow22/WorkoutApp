@@ -4,6 +4,7 @@ import { NewInventoryCard } from "../../components/NewInventoryCard";
 import { TNewCard } from "../newInventory/NewInventory";
 import { Select } from "antd";
 import { NewCardsInputByWave } from "../../components/NewCardsInputByWave";
+import { NewInputFormList } from "../../components/NewInputFormList";
 
 export const NewInput = () => {
 	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, lorcanaCards } = useContext(AuthContext);
@@ -28,7 +29,7 @@ export const NewInput = () => {
 				]}
 			/>
 			<div className="" style={{}}>
-				{waveFilter > 0 && <NewCardsInputByWave wave={waveFilter} />}
+				{waveFilter > 0 && <NewInputFormList wave={waveFilter} />}
 			</div>
 		</div>
 	);
