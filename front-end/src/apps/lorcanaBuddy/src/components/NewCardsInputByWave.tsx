@@ -189,7 +189,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 						<>
 							<Space style={{ width: "800px", flexWrap: "wrap" }}>
 								{numberOfCards > 0 &&
-									fields.map((field, index, name) => (
+									fields.map((field, index) => (
 										<div key={index} name->
 											<NewDeckCardInput
 												wave={wave}
@@ -205,7 +205,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 												style={{ color: "white", paddingLeft: "10px" }}
 												onClick={() => {
 													remove(field.name);
-													setNumberOfCards(currentCardIndex - 1);
+													setNumberOfCards(numberOfCards - 1);
 													setCurrentCardIndex(1);
 												}}
 											/> */}

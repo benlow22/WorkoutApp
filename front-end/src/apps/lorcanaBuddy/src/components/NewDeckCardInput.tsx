@@ -75,6 +75,8 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 		} else if (value && Number(value) > 204) {
 			setCardInput(0);
 		} else {
+			console.log("CN ", cardInput);
+			console.log("index", index);
 			setCardInput(Number(value));
 		}
 	};
@@ -106,12 +108,12 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 							key={index}
 							placeholder="Card #"
 							style={{ width: "100px", marginBottom: "0px" }}
-							onFocus={() => {
-								setCurrentCardIndex(index),
-									inputRef.current!.focus({
-										cursor: "all",
-									});
-							}}
+							// onFocus={() => {
+							// 	setCurrentCardIndex(index),
+							// 		inputRef.current!.focus({
+							// 			cursor: "all",
+							// 		});
+							// }}
 							// status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
 							onChange={(e) => handleCardNumberInput(e.target.value)}
