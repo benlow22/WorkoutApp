@@ -157,7 +157,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 
 	useEffect(() => {
 		console.log("currentCardIndex: ", currentCardIndex);
-		if (currentCardIndex <= numberOfCards) {
+		if (currentCardIndex >= numberOfCards) {
 			const addButtonElement = document.getElementById("theAddButton");
 			addButtonElement?.click();
 			setNumberOfCards(numberOfCards + 1);
@@ -200,7 +200,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 												currentCardIndex={currentCardIndex}
 											/>
 
-											<MinusCircleOutlined
+											{/* <MinusCircleOutlined
 												className="dynamic-delete-button"
 												style={{ color: "white", paddingLeft: "10px" }}
 												onClick={() => {
@@ -208,7 +208,7 @@ export const NewCardsInputByWave = ({ wave }: TProps) => {
 													setNumberOfCards(currentCardIndex - 1);
 													setCurrentCardIndex(1);
 												}}
-											/>
+											/> */}
 										</div>
 									))}
 							</Space>

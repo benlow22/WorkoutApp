@@ -6,7 +6,7 @@ type TProps = {
 
 import { Image } from "antd";
 
-export const NewInventoryCard = ({ card }: TProps) => {
+export const NewSheetInventoryCard = ({ card }: TProps) => {
 	return (
 		<div style={{ margin: "3px", display: "flex", flexWrap: "wrap", width: "100px" }}>
 			<Image width={99} style={{ borderRadius: "5px" }} src={card.image} fallback={"/lorcanaRarity/lorcana-cardback.jpg"} />

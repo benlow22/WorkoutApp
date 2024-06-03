@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { NewInventoryCard } from "../../components/NewInventoryCard";
+import { NewSheetInventoryCard } from "./NewSheetsForPrinting";
 
 export type TCardRef = {
 	cardNumber: number;
@@ -13,35 +14,35 @@ export type TCardRef = {
 };
 
 export type TNewCard = {
-	Abilities: string;
-	Artist: string;
-	Body_Text: string;
-	Card_Num: string;
-	Card_Variants: string | null;
-	Classifications: string;
-	Color: string;
-	Cost: number;
-	Franchise: string | null;
-	ID: string;
-	Image: string;
-	Inkable: boolean;
-	Lore: number;
-	Move_Cost: number | null;
-	Name: string;
-	Rarity: string;
-	Set_ID: string;
-	Set_Name: string;
-	Set_Num: number;
-	Strength: string;
-	Type: string;
-	Unique_ID: string;
-	Willpower: number;
+	abilities: string;
+	artist: string;
+	body_text: string;
+	card_num: string;
+	card_variants: string | null;
+	classifications: string;
+	color: string;
+	cost: number;
+	franchise: string | null;
+	id: string;
+	image: string;
+	inkable: boolean;
+	lore: number;
+	move_cost: number | null;
+	name: string;
+	rarity: string;
+	set_id: string;
+	set_name: string;
+	set_num: number;
+	strength: number;
+	type: string;
+	unique_id: string;
+	willpower: number;
 };
 
 /// when adding new cards,
 // change wave and uncomment
-export const NewInventory = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
+export const NewInventoryPrint = () => {
+	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, lorcanaCards } = useContext(AuthContext);
 	const [allCards, setAllCards] = useState<TNewCard[] | null>();
 	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 
@@ -54,69 +55,70 @@ export const NewInventory = () => {
 		img.src = url;
 	};
 
-	const getAllCards = async () => {
-		let { data, error } = await supabase
-			.from("new_cards")
-			.select(
-				"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
-			)
-			.order("Set_Num")
-			.order("Card_Num");
-		if (data) {
-			//PUPPIES
-			// let wave3 = data.filter((card) => card.Set_Num === 3);
-			// const sortedData = wave3.sort((a, b) => {
-			// 	return a.Card_Num - b.Card_Num;
-			// });
-			// const notPuppies = wave3.filter((card) => {
-			// 	if (card.ID !== "3-4a" && card.ID !== "3-4b" && card.ID !== "3-4c" && card.ID !== "3-4d" && card.ID !== "3-4e") {
-			// 		return card;
-			// 	}
-			// });
-			// const puppies = wave3.filter((card) => {
-			// 	if (card.ID === "3-4a" || card.ID === "3-4b" || card.ID === "3-4c" || card.ID === "3-4d" || card.ID === "3-4e") {
-			// 		return card;
-			// 	}
-			// });
-			// const sortedNonPup = notPuppies.sort((a, b) => (Number(a.Card_Num) < Number(b.Card_Num) ? -1 : 1));
-			// // let wave3 = sortedData.filter((card) => card.Set_Num === 3);
-			// sortedNonPup.splice(3, 1, ...puppies);
-			// setAllCards(sortedNonPup);
+	// const getAllCards = async () => {
+	// 	let { data, error } = await supabase
+	// 		.from("new_cards")
+	// 		.select(
+	// 			"Abilities, Artist,Body_Text, Card_Num, Card_Variants, Classifications, Color, Cost, Franchise, ID, Image, Inkable, Lore, Move_Cost, Name, Rarity, Set_ID, Set_Name, Set_Num, Strength, Type, Unique_ID, Willpower"
+	// 		)
+	// 		.order("Set_Num")
+	// 		.order("Card_Num");
+	// 	if (data) {
+	// 		//PUPPIES
+	// 		// let wave3 = data.filter((card) => card.Set_Num === 3);
+	// 		// const sortedData = wave3.sort((a, b) => {
+	// 		// 	return a.Card_Num - b.Card_Num;
+	// 		// });
+	// 		// const notPuppies = wave3.filter((card) => {
+	// 		// 	if (card.ID !== "3-4a" && card.ID !== "3-4b" && card.ID !== "3-4c" && card.ID !== "3-4d" && card.ID !== "3-4e") {
+	// 		// 		return card;
+	// 		// 	}
+	// 		// });
+	// 		// const puppies = wave3.filter((card) => {
+	// 		// 	if (card.ID === "3-4a" || card.ID === "3-4b" || card.ID === "3-4c" || card.ID === "3-4d" || card.ID === "3-4e") {
+	// 		// 		return card;
+	// 		// 	}
+	// 		// });
+	// 		// const sortedNonPup = notPuppies.sort((a, b) => (Number(a.Card_Num) < Number(b.Card_Num) ? -1 : 1));
+	// 		// // let wave3 = sortedData.filter((card) => card.Set_Num === 3);
+	// 		// sortedNonPup.splice(3, 1, ...puppies);
+	// 		// setAllCards(sortedNonPup);
 
-			//NONPUPPIES
-			// let wave = data.filter((card) => card.Set_Num === 1);
-			// const sortedData = wave.sort((a, b) => {
-			// 	return a.Card_Num - b.Card_Num;
-			// });
-			// setAllCards(sortedData);
+	// 		//NONPUPPIES
+	// 		// let wave = data.filter((card) => card.Set_Num === 1);
+	// 		// const sortedData = wave.sort((a, b) => {
+	// 		// 	return a.Card_Num - b.Card_Num;
+	// 		// });
+	// 		// setAllCards(sortedData);
 
-			//Green and Red
-			let wave = data.filter((card) => card.Set_Num === 2 && card.Card_Num > 136);
-			const sortedData = wave.sort((a, b) => {
-				return a.Card_Num - b.Card_Num;
-			});
-			setAllCards(sortedData);
+	// 		//Green and Red
+	// 		let wave = data.filter((card) => card.Set_Num === 2 && card.Card_Num > 136);
+	// 		const sortedData = wave.sort((a, b) => {
+	// 			return a.Card_Num - b.Card_Num;
+	// 		});
+	// 		setAllCards(sortedData);
 
-			console.log(
-				"PUPPIES FOUND : ",
-				sortedData.map((card) => card.Card_Num)
-			);
-			// setAllCards(sortedData.filter((card) => card.Set_Num === 3 && card.Card_Num === "7"));
-			// setFirstCard(sortedData[0]);
-			// const cardImages = data.map((card) => {
-			// 	preloadImage(card.Image);
-			// 	return card.Image;
-			// });
-			// setAllCardImages(cardImages);
-			// setTestSmallBatch(sortedData.slice(0, 50));
-			// console.log("get all cards", cardImages);
-		} else {
-			console.error(error);
-		}
-	};
+	// 		console.log(
+	// 			"PUPPIES FOUND : ",
+	// 			sortedData.map((card) => card.Card_Num)
+	// 		);
+	// 		// setAllCards(sortedData.filter((card) => card.Set_Num === 3 && card.Card_Num === "7"));
+	// 		// setFirstCard(sortedData[0]);
+	// 		// const cardImages = data.map((card) => {
+	// 		// 	preloadImage(card.Image);
+	// 		// 	return card.Image;
+	// 		// });
+	// 		// setAllCardImages(cardImages);
+	// 		// setTestSmallBatch(sortedData.slice(0, 50));
+	// 		// console.log("get all cards", cardImages);
+	// 	} else {
+	// 		console.error(error);
+	// 	}
+	// };
 
 	useEffect(() => {
-		getAllCards();
+		const w4p5 = lorcanaCards.filter((card) => card.set_num === 4);
+		setAllCards(w4p5.slice(136, 200));
 	}, []);
 
 	// Page 1
@@ -151,23 +153,23 @@ export const NewInventory = () => {
 		<div className="inventory-page" style={{ backgroundColor: "white", display: "flex", flexWrap: "wrap", marginLeft: "20px", width: "700px" }}>
 			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{batch1 && batch1?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{batch1 && batch1?.map((card) => <NewSheetInventoryCard card={card} key={card.id} />)}
 				</div>
 			</div>
 			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{batch2 && batch2?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{batch2 && batch2?.map((card) => <NewSheetInventoryCard card={card} key={card.id} />)}
 				</div>
 			</div>
 			<p style={{ width: "100%", borderRight: "none" }}></p>
 			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black" }}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{batch3 && batch3?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{batch3 && batch3?.map((card) => <NewSheetInventoryCard card={card} key={card.id} />)}
 				</div>
 			</div>
 			<div className="3x3" style={{ width: "320px", borderRight: "1px solid black", marginBottom: "5px" }}>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{batch4 && batch4?.map((card) => <NewInventoryCard card={card} key={card.ID} />)}
+					{batch4 && batch4?.map((card) => <NewSheetInventoryCard card={card} key={card.id} />)}
 				</div>
 			</div>
 		</div>

@@ -72,7 +72,7 @@ export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, cu
 	const handleCardNumberInput = (value: string | "4a" | "4b" | "4c" | "4d" | "4e" | null) => {
 		if (value === "4a" || value === "4b" || value === "4c" || value === "4d" || value === "4e") {
 			if (wave === 3) setCardInput(value);
-		} else if (value && Number(value) > 216) {
+		} else if (value && Number(value) > 204) {
 			setCardInput(0);
 		} else {
 			setCardInput(Number(value));
