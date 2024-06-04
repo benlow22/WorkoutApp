@@ -5,6 +5,9 @@ import { DeckCardInput } from "./DeckCardInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { v4 as uuidv4, v4 } from "uuid";
 import { NewDeckCardInput } from "./NewDeckCardInput";
+import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
+import { SingleCardInput } from "./SingleCardInput";
+import { NewSingleCardInput } from "./NewSingleCardInput";
 
 type TProps = {
 	wave: number;
@@ -154,35 +157,15 @@ export const NewInputFormList = ({ wave }: TProps) => {
 					{(fields, { add, remove }) => (
 						<div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
 							{fields.map((field, index) => (
-								<Space key={field.key}>
-									<>{index}</>
-									<Form.Item noStyle name={[field.name, "card_number"]}>
-										<Input
-											placeholder="Card #"
-											id={`card${index}`}
-											onFocus={() => {
-												console.log(
-													"this card is focus #",
-													index + 1,
-													"# of card",
-													numberOfCards,
-													"currentCardIndex",
-													currentCardIndex
-												),
-													setCurrentCardIndex(index);
-											}}
-										/>
-									</Form.Item>
-									<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
-										<Switch checkedChildren="foil" unCheckedChildren="non-foil"></Switch>
-									</Form.Item>
-									<CloseOutlined
-										onClick={() => {
-											remove(field.name);
-											setNumberOfCards(numberOfCards - 1);
-										}}
-									/>
-								</Space>
+								<NewSingleCardInput
+									field={field}
+									index={index}
+									setCurrentCardIndex={setCurrentCardIndex}
+									numberOfCards={numberOfCards}
+									currentCardIndex={currentCardIndex}
+									setNumberOfCards={setNumberOfCards}
+									remove={remove}
+								/>
 							))}
 							<Button
 								id="addButton"
