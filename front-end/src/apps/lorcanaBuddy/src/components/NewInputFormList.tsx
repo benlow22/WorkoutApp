@@ -148,7 +148,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				onFinish={onFinish}
 				style={{ maxWidth: "800px", margin: "auto", color: "black" }}
 				id="deckForm"
-				initialValues={{ transaction_id: transactionId, wave: wave, deck_list: [], user_id: userId, deck_input: [{}] }}
+				initialValues={{ deck_input: [{}], transaction_id: transactionId, wave: wave, deck_list: [], user_id: userId }}
 			>
 				<Form.Item name="user_id" hidden></Form.Item>
 				<Form.Item name="transaction_id" hidden></Form.Item>

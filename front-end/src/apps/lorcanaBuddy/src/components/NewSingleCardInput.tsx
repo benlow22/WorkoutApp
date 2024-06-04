@@ -4,7 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { NewSmallCardImageAboveInput } from "./NewSmallCardImageAboutInput";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
-import { getImageUrl } from "../utils/image-util";
+// import { getImageUrl } from "../utils/image-util";
 // import { LorcanaCards } from "./LorcanaCards";
 
 type TProps = {
@@ -35,21 +35,13 @@ export const NewSingleCardInput = ({
 	const [imageUrl, setimageUrl] = useState<string>("/lorcanaRarity/lorcana-cardback.jpg");
 	const [isFoil, setIsFoil] = useState<boolean>(false);
 	const cardNumberFromField = form.getFieldValue(["deck_input", index, "card_number"]);
-	const { lorcanaCards } = useContext(AuthContext);
+	const isFoilFromField = form.getFieldValue(["deck_input", index, "is_foil"]);
 
-	const getimageUrl = (cardNumber: string) => {
-		if (cardNumber) {
-			const card = lorcanaCards.filter((card) => card.card_num === cardNumber && card.set_num === wave);
-			setimageUrl(card[0] ? card[0].image : "/lorcanaRarity/lorcana-cardback.jpg");
-		} else {
-			setimageUrl("/lorcanaRarity/lorcana-cardback.jpg");
-		}
-	};
+	const { lorcanaCards } = useContext(AuthContext);
 
 	useEffect(() => {
 		console.log("getting value after delete", form.getFieldValue(["deck_input", index, "card_number"]));
-		// getImageUrl();
-		getImageUrl(cardNumberFromField);
+		// getImageUrl(cardNumberFromField);
 	}, [form.getFieldValue(["deck_input", index, "card_number"]), index]);
 
 	return (
@@ -59,10 +51,10 @@ export const NewSingleCardInput = ({
 					textAlign: "start",
 				}}
 			>
-				{isFoil && imageUrl !== "/lorcanaRarity/lorcana-cardback.jpg" && (
+				{isFoilFromField && (
 					<img
 						src="/lorcanaRarity/foilFilter.png"
-						style={{ position: "absolute", width: "100px", zIndex: "3", opacity: "0.45", filter: "contrast(100%)" }}
+						style={{ position: "absolute", width: "100px", zIndex: "3", opacity: "0.45", filter: "contrast(100%)", borderRadius: "5px" }}
 					/>
 				)}
 				<NewSmallCardImageAboveInput wave={wave} num={form.getFieldValue(["deck_input", index, "card_number"])} />
@@ -86,13 +78,18 @@ export const NewSingleCardInput = ({
 					}}
 					onChange={(e) => {
 						setCardNumber(e.target.value);
-						getimageUrl(e.target.value);
 					}}
 				/>
 			</Form.Item>
 			<p>WOAHS {form.getFieldValue(["deck_input", index, "card_number"])}</p>
 			<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
-				<Switch checkedChildren="foil" style={{ width: "100px" }} unCheckedChildren="non-foil" onChange={() => setIsFoil(!isFoil)}></Switch>
+				<Switch
+					checkedChildren="foil"
+					style={{ width: "100px" }}
+					unCheckedChildren="non-foil"
+					onChange={() => setIsFoil(!isFoil)}
+					defaultChecked={isFoilFromField}
+				></Switch>
 			</Form.Item>
 			<>
 				<CloseOutlined
