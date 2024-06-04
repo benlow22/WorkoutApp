@@ -34,7 +34,7 @@ export const NewSingleCardInput = ({
 	const getImageUrl = (cardNumber: string) => {
 		if (cardNumber) {
 			const card = lorcanaCards.filter((card) => card.card_num === cardNumber && card.set_num === wave);
-			setImageUrl(card ? card[0].image : "/lorcanaRarity/lorcana-cardback.jpg");
+			setImageUrl(card[0] ? card[0].image : "/lorcanaRarity/lorcana-cardback.jpg");
 		} else {
 			setImageUrl("/lorcanaRarity/lorcana-cardback.jpg");
 		}
