@@ -24,16 +24,11 @@ export const createTransaction = (transactionType: string, numberOfCards: number
 
 export const NewInputFormList = ({ wave }: TProps) => {
 	const { auth, userId, supabase } = useContext(AuthContext);
-	const [numberOfCards, setNumberOfCards] = useState<number>(0);
-	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
+	const [numberOfCards, setNumberOfCards] = useState<number>(1);
+	const [currentCardIndex, setCurrentCardIndex] = useState<number>(1);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 
 	const addButtonHtml = document.getElementById("addButton");
-	const inputReference = useRef(null);
-
-	useEffect(() => {
-		if (addButtonHtml) addButtonHtml.click();
-	}, [addButtonHtml]);
 
 	const [form] = Form.useForm();
 	const transactionId = v4();
@@ -98,50 +93,41 @@ export const NewInputFormList = ({ wave }: TProps) => {
 	};
 
 	const spaceDownHandler = (event: KeyboardEvent) => {
-		// console.log("before space clicked");
-		if (
-			event.code === "Space"
-			//  || event.code === "KeyV"
-		) {
+		if (event.code === "Space") {
 			event.preventDefault();
 			setIsSpaceClicked(true);
 		}
 	};
 
 	useEffect(() => {
+		// add spacebar listener
 		document.addEventListener("keydown", spaceDownHandler);
 		return () => document.removeEventListener("keydown", spaceDownHandler);
 	}, []);
 
 	useEffect(() => {
+		// check if input is selected; will not break if space is pressed outside of form
 		const deckForm = document.getElementById("deckForm");
 		if (deckForm?.contains(document.activeElement) && isSpaceClicked) {
-			setIsSpaceClicked(false);
+			// if the last input is selected
+			if (currentCardIndex === numberOfCards - 1) {
+				// add another input via space
+				if (addButtonHtml) addButtonHtml.click();
+				setNumberOfCards(numberOfCards + 1);
+			}
+			// focus new element
 			setCurrentCardIndex(currentCardIndex + 1);
-			////
-			// if (currentCardIndex === numberOfCards) {
-			// 	const addButtonElement = document.getElementById("theAddButton");
-			// 	addButtonElement?.click();
-			// 	setNumberOfCards(numberOfCards + 1);
-			// }
 		}
+		setIsSpaceClicked(false);
+	}, [isSpaceClicked]);
+
+	useEffect(() => {
+		// focus new element made
 		const nextInputToFocus = document.getElementById(`card${currentCardIndex}`);
 		if (nextInputToFocus) {
 			nextInputToFocus.focus();
 		}
-	}, [isSpaceClicked]);
-
-	// useEffect(() => {
-	// 	// console.log("currentCardIndex: ", currentCardIndex);
-	// 	if (currentCardIndex >= numberOfCards) {
-	// 		const addButtonElement = document.getElementById("theAddButton");
-	// 		addButtonElement?.click();
-	// 		// setNumberOfCards(numberOfCards + 1);
-	// 	}
-	// 	// console.log("CurrentCardIndex when space is pressed", currentCardIndex);
-	// 	// console.log("current Cards", numberOfCards);
-	// 	// setRefreshLorcanaCardImage(!refreshLorcanaCardImage);
-	// }, [currentCardIndex]);
+	}, [currentCardIndex]);
 
 	const formItemLayoutWithOutLabel = {
 		wrapperCol: {
@@ -177,7 +163,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 											onFocus={() => {
 												console.log(
 													"this card is focus #",
-													index,
+													index + 1,
 													"# of card",
 													numberOfCards,
 													"currentCardIndex",
@@ -193,6 +179,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 									<CloseOutlined
 										onClick={() => {
 											remove(field.name);
+											setNumberOfCards(numberOfCards - 1);
 										}}
 									/>
 								</Space>
