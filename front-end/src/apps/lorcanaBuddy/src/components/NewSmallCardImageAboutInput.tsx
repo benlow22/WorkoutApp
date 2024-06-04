@@ -1,28 +1,20 @@
 import { Image } from "antd";
 import { getImageUrl } from "../utils/image-util";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 
 type TProps = {
-	cardNumber: string;
-	wave: number;
+	imageUrl: string | undefined;
 };
 
-export const NewSmallCardImageAboveInput = ({ cardNumber, wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage, lorcanaCards } = useContext(AuthContext);
-	const imageUrl = lorcanaCards.filter((card) => {
-		if (card.set_num === wave && card.card_num === cardNumber) {
-			return card.image;
-		}
-	});
-	console.log(imageUrl);
+export const NewSmallCardImageAboveInput = ({ imageUrl }: TProps) => {
 	return (
 		<div style={{ minHeight: "70px" }}>
 			<Image
 				src={imageUrl}
 				style={{
-					// width: imageWidth,
-					borderRadius: "3px",
+					width: "100px",
+					borderRadius: "10px",
 					// opacity: opacity && parseFloat(opacity),
 				}}
 			/>

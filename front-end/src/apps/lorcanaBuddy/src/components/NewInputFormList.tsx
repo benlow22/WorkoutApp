@@ -165,6 +165,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 									currentCardIndex={currentCardIndex}
 									setNumberOfCards={setNumberOfCards}
 									remove={remove}
+									wave={wave}
 								/>
 							))}
 							<Button
