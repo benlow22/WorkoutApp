@@ -1,18 +1,10 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { AuthContext } from "../../../../../contexts/AuthProvider";
-import { NewInventoryCard } from "../../components/NewInventoryCard";
-import { TNewCard } from "../newInventory/NewInventory";
-import { Select, Space, Switch } from "antd";
-import { NewCardsInputByWave } from "../../components/NewCardsInputByWave";
+import { Select } from "antd";
+import { useState } from "react";
 import { NewInputFormList } from "../../components/NewInputFormList";
 
 export const NewInput = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, lorcanaCards } = useContext(AuthContext);
-	const [allCards, setAllCards] = useState<TNewCard[] | null>();
-	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 	const [waveFilter, setWaveFilter] = useState<number>(0);
-
-	const [isAllFoil, setIsAllFoil] = useState<boolean>(false);
+	// const [isAllFoil, setIsAllFoil] = useState<boolean>(false);
 	return (
 		<div className="input-page" style={{}}>
 			<h3>Select Wave:</h3>
@@ -29,18 +21,16 @@ export const NewInput = () => {
 					{ value: 4, label: "4. Ursula's Return" },
 				]}
 			/>
-			<Space style={{ width: "100%", justifyContent: "center" }}>
+			{/* <Space style={{ width: "100%", justifyContent: "center" }}>
 				<Switch
 					checkedChildren="foil"
 					style={{ width: "100px", margin: "auto" }}
 					unCheckedChildren="non-foil"
 					onChange={() => setIsAllFoil(!isAllFoil)}
 				></Switch>
-			</Space>
+			</Space> */}
 
-			<div className="" style={{}}>
-				{waveFilter > 0 && <NewInputFormList wave={waveFilter} />}
-			</div>
+			{waveFilter > 0 && <NewInputFormList wave={waveFilter} />}
 		</div>
 	);
 };

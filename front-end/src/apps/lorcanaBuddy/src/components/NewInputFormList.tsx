@@ -150,13 +150,13 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				id="deckForm"
 				initialValues={{ transaction_id: transactionId, wave: wave, deck_list: [], user_id: userId, deck_input: [{}] }}
 			>
-				<Form.Item name="user_id"></Form.Item>
-				<Form.Item name="transaction_id"></Form.Item>
-				<Form.Item name="wave"></Form.Item>
+				<Form.Item name="user_id" hidden></Form.Item>
+				<Form.Item name="transaction_id" hidden></Form.Item>
+				<Form.Item name="wave" hidden></Form.Item>
 				<Form.List name="deck_input">
-					{(fields, { add, remove }) => (
+					{(fields, { add, remove, move }) => (
 						<div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-							<div style={{ flexDirection: "row", display: "flex", width: "1000px", flexWrap: "wrap" }}>
+							<div style={{ flexDirection: "row", display: "flex", width: "800px", flexWrap: "wrap" }}>
 								{fields.map((field, index) => (
 									<NewSingleCardInput
 										field={field}
@@ -167,6 +167,9 @@ export const NewInputFormList = ({ wave }: TProps) => {
 										setNumberOfCards={setNumberOfCards}
 										remove={remove}
 										wave={wave}
+										key={index}
+										move={move}
+										form={form}
 									/>
 								))}
 							</div>
@@ -192,7 +195,7 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				</Form.Item>
 				<Form.Item>
 					<Button type="primary" htmlType="submit">
-						Submit ---- {numberOfCards} Cards
+						Submit ---- {numberOfCards} Cards {}
 					</Button>
 				</Form.Item>
 			</Form>
