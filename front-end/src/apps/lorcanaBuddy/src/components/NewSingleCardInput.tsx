@@ -27,23 +27,35 @@ export const NewSingleCardInput = ({
 	wave,
 }: TProps) => {
 	const [cardNumber, setCardNumber] = useState<string>();
-	const [imageurl, setImageUrl] = useState<string>("/lorcanaRarity/lorcana-cardback.jpg");
+	const [imageUrl, setimageUrl] = useState<string>("/lorcanaRarity/lorcana-cardback.jpg");
+	const [isFoil, setIsFoil] = useState<boolean>(false);
 
-	const { auth, userId, refreshLorcanaCardImage, lorcanaCards } = useContext(AuthContext);
+	const { lorcanaCards } = useContext(AuthContext);
 
-	const getImageUrl = (cardNumber: string) => {
+	const getimageUrl = (cardNumber: string) => {
 		if (cardNumber) {
 			const card = lorcanaCards.filter((card) => card.card_num === cardNumber && card.set_num === wave);
-			setImageUrl(card[0] ? card[0].image : "/lorcanaRarity/lorcana-cardback.jpg");
+			setimageUrl(card[0] ? card[0].image : "/lorcanaRarity/lorcana-cardback.jpg");
 		} else {
-			setImageUrl("/lorcanaRarity/lorcana-cardback.jpg");
+			setimageUrl("/lorcanaRarity/lorcana-cardback.jpg");
 		}
 	};
 
 	return (
-		<Space key={field.key}>
-			<>{index}</>
-			<NewSmallCardImageAboveInput imageUrl={imageurl} />
+		<Space key={field.key} style={{ display: "flex", width: "100px", flexWrap: "wrap", justifyContent: "center", margin: "10px 15px" }}>
+			<div
+				style={{
+					textAlign: "start",
+				}}
+			>
+				{isFoil && imageUrl !== "/lorcanaRarity/lorcana-cardback.jpg" && (
+					<img
+						src="/lorcanaRarity/foilFilter.png"
+						style={{ position: "absolute", width: "100px", zIndex: "3", opacity: "0.45", filter: "contrast(100%)" }}
+					/>
+				)}
+				<NewSmallCardImageAboveInput imageUrl={imageUrl} />
+			</div>
 			<Form.Item noStyle name={[field.name, "card_number"]}>
 				<Input
 					placeholder="Card #"
@@ -54,19 +66,22 @@ export const NewSingleCardInput = ({
 					}}
 					onChange={(e) => {
 						setCardNumber(e.target.value);
-						getImageUrl(e.target.value);
+						getimageUrl(e.target.value);
 					}}
 				/>
 			</Form.Item>
 			<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
-				<Switch checkedChildren="foil" unCheckedChildren="non-foil"></Switch>
+				<Switch checkedChildren="foil" style={{ width: "100px" }} unCheckedChildren="non-foil" onChange={() => setIsFoil(!isFoil)}></Switch>
 			</Form.Item>
-			<CloseOutlined
-				onClick={() => {
-					remove(field.name);
-					setNumberOfCards(numberOfCards - 1);
-				}}
-			/>
+			<>
+				<CloseOutlined
+					onClick={() => {
+						remove(field.name);
+						setNumberOfCards(numberOfCards - 1);
+					}}
+					style={{ color: "red" }}
+				/>
+			</>
 		</Space>
 	);
 };

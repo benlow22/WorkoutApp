@@ -156,18 +156,20 @@ export const NewInputFormList = ({ wave }: TProps) => {
 				<Form.List name="deck_input">
 					{(fields, { add, remove }) => (
 						<div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
-							{fields.map((field, index) => (
-								<NewSingleCardInput
-									field={field}
-									index={index}
-									setCurrentCardIndex={setCurrentCardIndex}
-									numberOfCards={numberOfCards}
-									currentCardIndex={currentCardIndex}
-									setNumberOfCards={setNumberOfCards}
-									remove={remove}
-									wave={wave}
-								/>
-							))}
+							<div style={{ flexDirection: "row", display: "flex", width: "1000px", flexWrap: "wrap" }}>
+								{fields.map((field, index) => (
+									<NewSingleCardInput
+										field={field}
+										index={index}
+										setCurrentCardIndex={setCurrentCardIndex}
+										numberOfCards={numberOfCards}
+										currentCardIndex={currentCardIndex}
+										setNumberOfCards={setNumberOfCards}
+										remove={remove}
+										wave={wave}
+									/>
+								))}
+							</div>
 							<Button
 								id="addButton"
 								type="dashed"
