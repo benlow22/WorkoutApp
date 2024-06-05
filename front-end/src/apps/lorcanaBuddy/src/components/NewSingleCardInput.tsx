@@ -31,10 +31,10 @@ export const NewSingleCardInput = ({
 	const [isFoil, setIsFoil] = useState<boolean>(false);
 	const isFoilFromField = form.getFieldValue(["deck_input", index, "is_foil"]);
 
-	useEffect(() => {
-		console.log("getting value after delete", form.getFieldValue(["deck_input", index, "card_number"]));
-		// getImageUrl(cardNumberFromField);
-	}, [form.getFieldValue(["deck_input", index, "card_number"]), index]);
+	// useEffect(() => {
+	// 	console.log("getting value after delete", form.getFieldValue(["deck_input", index, "card_number"]));
+	// 	// getImageUrl(cardNumberFromField);
+	// }, [form.getFieldValue(["deck_input", index, "card_number"]), index]);
 
 	return (
 		<Space key={field.key} style={{ display: "flex", width: "100px", flexWrap: "wrap", justifyContent: "center", margin: "10px 15px" }}>
@@ -49,9 +49,9 @@ export const NewSingleCardInput = ({
 						style={{ position: "absolute", width: "100px", zIndex: "3", opacity: "0.45", filter: "contrast(100%)", borderRadius: "5px" }}
 					/>
 				)}
-				<NewSmallCardImageAboveInput wave={form.getFieldValue("wave")} num={form.getFieldValue(["deck_input", index, "card_number"])} />
+				<NewSmallCardImageAboveInput wave={form.getFieldValue("wave")} num={form.getFieldValue(["deckInput", index, "cardNumber"])} />
 			</div>
-			<Form.Item noStyle name={[field.name, "card_number"]}>
+			<Form.Item noStyle name={[field.name, "cardNumber"]}>
 				<Input
 					placeholder="Card #"
 					id={`card${index}`}

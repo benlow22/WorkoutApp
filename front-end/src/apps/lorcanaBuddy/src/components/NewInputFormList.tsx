@@ -21,9 +21,9 @@ type TCardsToUpload = {
 	card_id: string;
 	transaction_id: string;
 };
-export const createTransaction = (transactionType: string, numberOfCards: number, userId: string) => {
-	return { transaction_type: transactionType, number_of_cards: numberOfCards, user_id: userId };
-};
+// export const createTransaction = (transactionType: string, numberOfCards: number, userId: string) => {
+// 	return { transaction_type: transactionType, number_of_cards: numberOfCards, user_id: userId };
+// };
 
 export const NewInputFormList = () => {
 	const { auth, userId, supabase } = useContext(AuthContext);
@@ -39,7 +39,7 @@ export const NewInputFormList = () => {
 
 	const onFinish = (values: any) => {
 		let validCardCounter = 0;
-		const cardsToUpload = values.cards
+		const cardsToUpload = values.deckInput
 			.filter((card: any) => card.cardNumber)
 			.map((card: any) => {
 				if (card.cardNumber) {
@@ -54,22 +54,7 @@ export const NewInputFormList = () => {
 					};
 				}
 			});
-		// const transaction = createTransaction("addCards", numberOfCards, userId);
-		console.log("cards to upload", cardsToUpload);
-		// let uploadedCards: any[] = [];
-		// let failedToUploadCards: any[] = [];
-		const uploadCards = async (cards: TCardsToUpload[]) => {
-			try {
-				const { data, error } = await supabase.from("new_user_cards").insert(cards).select();
-				if (data) {
-					console.log("Cards made it through:", data);
-				} else {
-					console.log("CARD UPLOAD", error);
-				}
-			} catch (err) {
-				console.log(err);
-			}
-		};
+
 		const uploadTransaction = async () => {
 			if (auth) {
 				try {
@@ -89,6 +74,24 @@ export const NewInputFormList = () => {
 					console.log(err);
 					console.log("asdfadsdfasdf");
 				}
+			}
+		};
+
+		console.log("VALLUES: ", values);
+		// const transaction = createTransaction("addCards", numberOfCards, userId);
+		console.log("cards to upload", cardsToUpload);
+		// let uploadedCards: any[] = [];
+		// let failedToUploadCards: any[] = [];
+		const uploadCards = async (cards: TCardsToUpload[]) => {
+			try {
+				const { data, error } = await supabase.from("new_user_cards").insert(cards).select();
+				if (data) {
+					console.log("Cards made it through:", data);
+				} else {
+					console.log("CARD UPLOAD", error);
+				}
+			} catch (err) {
+				console.log(err);
 			}
 		};
 
@@ -148,10 +151,10 @@ export const NewInputFormList = () => {
 				onFinish={onFinish}
 				style={{ maxWidth: "800px", margin: "auto", color: "black" }}
 				id="deckForm"
-				initialValues={{ deck_input: [{}], transaction_id: transactionId, deck_list: [], user_id: userId }}
+				initialValues={{ deckInput: [{}], transactionId: transactionId, deckList: [], userId: userId }}
 			>
-				<Form.Item name="user_id" hidden></Form.Item>
-				<Form.Item name="transaction_id" hidden></Form.Item>
+				<Form.Item name="userId" hidden></Form.Item>
+				<Form.Item name="transactionId" hidden></Form.Item>
 				<Form.Item name="wave">
 					<Select
 						placeholder="Select Wave"
@@ -169,7 +172,7 @@ export const NewInputFormList = () => {
 					{/* <InputNumber value={wave} /> */}
 				</Form.Item>
 				{waveFilter > 0 && (
-					<Form.List name="deck_input">
+					<Form.List name="deckInput">
 						{(fields, { add, remove, move }) => (
 							<div style={{ display: "flex", rowGap: 16, flexDirection: "column" }}>
 								<div style={{ flexDirection: "row", display: "flex", width: "800px", flexWrap: "wrap" }}>
