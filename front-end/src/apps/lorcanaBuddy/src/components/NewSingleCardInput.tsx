@@ -1,11 +1,7 @@
 import { CloseOutlined } from "@ant-design/icons";
 import { Form, FormInstance, FormListFieldData, Input, Space, Switch } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NewSmallCardImageAboveInput } from "./NewSmallCardImageAboutInput";
-import { AuthContext } from "../../../../contexts/AuthProvider";
-import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
-// import { getImageUrl } from "../utils/image-util";
-// import { LorcanaCards } from "./LorcanaCards";
 
 type TProps = {
 	field: FormListFieldData;
@@ -32,12 +28,8 @@ export const NewSingleCardInput = ({
 	form,
 }: TProps) => {
 	const [cardNumber, setCardNumber] = useState<string>();
-	const [imageUrl, setimageUrl] = useState<string>("/lorcanaRarity/lorcana-cardback.jpg");
 	const [isFoil, setIsFoil] = useState<boolean>(false);
-	const cardNumberFromField = form.getFieldValue(["deck_input", index, "card_number"]);
 	const isFoilFromField = form.getFieldValue(["deck_input", index, "is_foil"]);
-
-	const { lorcanaCards } = useContext(AuthContext);
 
 	useEffect(() => {
 		console.log("getting value after delete", form.getFieldValue(["deck_input", index, "card_number"]));
@@ -57,7 +49,7 @@ export const NewSingleCardInput = ({
 						style={{ position: "absolute", width: "100px", zIndex: "3", opacity: "0.45", filter: "contrast(100%)", borderRadius: "5px" }}
 					/>
 				)}
-				<NewSmallCardImageAboveInput wave={wave} num={form.getFieldValue(["deck_input", index, "card_number"])} />
+				<NewSmallCardImageAboveInput wave={form.getFieldValue("wave")} num={form.getFieldValue(["deck_input", index, "card_number"])} />
 			</div>
 			<Form.Item noStyle name={[field.name, "card_number"]}>
 				<Input
@@ -81,7 +73,6 @@ export const NewSingleCardInput = ({
 					}}
 				/>
 			</Form.Item>
-			<p>WOAHS {form.getFieldValue(["deck_input", index, "card_number"])}</p>
 			<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
 				<Switch
 					checkedChildren="foil"

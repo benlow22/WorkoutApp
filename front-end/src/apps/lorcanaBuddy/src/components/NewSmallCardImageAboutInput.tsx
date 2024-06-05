@@ -24,7 +24,7 @@ export const NewSmallCardImageAboveInput = ({ num, wave }: TProps) => {
 
 	useEffect(() => {
 		getImageUrl(num);
-	}, [num]);
+	}, [num, wave]);
 	return (
 		<div style={{ minHeight: "70px" }}>
 			{/* <p>{num}</p> */}
