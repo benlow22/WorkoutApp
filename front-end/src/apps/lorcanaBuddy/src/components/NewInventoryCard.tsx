@@ -7,9 +7,15 @@ type TProps = {
 import { Image } from "antd";
 
 export const NewInventoryCard = ({ card }: TProps) => {
+	const totalQuantity = card.foil + card.nonfoil;
 	return (
 		<div style={{ backgroundColor: "", margin: "3px", display: "flex", flexWrap: "wrap", width: "100px" }}>
-			<Image width={100} style={{ borderRadius: "5px" }} src={card.image} fallback={"/lorcanaRarity/lorcana-cardback.jpg"} />
+			<Image
+				width={100}
+				style={{ borderRadius: "5px", opacity: totalQuantity > 1 ? "1" : "0.3" }}
+				src={card.image}
+				fallback={"/lorcanaRarity/lorcana-cardback.jpg"}
+			/>
 			<div style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
 				<div>
 					<p style={{ color: card.foil + card.nonfoil > 3 ? "green" : "red", padding: " 5px", fontSize: "10px" }}>{card.card_num}</p>
