@@ -22,7 +22,12 @@ export const LorcanaBuddy = [
 	<Route path="newInventory" element={<NewInventory />} key={"LB6"} />,
 	// <Route path="newInput" element={<NewInput />} key={"LB6"} />,
 
-	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
+
+	<Route
+		path="*"
+		element={<Navigate to="" />}
+		key={"LB5"}
+	/>,
 ];
 
 // export const WorkoutBuddy = [

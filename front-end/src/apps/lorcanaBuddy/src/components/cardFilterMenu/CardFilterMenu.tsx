@@ -237,7 +237,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 
 					<h3>Set</h3>
 					<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
-					{/* <Button onClick={() => apiCall()}>CLICKY</Button> */}
+
 				</>
 			)}
 		</div>

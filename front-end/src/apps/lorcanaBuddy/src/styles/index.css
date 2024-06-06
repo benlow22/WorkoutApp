@@ -98,7 +98,11 @@
 	right: 55px;
 }
 
-.save-float-button .ant-float-btn .ant-float-btn-body .ant-float-btn-content .ant-float-btn-icon {
+.save-float-button
+	.ant-float-btn
+	.ant-float-btn-body
+	.ant-float-btn-content
+	.ant-float-btn-icon {
 	font-size: 40px;
 	width: fit-content;
 }
