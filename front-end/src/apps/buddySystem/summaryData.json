@@ -27,7 +27,7 @@
 			"description": "Catalog all your Lorcana trading cards and see if your collection is complete. You can browse all the cards to see which you want to obtain. You can even select and keep track of any special holographic cards too",
 			"imagePath": "lorcanaSummary.png",
 			"appName": "Lorcana Buddy",
-			"appPath": "lorcanaBuddy/browse"
+			"appPath": "lorcanaBuddy/inventory"
 		}
 	]
 }

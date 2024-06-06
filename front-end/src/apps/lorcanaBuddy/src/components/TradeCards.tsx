@@ -11,8 +11,7 @@ type TProps = {
 };
 
 export const TradeCards = ({ wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage, setRefreshLorcanaCardImage } =
-		useContext(AuthContext);
+	const { auth, userId, refreshLorcanaCardImage, setRefreshLorcanaCardImage } = useContext(AuthContext);
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
@@ -242,16 +241,9 @@ export const TradeCards = ({ wave }: TProps) => {
 						Submit
 					</Button>
 				</Form.Item> */}
-				<Switch
-					checkedChildren="foil"
-					unCheckedChildren="non-foil"
-					onChange={() => setIsFoil(!isFoil)}
-				/>
+				<Switch checkedChildren="foil" unCheckedChildren="non-foil" onChange={() => setIsFoil(!isFoil)} />
 				<h1>foiled: {isFoil ? "true" : "false"}</h1>
-				<TextArea
-					placeholder="excel input"
-					onChange={(e) => handleExcelInput(e.target.value)}
-				/>
+				<TextArea placeholder="excel input" onChange={(e) => handleExcelInput(e.target.value)} />
 				<Button onClick={() => handleSubmit()}>Add Cards</Button>
 				<Button onClick={() => onRemove(newCards)}>Remove Cards</Button>
 			</Form>

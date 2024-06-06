@@ -1,9 +1,7 @@
-import { Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { GridCardDisplay, ICardAndUserInfo } from "../../components/GridCardDisplay";
 import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
-import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
 import "./../../styles/index.css";
 export type TCardRef = {
 	cardNumber: number;
@@ -14,7 +12,7 @@ export type TCardRef = {
 	image: string;
 	cardId: string;
 };
-export const Inventory = () => {
+export const Checklist = () => {
 	// const images = require.context('../')
 	const { auth, userId, session, supabase, lorcanaCardImages } = useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
@@ -75,12 +73,6 @@ export const Inventory = () => {
 		}
 	};
 
-	const viewTypeOptions = [
-		{ value: "grid", label: "Grid" },
-		{ value: "list", label: "List" },
-		{ value: "icons", label: "Icons" },
-		{ value: "card", label: "Card", disabled: true },
-	];
 	useEffect(() => {
 		getAllCardsAndUsersCards();
 		getQuantityOfCards();
@@ -103,21 +95,11 @@ export const Inventory = () => {
 	}, [allCardAndUserCardInfo]);
 	return (
 		<div className="inventory-page">
-			<h1>cards</h1>
-			<h3>total foils: {cardQuantities.foil}</h3>
-			<h3>total non-foild: {cardQuantities.nonfoil} </h3>
-			<h3>
-				total cards:
-				{cardQuantities.foil + cardQuantities.nonfoil}
-			</h3>
 			{/* 
 			<h3>total shown cards: {rarityCardQuantities.nonfoil}</h3>
 
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
-			<Select defaultValue="grid" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
-			<CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} />
 			{/* {viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />} */}
-
 
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">
