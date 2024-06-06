@@ -12,7 +12,7 @@ export const NewInventoryCard = ({ card }: TProps) => {
 		<div style={{ backgroundColor: "", margin: "3px", display: "flex", flexWrap: "wrap", width: "100px" }}>
 			<Image
 				width={100}
-				style={{ borderRadius: "5px", opacity: totalQuantity > 1 ? "1" : "0.3" }}
+				style={{ borderRadius: "5px", opacity: totalQuantity > 0 ? "1" : "0.3" }}
 				src={card.image}
 				fallback={"/lorcanaRarity/lorcana-cardback.jpg"}
 			/>

@@ -29,12 +29,7 @@ export const NewSingleCardInput = ({
 }: TProps) => {
 	const [cardNumber, setCardNumber] = useState<string>();
 	const [isFoil, setIsFoil] = useState<boolean>(false);
-	const isFoilFromField = form.getFieldValue(["deck_input", index, "is_foil"]);
-
-	// useEffect(() => {
-	// 	console.log("getting value after delete", form.getFieldValue(["deck_input", index, "card_number"]));
-	// 	// getImageUrl(cardNumberFromField);
-	// }, [form.getFieldValue(["deck_input", index, "card_number"]), index]);
+	const isFoilFromField = form.getFieldValue(["deckInput", index, "isFoil"]);
 
 	return (
 		<Space key={field.key} style={{ display: "flex", width: "100px", flexWrap: "wrap", justifyContent: "center", margin: "10px 15px" }}>
@@ -57,23 +52,13 @@ export const NewSingleCardInput = ({
 					id={`card${index}`}
 					onFocus={(e) => {
 						setCurrentCardIndex(index);
-						console.log(
-							"this card is focus #",
-							index + 1,
-							"# of card",
-							numberOfCards,
-							"currentCardIndex",
-							currentCardIndex,
-							"current value",
-							e.target.value
-						);
 					}}
 					onChange={(e) => {
 						setCardNumber(e.target.value);
 					}}
 				/>
 			</Form.Item>
-			<Form.Item noStyle name={[field.name, "is_foil"]} initialValue={false}>
+			<Form.Item noStyle name={[field.name, "isFoil"]} initialValue={false}>
 				<Switch
 					checkedChildren="foil"
 					style={{ width: "100px" }}

@@ -1,12 +1,7 @@
-import { CloseOutlined, MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
-import { Button, Card, Form, Input, InputNumber, Select, Space, Switch, Typography } from "antd";
-import { useContext, useEffect, useRef, useState } from "react";
-import { DeckCardInput } from "./DeckCardInput";
+import { Button, Form, Select, Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { v4 } from "uuid";
 import { AuthContext } from "../../../../contexts/AuthProvider";
-import { v4 as uuidv4, v4 } from "uuid";
-import { NewDeckCardInput } from "./NewDeckCardInput";
-import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
-import { SingleCardInput } from "./SingleCardInput";
 import { NewSingleCardInput } from "./NewSingleCardInput";
 
 type TProps = {
@@ -21,9 +16,6 @@ type TCardsToUpload = {
 	card_id: string;
 	transaction_id: string;
 };
-// export const createTransaction = (transactionType: string, numberOfCards: number, userId: string) => {
-// 	return { transaction_type: transactionType, number_of_cards: numberOfCards, user_id: userId };
-// };
 
 export const NewInputFormList = () => {
 	const { auth, userId, supabase } = useContext(AuthContext);
@@ -64,24 +56,20 @@ export const NewInputFormList = () => {
 						.select();
 					if (data) {
 						console.log("Transaction uploaded ", data);
-						const transactionId = data[0].id;
-
 						uploadCards(cardsToUpload);
 					} else {
 						console.log("ERRRROR", error);
 					}
 				} catch (err) {
+					console.log("ERROR:");
 					console.log(err);
-					console.log("asdfadsdfasdf");
 				}
 			}
 		};
 
 		console.log("VALLUES: ", values);
-		// const transaction = createTransaction("addCards", numberOfCards, userId);
 		console.log("cards to upload", cardsToUpload);
-		// let uploadedCards: any[] = [];
-		// let failedToUploadCards: any[] = [];
+
 		const uploadCards = async (cards: TCardsToUpload[]) => {
 			try {
 				const { data, error } = await supabase.from("new_user_cards").insert(cards).select();
@@ -206,17 +194,17 @@ export const NewInputFormList = () => {
 						)}
 					</Form.List>
 				)}
+				<Form.Item>
+					<Button type="primary" htmlType="submit">
+						Submit ---- {numberOfCards} Cards {}
+					</Button>
+				</Form.Item>
 				<Form.Item noStyle shouldUpdate>
 					{() => (
 						<Typography style={{ color: "white", textAlign: "start" }}>
 							<pre>{JSON.stringify(form.getFieldsValue(), null, 2)}</pre>
 						</Typography>
 					)}
-				</Form.Item>
-				<Form.Item>
-					<Button type="primary" htmlType="submit">
-						Submit ---- {numberOfCards} Cards {}
-					</Button>
 				</Form.Item>
 			</Form>
 		</div>
