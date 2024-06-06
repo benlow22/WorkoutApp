@@ -118,6 +118,7 @@ export const Inventory = () => {
 			<CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} />
 			{/* {viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />} */}
 
+
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">
 					{filteredCards.map((card) => (
