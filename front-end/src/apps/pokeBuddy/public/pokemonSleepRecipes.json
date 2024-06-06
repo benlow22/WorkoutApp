@@ -4335,6 +4335,1198 @@
 						"expNeeded": "0"
 					}
 				}
+			},
+			{
+				"name": "Explosion Popcorn",
+				"description": "Prepared in an instant with enough heat to cause an explosion.",
+				"ingredients": [
+					{
+						"name": "Greengrass Corn",
+						"quantity": 15
+					},
+					{
+						"name": "Pure Oil",
+						"quantity": 14
+					},
+					{
+						"name": "Moomoo Milk",
+						"quantity": 7
+					}
+				],
+				"minimumPotSize": 36,
+				"imageUrl": "explosionpopcorn.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 6048,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 6169,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 6290,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 6411,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 6532,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 6592,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 6713,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 6834,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 7016,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 7137,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 7197,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 7318,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 7439,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 7500,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 7620,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 7741,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 7862,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 7923,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 8044,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 8165,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 8286,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 8467,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 8588,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 8770,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 8891,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 9072,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 9193,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 9374,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 9556,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 9737,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 9919,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 10100,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 10282,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 10524,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 10705,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 10947,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 11128,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 11370,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 11612,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 11854,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 12096,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 12338,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 12580,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 12882,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 13124,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 13427,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 13729,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 14031,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 14334,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 14636,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 14999,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 15301,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 15664,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 16027,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 16390,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"name": "Teatime Corn Scones",
+				"description": "This flaky scone is most delicious when paired with an equal amount of apple ginger jam.",
+				"ingredients": [
+					{
+						"name": "Fancy Apple",
+						"quantity": 20
+					},
+					{
+						"name": "Warming Ginger",
+						"quantity": 20
+					},
+					{
+						"name": "Greengrass Corn",
+						"quantity": 18
+					},
+					{
+						"name": "Moomoo Milk",
+						"quantity": 9
+					}
+				],
+				"minimumPotSize": 67,
+				"imageUrl": "teatimecornscones.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 10925,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 11144,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 11362,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 11581,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 11799,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 11908,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 12127,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 12345,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 12673,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 12892,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 13001,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 13219,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 13438,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 13547,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 13766,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 13984,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 14203,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 14312,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 14530,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 14749,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 14967,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 15295,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 15514,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 15841,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 16060,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 16388,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 16606,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 16934,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 17262,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 17589,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 17917,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 18245,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 18573,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 19010,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 19337,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 19774,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 20102,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 20539,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 20976,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 21413,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 21850,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 22287,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 22724,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 23270,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 23707,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 24254,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 24800,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 25346,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 25892,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 26439,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 27094,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 27640,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 28296,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 28951,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 29607,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"name": "Petal Dance Chocolate Tart",
+				"description": "A tricksy tart that scatters flower petals when you eat it.",
+				"ingredients": [
+					{
+						"name": "Fancy Apple",
+						"quantity": 11
+					},
+					{
+						"name": "Soothing Cacao",
+						"quantity": 11
+					}
+				],
+				"minimumPotSize": 22,
+				"imageUrl": "petaldancechocolatetart.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 3314,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 3380,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 3447,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 3513,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 3579,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 3612,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 3679,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 3745,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 3844,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 3911,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 3944,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 4010,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 4076,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 4109,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 4176,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 4242,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 4308,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 4341,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 4408,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 4474,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 4540,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 4640,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 4706,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 4805,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 4872,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 4971,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 5037,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 5137,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 5236,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 5336,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 5435,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 5534,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 5634,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 5766,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 5866,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 5998,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 6098,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 6230,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 6363,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 6495,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 6628,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 6761,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 6893,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 7059,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 7191,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 7357,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 7523,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 7688,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 7854,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 8020,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 8219,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 8384,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 8583,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 8782,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 8981,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"name": "Flower Gift Macarons",
+				"description": "These macarons are perfect to give as a gift - they always make the recipient smile.",
+				"ingredients": [
+					{
+						"name": "Soothing Cacao",
+						"quantity": 25
+					},
+					{
+						"name": "Fancy Egg",
+						"quantity": 25
+					},
+					{
+						"name": "Honey",
+						"quantity": 17
+					},
+					{
+						"name": "Moomoo Milk",
+						"quantity": 10
+					}
+				],
+				"minimumPotSize": 77,
+				"imageUrl": "flowergiftmacarons.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 13834,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 14111,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 14387,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 14664,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 14941,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 15079,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 15356,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 15632,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 16047,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 16324,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 16462,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 16739,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 17016,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 17154,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 17431,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 17708,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 17984,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 18123,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 18399,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 18676,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 18953,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 19368,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 19644,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 20059,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 20336,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 20751,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 21028,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 21443,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 21858,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 22273,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 22688,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 23103,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 23518,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 24071,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 24486,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 25040,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 25455,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 26008,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 26561,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 27115,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 27668,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 28221,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 28775,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 29466,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 30020,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 30711,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 31403,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 32095,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 32787,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 33478,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 34308,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 35000,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 35830,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 36660,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 37490,
+						"expNeeded": 0
+					}
+				}
 			}
 		],
 		"Curries and Stews": [
@@ -6265,7 +7457,6 @@
 					}
 				}
 			},
-
 			{
 				"name": "Spore Mushroom Curry",
 				"Description": "A curry that puts you to sleep just as surely as the move Spore.",
@@ -7964,6 +9155,584 @@
 						"experience": "568,918",
 						"value": 6417,
 						"expNeeded": "0"
+					}
+				}
+			},
+			{
+				"name": "Limber Corn Stew",
+				"Description": "The milk and corn in this creamy stew have a mild, gentle sweetness.",
+				"ingredients": [
+					{ "name": "Greengrass Corn", "quantity": 14 },
+					{ "name": "Moomoo Milk", "quantity": 8 },
+					{ "name": "Soft Potato", "quantity": 8 }
+				],
+				"minimumPotSize": 27,
+				"imageUrl": "limbercornstew.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 4670,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 4763,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 4857,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 4950,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 5044,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 5090,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 5184,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 5277,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 5417,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 5511,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 5557,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 5651,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 5744,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 5791,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 5884,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 5978,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 6071,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 6118,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 6211,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 6305,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 6398,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 6538,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 6631,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 6772,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 6865,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 7005,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 7098,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 7239,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 7379,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 7519,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 7659,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 7799,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 7939,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 8126,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 8266,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 8453,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 8593,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 8780,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 8966,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 9153,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 9340,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 9527,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 9714,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 9947,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 10134,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 10367,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 10601,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 10834,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 11068,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 11301,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 11582,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 11815,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 12095,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 12376,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 12656,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"name": "Inferno Corn Keema Curry",
+				"Description": "This curry's infernal spiciness kicks in after the sweetness of the corn.",
+
+				"ingredients": [
+					{ "name": "Greengrass Corn", "quantity": 14 },
+					{ "name": "Bean Sausage", "quantity": 24 },
+					{ "name": "Fiery Herb", "quantity": 27 },
+					{ "name": "Warming Ginger", "quantity": 12 }
+				],
+				"minimumPotSize": 77,
+				"imageUrl": "infernocornkeemacurry.png",
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 13690,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 13964,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 14238,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 14511,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 14785,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 14922,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 15196,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 15470,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 15880,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 16154,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 16291,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 16565,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 16839,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 16976,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 17249,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 17523,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 17797,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 17934,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 18208,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 18482,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 18755,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 19166,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 19440,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 19851,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 20124,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 20535,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 20809,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 21220,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 21630,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 22041,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 22452,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 22862,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 23273,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 23821,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 24231,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 24779,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 25190,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 25737,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 26285,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 26832,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 27380,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 27928,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 28475,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 29160,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 29707,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 30392,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 31076,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 31761,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 32445,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 33130,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 33951,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 34636,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 35457,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 36279,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 37100,
+						"expNeeded": 0
 					}
 				}
 			}
@@ -12269,6 +14038,897 @@
 						"experience": "1,121,582",
 						"value": 4782,
 						"expNeeded": "0"
+					}
+				}
+			},
+			{
+				"imageUrl": "greengrasssalad.png",
+				"name": "Greengrass Salad",
+				"description": "A salad made of fresh vegetables - all harvested on Greengrass Isle.",
+				"ingredients": [
+					{
+						"name": "Pure Oil",
+						"quantity": 22
+					},
+					{
+						"name": "Greengrass Corn",
+						"quantity": 17
+					},
+					{
+						"name": "Snoozy Tomato",
+						"quantity": 14
+					},
+					{
+						"name": "Soft Potato",
+						"quantity": 9
+					}
+				],
+				"minimumPotSize": 62,
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 11393,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 11621,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 11849,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 12077,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 12304,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 12418,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 12646,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 12874,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 13216,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 13444,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 13558,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 13786,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 14013,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 14127,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 14355,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 14583,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 14811,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 14925,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 15153,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 15381,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 15608,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 15950,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 16178,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 16520,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 16748,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 17090,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 17317,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 17659,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 18001,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 18343,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 18685,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 19026,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 19368,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 19824,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 20166,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 20621,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 20963,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 21419,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 21875,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 22330,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 22786,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 23242,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 23697,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 24267,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 24723,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 25292,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 25862,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 26432,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 27001,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 27571,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 28255,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 28824,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 29508,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 30191,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 30875,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"imageUrl": "calmmindfruitsalad.png",
+				"name": "Calm Mind Fruit Salad",
+				"description": "The refreshing sweetness of this fruit salad soothes the soul.",
+				"ingredients": [
+					{
+						"name": "Fancy Apple",
+						"quantity": 21
+					},
+					{
+						"name": "Greengrass Corn",
+						"quantity": 12
+					},
+					{
+						"name": "Honey",
+						"quantity": 16
+					}
+				],
+				"minimumPotSize": 62,
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 7675,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 7829,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 7982,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 8136,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 8289,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 8366,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 8519,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 8673,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 8903,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 9057,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 9133,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 9287,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 9440,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 9517,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 9671,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 9824,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 9978,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 10054,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 10208,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 10361,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 10515,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 10745,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 10899,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 11129,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 11282,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 11513,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 11666,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 11896,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 12127,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 12357,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 12587,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 12817,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 13048,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 13355,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 13585,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 13892,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 14122,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 14429,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 14736,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 15043,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 15350,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 15657,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 15964,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 16348,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 16655,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 17039,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 17422,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 17806,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 18190,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 18574,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 19034,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 19418,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 19878,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 20339,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 20799,
+						"expNeeded": 0
+					}
+				}
+			},
+			{
+				"imageUrl": "furyattackcornsalad.png",
+				"name": "Fury Attack Corn Salad",
+				"description": "When eating this salad, you should start by attacking the mound of corn.",
+				"ingredients": [
+					{
+						"name": "Pure Oil",
+						"quantity": 8
+					},
+					{
+						"name": "Greengrass Corn",
+						"quantity": 9
+					}
+				],
+				"minimumPotSize": 17,
+				"levels": {
+					"1": {
+						"experience": 0,
+						"value": 2785,
+						"expNeeded": "1,080"
+					},
+					"2": {
+						"experience": "1,080",
+						"value": 2841,
+						"expNeeded": "1,244"
+					},
+					"3": {
+						"experience": "2,324",
+						"value": 2896,
+						"expNeeded": "1,612"
+					},
+					"4": {
+						"experience": "3,936",
+						"value": 2952,
+						"expNeeded": "1,609"
+					},
+					"5": {
+						"experience": "5,545",
+						"value": 3008,
+						"expNeeded": "1,796"
+					},
+					"6": {
+						"experience": "7,341",
+						"value": 3036,
+						"expNeeded": "2,371"
+					},
+					"7": {
+						"experience": "9,712",
+						"value": 3091,
+						"expNeeded": "3,048"
+					},
+					"8": {
+						"experience": "12,760",
+						"value": 3147,
+						"expNeeded": "3,666"
+					},
+					"9": {
+						"experience": "16,426",
+						"value": 3231,
+						"expNeeded": "4,365"
+					},
+					"10": {
+						"experience": "20,791",
+						"value": 3286,
+						"expNeeded": "4,848"
+					},
+					"11": {
+						"experience": "25,639",
+						"value": 3314,
+						"expNeeded": "5,272"
+					},
+					"12": {
+						"experience": "30,911",
+						"value": 3370,
+						"expNeeded": "5,710"
+					},
+					"13": {
+						"experience": "36,621",
+						"value": 3426,
+						"expNeeded": "6,301"
+					},
+					"14": {
+						"experience": "42,922",
+						"value": 3453,
+						"expNeeded": "6,960"
+					},
+					"15": {
+						"experience": "49,882",
+						"value": 3509,
+						"expNeeded": "7,669"
+					},
+					"16": {
+						"experience": "57,551",
+						"value": 3565,
+						"expNeeded": "8,450"
+					},
+					"17": {
+						"experience": "66,001",
+						"value": 3621,
+						"expNeeded": "9,130"
+					},
+					"18": {
+						"experience": "75,131",
+						"value": 3648,
+						"expNeeded": "9,850"
+					},
+					"19": {
+						"experience": "84,981",
+						"value": 3704,
+						"expNeeded": "10,661"
+					},
+					"20": {
+						"experience": "95,642",
+						"value": 3760,
+						"expNeeded": "11,517"
+					},
+					"21": {
+						"experience": "107,159",
+						"value": 3815,
+						"expNeeded": "12,417"
+					},
+					"22": {
+						"experience": "119,576",
+						"value": 3899,
+						"expNeeded": "13,362"
+					},
+					"23": {
+						"experience": "132,938",
+						"value": 3955,
+						"expNeeded": "14,371"
+					},
+					"24": {
+						"experience": "147,309",
+						"value": 4038,
+						"expNeeded": "15,312"
+					},
+					"25": {
+						"experience": "162,621",
+						"value": 4094,
+						"expNeeded": "16,308"
+					},
+					"26": {
+						"experience": "178,929",
+						"value": 4178,
+						"expNeeded": "17,634"
+					},
+					"27": {
+						"experience": "196,563",
+						"value": 4233,
+						"expNeeded": "19,042"
+					},
+					"28": {
+						"experience": "215,605",
+						"value": 4317,
+						"expNeeded": "20,544"
+					},
+					"29": {
+						"experience": "236,149",
+						"value": 4400,
+						"expNeeded": "22,150"
+					},
+					"30": {
+						"experience": "258,299",
+						"value": 4484,
+						"expNeeded": "23,656"
+					},
+					"31": {
+						"experience": "281,955",
+						"value": 4567,
+						"expNeeded": "24,804"
+					},
+					"32": {
+						"experience": "306,759",
+						"value": 4651,
+						"expNeeded": "26,010"
+					},
+					"33": {
+						"experience": "332,769",
+						"value": 4735,
+						"expNeeded": "27,700"
+					},
+					"34": {
+						"experience": "360,469",
+						"value": 4846,
+						"expNeeded": "29,474"
+					},
+					"35": {
+						"experience": "389,943",
+						"value": 4929,
+						"expNeeded": "31,578"
+					},
+					"36": {
+						"experience": "421,521",
+						"value": 5041,
+						"expNeeded": "33,859"
+					},
+					"37": {
+						"experience": "455,380",
+						"value": 5124,
+						"expNeeded": "35,675"
+					},
+					"38": {
+						"experience": "491,055",
+						"value": 5236,
+						"expNeeded": "37,608"
+					},
+					"39": {
+						"experience": "528,663",
+						"value": 5347,
+						"expNeeded": "40,255"
+					},
+					"40": {
+						"experience": "568,918",
+						"value": 5459,
+						"expNeeded": "42,623"
+					},
+					"41": {
+						"experience": "611,541",
+						"value": 5570,
+						"expNeeded": "45,105"
+					},
+					"42": {
+						"experience": "656,646",
+						"value": 5681,
+						"expNeeded": "47,698"
+					},
+					"43": {
+						"experience": "704,344",
+						"value": 5793,
+						"expNeeded": "50,404"
+					},
+					"44": {
+						"experience": "754,748",
+						"value": 5932,
+						"expNeeded": "52,436"
+					},
+					"45": {
+						"experience": "807,184",
+						"value": 6043,
+						"expNeeded": "55,021"
+					},
+					"46": {
+						"experience": "862,205",
+						"value": 6183,
+						"expNeeded": "58,731"
+					},
+					"47": {
+						"experience": "920,936",
+						"value": 6322,
+						"expNeeded": "62,654"
+					},
+					"48": {
+						"experience": "983,590",
+						"value": 6461,
+						"expNeeded": "66,801"
+					},
+					"49": {
+						"experience": "1,050,391",
+						"value": 6600,
+						"expNeeded": "71,191"
+					},
+					"50": {
+						"experience": "1,121,582",
+						"value": 6740,
+						"expNeeded": "75,105"
+					},
+					"51": {
+						"experience": "1,196,687",
+						"value": 6907,
+						"expNeeded": "122,798"
+					},
+					"52": {
+						"experience": "1,319,485",
+						"value": 7046,
+						"expNeeded": "151,878"
+					},
+					"53": {
+						"experience": "1,471,363",
+						"value": 7213,
+						"expNeeded": "201,226"
+					},
+					"54": {
+						"experience": "1,672,589",
+						"value": 7380,
+						"expNeeded": "258,289"
+					},
+					"55": {
+						"experience": "1,930,878",
+						"value": 7547,
+						"expNeeded": 0
 					}
 				}
 			}

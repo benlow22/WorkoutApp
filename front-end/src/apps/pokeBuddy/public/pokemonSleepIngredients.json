@@ -119,6 +119,14 @@
 			"baseStrength": 100,
 			"sellValue": 4,
 			"imageUrl": "greengrass-soybeans.png"
+		},
+		{
+			"id": 16,
+			"name": "Greengrass Corn",
+			"description": "This Greengrass Isle specialty can be eaten raw. It's remarkably sweet.",
+			"baseStrength": 140,
+			"sellValue": 6,
+			"imageUrl": "greengrass-corn.png"
 		}
 	]
 }

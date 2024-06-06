@@ -6,6 +6,7 @@ import { supabase } from "../../../../supabase/supabaseClient";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../contexts/AuthProvider";
 import { CardFilterMenu } from "./cardFilterMenu/CardFilterMenu";
+import { TNewCardAndUserData } from "../pages/newInventory/NewInventory";
 
 export interface ICardAndUserInfo extends TLorcanaCard {
 	foil?: number;
@@ -13,14 +14,11 @@ export interface ICardAndUserInfo extends TLorcanaCard {
 }
 
 type TProps = {
-	allCardsAndUsersCards: ICardAndUserInfo[] | undefined;
+	allCardsAndUsersCards: TNewCardAndUserData[] | undefined;
 };
 export const GridCardDisplay = ({ allCardsAndUsersCards }: TProps) => {
-	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] =
-		useState<ICardAndUserInfo[]>();
-	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>(
-		[]
-	);
+	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
+	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>([]);
 	const { userId, supabase } = useContext(AuthContext);
 
 	// const getAllCardsAndUsersCards = async () => {
@@ -51,13 +49,7 @@ export const GridCardDisplay = ({ allCardsAndUsersCards }: TProps) => {
 				allCardsAndUsersCards={allCardAndUserCardInfo}
 				setFilteredCards={setFilteredCards}
 			/> */}
-			{allCardsAndUsersCards &&
-				allCardsAndUsersCards.map((card) => (
-					<GridItem
-						card={card}
-						key={`gridItem-${card.id}`}
-					/>
-				))}
+			{allCardsAndUsersCards && allCardsAndUsersCards.map((card) => <GridItem card={card} key={`gridItem-${card.id}`} />)}
 		</div>
 	);
 };

@@ -8,6 +8,7 @@
 } */
 main {
 	position: relative;
+	/* top: 20px;  UNCCOMMENT SWITCH FOR PRINTNG*/
 	top: 100px;
 }
 
