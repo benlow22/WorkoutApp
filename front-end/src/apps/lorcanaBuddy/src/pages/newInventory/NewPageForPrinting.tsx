@@ -42,7 +42,7 @@ export type TNewCard = {
 /// when adding new cards,
 // change wave and uncomment
 export const NewInventoryPrint = () => {
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages, lorcanaCards } = useContext(AuthContext);
+	const { auth, userId, session, supabase, lorcanaCardImages, lorcanaCards } = useContext(AuthContext);
 	const [allCards, setAllCards] = useState<TNewCard[] | null>();
 	const [allCardImages, setAllCardImages] = useState<string[] | null>();
 

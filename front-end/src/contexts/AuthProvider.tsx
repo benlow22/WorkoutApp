@@ -82,7 +82,6 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [initialUrl, setInitialUrl] = useState<string>("");
 	const [refreshLorcanaCardImage, setRefreshLorcanaCardImage] = useState<boolean>(false);
 	const [lorcanaCards, setLorcanaCards] = useState<TNewCard[]>([]);
-	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
 	const [lorcanaCardImages, setLorcanaCardImages] = useState<HTMLImageElement[]>([]);
 	const [allCardsAndUserData, setAllCardsAndUserData] = useState<TNewCardAndUserData[]>();
 
@@ -179,8 +178,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				setSession(null);
 				setAuth(false);
 				setUser(null);
-				// setIsLoggedIn(false);
-				setUsersLorcanaCards([]);
+				setIsLoggedIn(false);
 
 				// remove cookies, when signed out
 				const expires = new Date(0).toUTCString();
