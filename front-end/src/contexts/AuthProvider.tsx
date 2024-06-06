@@ -5,7 +5,7 @@ import { IWorkout } from "../api/types";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { Database } from "../database.types";
 import { ICardAndUserInfo } from "../apps/lorcanaBuddy/src/components/GridCardDisplay";
-import { TNewCard } from "../apps/lorcanaBuddy/src/pages/newInventory/NewInventory";
+import { TNewCard, TNewCardAndUserData } from "../apps/lorcanaBuddy/src/pages/newInventory/NewInventory";
 
 type IAuthContext = {
 	supabase: SupabaseClient<Database>;
@@ -25,8 +25,8 @@ type IAuthContext = {
 	setInitialUrl: (url: string) => void;
 	setIsLoggedIn: (loggedIn: boolean) => void;
 	setWorkouts: (usersWorkouts: IWorkout[]) => void;
-	usersLorcanaCards: ICardAndUserInfo[];
-	setUsersLorcanaCards: (usersCards: ICardAndUserInfo[]) => void;
+	allCardsAndUserData: TNewCardAndUserData[] | undefined;
+	setAllCardsAndUserData: (usersCards: TNewCardAndUserData[]) => void;
 	setLorcanaCardImages: (cards: HTMLImageElement[]) => void;
 	setLorcanaCards: (cards: TNewCard[]) => void;
 	refreshLorcanaCardImage: boolean;
@@ -59,8 +59,8 @@ export const AuthContext = React.createContext<IAuthContext>({
 	setInitialUrl: () => {},
 	supabase: supabase,
 	lorcanaCardImages: [],
-	usersLorcanaCards: [],
-	setUsersLorcanaCards: () => {},
+	allCardsAndUserData: [],
+	setAllCardsAndUserData: () => {},
 	refreshLorcanaCardImage: false,
 	setLorcanaCardImages: () => {},
 	setRefreshLorcanaCardImage: () => {},
@@ -84,30 +84,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 	const [lorcanaCards, setLorcanaCards] = useState<TNewCard[]>([]);
 	const [usersLorcanaCards, setUsersLorcanaCards] = useState<ICardAndUserInfo[]>([]);
 	const [lorcanaCardImages, setLorcanaCardImages] = useState<HTMLImageElement[]>([]);
-
-	const getAllCardsAndUsersCards = async () => {
-		let { data, error } = await supabase
-			// @ts-expect-error does not get type for the join
-			.rpc("get_all_cards_plus_user_data")
-			.select(
-				"id, abilities, cardNumber: card_number , colour , inkable , rarity , type , name , classification , cost , strength, willpower , lore , bodyText: body_text , flavourText: flavour_text , setName: set_name , wave , artist , imageUrl: image ,setId: set_id ,foil , nonFoil: nonfoil "
-			)
-			.order("wave")
-			.order("card_number");
-		if (data) {
-			// console.log("get all cards", data);
-			const allCardImages = data.map((card) => {
-				const img = new Image();
-				img.src = card.imageUrl;
-				return img;
-				console.log("allIMAGEvide", card.imageUrl);
-			});
-			setLorcanaCardImages(allCardImages);
-			setUsersLorcanaCards(data);
-		} else {
-			console.error(error);
-		}
-	};
+	const [allCardsAndUserData, setAllCardsAndUserData] = useState<TNewCardAndUserData[]>();
 
 	const getAllCards = async () => {
 		let { data, error } = await supabase
@@ -124,8 +101,26 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			setLorcanaCards(sortedData);
 		}
 	};
+
+	const getAllCardsAndUsersCards = async () => {
+		let { data, error } = await supabase
+			// @ts-expect-error does not get type for the join
+			.rpc("new_get_all_cards_plus_user_data")
+			.select(
+				"id ,abilities ,card_num ,card_variants ,franchise ,color ,inkable ,rarity ,type ,name ,classifications ,cost ,strength ,willpower  ,body_text ,set_name ,set_num ,unique_id ,artist ,image ,set_id , move_cost ,foil ,nonfoil ,user_id , lore"
+			)
+			//sort by set number than id to deal with puppies who have 4a,4b,4c...
+			.order("set_num")
+			.order("unique_id");
+		if (data) {
+			setAllCardsAndUserData(data);
+		} else {
+			console.error(error);
+		}
+	};
 	useEffect(() => {
 		getAllCards();
+		getAllCardsAndUsersCards();
 		if (lorcanaCardImages) {
 			// console.log("allCardImages in PRovide", lorcanaCardImages);
 		}
@@ -247,8 +242,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				contextIsLoading: isLoading,
 				setInitialUrl,
 				supabase,
-				setUsersLorcanaCards,
-				usersLorcanaCards,
+				setAllCardsAndUserData,
+				allCardsAndUserData,
 				refreshLorcanaCardImage,
 				setRefreshLorcanaCardImage,
 				lorcanaCardImages,

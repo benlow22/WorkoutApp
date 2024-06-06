@@ -46,8 +46,7 @@ export type TNewCardAndUserData = TNewCard & {
 /// when adding new cards,
 // change wave and uncomment
 export const NewInventory = () => {
-	const { lorcanaCards, supabase, userId } = useContext(AuthContext);
-	const [allCardsAndUserData, setAllCardsAndUserData] = useState<TNewCardAndUserData[]>();
+	const { supabase, userId, auth, allCardsAndUserData } = useContext(AuthContext);
 	const [cardQuantities, setCardQuantities] = useState<{
 		foil: number;
 		nonfoil: number;
@@ -55,11 +54,6 @@ export const NewInventory = () => {
 		foil: 0,
 		nonfoil: 0,
 	});
-	//Test Variables
-	const [firstCard, setFirstCard] = useState<TNewCard>();
-	const [testSmallBatch, setTestSmallBatch] = useState<TNewCard[]>(lorcanaCards.slice(0, 59));
-
-	const allLorcanaCards = useMemo(() => lorcanaCards, [lorcanaCards]);
 
 	const getQuantityOfCards = async () => {
 		let { data, error } = await supabase
@@ -68,33 +62,18 @@ export const NewInventory = () => {
 			.eq("user_id", userId)
 			.single();
 		if (data) {
-			console.log("quantity", data);
+			// console.log("quantity", data);
 			setCardQuantities(data);
-		} else {
-			console.error(error);
-		}
-	};
-	const getAllCardsAndUsersCards = async () => {
-		let { data, error } = await supabase
-			// @ts-expect-error does not get type for the join
-			.rpc("new_get_all_cards_plus_user_data")
-			.select(
-				"id ,abilities ,card_num ,card_variants ,franchise ,color ,inkable ,rarity ,type ,name ,classifications ,cost ,strength ,willpower  ,body_text ,set_name ,set_num ,unique_id ,artist ,image ,set_id , move_cost ,foil ,nonfoil ,user_id , lore"
-			)
-			//sort by set number than id to deal with puppies who have 4a,4b,4c...
-			.order("set_num")
-			.order("unique_id");
-		if (data) {
-			setAllCardsAndUserData(data);
 		} else {
 			console.error(error);
 		}
 	};
 
 	useEffect(() => {
-		getAllCardsAndUsersCards();
-		getQuantityOfCards();
-	}, []);
+		if (auth) {
+			getQuantityOfCards();
+		}
+	}, [auth]);
 
 	return (
 		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", maxWidth: "1000px", margin: "auto" }}>
