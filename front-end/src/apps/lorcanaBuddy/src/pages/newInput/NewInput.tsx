@@ -1,11 +1,13 @@
-import { Select } from "antd";
-import { useState } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { NewInputFormList } from "../../components/NewInputFormList";
 
 export const NewInput = () => {
+	const { auth } = useContext(AuthContext);
+
 	return (
 		<div className="input-page" style={{}}>
-			<NewInputFormList />
+			{auth ? <NewInputFormList /> : <h3> Please Login</h3>}
 		</div>
 	);
 };
