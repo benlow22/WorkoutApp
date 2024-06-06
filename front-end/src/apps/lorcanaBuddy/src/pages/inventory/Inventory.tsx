@@ -1,13 +1,10 @@
-import { Image, Select } from "antd";
+import { Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { GridCardDisplay, ICardAndUserInfo } from "../../components/GridCardDisplay";
 import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
-import { TLorcanaCard } from "../../types/lorcana.types";
-import "./../../styles/index.css";
-import immmmm from "./invImg/3-202-35-en-alice.png";
 import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
-import { getImageUrl } from "../../utils/image-util";
+import "./../../styles/index.css";
 export type TCardRef = {
 	cardNumber: number;
 	foil?: number;
@@ -19,7 +16,7 @@ export type TCardRef = {
 };
 export const Inventory = () => {
 	// const images = require.context('../')
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
+	const { auth, userId, session, supabase, lorcanaCardImages } = useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
 
@@ -119,7 +116,7 @@ export const Inventory = () => {
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
 			<Select defaultValue="grid" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
 			<CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} />
-			{viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />}
+			{/* {viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />} */}
 
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">

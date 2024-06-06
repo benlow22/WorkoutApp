@@ -1,13 +1,8 @@
-import { Image, Select } from "antd";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { GridCardDisplay, ICardAndUserInfo } from "../../components/GridCardDisplay";
 import { InventoryCardDisplay } from "../../components/InventoryCardDisplay";
-import { TLorcanaCard } from "../../types/lorcana.types";
 import "./../../styles/index.css";
-import immmmm from "./invImg/3-202-35-en-alice.png";
-import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
-import { getImageUrl } from "../../utils/image-util";
 export type TCardRef = {
 	cardNumber: number;
 	foil?: number;
@@ -19,7 +14,7 @@ export type TCardRef = {
 };
 export const Checklist = () => {
 	// const images = require.context('../')
-	const { auth, userId, session, supabase, usersLorcanaCards, lorcanaCardImages } = useContext(AuthContext);
+	const { auth, userId, session, supabase, lorcanaCardImages } = useContext(AuthContext);
 	const [viewType, setViewType] = useState<string>("grid");
 	const [allCardAndUserCardInfo, setAllCardAndUserCardInfo] = useState<ICardAndUserInfo[]>();
 
@@ -104,7 +99,7 @@ export const Checklist = () => {
 			<h3>total shown cards: {rarityCardQuantities.nonfoil}</h3>
 
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
-			{viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />}
+			{/* {viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />} */}
 
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">

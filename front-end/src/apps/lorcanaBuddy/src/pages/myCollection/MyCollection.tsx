@@ -5,7 +5,7 @@ import { GridCardDisplay, ICardAndUserInfo } from "../../components/GridCardDisp
 import { supabase } from "../../../../../supabase/supabaseClient";
 
 export const MyCollection = () => {
-	const { auth, username, usersLorcanaCards } = useContext(AuthContext);
+	const { auth, username, allCardsAndUserData } = useContext(AuthContext);
 	const [filteredCards, setFilteredCards] = useState<ICardAndUserInfo[] | undefined>();
 	const getAllCardsAndUsersCards = async () => {
 		let { data, error } = await supabase
@@ -33,7 +33,7 @@ export const MyCollection = () => {
 			{filteredCards && (
 				<div className="page-heading">
 					<h2>My Collection</h2>
-					<GridCardDisplay allCardsAndUsersCards={usersLorcanaCards} />
+					<GridCardDisplay allCardsAndUsersCards={allCardsAndUserData} />
 				</div>
 			)}
 		</>
