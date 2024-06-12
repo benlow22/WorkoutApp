@@ -87,7 +87,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 
 	const getAllCards = async () => {
 		let { data, error } = await supabase
-			.from("new_cards")
+			.from("new_cards_duplicate")
 			.select(
 				"abilities, artist, body_text, card_num, card_variants, classifications, color, cost, franchise, id, image, inkable, lore, move_cost, name, rarity, set_id, set_name, set_num, strength, type, unique_id, willpower"
 			)
@@ -98,6 +98,8 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 				return a.set_num - b.set_num || a.card_num - b.card_num;
 			});
 			setLorcanaCards(sortedData);
+		} else {
+			console.log("ERROR fetching cards :", error);
 		}
 	};
 

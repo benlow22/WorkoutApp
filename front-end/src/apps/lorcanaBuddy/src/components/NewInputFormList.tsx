@@ -87,7 +87,8 @@ export const NewInputFormList = () => {
 	};
 
 	const spaceDownHandler = (event: KeyboardEvent) => {
-		if (event.code === "Space") {
+		// console.log(event.code);
+		if (event.code === "Space" || event.code === "NumpadEnter" || event.code === "ArrowRight") {
 			event.preventDefault();
 			setIsSpaceClicked(true);
 		}

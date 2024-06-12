@@ -7,11 +7,12 @@ import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
 import { Rarity } from "../../types/lorcana.types";
 import axios from "axios";
+import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";
 
 // returns a list of cards that are filtered
 type TProps = {
-	allCardsAndUsersCards: ICardAndUserInfo[] | undefined;
-	setFilteredCards: (filteredCards: ICardAndUserInfo[] | undefined) => void;
+	allCardsAndUsersCards: TNewCardAndUserData[] | undefined;
+	setFilteredCards: (filteredCards: TNewCardAndUserData[] | undefined) => void;
 };
 
 export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
@@ -45,10 +46,10 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		let filteredCards = allCardsAndUsersCards;
 		switch (cardPossesionFilters) {
 			case 1: // owned
-				filteredCards = allCardsAndUsersCards?.filter((card) => card.foil || card.nonFoil);
+				filteredCards = allCardsAndUsersCards?.filter((card) => card.foil || card.nonfoil);
 				break;
 			case 2: // not Owned
-				filteredCards = allCardsAndUsersCards?.filter((card) => !card.foil && !card.nonFoil);
+				filteredCards = allCardsAndUsersCards?.filter((card) => !card.foil && !card.nonfoil);
 				break;
 			default:
 				break;
@@ -73,24 +74,24 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 	const rare = ["Rare", "Super Rare"];
 	// enchanted, foil, non-foil.
 	//[0],[0,1],[1],[1,2]
-	const cardTypeFilterFn = (card: ICardAndUserInfo) => {
+	const cardTypeFilterFn = (card: TNewCardAndUserData) => {
 		if (cardTypeFilters.includes(1)) {
 			if (card.foil && card.foil > 0) {
 				return true;
 			}
 		}
 		if (cardTypeFilters.includes(2)) {
-			if (card.nonFoil && card.nonFoil > 0) {
+			if (card.nonfoil && card.nonfoil > 0) {
 				return true;
 			}
 		}
 		if (cardTypeFilters.includes(3)) {
-			if (card.cardNumber > 204) {
+			if (Number(card.card_num) > 204) {
 				return true;
 			}
 		}
 		if (cardTypeFilters.includes(4)) {
-			let quantity = (card.foil ? card.foil : 0) + (card.nonFoil ? card.nonFoil : 0);
+			let quantity = (card.foil ? card.foil : 0) + (card.nonfoil ? card.nonfoil : 0);
 			if (quantity > 8) {
 				return true;
 			}
@@ -99,11 +100,11 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 			// if (!card.foil) {
 			// 	return true;
 			// }
-			return card.nonFoil ? card.nonFoil > 8 : false;
+			return card.nonfoil ? card.nonfoil > 8 : false;
 		}
 		if (cardTypeFilters.includes(6)) {
-			if (card.cardNumber < 205) {
-				let quantity = (card.foil ? 1 : 0) + (card.nonFoil ? card.nonFoil : 0);
+			if (Number(card.card_num) < 205) {
+				let quantity = (card.foil ? 1 : 0) + (card.nonfoil ? card.nonfoil : 0);
 
 				if (quantity < 4) {
 					return true;
@@ -118,47 +119,47 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		return false;
 	};
 
-	const cardSetFilterFn = (card: ICardAndUserInfo) => {
-		if (cardSetFilters.includes(card.wave)) {
+	const cardSetFilterFn = (card: TNewCard) => {
+		if (cardSetFilters.includes(card.set_num)) {
 			return true;
 		} else return false;
 	};
 
-	const cardInkFilterFn = (card: ICardAndUserInfo) => {
+	const cardInkFilterFn = (card: TNewCard) => {
 		if (cardInkFilters.includes(0)) {
-			if (card.colour === "Amber") {
+			if (card.color === "Amber") {
 				return true;
 			}
 		}
 		if (cardInkFilters.includes(1)) {
-			if (card.colour === "Amethyst") {
+			if (card.color === "Amethyst") {
 				return true;
 			}
 		}
 		if (cardInkFilters.includes(2)) {
-			if (card.colour === "Emerald") {
+			if (card.color === "Emerald") {
 				return true;
 			}
 		}
 		if (cardInkFilters.includes(3)) {
-			if (card.colour === "Ruby") {
+			if (card.color === "Ruby") {
 				return true;
 			}
 		}
 		if (cardInkFilters.includes(4)) {
-			if (card.colour === "Sapphire") {
+			if (card.color === "Sapphire") {
 				return true;
 			}
 		}
 		if (cardInkFilters.includes(5)) {
-			if (card.colour === "Steel") {
+			if (card.color === "Steel") {
 				return true;
 			}
 		}
 		return false;
 	};
 
-	const cardRarityFilterFn = (card: ICardAndUserInfo) => {
+	const cardRarityFilterFn = (card: TNewCard) => {
 		if (cardRarityFilters.includes(card.rarity)) {
 			return true;
 		}
@@ -177,7 +178,7 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "more than 8", value: 4 },
 		{ label: "more than 8 nonfoil", value: 5 },
 		{ label: "missing foil", value: 7 },
-		{ label: "rare", value: 6 },
+		{ label: "less than 4", value: 6 },
 	];
 
 	const cardRarityFilterOptions = [
@@ -188,13 +189,16 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		{ label: "Legendary", value: "Legendary" },
 		{ label: "Enchanted", value: "Enchanted" },
 	];
+
 	const cardSetFilterOptions = [
 		{ label: "All", value: 0 },
 		{ label: "The First Chapter", value: 1 },
 		{ label: "Rise of the Floodborn", value: 2 },
 		{ label: "Into The Inklands", value: 3 },
-		{ label: "Promo", value: 4 },
+		{ label: "Ursula's Return", value: 4 },
+		{ label: "Promo", value: 5 },
 	];
+
 	const cardInkFilterOptions = [
 		{ label: "Amber", value: 0 },
 		{ label: "Amethyst", value: 1 },
@@ -237,7 +241,6 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 
 					<h3>Set</h3>
 					<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
-
 				</>
 			)}
 		</div>

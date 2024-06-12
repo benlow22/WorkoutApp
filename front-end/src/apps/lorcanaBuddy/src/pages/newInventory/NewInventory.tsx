@@ -1,6 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { NewInventoryCard } from "../../components/NewInventoryCard";
+import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
 
 export type TCardRef = {
 	cardNumber: number;
@@ -47,6 +48,7 @@ export type TNewCardAndUserData = TNewCard & {
 // change wave and uncomment
 export const NewInventory = () => {
 	const { supabase, userId, auth, allCardsAndUserData } = useContext(AuthContext);
+	const [filteredCards, setFilteredCard] = useState<TNewCardAndUserData[] | undefined>([]);
 	const [cardQuantities, setCardQuantities] = useState<{
 		foil: number;
 		nonfoil: number;
@@ -54,7 +56,7 @@ export const NewInventory = () => {
 		foil: 0,
 		nonfoil: 0,
 	});
-
+	const needFoils = allCardsAndUserData?.filter((card) => card.nonfoil > 8 && card.rarity === "");
 	const getQuantityOfCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
@@ -76,13 +78,15 @@ export const NewInventory = () => {
 	}, [auth]);
 
 	return (
-		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", maxWidth: "1000px", margin: "auto" }}>
+		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", margin: "auto" }}>
 			<div className="3x3" style={{}}>
+				<CardFilterMenu allCardsAndUsersCards={allCardsAndUserData} setFilteredCards={setFilteredCard} />
 				<h3>Total Cards : {cardQuantities.foil + cardQuantities.nonfoil}</h3>
 				<h4>Foil Cards : {cardQuantities.foil}</h4>
 				<h4>Nonfoil Cards : {cardQuantities.nonfoil}</h4>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{allCardsAndUserData && allCardsAndUserData.map((card) => <NewInventoryCard card={card} key={card.id} />)}
+					{filteredCards && filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />)}
+					<p>{needFoils?.length}</p>
 				</div>
 			</div>
 		</div>
