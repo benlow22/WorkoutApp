@@ -1,15 +1,12 @@
 // takes in all cards + user's cards
 
-import { useEffect, useState } from "react";
-import { ICardAndUserInfo } from "../GridCardDisplay";
-import { Button, Checkbox, Radio } from "antd";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
-import { Rarity } from "../../types/lorcana.types";
+import { Button, Checkbox, Form, Radio } from "antd";
+import { CheckboxValueType } from "antd/es/checkbox/Group";
 import axios from "axios";
-import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";
-import { useLocation } from "react-router";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";
 
 // returns a list of cards that are filtered
 type TProps = {
@@ -17,8 +14,12 @@ type TProps = {
 	setFilteredCards: (filteredCards: TNewCardAndUserData[] | undefined) => void;
 };
 
-export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
+export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
 	const [searchParams, setSearchParams] = useSearchParams();
+	const [inkFilter, setInkFilter] = useState<string[]>();
+	const noUseStateInkfilter = searchParams.getAll("ink");
+	const [form] = Form.useForm();
+
 	const url = new URL(window.location.href);
 	console.log("location", window.location.href);
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
@@ -38,28 +39,29 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		}
 	};
 
-	// const valuesToSearchParams = (key: string, values: string[]) => {
-	// };
-
-	useEffect(() => {
-		console.log("asdf", cardInkFilters);
-		let newSearchParams = new URLSearchParams();
-		if (cardInkFilters) {
-			for (let i = 0; i < cardInkFilters.length; i++) {
-				searchParams.append("ink", cardInkFilters[i].toString());
+	const valuesToSearchParams = (searchParams: URLSearchParams, filter: CheckboxValueType[], filterName: string) => {
+		if (filter) {
+			for (let i = 0; i < filter.length; i++) {
+				searchParams.append(filterName, filter[i].toString());
 			}
 		}
-		console.log("searchParams", searchParams.toString());
+	};
+
+	useEffect(() => {
+		console.log("NO", noUseStateInkfilter);
+		console.log("first search params", searchParams.toString());
+		let newSearchParams = new URLSearchParams();
+		valuesToSearchParams(newSearchParams, cardInkFilters, "ink");
+		valuesToSearchParams(newSearchParams, cardTypeFilters, "type");
+
+		// if (cardInkFilters) {
+		// 	for (let i = 0; i < cardInkFilters.length; i++) {
+		// 		newSearchParams.append("ink", cardInkFilters[i].toString());
+		// 	}
+		// }
+		// console.log("searchParams", newSearchParams.toString());
 		setSearchParams(newSearchParams);
 	}, [cardInkFilters, cardPossesionFilters, cardRarityFilters, cardSetFilters, cardTypeFilters]);
-
-	const apiCall = async () => {
-		console.log("double Clicky");
-		let url = "https://lorcana-api.com/images/goofy/knight_for_a_day/goofy-knight_for_a_day-large.png";
-		await callIt(url).then((data: any) => {
-			console.log("got data", data);
-		});
-	};
 
 	useEffect(() => {
 		console.log("CARDTYPEFILTERS", cardTypeFilters);
@@ -227,12 +229,70 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 	];
 
 	const cardInkFilterOptions = [
-		{ label: "Amber", value: "Amber" },
-		{ label: "Amethyst", value: "Amethyst" },
-		{ label: "Emerald", value: "Emerald" },
-		{ label: "Ruby", value: "Ruby" },
-		{ label: "Sapphire", value: "Sapphire" },
-		{ label: "Steel", value: "Steel" },
+		{
+			label: (
+				<div
+					className={(cardInkFilters.toString() === "Amber" || cardInkFilters.includes("Amber") ? "active " : "not-active ") + "amber-ink"}
+				>
+					<img src="/amber.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Amber",
+		},
+		{
+			label: (
+				<div
+					className={
+						(cardInkFilters.toString() === "Amethyst" || cardInkFilters.includes("Amethyst") ? "active " : "not-active ") + "amethyst-ink"
+					}
+				>
+					<img src="/amethyst.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Amethyst",
+		},
+		{
+			label: (
+				<div
+					className={
+						(cardInkFilters.toString() === "Emerald" || cardInkFilters.includes("Emerald") ? "active " : "not-active ") + "emerald-ink"
+					}
+				>
+					<img src="/emerald.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Emerald",
+		},
+		{
+			label: (
+				<div className={(cardInkFilters.toString() === "Ruby" || cardInkFilters.includes("Ruby") ? "active " : "not-active ") + "ruby-ink"}>
+					<img src="/ruby.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Ruby",
+		},
+		{
+			label: (
+				<div
+					className={
+						(cardInkFilters.toString() === "Sapphire" || cardInkFilters.includes("Sapphire") ? "active " : "not-active ") + "sapphire-ink"
+					}
+				>
+					<img src="/sapphire.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Sapphire",
+		},
+		{
+			label: (
+				<div
+					className={(cardInkFilters.toString() === "Steel" || cardInkFilters.includes("Steel") ? "active " : "not-active ") + "steel-ink"}
+				>
+					<img src="/steel.svg" style={{ width: "50px", padding: "0px", position: "relative" }} />
+				</div>
+			),
+			value: "Steel",
+		},
 	];
 
 	const handleClearFilters = () => {
@@ -242,8 +302,25 @@ export const CardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TPro
 		setCardPossessionFilters(0);
 	};
 
+	// const handleFormChange = (changedValues, allValues) => {
+	// 	console.log("form Values:", allValues);
+	// };
+
 	return (
 		<div className="card-filter-menu">
+			{noUseStateInkfilter.map((ink) => (
+				<p>{ink}----</p>
+			))}
+			<h4>Ink</h4>
+
+			<Checkbox.Group
+				options={cardInkFilterOptions}
+				onChange={(values) => {
+					setCardInkFilters(values);
+				}}
+				value={cardInkFilters}
+				className="ink-checkbox"
+			/>
 			<h4>Possesion</h4>
 			<Radio.Group
 				options={cardPossesionFiltersOptions}

@@ -11,7 +11,7 @@ import { NewInventory } from "./pages/newInventory/NewInventory";
 import { NewInput } from "./pages/newInput/NewInput";
 
 export const LorcanaBuddy = [
-	<Route index element={<NewInventory />} key={"LB1"} />,
+	<Route path="?filter" element={<NewInventory />} key={"LB1"} />,
 	<Route path="myCollection" element={<MyCollection />} key={"LB2"} />,
 	<Route path="browse" element={<Inventory />} key={"LB3"} />,
 	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,

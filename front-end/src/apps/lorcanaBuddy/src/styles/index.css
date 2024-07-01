@@ -98,11 +98,7 @@
 	right: 55px;
 }
 
-.save-float-button
-	.ant-float-btn
-	.ant-float-btn-body
-	.ant-float-btn-content
-	.ant-float-btn-icon {
+.save-float-button .ant-float-btn .ant-float-btn-body .ant-float-btn-content .ant-float-btn-icon {
 	font-size: 40px;
 	width: fit-content;
 }
@@ -135,7 +131,45 @@
 	width: 100px;
 	margin: 10px;
 }
+/* .ink-checkbox input[type="checkbox"] { */
+/* display: none; */
+/* width: 100px;
+} */
+.ant-checkbox-wrapper {
+	width: 0px!;
+}
+.ink-checkbox .ant-checkbox {
+	width: 0px;
+	position: relative;
+	left: 25px;
+	/* display: none; */
+	z-index: 0;
+	width: 0px !important;
+}
+/* .ant-checkbox-checked {
+	background-color: aqua;
+	border: black 2px solid;
+	width: 100%;
+} */
+.ink-checkbox .active {
+	background-color: black;
+	padding: 5px 4px 0px;
+	border-radius: 5px;
+	border: white 3px solid;
+}
+.ink-checkbox .not-active {
+	padding: 8px 7px 3px;
+	border-radius: 5px;
+}
+.ink-button {
+	width: 60px;
+	padding: 6px 0px;
+	z-index: 2;
+}
 
+/* .ink-button: {
+	background-color: aqua;
+} */
 .do-not-own {
 	opacity: 0.2;
 }
@@ -145,7 +179,7 @@
 }
 
 .card-filter-menu {
-	width: 50%;
+	min-width: 400px;
 	margin: 20px auto;
 	padding: 10px;
 	background-color: gray;

@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import { NewInventoryCard } from "../../components/NewInventoryCard";
 import { CardFilterMenu } from "../../components/cardFilterMenu/CardFilterMenu";
+import { NewCardFilterMenu } from "../../components/cardFilterMenu/NewCardFilterMenu";
 
 export type TCardRef = {
 	cardNumber: number;
@@ -80,13 +81,14 @@ export const NewInventory = () => {
 	return (
 		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", margin: "auto" }}>
 			<div className="3x3" style={{}}>
-				<CardFilterMenu allCardsAndUsersCards={allCardsAndUserData} setFilteredCards={setFilteredCard} />
+				<NewCardFilterMenu allCardsAndUsersCards={allCardsAndUserData} setFilteredCards={setFilteredCard} />
 				<h3>Total Cards : {cardQuantities.foil + cardQuantities.nonfoil}</h3>
 				<h4>Foil Cards : {cardQuantities.foil}</h4>
 				<h4>Nonfoil Cards : {cardQuantities.nonfoil}</h4>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
 					{filteredCards && filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />)}
-					<p>{needFoils?.length}</p>
+					{/* <p>{needFoils?.length}</p> */}
+					<h2 style={{ alignContent: "center", paddingLeft: "20px" }}> W4 Need Foil</h2>
 				</div>
 			</div>
 		</div>
