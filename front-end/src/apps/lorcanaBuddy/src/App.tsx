@@ -11,7 +11,7 @@ import { NewInventory } from "./pages/newInventory/NewInventory";
 import { NewInput } from "./pages/newInput/NewInput";
 
 export const LorcanaBuddy = [
-	<Route index element={<NewInventory />} key={"LB1"} />,
+	<Route path="?filter" element={<NewInventory />} key={"LB1"} />,
 	<Route path="myCollection" element={<MyCollection />} key={"LB2"} />,
 	<Route path="browse" element={<Inventory />} key={"LB3"} />,
 	<Route path="wishlist" element={<Wishlist />} key={"LB4"} />,
@@ -22,12 +22,7 @@ export const LorcanaBuddy = [
 	<Route path="newInventory" element={<NewInventory />} key={"LB6"} />,
 	// <Route path="newInput" element={<NewInput />} key={"LB6"} />,
 
-
-	<Route
-		path="*"
-		element={<Navigate to="" />}
-		key={"LB5"}
-	/>,
+	<Route path="*" element={<Navigate to="" />} key={"LB5"} />,
 ];
 
 // export const WorkoutBuddy = [

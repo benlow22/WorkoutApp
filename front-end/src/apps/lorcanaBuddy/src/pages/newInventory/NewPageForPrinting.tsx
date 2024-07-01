@@ -117,15 +117,23 @@ export const NewInventoryPrint = () => {
 	// };
 
 	useEffect(() => {
-		const w4p5 = lorcanaCards.filter((card) => card.set_num === 4);
-		setAllCards(w4p5.slice(136, 200));
+		const w4p5 = lorcanaCards.filter((card) => {
+			if (card.card_num !== "4a" && card.card_num !== "4b" && card.card_num !== "4c" && card.card_num !== "4d" && card.card_num !== "4e")
+				// console.log(card.card_num);
+				return card.set_num === 3;
+		});
+		const sortedData = w4p5.sort((a, b) => {
+			return Number(a.card_num) - Number(b.card_num);
+		});
+		console.log(w4p5.map((card) => card.card_num));
+		setAllCards(sortedData.slice(136));
 	}, []);
 
 	// Page 1
-	const batch1 = allCards?.slice(0, 9);
-	const batch2 = allCards?.slice(9, 18);
-	const batch3 = allCards?.slice(34, 43);
-	const batch4 = allCards?.slice(43, 52);
+	// const batch1 = allCards?.slice(0, 9);
+	// const batch2 = allCards?.slice(9, 18);
+	// const batch3 = allCards?.slice(34, 43);
+	// const batch4 = allCards?.slice(43, 52);
 	// // #wave 3 puppies
 
 	// const batch2 = allCards?.slice(9, 18);
@@ -144,10 +152,10 @@ export const NewInventoryPrint = () => {
 	// const batch4 = allCards?.slice(65, 69);
 
 	// wave 3 no locations
-	// const batch1 = allCards?.slice(18, 27);
-	// const batch2 = allCards?.slice(27, 34);
-	// const batch3 = allCards?.slice(52, 61);
-	// const batch4 = allCards?.slice(61, 68);
+	const batch1 = allCards?.slice(18, 27);
+	const batch2 = allCards?.slice(27, 31);
+	const batch3 = allCards?.slice(52, 61);
+	const batch4 = allCards?.slice(61, 65);
 
 	return (
 		<div className="inventory-page" style={{ backgroundColor: "white", display: "flex", flexWrap: "wrap", marginLeft: "20px", width: "700px" }}>

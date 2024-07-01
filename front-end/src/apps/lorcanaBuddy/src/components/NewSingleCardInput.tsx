@@ -50,6 +50,7 @@ export const NewSingleCardInput = ({
 				<Input
 					placeholder="Card #"
 					id={`card${index}`}
+					maxLength={3}
 					onFocus={(e) => {
 						setCurrentCardIndex(index);
 					}}

@@ -69,7 +69,7 @@ export const Inventory = () => {
 			.single();
 		if (data) {
 			console.log("quantity", data);
-			setCardQuantities(data);
+			// setCardQuantities(data);
 		} else {
 			console.error(error);
 		}
@@ -115,9 +115,8 @@ export const Inventory = () => {
 
 			{filteredCards && <h3>Filtered cards: {filteredCards.length} / 432</h3>} */}
 			<Select defaultValue="grid" style={{ width: 120 }} onSelect={(value) => setViewType(value)} options={viewTypeOptions} />
-			<CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} />
+			{/* <CardFilterMenu allCardsAndUsersCards={allCardAndUserCardInfo} setFilteredCards={setFilteredCards} /> */}
 			{/* {viewType === "grid" && allCardAndUserCardInfo && <GridCardDisplay allCardsAndUsersCards={filteredCards} />} */}
-
 
 			{viewType === "icons" && filteredCards && (
 				<div className="icon-display">
