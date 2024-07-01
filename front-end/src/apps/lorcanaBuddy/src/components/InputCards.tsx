@@ -10,8 +10,7 @@ type TProps = {
 };
 
 export const InputCards = ({ wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage, setRefreshLorcanaCardImage } =
-		useContext(AuthContext);
+	const { auth, userId, refreshLorcanaCardImage, setRefreshLorcanaCardImage } = useContext(AuthContext);
 	const [numberOfCards, setNumberOfCards] = useState<number>(0);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(0);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
@@ -24,6 +23,7 @@ export const InputCards = ({ wave }: TProps) => {
 		let failedToUploadCards: any[] = [];
 		if (auth) {
 			values.cards.map((card: any) => {
+				console.log(card);
 				const uploadCardToSupabase = async () => {
 					const { data, error } = await supabase
 						.from("lorcana_user_cards")

@@ -9,8 +9,9 @@ type TProps = {
 };
 
 export const SmallCardImageAboveInput = ({ imageUrl, imageWidth, opacity, wave }: TProps) => {
+	console.log("WAVE: asdf", wave, imageUrl);
 	return (
-		<div style={{ minHeight: "140px" }}>
+		<div style={{ minHeight: "70px" }}>
 			<Image
 				src={imageUrl}
 				style={{

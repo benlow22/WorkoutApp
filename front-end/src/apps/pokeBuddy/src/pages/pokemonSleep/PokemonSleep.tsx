@@ -27,7 +27,12 @@ import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
 import type { TourProps } from "antd";
-import { ArrowDownOutlined, ArrowUpOutlined, FilterFilled, UserOutlined } from "@ant-design/icons";
+import {
+	ArrowDownOutlined,
+	ArrowUpOutlined,
+	FilterFilled,
+	UserOutlined,
+} from "@ant-design/icons";
 
 type TIngredient = {
 	id: number;
@@ -54,7 +59,11 @@ export const PokemonSleep = () => {
 				"Select how many ingredients you can use in your meal. you can find this on the top right when you start cooking.",
 			cover: (
 				<div>
-					<img alt="tour.png" src="/IMG_4036.jpeg" width="400" />
+					<img
+						alt="tour.png"
+						src="/IMG_4036.jpeg"
+						width="400"
+					/>
 				</div>
 			),
 			target: () => ref1.current,
@@ -112,9 +121,15 @@ export const PokemonSleep = () => {
 	const [showAll, setShowAll] = useState<boolean>(false);
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
 	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
-	const [saladsLevels, setSaladLevels] = useState<{ name: string; level: number }[]>([]);
-	const [curriesLevels, setCurriesLevels] = useState<{ name: string; level: number }[]>([]);
-	const [drinksLevels, setDrinksLevels] = useState<{ name: string; level: number }[]>([]);
+	const [saladsLevels, setSaladLevels] = useState<{ name: string; level: number }[]>(
+		[]
+	);
+	const [curriesLevels, setCurriesLevels] = useState<{ name: string; level: number }[]>(
+		[]
+	);
+	const [drinksLevels, setDrinksLevels] = useState<{ name: string; level: number }[]>(
+		[]
+	);
 
 	const [messageApi, contextHolder] = message.useMessage();
 
@@ -140,7 +155,9 @@ export const PokemonSleep = () => {
 		const newIngredientArray = new Array(...unlockedIngredients);
 		// remove if clicked ing is in list
 		if (newIngredientArray.includes(ingredient.name)) {
-			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(ingredient.name);
+			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(
+				ingredient.name
+			);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
 			// console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
@@ -346,6 +363,7 @@ export const PokemonSleep = () => {
 				"Snoozy Tomato",
 				"Warming Ginger",
 				"Fiery Herb",
+				"Greengrass Corn",
 			]);
 		} else {
 			setUnlockedIngredients([]);
@@ -671,7 +689,10 @@ export const PokemonSleep = () => {
 				className="uncheck-all-switch"
 				ref={ref2}
 			/>
-			<div className="ingredient-buttons-container" ref={ref3}>
+			<div
+				className="ingredient-buttons-container"
+				ref={ref3}
+			>
 				{ingredients.length > 0 &&
 					ingredients.map((ingredient, index: number) => (
 						<Button
@@ -702,13 +723,23 @@ export const PokemonSleep = () => {
 					style={{ marginTop: 16 }}
 					defaultValue={chosenCategories}
 				>
-					<Radio.Button value="Curries and Stews">Curries and Stews</Radio.Button>
+					<Radio.Button value="Curries and Stews">
+						Curries and Stews
+					</Radio.Button>
 					<Radio.Button value="Salads">Salads</Radio.Button>
-					<Radio.Button value="Drinks and Desserts">Desserts and Drink</Radio.Button>
+					<Radio.Button value="Drinks and Desserts">
+						Desserts and Drink
+					</Radio.Button>
 				</Radio.Group>
 			)}
-			<div className="save-and-filter" ref={ref5}>
-				<Button type="primary" onClick={() => handlesave()}>
+			<div
+				className="save-and-filter"
+				ref={ref5}
+			>
+				<Button
+					type="primary"
+					onClick={() => handlesave()}
+				>
 					Save
 				</Button>
 				{/* <Dropdown
@@ -749,7 +780,10 @@ export const PokemonSleep = () => {
 								<Recipe recipe={recipe} />
 							))}
 					</div> */}
-				<div className="cookable-recipes" ref={ref6}>
+				<div
+					className="cookable-recipes"
+					ref={ref6}
+				>
 					<h3 className="cookable-recipes-header">Cookable Recipes</h3>
 					{cookableRecipes.length > 0 ? (
 						cookableRecipes.map((recipe: TRecipe, index: number) => (

@@ -16,8 +16,7 @@ import { supabase } from "../../supabase/supabaseClient";
 import { Image } from "antd";
 
 export const Header: React.FC<{}> = () => {
-	const { username, auth, contextIsLoading, userId, lorcanaCardImages } =
-		useContext(AuthContext);
+	const { username, auth, contextIsLoading, userId, lorcanaCardImages } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState<boolean>(true); // wait for username to be fetched before rendering.
 	const [displayUsername, setDisplayUsername] = useState<string>("");
 	const location = useLocation();
@@ -25,29 +24,25 @@ export const Header: React.FC<{}> = () => {
 	const domains = varFromDomainsJSON(domainsJSON, "domains");
 	const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
 
-	const [domainObj, setDomainObj] = useState<TDomain>(domains[domain]); // wait for username to be fetched before rendering.
-	const [previousDomain, setPreviousDomain] = useState<string | undefined>();
+	// const [domainObj, setDomainObj] = useState<TDomain>(domains[domain]); // wait for username to be fetched before rendering.
+	// const [previousDomain, setPreviousDomain] = useState<string | undefined>();
 	const [currentDomain, setCurrentDomain] = useState<string>(domain);
 	const [headerTransition, setHeaderTransition] = useState<string>();
-
-	useEffect(() => {
-		// console.log("DOMAIN", domains[domain]);
-		console.log("DOMAIN", lorcanaCardImages);
-		setDomainObj(domains[domain]);
-	}, []);
+	const domainObj = domains[domain];
+	// useEffect(() => {
+	// 	// console.log("DOMAIN", domains[domain]);
+	// 	console.log("DOMAIN", lorcanaCardImages);
+	// 	// setDomainObj(domains[domain]);
+	// }, []);
 
 	const getUsername = async () => {
-		let { data: profiles, error } = await supabase
-			.from("profiles")
-			.select("username")
-			.eq("id", userId)
-			.single();
-		console.log("username", profiles?.username);
+		let { data: profiles, error } = await supabase.from("profiles").select("username").eq("id", userId).single();
 		setDisplayUsername(profiles?.username);
 	};
+
 	useEffect(() => {
 		const domain = splitUrl[1] in domains ? splitUrl[1] : "buddySystem";
-		setDomainObj(domains[domain]);
+		// setDomainObj(domains[domain]);
 		let curDom = domain;
 		let prevDom = undefined;
 		let headerTransition = "";
@@ -63,7 +58,7 @@ export const Header: React.FC<{}> = () => {
 		}
 		changeTheme(headerTransition);
 		setCurrentDomain(curDom);
-		setDomainObj(domains[domain]);
+		// setDomainObj(domains[domain]);
 	}, [location, auth]);
 
 	useEffect(() => {
@@ -78,7 +73,7 @@ export const Header: React.FC<{}> = () => {
 				getUsername();
 				// setDisplayUsername(updatedUsername);
 				setIsLoading(false);
-				console.log("display USername", username);
+				// console.log("display USername", username);
 			}
 			if (domain === "buddySystem" && !username) {
 				setIsLoading(false);
@@ -91,25 +86,15 @@ export const Header: React.FC<{}> = () => {
 	}, [auth, contextIsLoading, domainObj, username]);
 
 	return (
-		<div
-			className="header"
-			key={domain}
-		>
+		<div className="header" key={domain}>
 			<div className="site-banner white-font">
 				{domainObj && (
 					<>
 						<Helmet>
-							<link
-								rel="icon"
-								type="image/x-icon"
-								href={`/${domainObj.logo}`}
-							/>
+							<link rel="icon" type="image/x-icon" href={`/${domainObj.logo}`} />
 							<title>{domains[domain].name}</title>
 						</Helmet>
-						<Link
-							to={`/${domains[domain].path}`}
-							key={domain}
-						>
+						<Link to={`/${domains[domain].path}`} key={domain}>
 							{domain && <h1 key={domain}>{domains[domain].name}</h1>}
 						</Link>
 						<div className="account">
@@ -164,10 +149,7 @@ export const Header: React.FC<{}> = () => {
 			<div hidden={true}>
 				<h3>asd {lorcanaCardImages.length}</h3>
 				{lorcanaCardImages.map((card) => (
-					<Image
-						src={card.src}
-						sizes="small"
-					/>
+					<Image src={card.src} sizes="small" />
 				))}
 			</div>
 			<Navbar />

@@ -1,6 +1,6 @@
 import { MinusCircleOutlined } from "@ant-design/icons";
 import { Form, FormListFieldData, Input, InputNumber, InputRef, Switch } from "antd";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { SmallCardImageAboveInput } from "./SmallCardImageAboveInput";
 import { getImageUrlFromCardNumber } from "./SingleCardInput";
 import { TCardCache, getAllCards } from "../pages/addItems/AddItems";
@@ -15,40 +15,42 @@ type TProps = {
 	wave: number;
 };
 
-export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
-	const { auth, userId, refreshLorcanaCardImage } = useContext(AuthContext);
+export const NewDeckCardInput = ({ field, index, remove, setCurrentCardIndex, currentCardIndex, wave }: TProps) => {
+	const { auth, userId, refreshLorcanaCardImage, lorcanaCards } = useContext(AuthContext);
 
 	const [imageUrl, setImageUrl] = useState<string | undefined>("");
-	const [cardInput, setCardInput] = useState<number | null>();
+	const [cardInput, setCardInput] = useState<number | "4a" | "4b" | "4c" | "4d" | "4e" | null>();
 
 	const [isFoil, setIsFoil] = useState<boolean>(false);
 	const [allCardsCache, setAllCardsCache] = useState<TCardCache>({});
 
 	const inputRef = useRef<InputRef>(null);
+	const lorcanaCardsByWave = useMemo(() => lorcanaCards.filter((card) => card.set_num === wave), [lorcanaCards, wave]);
 
-	useEffect(() => {
-		async function fetchAllCards() {
-			let response = getAllCards();
-			const retrievedCards = await response;
-			if (retrievedCards) {
-				setAllCardsCache(retrievedCards);
-			}
-		}
-		fetchAllCards();
-	}, []);
+	// useEffect(() => {
+	// 	async function fetchAllCards() {
+	// 		let response = getAllCards();
+	// 		const retrievedCards = await response;
+	// 		if (retrievedCards) {
+	// 			setAllCardsCache(retrievedCards);
+	// 		}
+	// 	}
+	// 	fetchAllCards();
+	// }, []);
 
 	useEffect(() => {
 		// getImageUrlFromCardNumber(setImageUrl, Number(cardInput), wave, allCardsCache, isFoil);
 		// console.log("card input:", cardInput);
 		// console.log("WAVE", wave);
-		if (cardInput && cardInput > 0 && cardInput < 216) {
-			const newTestImage = set4cards.filter((card) => card.Set_Num === wave && card.Card_Num === cardInput);
-			// console.log("NEW test image:", newTestImage[0].Image);
-			cardInput ? setImageUrl(newTestImage[0].Image) : setImageUrl("");
+		if (cardInput) {
+			// console.log("CARD INPUT", cardInput);
+			const newTestImage = lorcanaCardsByWave.filter((card) => card.card_num == cardInput);
+			// console.log(newTestImage);
+			setImageUrl(newTestImage[0].image);
 		} else {
-			setImageUrl("/public/lorcanaRarity/lorcana-cardback.jpg");
+			setImageUrl("/lorcanaRarity/lorcana-cardback.jpg");
 		}
-	}, [cardInput, isFoil, refreshLorcanaCardImage]);
+	}, [cardInput, isFoil]);
 
 	// focus on input when component is made
 	useEffect(() => {
@@ -67,18 +69,22 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 		}
 	}, [currentCardIndex, inputRef]);
 
-	const handleCardNumberInput = (value: number | null) => {
-		// console.log("ASDF, ", value);
-		if (value && value > 216) {
+	const handleCardNumberInput = (value: string | "4a" | "4b" | "4c" | "4d" | "4e" | null) => {
+		if (value === "4a" || value === "4b" || value === "4c" || value === "4d" || value === "4e") {
+			if (wave === 3) setCardInput(value);
+		} else if (value && Number(value) > 204) {
 			setCardInput(0);
 		} else {
-			setCardInput(value);
+			console.log("CN ", cardInput);
+			console.log("index", index);
+			setCardInput(Number(value));
 		}
 	};
 
 	const validateMessage = {
 		required: "card # between 1 and 216 required",
 	};
+
 	return (
 		<Form.Item
 			required
@@ -102,15 +108,15 @@ export const DeckCardInput = ({ field, index, remove, setCurrentCardIndex, curre
 							key={index}
 							placeholder="Card #"
 							style={{ width: "100px", marginBottom: "0px" }}
-							onFocus={() => {
-								setCurrentCardIndex(index),
-									inputRef.current!.focus({
-										cursor: "all",
-									});
-							}}
-							status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
+							// onFocus={() => {
+							// 	setCurrentCardIndex(index),
+							// 		inputRef.current!.focus({
+							// 			cursor: "all",
+							// 		});
+							// }}
+							// status={cardInput ? (cardInput > 216 ? "error" : "") : "warning"}
 							maxLength={3}
-							onChange={(e) => handleCardNumberInput(Number(e.target.value))}
+							onChange={(e) => handleCardNumberInput(e.target.value)}
 							max={217}
 						/>
 					</Form.Item>
