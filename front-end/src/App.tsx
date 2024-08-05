@@ -15,7 +15,6 @@ import { WorkoutBuddy } from "./apps/workoutBuddy/src/App";
 import { ResetPasswordPage } from "./components/auth/login/ResetPasswordPage";
 import { NewUsername } from "./containers/header/newUsername";
 import { ChecklistPage } from "./pages/buddySystemHomepage/ChecklistPage";
-// import { PrivacyPolicy } from "./components/auth/login/PrivacyPolicy";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -36,7 +35,7 @@ const router = createBrowserRouter(
 				</Route> */}
 			{/* </Route> */}
 			<Route path="buddySystem/resetpassword" element={<ResetPasswordPage />} />
-			{/* <Route path="buddySystem/privacypolicy" element={<PrivacyPolicy />} /> */}
+			<Route path="buddySystem/privacypolicy" element={<PrivacyPolicy />} />
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)
