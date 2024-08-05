@@ -3,21 +3,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../../../../contexts/AuthProvider";
 import sprigatito from "../../../../../images/sprigatito.jpg";
 import "../../styles/style.css";
-import {
-	Button,
-	Cascader,
-	Dropdown,
-	Input,
-	InputNumber,
-	MenuProps,
-	Radio,
-	Select,
-	Space,
-	Switch,
-	Tooltip,
-	Tour,
-	message,
-} from "antd";
+import { Button, Cascader, Dropdown, Input, InputNumber, MenuProps, Radio, Select, Space, Switch, Tooltip, Tour, message } from "antd";
 import ingredientsJSON from "../../../public/pokemonSleepIngredients.json";
 import { Option } from "antd/es/mentions";
 import recipesJSON from "../../../public/pokemonSleepRecipes.json";
@@ -27,12 +13,7 @@ import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
 import type { TourProps } from "antd";
-import {
-	ArrowDownOutlined,
-	ArrowUpOutlined,
-	FilterFilled,
-	UserOutlined,
-} from "@ant-design/icons";
+import { ArrowDownOutlined, ArrowUpOutlined, FilterFilled, UserOutlined } from "@ant-design/icons";
 
 type TIngredient = {
 	id: number;
@@ -55,29 +36,22 @@ export const PokemonSleep = () => {
 	const steps: TourProps["steps"] = [
 		{
 			title: "Choose Pot Size",
-			description:
-				"Select how many ingredients you can use in your meal. you can find this on the top right when you start cooking.",
+			description: "Select how many ingredients you can use in your meal. you can find this on the top right when you start cooking.",
 			cover: (
 				<div>
-					<img
-						alt="tour.png"
-						src="/IMG_4036.jpeg"
-						width="400"
-					/>
+					<img alt="tour.png" src="/IMG_4036.jpeg" width="400" />
 				</div>
 			),
 			target: () => ref1.current,
 		},
 		{
 			title: "Toggle all ingredients",
-			description:
-				"Quickly select or deselect all. Selecting all will show all posible recipes for your pot size.",
+			description: "Quickly select or deselect all. Selecting all will show all posible recipes for your pot size.",
 			target: () => ref2.current,
 		},
 		{
 			title: "Select specific ingredients you've unlocked",
-			description:
-				"Click on each ingredient you have unlocked. This can be view when you click 'Main Menu' => 'Notes' => 'Ingredients'",
+			description: "Click on each ingredient you have unlocked. This can be view when you click 'Main Menu' => 'Notes' => 'Ingredients'",
 			target: () => ref3.current,
 		},
 		{
@@ -121,15 +95,9 @@ export const PokemonSleep = () => {
 	const [showAll, setShowAll] = useState<boolean>(false);
 	const [cookableRecipes, setCookableRecipes] = useState<TRecipe[]>([]);
 	const [uncookableRecipes, setUncookableRecipes] = useState<TRecipe[]>([]);
-	const [saladsLevels, setSaladLevels] = useState<{ name: string; level: number }[]>(
-		[]
-	);
-	const [curriesLevels, setCurriesLevels] = useState<{ name: string; level: number }[]>(
-		[]
-	);
-	const [drinksLevels, setDrinksLevels] = useState<{ name: string; level: number }[]>(
-		[]
-	);
+	const [saladsLevels, setSaladLevels] = useState<{ name: string; level: number }[]>([]);
+	const [curriesLevels, setCurriesLevels] = useState<{ name: string; level: number }[]>([]);
+	const [drinksLevels, setDrinksLevels] = useState<{ name: string; level: number }[]>([]);
 
 	const [messageApi, contextHolder] = message.useMessage();
 
@@ -155,9 +123,7 @@ export const PokemonSleep = () => {
 		const newIngredientArray = new Array(...unlockedIngredients);
 		// remove if clicked ing is in list
 		if (newIngredientArray.includes(ingredient.name)) {
-			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(
-				ingredient.name
-			);
+			const ingredientToRemoveArrIndex = newIngredientArray.indexOf(ingredient.name);
 			newIngredientArray.splice(ingredientToRemoveArrIndex, 1);
 			// console.log("newIngredientArray", newIngredientArray);
 			setUnlockedIngredients(newIngredientArray);
@@ -171,9 +137,7 @@ export const PokemonSleep = () => {
 	// if logged in get Users data
 	const getUsersData = async () => {
 		// check if data exists
-		const { count, error: testError } = await supabase
-			.from("pokemon_sleep_users_recipe_data")
-			.select(`*`, { count: "exact", head: true });
+		const { count, error: testError } = await supabase.from("pokemon_sleep_users_recipe_data").select(`*`, { count: "exact", head: true });
 		if (testError) {
 			console.error(testError);
 		}
@@ -222,10 +186,7 @@ export const PokemonSleep = () => {
 		// console.log("filterKey", filterName);
 	}, [filterKey]);
 
-	const updateLevels = async (
-		column_name: string,
-		dataToUpdate: { name: string; level: number }[]
-	) => {
+	const updateLevels = async (column_name: string, dataToUpdate: { name: string; level: number }[]) => {
 		if (auth) {
 			setIsLoading(true);
 			const { data, error } = await supabase
@@ -251,9 +212,7 @@ export const PokemonSleep = () => {
 				if (curriesLevels) {
 					dataToUpdate = curriesLevels;
 					// console.log("dataToUpdate", dataToUpdate);
-					let updatedDataIndex = dataToUpdate.findIndex(
-						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
-					);
+					let updatedDataIndex = dataToUpdate.findIndex((oldRecipe) => oldRecipe.name === newRecipeLevel.name);
 					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
@@ -270,9 +229,7 @@ export const PokemonSleep = () => {
 				if (saladsLevels) {
 					dataToUpdate = saladsLevels;
 					// console.log("dataToUpdate", dataToUpdate);
-					let updatedDataIndex = dataToUpdate.findIndex(
-						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
-					);
+					let updatedDataIndex = dataToUpdate.findIndex((oldRecipe) => oldRecipe.name === newRecipeLevel.name);
 					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
@@ -289,9 +246,7 @@ export const PokemonSleep = () => {
 				if (drinksLevels) {
 					dataToUpdate = drinksLevels;
 					// console.log("dataToUpdate", dataToUpdate);
-					let updatedDataIndex = dataToUpdate.findIndex(
-						(oldRecipe) => oldRecipe.name === newRecipeLevel.name
-					);
+					let updatedDataIndex = dataToUpdate.findIndex((oldRecipe) => oldRecipe.name === newRecipeLevel.name);
 					// console.log("indexxxx", updatedDataIndex);
 					if (updatedDataIndex < 0) {
 						dataToUpdate.push(newRecipeLevel);
@@ -402,17 +357,11 @@ export const PokemonSleep = () => {
 		if (recipes) {
 			let cookableMeals: TRecipe[] = recipes.filter(
 				(recipe) =>
-					recipe.minimumPotSize <= potSize! &&
-					recipe.ingredients.every((ingredient) =>
-						unlockedIngredients.includes(ingredient.name)
-					)
+					recipe.minimumPotSize <= potSize! && recipe.ingredients.every((ingredient) => unlockedIngredients.includes(ingredient.name))
 			);
 			let uncookableMeals: TRecipe[] = recipes.filter(
 				(recipe) =>
-					recipe.minimumPotSize > potSize! &&
-					recipe.ingredients.every((ingredient) =>
-						unlockedIngredients.includes(ingredient.name)
-					)
+					recipe.minimumPotSize > potSize! && recipe.ingredients.every((ingredient) => unlockedIngredients.includes(ingredient.name))
 			);
 			if (cookableMeals.length > 0) {
 				// console.log("cook ARR", cookableMeals);
@@ -636,10 +585,12 @@ export const PokemonSleep = () => {
 		<div className="recipe-page">
 			{contextHolder}
 			<Helmet>
-				<meta
-					name="viewport"
-					content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
-				></meta>
+				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"></meta>
+				<script
+					async
+					src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2005482130060138"
+					crossOrigin="anonymous"
+				></script>
 			</Helmet>
 			<div className="page-heading">
 				<h2>Pokemon Sleep HomePage</h2>
@@ -689,27 +640,15 @@ export const PokemonSleep = () => {
 				className="uncheck-all-switch"
 				ref={ref2}
 			/>
-			<div
-				className="ingredient-buttons-container"
-				ref={ref3}
-			>
+			<div className="ingredient-buttons-container" ref={ref3}>
 				{ingredients.length > 0 &&
 					ingredients.map((ingredient, index: number) => (
 						<Button
 							key={index}
 							shape="circle"
 							size="large"
-							className={`ingredient-button ${
-								unlockedIngredients.includes(ingredient.name)
-									? "unlocked-ingredient"
-									: ""
-							}`}
-							icon={
-								<img
-									src={`/pokemonSleepIngredients/${ingredient.imageUrl}`}
-									className="ingredient-button-icon"
-								/>
-							}
+							className={`ingredient-button ${unlockedIngredients.includes(ingredient.name) ? "unlocked-ingredient" : ""}`}
+							icon={<img src={`/pokemonSleepIngredients/${ingredient.imageUrl}`} className="ingredient-button-icon" />}
 							onClick={() => handleIconClick(ingredient)}
 						/>
 					))}
@@ -723,23 +662,13 @@ export const PokemonSleep = () => {
 					style={{ marginTop: 16 }}
 					defaultValue={chosenCategories}
 				>
-					<Radio.Button value="Curries and Stews">
-						Curries and Stews
-					</Radio.Button>
+					<Radio.Button value="Curries and Stews">Curries and Stews</Radio.Button>
 					<Radio.Button value="Salads">Salads</Radio.Button>
-					<Radio.Button value="Drinks and Desserts">
-						Desserts and Drink
-					</Radio.Button>
+					<Radio.Button value="Drinks and Desserts">Desserts and Drink</Radio.Button>
 				</Radio.Group>
 			)}
-			<div
-				className="save-and-filter"
-				ref={ref5}
-			>
-				<Button
-					type="primary"
-					onClick={() => handlesave()}
-				>
+			<div className="save-and-filter" ref={ref5}>
+				<Button type="primary" onClick={() => handlesave()}>
 					Save
 				</Button>
 				{/* <Dropdown
@@ -780,20 +709,11 @@ export const PokemonSleep = () => {
 								<Recipe recipe={recipe} />
 							))}
 					</div> */}
-				<div
-					className="cookable-recipes"
-					ref={ref6}
-				>
+				<div className="cookable-recipes" ref={ref6}>
 					<h3 className="cookable-recipes-header">Cookable Recipes</h3>
 					{cookableRecipes.length > 0 ? (
 						cookableRecipes.map((recipe: TRecipe, index: number) => (
-							<Recipe
-								key={index}
-								recipe={recipe}
-								ingredients={ingredients}
-								setNewRecipeLevel={setNewRecipeLevel}
-								disable={isLoading}
-							/>
+							<Recipe key={index} recipe={recipe} ingredients={ingredients} setNewRecipeLevel={setNewRecipeLevel} disable={isLoading} />
 						))
 					) : (
 						<div className="no-recipe-placeholder">
@@ -805,29 +725,13 @@ export const PokemonSleep = () => {
 					{uncookableRecipes &&
 						uncookableRecipes.map((recipe: TRecipe, index: number) => (
 							// <Tooltip
-							<Recipe
-								key={index}
-								recipe={recipe}
-								ingredients={ingredients}
-								setNewRecipeLevel={setNewRecipeLevel}
-								disable={isLoading}
-							/>
+							<Recipe key={index} recipe={recipe} ingredients={ingredients} setNewRecipeLevel={setNewRecipeLevel} disable={isLoading} />
 						))}
 				</div>
 			</div>
 			{/* )} */}
-			<FloatButton
-				icon={<QuestionCircleOutlined />}
-				type="primary"
-				style={{ right: 50 }}
-				onClick={() => setOpen(true)}
-			/>
-			<Tour
-				open={open}
-				onClose={() => setOpen(false)}
-				steps={steps}
-				scrollIntoViewOptions={false}
-			/>
+			<FloatButton icon={<QuestionCircleOutlined />} type="primary" style={{ right: 50 }} onClick={() => setOpen(true)} />
+			<Tour open={open} onClose={() => setOpen(false)} steps={steps} scrollIntoViewOptions={false} />
 		</div>
 	);
 };
