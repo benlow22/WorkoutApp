@@ -35,7 +35,6 @@ const router = createBrowserRouter(
 				</Route> */}
 			{/* </Route> */}
 			<Route path="buddySystem/resetpassword" element={<ResetPasswordPage />} />
-			<Route path="buddySystem/privacypolicy" element={<PrivacyPolicy />} />
 			<Route path="*" element={<Navigate to="" />} />,
 		</Route>
 	)
