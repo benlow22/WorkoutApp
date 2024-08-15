@@ -49,7 +49,9 @@ export type TNewCardAndUserData = TNewCard & {
 // change wave and uncomment
 export const NewInventory = () => {
 	const { supabase, userId, auth, allCardsAndUserData } = useContext(AuthContext);
-	const [filteredCards, setFilteredCard] = useState<TNewCardAndUserData[] | undefined>([]);
+	const [filteredCards, setFilteredCard] = useState<TNewCardAndUserData[] | undefined>(allCardsAndUserData);
+	const [isReady, setIsReady] = useState<boolean>(false);
+
 	const [cardQuantities, setCardQuantities] = useState<{
 		foil: number;
 		nonfoil: number;
@@ -57,7 +59,7 @@ export const NewInventory = () => {
 		foil: 0,
 		nonfoil: 0,
 	});
-	const needFoils = allCardsAndUserData?.filter((card) => card.nonfoil > 8 && card.rarity === "");
+	// const needFoils = allCardsAndUserData?.filter((card) => card.nonfoil > 8 && card.rarity === "");
 	const getQuantityOfCards = async () => {
 		let { data, error } = await supabase
 			// @ts-expect-error does not get type for the join
@@ -78,6 +80,12 @@ export const NewInventory = () => {
 		}
 	}, [auth]);
 
+	useEffect(() => {
+		if (filteredCards && filteredCards.length > 0) {
+			setIsReady(true);
+		}
+	}, [filteredCards]);
+
 	return (
 		<div className="inventory-page" style={{ display: "flex", flexWrap: "wrap", margin: "auto" }}>
 			<div className="3x3" style={{}}>
@@ -86,7 +94,7 @@ export const NewInventory = () => {
 				<h4>Foil Cards : {cardQuantities.foil}</h4>
 				<h4>Nonfoil Cards : {cardQuantities.nonfoil}</h4>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{filteredCards && filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />)}
+					{filteredCards ? filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />) : <p>loading</p>}
 					{/* <p>{needFoils?.length}</p> */}
 					<h2 style={{ alignContent: "center", paddingLeft: "20px" }}></h2>
 				</div>
