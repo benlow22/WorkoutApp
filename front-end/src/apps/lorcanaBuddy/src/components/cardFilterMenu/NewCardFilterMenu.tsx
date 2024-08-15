@@ -26,7 +26,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
 	const [cardInkFilters, setCardInkFilters] = useState<CheckboxValueType[]>([]);
 	const [cardRarityFilters, setCardRarityFilters] = useState<CheckboxValueType[]>([]);
-	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([]);
+	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([5]);
 	const [showRARE, setShowRARE] = useState<boolean>(false);
 
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
@@ -81,6 +81,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		}
 		if (cardSetFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardSetFilterFn(card));
+			console.log("filtered", filteredCards);
 		}
 		if (cardInkFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardInkFilterFn(card));
@@ -89,6 +90,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			filteredCards = filteredCards?.filter((card) => cardRarityFilterFn(card));
 		}
 		setFilteredCards(filteredCards);
+		console.log("filtered", filteredCards);
 	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters, cardRarityFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
@@ -225,7 +227,8 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Rise of the Floodborn", value: 2 },
 		{ label: "Into The Inklands", value: 3 },
 		{ label: "Ursula's Return", value: 4 },
-		{ label: "Promo", value: 5 },
+		{ label: "Shimmering Skies", value: 5 },
+		{ label: "Promo", value: 6 },
 	];
 
 	const cardInkFilterOptions = [

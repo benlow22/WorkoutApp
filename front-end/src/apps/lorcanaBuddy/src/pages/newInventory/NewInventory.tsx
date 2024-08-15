@@ -88,7 +88,7 @@ export const NewInventory = () => {
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
 					{filteredCards && filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />)}
 					{/* <p>{needFoils?.length}</p> */}
-					<h2 style={{ alignContent: "center", paddingLeft: "20px" }}> W4 Need Foil</h2>
+					<h2 style={{ alignContent: "center", paddingLeft: "20px" }}></h2>
 				</div>
 			</div>
 		</div>
