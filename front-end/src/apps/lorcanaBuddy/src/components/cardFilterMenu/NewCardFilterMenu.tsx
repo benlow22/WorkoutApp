@@ -314,7 +314,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			{noUseStateInkfilter.map((ink) => (
 				<p>{ink}----</p>
 			))}
-			<h4>Ink</h4>
+			<h3>Ink</h3>
 
 			<Checkbox.Group
 				options={cardInkFilterOptions}
@@ -324,38 +324,38 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 				value={cardInkFilters}
 				className="ink-checkbox"
 			/>
-			<h4>Possesion</h4>
+			<h3>Possesion</h3>
 			<Radio.Group
 				options={cardPossesionFiltersOptions}
 				onChange={(e) => setCardPossessionFilters(e.target.value)}
 				value={cardPossesionFilters}
 				defaultValue={0}
 			/>
-			<h4>card typey</h4>
+			<h3>card typey</h3>
 
 			<Checkbox.Group options={cardTypeFilterOptions} onChange={(values) => setCardTypeFilters(values)} value={cardTypeFilters} />
-			<h4></h4>
-			<Button type="text" onClick={() => setShowAdvancedSettings(!showAdvancedSettings)} icon={<SettingOutlined />}>
+			{/* <h4></h4> */}
+			{/* <Button type="text" onClick={() => setShowAdvancedSettings(!showAdvancedSettings)} icon={<SettingOutlined />}>
 				Advanced Settings
 			</Button>
 			<Button type="primary" icon={<ClearOutlined />} onClick={handleClearFilters} />
-			{showAdvancedSettings && (
-				<>
-					<h3>Ink Color</h3>
-					<Checkbox.Group
-						options={cardInkFilterOptions}
-						onChange={(values) => {
-							setCardInkFilters(values);
-						}}
-						value={cardInkFilters}
-					/>
-					<h3>Set</h3>
-					<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
+			{showAdvancedSettings && ( */}
+			<>
+				{/* <h3>Ink Color</h3>
+				<Checkbox.Group
+					options={cardInkFilterOptions}
+					onChange={(values) => {
+						setCardInkFilters(values);
+					}}
+					value={cardInkFilters}
+				/> */}
+				<h3>Set</h3>
+				<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
 
-					<h3>Set</h3>
-					<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
-				</>
-			)}
+				<h3>Rarity</h3>
+				<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
+			</>
+			{/* )} */}
 		</div>
 	);
 };
