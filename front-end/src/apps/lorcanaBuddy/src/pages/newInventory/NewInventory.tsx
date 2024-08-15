@@ -94,7 +94,9 @@ export const NewInventory = () => {
 				<h4>Foil Cards : {cardQuantities.foil}</h4>
 				<h4>Nonfoil Cards : {cardQuantities.nonfoil}</h4>
 				<div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
-					{filteredCards ? filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />) : <p>loading</p>}
+					{filteredCards
+						? filteredCards.map((card) => <NewInventoryCard card={card} key={card.id} />)
+						: allCardsAndUserData?.map((card) => card.set_num === 5 && <NewInventoryCard card={card} key={card.id} />)}
 					{/* <p>{needFoils?.length}</p> */}
 					<h2 style={{ alignContent: "center", paddingLeft: "20px" }}></h2>
 				</div>
