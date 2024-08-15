@@ -97,6 +97,7 @@ const AuthProvider: React.FC<IChildren> = ({ children }) => {
 			const sortedData = data.sort((a, b) => {
 				return a.set_num - b.set_num || a.card_num - b.card_num;
 			});
+
 			setLorcanaCards(sortedData);
 		} else {
 			console.log("ERROR fetching cards :", error);

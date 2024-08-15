@@ -26,7 +26,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
 	const [cardInkFilters, setCardInkFilters] = useState<CheckboxValueType[]>([]);
 	const [cardRarityFilters, setCardRarityFilters] = useState<CheckboxValueType[]>([]);
-	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([]);
+	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([5]);
 	const [showRARE, setShowRARE] = useState<boolean>(false);
 
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
@@ -81,6 +81,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		}
 		if (cardSetFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardSetFilterFn(card));
+			console.log("filtered", filteredCards);
 		}
 		if (cardInkFilters.length > 0) {
 			filteredCards = filteredCards?.filter((card) => cardInkFilterFn(card));
@@ -89,6 +90,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			filteredCards = filteredCards?.filter((card) => cardRarityFilterFn(card));
 		}
 		setFilteredCards(filteredCards);
+		console.log("filtered", filteredCards);
 	}, [cardPossesionFilters, cardTypeFilters, cardSetFilters, cardInkFilters, cardRarityFilters]);
 
 	//creates a check for an array of filters, check if a card passes any of the filters
@@ -225,7 +227,8 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Rise of the Floodborn", value: 2 },
 		{ label: "Into The Inklands", value: 3 },
 		{ label: "Ursula's Return", value: 4 },
-		{ label: "Promo", value: 5 },
+		{ label: "Shimmering Skies", value: 5 },
+		{ label: "Promo", value: 6 },
 	];
 
 	const cardInkFilterOptions = [
@@ -311,7 +314,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			{noUseStateInkfilter.map((ink) => (
 				<p>{ink}----</p>
 			))}
-			<h4>Ink</h4>
+			<h3>Ink</h3>
 
 			<Checkbox.Group
 				options={cardInkFilterOptions}
@@ -321,38 +324,38 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 				value={cardInkFilters}
 				className="ink-checkbox"
 			/>
-			<h4>Possesion</h4>
+			<h3>Possesion</h3>
 			<Radio.Group
 				options={cardPossesionFiltersOptions}
 				onChange={(e) => setCardPossessionFilters(e.target.value)}
 				value={cardPossesionFilters}
 				defaultValue={0}
 			/>
-			<h4>card typey</h4>
+			<h3>card typey</h3>
 
 			<Checkbox.Group options={cardTypeFilterOptions} onChange={(values) => setCardTypeFilters(values)} value={cardTypeFilters} />
-			<h4></h4>
-			<Button type="text" onClick={() => setShowAdvancedSettings(!showAdvancedSettings)} icon={<SettingOutlined />}>
+			{/* <h4></h4> */}
+			{/* <Button type="text" onClick={() => setShowAdvancedSettings(!showAdvancedSettings)} icon={<SettingOutlined />}>
 				Advanced Settings
 			</Button>
 			<Button type="primary" icon={<ClearOutlined />} onClick={handleClearFilters} />
-			{showAdvancedSettings && (
-				<>
-					<h3>Ink Color</h3>
-					<Checkbox.Group
-						options={cardInkFilterOptions}
-						onChange={(values) => {
-							setCardInkFilters(values);
-						}}
-						value={cardInkFilters}
-					/>
-					<h3>Set</h3>
-					<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
+			{showAdvancedSettings && ( */}
+			<>
+				{/* <h3>Ink Color</h3>
+				<Checkbox.Group
+					options={cardInkFilterOptions}
+					onChange={(values) => {
+						setCardInkFilters(values);
+					}}
+					value={cardInkFilters}
+				/> */}
+				<h3>Set</h3>
+				<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
 
-					<h3>Set</h3>
-					<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
-				</>
-			)}
+				<h3>Rarity</h3>
+				<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
+			</>
+			{/* )} */}
 		</div>
 	);
 };
