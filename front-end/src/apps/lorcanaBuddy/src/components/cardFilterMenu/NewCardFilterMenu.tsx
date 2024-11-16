@@ -124,13 +124,13 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			// if (!card.foil) {
 			// 	return true;
 			// }
-			return card.nonfoil ? card.nonfoil > 8 : false;
+			return card.nonfoil ? card.nonfoil > 4 : false;
 		}
 		if (cardTypeFilters.includes(6)) {
 			if (Number(card.card_num) < 205) {
 				let quantity = (card.foil ? 1 : 0) + (card.nonfoil ? card.nonfoil : 0);
 
-				if (quantity < 4) {
+				if (quantity > 4) {
 					return true;
 				}
 			}
@@ -206,8 +206,8 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Non Foil", value: 2 },
 		{ label: "Enchanted", value: 3 },
 		{ label: "more than 8", value: 4 },
-		{ label: "more than 8 nonfoil", value: 5 },
-		{ label: "less than 4", value: 6 },
+		{ label: "more than 4 nonfoil", value: 5 },
+		{ label: "more than 4", value: 6 },
 		{ label: "missing foil", value: 7 },
 		{ label: "more than 1 foil", value: 8 },
 	];
