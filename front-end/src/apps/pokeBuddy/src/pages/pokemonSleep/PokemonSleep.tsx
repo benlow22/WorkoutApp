@@ -25,7 +25,7 @@ type TIngredient = {
 };
 
 export const PokemonSleep = () => {
-	const { auth, username, supabase, userId } = useContext(AuthContext);
+	const { auth, supabase, userId } = useContext(AuthContext);
 	const ref1 = useRef(null);
 	const ref2 = useRef(null);
 	const ref3 = useRef(null);
@@ -75,7 +75,6 @@ export const PokemonSleep = () => {
 	];
 
 	const [potSize, setPotSize] = useState<number>(15);
-	const [allRecipes, setAllRecipes] = useState();
 	const [categories, setCategories] = useState<{
 		[category: string]: TRecipe[];
 	}>();
@@ -195,7 +194,6 @@ export const PokemonSleep = () => {
 				.eq("user_id", userId)
 				.select();
 			if (data) {
-				// console.log(data);
 				setIsLoading(false);
 			} else {
 				console.log(error);
@@ -206,7 +204,6 @@ export const PokemonSleep = () => {
 	//
 	useEffect(() => {
 		if (newRecipeLevel) {
-			// console.log("startupload", newRecipeLevel);
 			let dataToUpdate: { name: string; level: number }[] = [];
 			if (chosenCategories === "Curries and Stews") {
 				if (curriesLevels) {
