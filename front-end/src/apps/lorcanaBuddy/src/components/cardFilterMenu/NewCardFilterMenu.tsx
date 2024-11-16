@@ -228,7 +228,8 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Into The Inklands", value: 3 },
 		{ label: "Ursula's Return", value: 4 },
 		{ label: "Shimmering Skies", value: 5 },
-		{ label: "Promo", value: 6 },
+		{ label: "Azurite Sea", value: 6 },
+		{ label: "Promo", value: 100 },
 	];
 
 	const cardInkFilterOptions = [
