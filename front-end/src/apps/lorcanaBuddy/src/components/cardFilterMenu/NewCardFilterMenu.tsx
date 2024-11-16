@@ -230,6 +230,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Shimmering Skies", value: 5 },
 		{ label: "Azurite Sea", value: 6 },
 		{ label: "Promo", value: 100 },
+
 	];
 
 	const cardInkFilterOptions = [

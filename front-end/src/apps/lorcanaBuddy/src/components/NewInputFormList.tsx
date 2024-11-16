@@ -158,6 +158,7 @@ export const NewInputFormList = () => {
 							{ value: 4, label: "4. Ursula's Return" },
 							{ value: 5, label: "5. Shimmering Skies" },
 							{ value: 6, label: "6. Azurite Sea" },
+
 						]}
 					/>
 					{/* <InputNumber value={wave} /> */}
