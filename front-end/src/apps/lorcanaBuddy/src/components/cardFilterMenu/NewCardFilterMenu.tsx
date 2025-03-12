@@ -4,9 +4,10 @@ import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Radio } from "antd";
 import { CheckboxValueType } from "antd/es/checkbox/Group";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";
+import { AuthContext } from "../../../../../contexts/AuthProvider";
 
 // returns a list of cards that are filtered
 type TProps = {
@@ -15,6 +16,8 @@ type TProps = {
 };
 
 export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: TProps) => {
+	const { supabase, user } = useContext(AuthContext);
+
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [inkFilter, setInkFilter] = useState<string[]>();
 	const noUseStateInkfilter = searchParams.getAll("ink");
@@ -22,13 +25,24 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 
 	const url = new URL(window.location.href);
 	console.log("location", window.location.href);
+	const [currentWaves, setCurrentWaves] = useState<
+		{
+			label: string;
+			value: number;
+		}[]
+	>();
 	const [cardPossesionFilters, setCardPossessionFilters] = useState<number>();
 	const [cardTypeFilters, setCardTypeFilters] = useState<CheckboxValueType[]>([]);
 	const [cardInkFilters, setCardInkFilters] = useState<CheckboxValueType[]>([]);
 	const [cardRarityFilters, setCardRarityFilters] = useState<CheckboxValueType[]>([]);
 	const [cardSetFilters, setCardSetFilters] = useState<CheckboxValueType[]>([5]);
 	const [showRARE, setShowRARE] = useState<boolean>(false);
-
+	const [cardWaveFilterOptions, setCardWaveFilterOptions] = useState<
+		{
+			label: string;
+			value: number;
+		}[]
+	>();
 	const [showAdvancedSettings, setShowAdvancedSettings] = useState<boolean>(false);
 	const callIt = async (url: any) => {
 		const data = await axios.get(url);
@@ -46,6 +60,32 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 			}
 		}
 	};
+
+	// Call the function
+	// getDistinctWavesFromDB();
+	useEffect(() => {
+		const getDistinctWavesFromDB = async () => {
+			// @ts-expect-error does not get type for the join
+			const { data, error } = await supabase.rpc("get_distinct_values_from_new_cards").select("*");
+
+			// Handle any errors that occur
+			if (error) {
+				console.error("Error fetching distinct values:", error.message);
+				throw error;
+			}
+
+			// Extract the distinct values
+			// const distinctValues = data.map(row => row.column_b);
+
+			// Output the distinct values
+			const typedData = [{ label: "All", value: 0 }];
+			data.map((row: { wave: string }, index) => typedData.push({ label: row.wave, value: index + 1 }));
+			typedData.push({ label: "Promo", value: 999 });
+			setCardWaveFilterOptions(typedData);
+			console.log("Distinct values for set waves", typedData);
+		};
+		getDistinctWavesFromDB();
+	}, [user]);
 
 	useEffect(() => {
 		console.log("NO", noUseStateInkfilter);
@@ -351,7 +391,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 					value={cardInkFilters}
 				/> */}
 				<h3>Set</h3>
-				<Checkbox.Group options={cardSetFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
+				<Checkbox.Group options={cardWaveFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
 
 				<h3>Rarity</h3>
 				<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
