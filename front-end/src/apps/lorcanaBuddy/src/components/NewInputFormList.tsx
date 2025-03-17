@@ -17,13 +17,18 @@ type TCardsToUpload = {
 	transaction_id: string;
 };
 
+type TWaveOption = {
+	label: string;
+	value: number;
+};
+
 export const NewInputFormList = () => {
 	const { auth, userId, supabase } = useContext(AuthContext);
 	const [numberOfCards, setNumberOfCards] = useState<number>(1);
 	const [currentCardIndex, setCurrentCardIndex] = useState<number>(1);
 	const [isSpaceClicked, setIsSpaceClicked] = useState<boolean>(false);
 	const [waveFilter, setWaveFilter] = useState<number>(0);
-
+	const [waveOptions, setWaveOptions] = useState<TWaveOption[]>();
 	const addButtonHtml = document.getElementById("addButton");
 
 	const [form] = Form.useForm();
@@ -131,6 +136,29 @@ export const NewInputFormList = () => {
 		},
 	};
 
+	useEffect(() => {
+		const getDistinctWavesFromDB = async () => {
+			// @ts-expect-error does not get type for the join
+			const { data, error } = await supabase.rpc("get_distinct_values_from_new_cards").select("*");
+
+			// Handle any errors that occur
+			if (error) {
+				console.error("Error fetching distinct values:", error.message);
+				throw error;
+			}
+
+			// Extract the distinct values
+			// const distinctValues = data.map(row => row.column_b);
+
+			// Output the distinct values
+			const typedData: TWaveOption[] = data.map((row: { wave: string }, index) => ({ label: `${index + 1}. ${row.wave}`, value: index + 1 }));
+			typedData.push({ label: "Promo", value: 999 });
+			setWaveOptions(typedData);
+			console.log("Distinct values for set waves", typedData);
+		};
+		getDistinctWavesFromDB();
+	}, []);
+
 	return (
 		<div>
 			<Form
@@ -150,16 +178,8 @@ export const NewInputFormList = () => {
 						style={{ width: 220 }}
 						onChange={(value: number) => {
 							setWaveFilter(value);
-						}}
-						options={[
-							{ value: 1, label: "1. The First Chapter" },
-							{ value: 2, label: "2. Rise of the Floodborn" },
-							{ value: 3, label: "3. Into the Inklands" },
-							{ value: 4, label: "4. Ursula's Return" },
-							{ value: 5, label: "5. Shimmering Skies" },
-							{ value: 6, label: "6. Azurite Sea" },
+						}}						options={waveOptions}
 
-						]}
 					/>
 					{/* <InputNumber value={wave} /> */}
 				</Form.Item>
