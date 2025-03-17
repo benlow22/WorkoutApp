@@ -178,8 +178,8 @@ export const NewInputFormList = () => {
 						style={{ width: 220 }}
 						onChange={(value: number) => {
 							setWaveFilter(value);
-						}}
-						options={waveOptions}
+						}}						options={waveOptions}
+
 					/>
 					{/* <InputNumber value={wave} /> */}
 				</Form.Item>

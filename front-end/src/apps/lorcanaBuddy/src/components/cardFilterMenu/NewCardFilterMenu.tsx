@@ -269,7 +269,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 		{ label: "Ursula's Return", value: 4 },
 		{ label: "Shimmering Skies", value: 5 },
 		{ label: "Azurite Sea", value: 6 },
-		{ label: "Promo", value: 100 },
+		{ label: "Promo", value: 100 }
 	];
 
 	const cardInkFilterOptions = [
@@ -392,6 +392,7 @@ export const NewCardFilterMenu = ({ allCardsAndUsersCards, setFilteredCards }: T
 				/> */}
 				<h3>Set</h3>
 				<Checkbox.Group options={cardWaveFilterOptions} onChange={(values) => setCardSetFilters(values)} value={cardSetFilters} />
+
 
 				<h3>Rarity</h3>
 				<Checkbox.Group options={cardRarityFilterOptions} onChange={(values) => setCardRarityFilters(values)} value={cardRarityFilters} />
