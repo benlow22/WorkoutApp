@@ -33,7 +33,7 @@ export const Navbar = () => {
 									to={
 										domain.name === "Buddy System"
 											? `/${page.path}`
-											: `/${domain.path}/${page.path} `
+											: `/${domain.path}/${page.path}`
 									}
 									key={page.name}
 									className={({ isActive, isPending }) =>
