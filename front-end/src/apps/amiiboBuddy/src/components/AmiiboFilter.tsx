@@ -25,8 +25,9 @@ import {
 	DownOutlined,
 } from "@ant-design/icons";
 import { TAmiiboCard } from "../types/types";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { Amiibos } from "./Amiibos";
+// antd v5 removed CheckboxValueType from antd/es/checkbox/Group; this is its original definition.
+type CheckboxValueType = string | number | boolean;
 import { TAmiiboWithStatus } from "./AmiiboLine";
 import { TAmiiboCache } from "../pages/addAmiibo/AddAmiibo";
 import Search from "antd/es/input/Search";

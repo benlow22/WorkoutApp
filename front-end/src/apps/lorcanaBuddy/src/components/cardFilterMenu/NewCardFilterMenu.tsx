@@ -2,8 +2,9 @@
 
 import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Radio } from "antd";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 import axios from "axios";
+// antd v5 removed CheckboxValueType from antd/es/checkbox/Group; this is its original definition.
+type CheckboxValueType = string | number | boolean;
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";

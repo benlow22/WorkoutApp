@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import { ICardAndUserInfo } from "../GridCardDisplay";
 import { Button, Checkbox, Radio } from "antd";
-import { CheckboxValueType } from "antd/es/checkbox/Group";
 import { ClearOutlined, SettingOutlined } from "@ant-design/icons";
+// antd v5 removed CheckboxValueType from antd/es/checkbox/Group; this is its original definition.
+type CheckboxValueType = string | number | boolean;
 import { Rarity } from "../../types/lorcana.types";
 import axios from "axios";
 import { TNewCard, TNewCardAndUserData } from "../../pages/newInventory/NewInventory";
