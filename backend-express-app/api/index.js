@@ -5,7 +5,6 @@ const path = require("path");
 const env = require("dotenv");
 const cors = require("cors");
 const { v4 } = require("uuid");
-const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 
 env.config();
